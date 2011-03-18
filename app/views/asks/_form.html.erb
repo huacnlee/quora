@@ -1,0 +1,11 @@
+<div id="ask">
+<%= simple_form_for(@ask) do |f| %>
+  <div class="inputs">
+  <%= f.input :title, :input_html => {:class => "long"}%>
+  <%= f.input :body, :as => :text, :input_html => {:class => "long"} %>
+  </div>
+  <div class="actions">
+    <button class="submit">提交问题</button> 或者 <%= link_to '返回', asks_path %>
+  </div>
+<% end %>
+</div>

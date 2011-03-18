@@ -14,7 +14,8 @@ class Ask
   embeds_many :comments
 
   attr_protected :user_id
-
   validates_presence_of :user_id, :title
+
+  scope :last_actived, order_by("answered_at desc")
 
 end

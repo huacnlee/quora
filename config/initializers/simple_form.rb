@@ -1,3 +1,4 @@
+# coding: utf-8
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
 
@@ -21,13 +22,13 @@ SimpleForm.setup do |config|
   config.wrapper_tag = :div
 
   # CSS class to add to all wrapper tags.
-  config.wrapper_class = :field
+  config.wrapper_class = :row
 
   # CSS class to add to the wrapper if the field has errors.
   # config.wrapper_error_class = :field_with_errors
 
   # How the label text should be generated altogether with the required text.
-  # config.label_text = lambda { |label, required| "#{required} #{label}" }
+  config.label_text = lambda { |label, required| "#{label} #{"(可选)" if not required}" }
 
   # Whether attributes are required by default (or not). Default is true.
   config.required_by_default = true

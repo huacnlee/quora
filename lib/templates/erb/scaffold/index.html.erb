@@ -1,0 +1,20 @@
+<%%= content_for :sitemap do %>
+<span class="current">列表</span>
+<%% end %>
+<%%= render 'base' %>
+
+<div id="<%= plural_table_name %>">
+  <%%= grid(@<%= plural_file_name %>, :show_filters => :always) do |g|
+    g.column :column_name => '', :attribute_name => 'id'
+<% for attribute in attributes -%>
+    g.column :column_name => '<%= attribute.name %>', :attribute_name => '<%= attribute.name %>'
+<% end -%>
+    g.column :column_name => '创建时间', :attribute_name => 'created_at', :td_html_attrs => { :style => "width:120px;" }
+    g.column :td_html_attrs => { :style => "width:50px; text-align:right;" } do |c|
+      raw "#{link_to '修改', edit_<%= singular_table_name %>_path(c.id)}
+      #{link_to image_tag("icons/small/delete.png", :style => "margin-bottom:-4px"), <%= singular_table_name %>_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
+    end
+  end %>
+</div>
+
+

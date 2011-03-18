@@ -1,0 +1,89 @@
+body { text-align:center; }
+.container { width:1260px; margin:0 auto; text-align:left; }
+
+#header {
+  background: #505759;
+  min-height: 35px;
+  padding-top: 18px;
+  color:#FFF;
+}
+#header #site_name { background:#a82400; color:#FFF; height:35px; width:68px; text-align:center; line-height:35px;  float:left;
+  font-size:20px; font-weight:bold;  }
+#header #site_name a { color:#FFF; text-decoration:none; }
+#header #add_ask { display:inline-block; background:#000; height:35px; line-height:35px; padding:0 6px; overflow:hidden; }
+#header #add_ask input { width:360px; font-size: 16px;height: 18px; line-height:18px; border:0; margin-top: 2px; }
+#header #add_ask a { color: #F0F0F0; font-weight: bold; font-size: 13px; padding: 10px 10px; text-align: center;}
+
+#header #user_bar { padding-top:10px; }
+#header #user_bar a { color: #B9BBBC; font-weight:bold; font-size:13px; display:inline-block; margin-right:8px; }
+#footer { clear:both; padding-top:25px; height:80px; }
+
+#main { margin:20px 0; }
+.left_wrapper { float:left; width:870px; }
+#footer .left_wrapper ,
+#main .left_wrapper { margin-left:70px; margin-right:20px; width:780px; }
+.sidebar { float:right: width:450px; overflow:hidden; }
+.sidebar .box { margin-bottom:20px; }
+.sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1em; margin-bottom: 3px; }
+
+
+.ask { margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px; }
+.ask h1 { font-size: 1.8em; line-height: 1.3em; letter-spacing: -1px; margin-bottom: 0; }
+.ask .title { font-size: 1.3em; line-height: 1.2em; font-weight: bold;}
+.ask .info { color: #999; margin:3px 0;  }
+.md_body { font-size:1.2em; color: #333; line-height:130%; }
+.md_body blockquote { padding-left:28px; padding-top:8px; background:#FAEBBC url(/images/lquote.gif) left top no-repeat; }
+.md_body blockquote p { padding-right:28px; padding-bottom:8px; font-size:1em; background:url(/images/rquote.gif) bottom right no-repeat; }
+.md_body code { background: #F4F4F4; display:block; margin:5px; padding:2px; font-size:.6em; font-family:monaco,monospace; line-height:120%; }
+.md_body a { background:url(/images/link_out.gif) 4px right no-repeat; padding-right:10px; }
+a.page_more  { margin-top:10px; padding:4px 0px; -moz-border-radius: 3px; -webkit-border-radius: 3px; 
+  display:block; text-align:center; font-weight: bold; cursor: pointer; color:#333;
+  background:#ddd url(/images/more_bg.gif); border: 1px solid #bbb; font-size: .9em; }
+a.page_more:hover { color: #19558D; border-bottom: 1px solid #999; text-decoration: none; }
+a.page_more:active { background: #E0E0E0; border-color: #999; text-shadow: none; }
+
+a.tag { margin:0px 2px; }
+
+.answers { margin:20px 0; }
+.answers .vote_buttons { float:left; width:20px; position:relative; margin-top:5px; margin-right:8px; margin-left:-27px; }
+.answers .vote_buttons a:link,
+.answers .vote_buttons a:visited {  display:block; width:20px; height:17px;  background: #DFEAF4 url(/images/vote.gif); margin-bottom: 1px;
+  -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+.answers .vote_buttons a:hover,
+.answers .vote_buttons a.voted { background-color:#19558D; background-position: -17px left; }
+.answers .vote_buttons a.vote_down:link,
+.answers .vote_buttons a.vote_down:visited { background-position: top -20px; }
+.answers .vote_buttons a.vote_down:hover,
+.answers .vote_buttons a.vote_down.voted { background-color:#19558D; background-position: -20px -17px; }
+.answers .answer_border { padding-right:30px; }
+.answers .avatar_border { margin-top:2px; float:right; width:24px; margin-left:6px; }
+
+.answers .answer { border-bottom:1px solid #DDD; padding:8px 0; margin-bottom:3px; }
+.answers .answer .info { color: #999; margin:3px 0;  }
+
+.ask .info a.user,
+.answer .info a.user { font-weight:bold; }
+.answer .votes { color:#999; margin-bottom:4px; }
+.answer .votes a { color:#999; }
+
+.answer .action,
+.ask .action { color:#999; margin:3px 0; }
+.ask .action a,
+.answer .action a { color:#538DC2; }
+.answer .action a.voted { color:#666; }
+.ask .action a.flagged { color:#999; }
+
+.comments { margin-top:10px; }
+.comments h2 { font-size:1em; color:#333; }
+.comments .comment { padding-left:15px; margin-top:8px; background:url(/images/comment_bg.gif) left top no-repeat; }
+.comments .comment .md_body { font-size:80%; }
+.comments .comment .info {font-size: .9em;}
+.comments .form { height: 50px; }
+.comments .form textarea { float:left; height: 30px; width:300px; margin-right:6px;  }
+
+#login { margin: 20px 0; }
+
+
+.user_profile {}
+.user_profile .bio { margin-top:10px; }
+

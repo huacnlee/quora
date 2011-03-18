@@ -21,8 +21,8 @@ class User
 
   embeds_many :authorizations
 
-  attr_accessor :password_confirmation
-  attr_accessible :name, :slug, :tagline, :bio, :avatar, :website
+  attr_accessor  :password_confirmation
+  attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website
 
   def password_required?
     (authorizations.empty? || !password.blank?) && super  
@@ -38,5 +38,12 @@ class User
 		user.reset_persistence_token! #set persistence_token else sessions will not be created
 		user
   end  
+
+  before_create :auth_slug
+  def auth_slug
+    if self.slug.blank?
+      self.slug = self.email.split("@")[0]
+    end
+  end
   
 end

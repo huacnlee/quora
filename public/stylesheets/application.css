@@ -1,0 +1,27 @@
+body {font-family:"Helvetica Neue",Helvetica,Arial,default;font-size:80%;  }
+* {margin:0;padding:0;}
+a {text-decoration:none;}
+a:link,a:visited { color: #19558D; }
+a:hover {text-decoration:underline;}
+img {border:0;}
+input {font-family:Helvetica,Arial,default;outline:none;}
+hr {border:0;border-top:1px solid #bcc4d3;}
+h1 {font-size:1.4em;margin:0 0 10px;}
+ul,ol { list-style-position :inside; margin:2px 10px; }
+
+input,textarea { border: 1px solid #999; width: 250px; padding:3px; }
+input.long,textarea.long { width: 700px; }
+textarea.long { height:300px; }
+button { border-color: #062C50; background: #19558D; text-shadow: none; color: white; min-width: 40px; cursor: pointer;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-weight: bold; font-size: .9em; display: inline-block; padding: 3px 10px; text-align: center; }
+
+
+/* simple_form style */
+.simple_form { }
+.simple_form .row,
+.simple_form .actions { margin:5px 0 10px 0; }
+.simple_form label { font-size: 12px; color:#666; display:block; }
+.form span.error-message { color:red; }
+

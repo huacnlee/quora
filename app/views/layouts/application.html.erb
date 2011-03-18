@@ -1,14 +1,64 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-  <title>Quora</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title><%= raw @page_title %><%= Setting.app_name %></title>
+  <%= stylesheet_link_tag "application","front","jquery.jdialog", :cache => "cached_front" %>
+	<%= yield :styles %>
+  <meta name="keywords" content="<%= @meta_keywords %>" />
+  <meta name="description" content="<%= @meta_description %>" />
+  <link rel="shortcut icon" href="/favicon.ico?v=001" /> 
   <%= csrf_meta_tag %>
+  <%= javascript_include_tag "jquery.min","rails","jquery.jdialog","application", :cache => "cached_application" %>
+  <%= yield :scripts %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div id="header">
+    <div class="container">
+      <div class="left_wrapper">
+        <div id="site_name">
+          <a href="/"><%= Setting.app_name %></a>
+        </div>
+        <div id="add_ask">
+          <input type="text" placeholder="搜索问题, 话题 或 会员" />
+          <a href="/asks/new">我要提问</a>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div id="user_bar">
+          <a href="/">首页</a>
+          <% if not current_user %>
+          <a href="/login">登陆</a>
+          <a href="/register">注册</a>
+          <% else %>
+            <%= user_name_tag(current_user) %>
+            <a href="/settings">个人设置</a>
+            <a href="/logout">退出</a>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="main">
+    <div class="container">
+      <div class="left_wrapper">
+        <%= yield %>
+      </div>
+      <div class="sidebar">
+        <%= yield :sidebar %>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+    <div class="container">
+      <div class="left_wrapper">
+        <p class="copyright">
+          <%= raw Setting.foot_html %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <%= yield :bottom %>
 </body>
 </html>
+

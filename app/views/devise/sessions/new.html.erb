@@ -1,0 +1,27 @@
+<% content_for :sitemap do %><span class="current">加入社区</span><% end %>
+<div class="leftbox">
+	<div class="box">
+    <h1>登陆</h1>
+      <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <%= f.input :email %>
+        <%= f.input :password, :as => :password %>
+        <% if devise_mapping.rememberable? -%>
+          <div class="row"><%= f.check_box :remember_me, :style => "width:auto;" %> <%= f.label :remember_me,"记住登陆状态", :style => "display:inline;" %></div>
+        <% end -%>
+      <div class="field"><button type="submit" class="button submit">登陆</button></div>
+    <% end %>
+  </div>
+</div>
+<% content_for :sidebar do %>
+  <div class="box">
+    <h2>还没有帐号？</h2>
+    <%= render :partial => "devise/shared/links" %>
+  </div>
+  <div class="box">
+		<h2>用其他平台的帐号登陆</h2>
+		<ul>
+			<li><a href="/auth/google">Google用户登陆</a></li>
+			<li><a href="/auth/github">Github用户登陆</a></li>
+		</ul>
+	</div>
+<% end %>
