@@ -19,8 +19,6 @@ class User
   field :answers_count, :type => Integer, :default => 0
   has_many :answers
 
-  has_many :flagged_asks
-
   embeds_many :authorizations
 
   attr_accessor  :password_confirmation
