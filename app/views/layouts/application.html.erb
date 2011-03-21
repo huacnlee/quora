@@ -4,14 +4,20 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title><%= raw @page_title %><%= Setting.app_name %></title>
-  <%= stylesheet_link_tag "application","front","jquery.jdialog", :cache => "cached_front" %>
+  <%= stylesheet_link_tag "application","front","facebox", :cache => "cached_front" %>
 	<%= yield :styles %>
   <meta name="keywords" content="<%= @meta_keywords %>" />
   <meta name="description" content="<%= @meta_description %>" />
   <link rel="shortcut icon" href="/favicon.ico?v=001" /> 
   <%= csrf_meta_tag %>
-  <%= javascript_include_tag "jquery.min","rails","jquery.jdialog","application", :cache => "cached_application" %>
+  <%= javascript_include_tag "jquery.min","rails","facebox","application", :cache => "cached_application" %>
   <%= yield :scripts %>
+  <script type="text/javascript">
+    function addAsk(){
+      $.facebox({ div : "#hidden_new_ask", overlay : false });
+      return false;
+    }
+  </script>
 </head>
 <body>
   <div id="header">
@@ -22,7 +28,7 @@
         </div>
         <div id="add_ask">
           <input type="text" placeholder="搜索问题, 话题 或 会员" />
-          <a href="/asks/new">我要提问</a>
+          <a href="/asks/new" onclick="return addAsk();">我要提问</a>
         </div>
       </div>
       <div class="sidebar">
@@ -72,6 +78,15 @@
     </div>
   </div>
   <%= yield :bottom %>
+  <div style="display: none;" id="hidden_new_ask">
+    <form action="/asks" method="post" id="inner_new_ask">
+      <%= auth_token %>
+      <textarea type="text" name="ask[title]" class="title" placeholder="在这里输入问题"></textarea>
+      <label>可选:</label>添加更多描述
+      <textarea type="text" name="ask[body]"></textarea>
+      <button type="submit" class="submit">添加问题</button> <a href="#" onclick="$.facebox.close(); return false;">取消</a>
+    </form>
+  </div>
   <div style="display: none;" id="loading"> 
     <div class="logo"></div> 
     <div class="text">加载中…</div> 

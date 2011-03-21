@@ -63,7 +63,7 @@ class AsksController < ApplicationController
 
     respond_to do |format|
       if @ask.save
-        format.html { redirect_to(asks_path, :notice => '问题创建成功。') }
+        format.html { redirect_to(ask_path(@ask.id), :notice => '问题创建成功。') }
         format.json
       else
         format.html { render :action => "new" }
@@ -77,7 +77,7 @@ class AsksController < ApplicationController
 
     respond_to do |format|
       if @ask.update_attributes(params[:ask])
-        format.html { redirect_to(asks_path, :notice => '问题更新成功。') }
+        format.html { redirect_to(ask_path(@ask.id), :notice => '问题更新成功。') }
         format.json
       else
         format.html { render :action => "edit" }

@@ -27,6 +27,10 @@ body { text-align:center; }
 .sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1em; margin-bottom: 3px; }
 
 
+#inner_new_ask {}
+#inner_new_ask textarea { display:block; width:387px; height:80px; margin-bottom:8px; }
+#inner_new_ask textarea.title { font-size:16px; font-weight:bold; }
+
 .ask { margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px; }
 .ask h1 { font-size: 1.8em; line-height: 1.3em; letter-spacing: -1px; margin-bottom: 0; }
 .ask .title { font-size: 1.3em; line-height: 1.2em; font-weight: bold;}
