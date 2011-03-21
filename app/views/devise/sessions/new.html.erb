@@ -2,13 +2,14 @@
 <div class="leftbox">
 	<div class="box">
     <h1>登陆</h1>
-      <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-        <%= f.input :email %>
-        <%= f.input :password, :as => :password %>
-        <% if devise_mapping.rememberable? -%>
-          <div class="row"><%= f.check_box :remember_me, :style => "width:auto;" %> <%= f.label :remember_me,"记住登陆状态", :style => "display:inline;" %></div>
-        <% end -%>
-      <div class="field"><button type="submit" class="button submit">登陆</button></div>
+    <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.input :email %>
+      <%= f.input :password, :as => :password %>
+      <% if devise_mapping.rememberable? -%>
+        <div class="row"><%= f.check_box :remember_me, :style => "width:auto;" %> <%= f.label :remember_me,"记住登陆状态", :style => "display:inline;" %></div>
+      <% end -%>
+    <div class="field"><button type="submit" class="button submit">登陆</button></div>
     <% end %>
   </div>
 </div>

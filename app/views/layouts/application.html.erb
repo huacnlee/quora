@@ -1,3 +1,4 @@
+<%= spaceless do %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -32,7 +33,7 @@
           <a href="/register">注册</a>
           <% else %>
             <%= user_name_tag(current_user) %>
-            <a href="/settings">个人设置</a>
+            <%= link_to('设置', edit_user_registration_path) %>
             <a href="/logout">退出</a>
           <% end %>
         </div>
@@ -42,6 +43,18 @@
   <div id="main">
     <div class="container">
       <div class="left_wrapper">
+        <% if !notice.blank? %>
+          <div class="notice_message"><%= notice %></div>
+          <script type="text/javascript">
+            $(".notice_message").fadeOut().fadeIn();    
+          </script>
+        <% end %>
+        <% if !alert.blank? %>
+          <div class="alert_message"><%= alert %></div>
+          <script type="text/javascript">
+            $(".alert_message").fadeOut().fadeIn();    
+          </script>
+        <% end %> 
         <%= yield %>
       </div>
       <div class="sidebar">
@@ -59,6 +72,10 @@
     </div>
   </div>
   <%= yield :bottom %>
+  <div style="display: none;" id="loading"> 
+    <div class="logo"></div> 
+    <div class="text">加载中…</div> 
+  </div> 
 </body>
 </html>
-
+<% end %>

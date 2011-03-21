@@ -1,0 +1,38 @@
+<% content_for :sitemap do %><span class="current">设置</span><% end %>
+<div class="leftbox">
+<div class="box">
+	<h1>个人资料</h1>
+  <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
+	<%= render "shared/error_messages", :target => resource %> 
+	  <%= f.input :slug %>
+	  <%= f.input :email %>
+    <%= f.input :avatar %>
+    <% if not @user.avatar.blank? %>
+    <div class="row">
+      <label>预览</label>
+      <%= image_tag(@user.avatar.normal.url) %>
+    </div>
+    <% end %>
+    <%= f.input :website, :input_html => { :placeholder => "http://", :class => "long" } %>
+    <%= f.input :tagline, :input_html => { :class => "long" } %>
+    <%= f.input :bio, :as => :text, :input_html => { :class => "long", :style => "height:120px;"} %>
+    <div class="actions">
+      <button type="submit">保存</button>
+    </div>
+	<% end %>
+</div>
+</div>
+<% content_for :sidebar do %>
+  <div class="box">
+		<h2>绑定其他帐号用于登陆</h2>
+		<ul>
+			<li><a href="/auth/google">Google帐号</a></li>
+			<li><a href="/auth/github">Github帐号</a></li>
+		</ul>
+	</div>
+  <div class="box">
+    <h2>删除我的帐号</h2>
+    <p>不喜欢? <%= link_to "删除此帐号", registration_path(resource_name), :confirm => "删除后无法恢复，你确定吗?", :method => :delete %>.</p>
+  </div>
+  
+<% end %>

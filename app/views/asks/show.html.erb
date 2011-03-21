@@ -1,18 +1,134 @@
-<%= content_for :sitemap do %>
-<span class="current">查看</span>
+<% content_for :styles do %>
+  <%= stylesheet_link_tag "wmd", :cache => "cached_wmd" %>
+<% end %>
+<% content_for :scripts do %>
+  <%= javascript_include_tag "wmd","showdown", :cache => "cached_wmd" %>
+  <script type="text/javascript">
+    function toggleComments(type,id){
+      var el = $("#"+type+"_"+id);
+      var comments = $(".comments",el);
+      if(comments.length > 0){
+        comments.toggle();
+      }
+      else{
+        App.loading();
+        $.get("/comments",{ type : type, id : id }, function(html){
+          $(".action",el).after(html);
+          App.loading(false);
+        });
+      }
+      return false;
+    }
+
+    function vote(id,type){
+      var answer = $("#answer_"+id);
+      vtype = "down";
+      if(type == 1) { vtype = "up"; }
+      $(".vote_buttons a",answer).removeClass("voted");
+      $(".vote_buttons a.vote_"+vtype,answer).addClass("voted");
+      $(".action a",answer).removeClass("voted");
+      $(".action a.vote_"+vtype,answer).addClass("voted");
+      App.loading();
+      $.get("/answers/"+id+"/vote",{ inc : type },function(votes_count){
+        vote_callback(id, votes_count);
+        App.loading(false);
+      });
+      return false;
+    }
+
+    function vote_callback(id,votes_count){
+      var answer = $("#answer_"+id);
+      var answer_votes = $(".votes",answer);
+      if(answer_votes.length > 0){
+        $(".num",answer_votes).text(votes_count);
+      }
+      else {
+        $(".author",answer).after("<div class=\"votes\"><span class=\"num\">"+votes_count+"</span> 票</div>");
+      }
+
+      var answers = $(".answer");
+      for(var i =0;i<answers.length;i++){
+        a = answers[i];
+        v_count = 0;
+        votes = $(".votes",a);
+        if(votes.length > 0){
+          v_count = parseInt($(".num",votes).text());
+        }
+        if(votes_count > v_count){
+          $(a).before(answer);
+          break;
+        }
+      }
+    }
+
+    function follow(el){
+      if($(el).text() == "关注"){
+        f = 1;
+        $(el).addClass("followed").text("取消关注");
+      }
+      else{
+        f = 0;
+        $(el).removeClass("followed").text("关注");
+      }
+      $.get("/asks/<%= @ask.id %>/follow",{follow:f},function(s){ });
+      return false;
+    }
+  </script>
 <% end %>
 <%= render 'base' %>
-<div class="tools">
-  <%= link_to '修改', edit_ask_path(@ask) %> |
-  <%= link_to '返回', asks_path %>
-</div>
-<div id="ask">
-    <p>
-    <b>Title:</b>
-    <%= @ask.title %>
-  </p>
-    <p>
-    <b>Body:</b>
-    <%= @ask.body %>
-  </p>
+
+<div class="ask" id="ask_<%= @ask.id %>">
+  <div class="topics"><%= topics_name_tag(@ask.topics) %></div>
+  <h1><%= @ask.title %></h1>
+  <div class="md_body">
+    <% if @ask.body.blank? %>
+      <a href="#" class="insite">添加补充说明</a>
+    <% else %>
+      <%= md_body(@ask.body) %>
+    <% end %>
   </div>
+  <div class="action">
+    <% if @ask.comments_count == 0 %>
+      <a href="#" onclick="return toggleComments('ask','<%= @ask.id %>');">添加评论</a>
+    <% else %>
+      <a href="#" onclick="return toggleComments('ask','<%= @ask.id %>');"><%= @ask.comments_count %> 条评论</a>
+    <% end %>
+  </div>
+</div>
+
+<div class="answers">
+  <% if !@answers.blank? %>
+    <% @answers.each do |item| %>
+      <%= render("answer", :item => item) %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="ask from">
+  <h2>回答</h2>
+  <%= form_for(@answer, :remote => true, :url => answer_ask_path(@ask.id)) do |f| %>
+    <div class="row">
+      <div id="answer_body_buttons"></div>
+      <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
+      <div id="answer_body_preview" class="md_body"></div>
+    </div>
+    <div class="actions">
+      <button type="submit">提交回答</button>
+    </div>
+  <% end %>
+  <script type="text/javascript">
+    setup_wmd({
+      input: "answer_body",
+      button_bar: "answer_body_buttons",
+      preview: "answer_body_preview",
+      output: "copy_html"
+    });
+  </script>
+</div>
+<% content_for :sidebar do %>
+  <div class="box">
+    <h2></h2>
+    <div class="inner">
+      <a href="#" class="follow button" onclick="return follow(this);">关注</a>
+    </div>
+<% end %>

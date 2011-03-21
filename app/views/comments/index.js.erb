@@ -1,0 +1,19 @@
+<div id="<%= @type %>_<%= @id %>_comments" class="comments">
+  <% if @comments.blank? %>
+    <% @comments.each do |item| %>
+      <div class="comment">
+        <div class="md_body"><%= item.body %>
+        <div class="info"><%= user_name_tag(item.user) %> • <%= l item.created_at, :format => :short %></div>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="comment form">
+    <%= form_for(@comment, :remote => true) do |f| %>
+      <%= f.hidden_field :commentable_type %>
+      <%= f.hidden_field :commentable_id %>
+      <%= f.text_area :body, :class => "body" %>
+      <button type="submit">评论</button>
+      <a href="#" onclick="$('#<%= @type %>_<%= @id %>_comments').hide(); return false;">关闭</a>
+    <% end %>
+  </div>
+</div>

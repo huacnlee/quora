@@ -44,6 +44,9 @@ a.page_more:active { background: #E0E0E0; border-color: #999; text-shadow: none;
 
 a.tag { margin:0px 2px; }
 
+a.user img.small { width:25px; height:25px; }
+a.user img.normal { width:100px; height:100px; }
+
 .answers { margin:20px 0; }
 .answers .vote_buttons { float:left; width:20px; position:relative; margin-top:5px; margin-right:8px; margin-left:-27px; }
 .answers .vote_buttons a:link,
@@ -62,7 +65,8 @@ a.tag { margin:0px 2px; }
 .answers .answer .info { color: #999; margin:3px 0;  }
 
 .ask .info a.user,
-.answer .info a.user { font-weight:bold; }
+.answer .author { font-weight:bold; }
+.answer .author a.user { font-weight:bold; }
 .answer .votes { color:#999; margin-bottom:4px; }
 .answer .votes a { color:#999; }
 

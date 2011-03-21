@@ -2,7 +2,7 @@
 class AsksController < ApplicationController
   
   def index
-    @ask = Ask.last_actived.paginate(:page => params[:page], :per_page => 20)
+    @asks = Ask.last_actived.paginate(:page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,11 +12,36 @@ class AsksController < ApplicationController
 
   def show
     @ask = Ask.find(params[:id])
+    @answers = @ask.answers.desc(:votes_count)
+    @answer = Answer.new
 
     respond_to do |format|
       format.html # show.html.erb
       format.json
     end
+  end
+
+  def answer
+    @answer = Answer.new(params[:answer])
+    @answer.ask_id = params[:id]
+    @answer.user_id = current_user.id
+    if @answer.save
+      @success = true
+    else
+      @success = false
+    end
+
+  end
+  
+  def follow
+    @ask = Ask.find(params[:id])
+    if params[:follow].blank?
+      follow = false
+    else
+      follow = true
+    end
+    res = current_user.follow_ask(@ask,follow)
+    render :text => res
   end
   
   def new
@@ -34,7 +59,7 @@ class AsksController < ApplicationController
   
   def create
     @ask = Ask.new(params[:ask])
-    @ask.user_id = @current_user.id
+    @ask.user_id = current_user.id
 
     respond_to do |format|
       if @ask.save

@@ -1,0 +1,28 @@
+<div id="answer_<%= item.id %>" class="answer">
+  <div class="vote_buttons">
+    <a class="vote_up" onclick="return vote('<%= item.id %>',1);" href="#"></a>
+    <a class="vote_down" onclick="return vote('<%= item.id %>',0);" href="#"></a>
+  </div>
+  <div class="avatar_border">
+    <%= user_avatar_tag(item.user, :small) %>
+  </div>
+  <div class="answer_border">
+    <div class="author"><%= user_name_tag(item.user) %>, <%= truncate item.user.tagline, :length => 10 %></div>
+    <% if item.votes_count != 0 %>
+    <div class="votes"> 
+      <span class="num"><%= item.votes_count %></span> 票
+    </div>
+    <% end %>
+    <div class="md_body"><%= md_body(item.body) %></div>
+    <div class="action">
+      <% if item.comments.count == 0 %>
+        <a href="#" onclick="return toggleComments('answer','<%= item.id %>');">添加评论</a>
+      <% else %>
+        <a href="#" onclick="return toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> 条评论</a>
+      <% end %>
+      • <a class="usefull" onclick="return usefull('<%= item.id %>',1);" href="#">感谢</a> 
+      • <a class="notusefull" onclick="return usefull('<%= item.id %>',0);" href="#">没有帮助</a>
+      • <%= l item.created_at, :format => :short %>
+    </div>
+  </div>
+</div>

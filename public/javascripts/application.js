@@ -25,3 +25,21 @@ var DateHelper = {
     return "超过" + years_ago + "年"
   }
 }
+
+var App = {
+  
+  // 显示进度条
+  loading : function(show){
+    var loadingPanel = $("#loading");
+    if(show == false){
+      loadingPanel.hide();
+    }
+    else{      
+      loadingPanel.show();
+    }
+  },
+
+  varsion : function(){
+    return "1.0";
+  }
+}

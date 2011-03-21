@@ -5,8 +5,17 @@ class Comment
   
   field :body
   
+  belongs_to :commentable, :polymorphic => true
   belongs_to :user
 
-  embedded_in :answer, :inverse_of => :comments
-  embedded_in :ask, :inverse_of => :comments
+  after_create :inc_counter_cache
+  def inc_counter_cache
+    self.commentable.safely.inc(:comments_count,1)
+  end
+
+  before_destroy :dec_counter_cache
+  def dec_counter_cache
+    self.commentable.safely.inc(:comments_count,-1)
+  end
+
 end

@@ -4,7 +4,7 @@ class User
   include Mongoid::Timestamps
   
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :validatable
   
   field :name
   field :slug
@@ -19,13 +19,15 @@ class User
   field :answers_count, :type => Integer, :default => 0
   has_many :answers
 
+  has_many :flagged_asks
+
   embeds_many :authorizations
 
   attr_accessor  :password_confirmation
   attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website
 
   def password_required?
-    (authorizations.empty? || !password.blank?) && super  
+    !persisted? || password.present? || password_confirmation.present?
   end
   
   mount_uploader :avatar, AvatarUploader
@@ -45,5 +47,6 @@ class User
       self.slug = self.email.split("@")[0]
     end
   end
+
   
 end

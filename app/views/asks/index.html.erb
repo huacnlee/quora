@@ -1,2 +1,21 @@
 <%= render 'base' %>
 
+<div id="asks">
+  <% @asks.each do |item| %>
+  <div class="ask">
+    <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+    <div class="info"><%= user_name_tag(item.user) %> 添加<%- if not item.topics.blank? -%>到
+      <%= topics_name_tag(item.topics) %>
+      <%- end -%>的问题
+      • <%= item.answers_count %> 个答案 • <a href="<%= follow_ask_path(item.id) %>">关注</a> 
+      • <a href="<%= mute_ask_path(item.id) %>">不感兴趣</a>
+    </div>
+    <div class="md_body">
+      <%= md_body(item.body) %>
+    </div>
+  </div>
+  <% end %>
+  <% if @asks.length == 10 %>
+    <div class="pagination><a class="page_more" href="/?page=1">查看更多...</a></div>
+  <% end %>
+</div>

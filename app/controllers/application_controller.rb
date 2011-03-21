@@ -1,6 +1,7 @@
 # coding: utf-8
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  helper :all
 
   # set page title, meta keywords, meta description
   def set_seo_meta(options = {})
