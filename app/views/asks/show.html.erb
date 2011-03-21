@@ -47,8 +47,12 @@
       }
 
       var answers = $(".answer");
+      var position_changed = false;
       for(var i =0;i<answers.length;i++){
         a = answers[i];
+        if($(a).attr("id") == answer.attr("id")){
+          continue;
+        }
         v_count = 0;
         votes = $(".votes",a);
         if(votes.length > 0){
@@ -56,9 +60,15 @@
         }
         if(votes_count > v_count){
           $(a).before(answer);
+          position_changed = true;
           break;
         }
+        else{
+          $(a).after(answer);
+        }
       }
+      answer.fadeOut(100).fadeIn(200);
+      
     }
 
     function follow(el){
