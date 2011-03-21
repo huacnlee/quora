@@ -15,7 +15,7 @@
     <% end %>
     <div class="md_body"><%= md_body(item.body) %></div>
     <div class="action">
-      <% if item.comments.count == 0 %>
+      <% if item.comments_count == 0 %>
         <a href="#" onclick="return toggleComments('answer','<%= item.id %>');">添加评论</a>
       <% else %>
         <a href="#" onclick="return toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> 条评论</a>

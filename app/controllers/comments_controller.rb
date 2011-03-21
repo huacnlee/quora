@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   def index
     @type = params[:type]
     @id = params[:id]
-    @comments = Comment.find(:conditions => { :commentable_type => @type.titleize, :commentable_id => BSON::ObjectId(@id) })
+    @comments = Comment.where(:commentable_type => @type.titleize, :commentable_id => BSON::ObjectId(@id)).to_a
     @comment = Comment.new(:commentable_type => @type.titleize, :commentable_id => @id)
   end
 

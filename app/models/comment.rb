@@ -8,6 +8,13 @@ class Comment
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
 
+  before_create :fix_commentable_id
+  def fix_commentable_id
+    if self.commentable_id.class == "".class
+      self.commentable_id = BSON::ObjectId(self.commentable_id)
+    end
+  end
+
   after_create :inc_counter_cache
   def inc_counter_cache
     self.commentable.safely.inc(:comments_count,1)
