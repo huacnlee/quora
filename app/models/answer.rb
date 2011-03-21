@@ -22,4 +22,12 @@ class Answer
       self.safely.inc(:votes_count, -1)
     end
   end
+
+  after_create :save_to_ask_and_update_answered_at
+  def save_to_ask_and_update_answered_at
+    self.ask.update_attributes({:answered_at => self.created_at, 
+                               :last_answer_id => self.id,
+                               :last_answer_user_id => self.user_id })
+    self.ask.inc(:answers_count,1)
+  end
 end

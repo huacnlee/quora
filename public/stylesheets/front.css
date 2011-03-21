@@ -31,11 +31,27 @@ body { text-align:center; }
 .ask h1 { font-size: 1.8em; line-height: 1.3em; letter-spacing: -1px; margin-bottom: 0; }
 .ask .title { font-size: 1.3em; line-height: 1.2em; font-weight: bold;}
 .ask .info { color: #999; margin:3px 0;  }
+.ask .last_answer { margin-top:5px; }
+.ask .last_answer .votes { display:inline-block;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color: #DFEAF4;
+  font-size: 1em;
+  line-height: 1.1em;
+  color: #538DC2;
+  font-weight:bold;
+  width:20px;
+  text-align:center;
+  padding: 1px 3px;
+}
+.ask .last_answer .md_body { margin-left:30px; }
+
 .md_body { font-size:1.2em; color: #333; line-height:130%; }
 .md_body blockquote { padding-left:28px; padding-top:8px; background:#FAEBBC url(/images/lquote.gif) left top no-repeat; }
 .md_body blockquote p { padding-right:28px; padding-bottom:8px; font-size:1em; background:url(/images/rquote.gif) bottom right no-repeat; }
 .md_body code { background: #F4F4F4; display:block; margin:5px; padding:2px; font-size:.6em; font-family:monaco,monospace; line-height:120%; }
 .md_body a { background:url(/images/link_out.gif) 4px right no-repeat; padding-right:10px; }
+
 a.page_more  { margin-top:10px; padding:4px 0px; -moz-border-radius: 3px; -webkit-border-radius: 3px; 
   display:block; text-align:center; font-weight: bold; cursor: pointer; color:#333;
   background:#ddd url(/images/more_bg.gif); border: 1px solid #bbb; font-size: .9em; }

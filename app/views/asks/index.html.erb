@@ -4,15 +4,30 @@
   <% @asks.each do |item| %>
   <div class="ask">
     <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
-    <div class="info"><%= user_name_tag(item.user) %> 添加<%- if not item.topics.blank? -%>到
-      <%= topics_name_tag(item.topics) %>
-      <%- end -%>的问题
-      • <%= item.answers_count %> 个答案 • <a href="<%= follow_ask_path(item.id) %>">关注</a> 
-      • <a href="<%= mute_ask_path(item.id) %>">不感兴趣</a>
-    </div>
-    <div class="md_body">
-      <%= md_body(item.body) %>
-    </div>
+      <div class="info">
+        <% if item.last_answer %>
+          话题 <%= topics_name_tag(item.topics,3) %> 添加了一个回答
+        <% else %>
+          该问题被添加到了 <%= topics_name_tag(item.topics,3) %> 话题
+        <% end %>
+        • <%= item.answers_count %> 个答案 
+        • <a href="<%= follow_ask_path(item.id) %>">关注</a> 
+        • <a href="<%= mute_ask_path(item.id) %>">不感兴趣</a>
+      </div>
+    <% if item.last_answer %>
+      <div class="last_answer answer">
+        <div class="author">
+          <span class="votes"><%= item.last_answer.votes_count %></span>
+          <%= user_name_tag(item.last_answer_user) %>, 
+          <%= truncate(item.last_answer_user.tagline,:length => 10) %> 
+        </div>
+        <div class="md_body"><%= md_body(item.last_answer.body) %></div>
+      </div>
+    <% else %>
+      <div class="md_body">
+        <%= md_body(item.body) %>
+      </div>
+    <% end %>
   </div>
   <% end %>
   <% if @asks.length == 10 %>
