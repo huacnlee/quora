@@ -72,21 +72,31 @@
     }
 
     function follow(el){
-      if($(el).text() == "关注"){
+      if($(el).text() == "关注此问题"){
         f = 1;
-        $(el).addClass("followed").text("取消关注");
+        $(el).removeClass("green_button").text("取消关注");
       }
       else{
         f = 0;
-        $(el).removeClass("followed").text("关注");
+        $(el).addClass("green_button").text("关注此问题");
       }
       $.get("/asks/<%= @ask.id %>/follow",{follow:f},function(s){ });
+      return false;
+    }
+
+    function dropdownSettings(el){
+      $(el).jDialog({
+        title_visiable : false,
+        width : 160,
+        top_offset : -1,
+        content : "<ul><li>asdgasdgasdgasdg</li></ul>"
+      });
+      $(el).attr("droped",1);
       return false;
     }
   </script>
 <% end %>
 <%= render 'base' %>
-
 <div class="ask" id="ask_<%= @ask.id %>">
   <div class="topics"><%= topics_name_tag(@ask.topics) %></div>
   <h1><%= @ask.title %></h1>
@@ -139,6 +149,7 @@
   <div class="box">
     <h2></h2>
     <div class="inner">
-      <a href="#" class="follow button" onclick="return follow(this);">关注</a>
+      <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this);">关注此问题</a>
+      <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a>
     </div>
 <% end %>

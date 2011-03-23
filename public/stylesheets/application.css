@@ -22,6 +22,42 @@ button.submit { background:url(/images/button_submit.gif) left top repeat-x; }
 a.submit:active,
 button.submit:active { background:#19558D; }
 
+a.gray_button,
+a.dropdown { 
+  background: #EEE;
+  display:inline-block;
+  line-height:24px;
+  padding:2px 25px 1px 25px;
+  background:#FFF url(/images/gray_button_bg.gif) bottom left repeat-x;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  text-decoration:none;
+  color:#000;
+  border:1px solid #bbb;
+  border-color: #BBB #BBB #999 #999;
+  text-align:center;
+}
+a.gray_button:active,
+a.dropdown:active,
+a.gray_button.active,
+a.dropdown.active {
+  background:#CCC;
+  border-color: #999;
+}
+
+a.green_button {
+  background:#dff0b1 url(/images/green_button_bg.gif) bottom left repeat-x;
+  border:1px solid #8CB332;
+  border-bottom: 1px solid #648517;
+  color: #406A24;
+  text-shadow: 0 1px #D4ED95;
+  font-weight:bold;
+}
+a.green_button:active {
+  background:#c3dd82;
+  border:1px solid #648517;
+}
+
 
 
 /* simple_form style */
