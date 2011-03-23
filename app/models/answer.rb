@@ -2,9 +2,12 @@
 class Answer
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Voteable
+
+  # 投票对应的分数
+  vote_point self, :up => +1, :down => -1
 
   field :body
-  field :votes_count, :type => Integer, :default => 0
   field :comments_count, :type => Integer, :default => 0
 
   belongs_to :ask, :inverse_of => :answers, :counter_cache => true
@@ -14,14 +17,6 @@ class Answer
   validates_presence_of :user_id, :body
   
   embeds_many :comments
-
-  def vote(inc = true,user)
-    if inc == true
-      self.safely.inc(:votes_count, 1)
-    else
-      self.safely.inc(:votes_count, -1)
-    end
-  end
 
   after_create :save_to_ask_and_update_answered_at
   def save_to_ask_and_update_answered_at

@@ -1,11 +1,14 @@
 class AnswersController < ApplicationController
+  before_filter :require_user_text
+
   def vote
     answer = Answer.find(params[:id])
-    inc = false
+    vote_type = :down
     if params[:inc] == "1"
-      inc = true
+      vote_type = :up
     end
-    answer.vote(inc,current_user)
-    render :text => answer.votes_count
+    success = answer.vote(:voter_id => current_user.id, :value => vote_type)
+    answer.reload
+    render :text => answer.votes_point
   end
 end

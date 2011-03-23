@@ -12,7 +12,7 @@ class AsksController < ApplicationController
 
   def show
     @ask = Ask.find(params[:id])
-    @answers = @ask.answers.desc(:votes_count)
+    @answers = @ask.answers.includes(:user).best_voted
     @answer = Answer.new
 
     respond_to do |format|

@@ -39,6 +39,27 @@ var App = {
     }
   },
 
+  /*
+   * 检查 Ajax 返回结果的登陆状态，如果是未登陆，就转向登陆页面
+   * 此处要配合 ApplicationController 里面的 require_user 使用
+   */
+  requireUser : function(result, type){
+    type = type.toLowerCase();
+    if(type == "json"){
+      if(result.success == false){
+        location.href = "/login";
+        return false;
+      }
+    }
+    else{
+      if(result == "_nologin_"){
+        location.href = "/login";
+        return false;
+      }
+    }
+    return true;
+  },
+
   varsion : function(){
     return "1.0";
   }

@@ -30,6 +30,7 @@
       $(".action a.vote_"+vtype,answer).addClass("voted");
       App.loading();
       $.get("/answers/"+id+"/vote",{ inc : type },function(votes_count){
+        App.requireUser(votes_count,"text");
         vote_callback(id, votes_count);
         App.loading(false);
       });
@@ -68,7 +69,6 @@
         }
       }
       answer.fadeOut(100).fadeIn(200);
-      
     }
 
     function follow(el){
