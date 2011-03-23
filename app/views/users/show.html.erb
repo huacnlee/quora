@@ -1,0 +1,27 @@
+<div class="user_profile">
+  <h1><%= current_user.name %></h1>
+  <div class="tagline">
+    <%= current_user.tagline %>
+  </div>
+  <ul>
+    <li class="info">
+      注册于 <%= l current_user.created_at, :format => :long %>
+    </li>
+    <li>
+    <% if !current_user.website.blank? %>
+      <a href="<%= current_user.website %>" rel="nofollow" target="_blank"><%= current_user.website %></a>
+    <% end %>
+    </li>
+  </ul>
+  <div class="bio md_body">
+    <% if current_user.bio %>
+      <%= current_user.bio %>
+    <% end %>
+  </div>
+</div>
+<% content_for :sidebar do %>
+<div class="box">
+  <%= image_tag(current_user.avatar.normal.url) %>
+</div>
+<% end %>
+
