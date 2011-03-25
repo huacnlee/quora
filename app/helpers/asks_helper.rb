@@ -13,7 +13,7 @@ module AsksHelper
   end
 
   def md_body(str)
-    str = sanitize(str,:tags => %w(strong b i u strike ol ul li br div), :attributes => %w(src))
+    str = sanitize(str,:tags => %w(strong b i u strike ol ul li blockquote address br div), :attributes => %w(src))
     return raw str
   end
 

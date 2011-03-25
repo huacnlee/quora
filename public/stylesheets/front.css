@@ -1,6 +1,12 @@
 body { text-align:center; }
 .container { width:1260px; margin:0 auto; text-align:left; }
 
+address, blockquote {
+  font-style: normal;
+  padding: 0 0 0 10px;
+  border-left: 3px solid #D0E5F2;
+}
+
 #header {
   background: #505759;
   min-height: 35px;
