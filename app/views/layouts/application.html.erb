@@ -17,6 +17,35 @@
       $.facebox({ div : "#hidden_new_ask", overlay : false });
       return false;
     }
+
+    function showSearchComplete(el,type){
+      el_width = $(el).width();
+      html = "";
+      if(type == "click" || $(el).val() == ""){
+        html = $(el).attr("placeholder");
+      }
+      else{
+        html += '<ul class="complete" style="padding:0px 15px;">';
+        t = $(el).val().toLowerCase();
+        searchList = [];
+        for(var i=0;i<searchList.length;i++){
+          curr = searchList[i].toLowerCase();
+          if(curr.indexOf(t) >= 0){
+            html += "<li>"+searchList[i]+"</li>";
+          }
+        }
+        html += "</ul>";
+      }
+
+      $(el).jDialog({
+        content : html,
+        width : el_width + 250,
+        title_visiable : false,
+        top_offset : 1,
+        left_offset : -1
+      });
+      return false;
+    }
   </script>
 </head>
 <body>
@@ -27,7 +56,7 @@
           <a href="/"><%= Setting.app_name %></a>
         </div>
         <div id="add_ask">
-          <input type="text" placeholder="搜索问题, 话题 或 会员" />
+          <input type="text" placeholder="搜索问题, 话题 或 会员" onclick="return showSearchComplete(this,'click');"  onkeyup="return showSearchComplete(this,'keyup');" />
           <a href="/asks/new" onclick="return addAsk();">我要提问</a>
         </div>
       </div>

@@ -10,7 +10,7 @@
 .jdialog_outterbox .jdialog_close { background:url(images/close.gif) left top no-repeat; 
   width:11px; height:11px; cursor:pointer; top:6px; right:6px; float:right; position:absolute; }
 .jdialog_outterbox .contextual_dialog_content{top:-2px; left:-2px; background:#FFF; position:relative; 
-  border:1px solid #CCC; border-color: #CCC #666 #666 #CCC; line-height:15px;padding:6px;}
+  border:1px solid #666; line-height:15px;padding:6px;}
 .jdialog_outterbox a { text-decoration: underline; }
 .jdialog_outterbox a:hover { text-decoration: underline; color:#333; }
 .jdialog_outterbox .dialog_buttons{ display:none; margin-top:5px;}
