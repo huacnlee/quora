@@ -1,8 +1,8 @@
 <% content_for :styles do %>
-  <%= stylesheet_link_tag "wmd", :cache => "cached_wmd" %>
+  <%= stylesheet_link_tag("jquery.qeditor") %>
 <% end %>
 <% content_for :scripts do %>
-  <%= javascript_include_tag "wmd","showdown", :cache => "cached_wmd" %>
+  <%= javascript_include_tag("jquery.qeditor") %>
   <script type="text/javascript">
     function toggleComments(type,id){
       var el = $("#"+type+"_"+id);
@@ -128,21 +128,14 @@
   <h2>回答</h2>
   <%= form_for(@answer, :remote => true, :url => answer_ask_path(@ask.id)) do |f| %>
     <div class="row">
-      <div id="answer_body_buttons"></div>
       <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
-      <div id="answer_body_preview" class="md_body"></div>
     </div>
     <div class="actions">
       <button type="submit">提交回答</button>
     </div>
   <% end %>
   <script type="text/javascript">
-    setup_wmd({
-      input: "answer_body",
-      button_bar: "answer_body_buttons",
-      preview: "answer_body_preview",
-      output: "copy_html"
-    });
+    $("#answer_body").qeditor();
   </script>
 </div>
 <% content_for :sidebar do %>

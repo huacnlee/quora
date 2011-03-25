@@ -47,4 +47,3 @@ gem 'tagged-cache'
 gem 'colorize'
 
 
-

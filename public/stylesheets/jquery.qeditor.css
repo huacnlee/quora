@@ -1,0 +1,30 @@
+.qeditor_border { background: #EAEAEA; padding:6px; margin-bottom:8px;	}
+.qeditor_toolbar {  height:27px; }
+.qeditor_toolbar * {	vertical-align: middle; }
+.qeditor_toolbar img { border:0; }
+.qeditor_toolbar a { 
+  border: 1px solid #999;
+  border-bottom: 1px solid #666;
+  border-right:0px;
+  cursor: pointer;
+  font-family: Georgia,default;
+  font-size: 11px;
+  font-weight: bold;
+  height: 14px;
+  line-height: 11px;
+  padding: 4px 2px 3px;
+  text-align: center;
+  text-shadow: 0 1px white;
+  background:url(/images/qeditor/gray_bg.gif) repeat-x top left;
+  float:left;
+  display:block;
+  color:#000;
+  font-weight:bold;
+  width: 18px;
+}
+.qeditor_toolbar a:hover { text-decoration: none; border-color:#666; }
+.qeditor_toolbar a:active { background:#DDD; }
+.qeditor_toolbar a.qeditor_glast { border-right:1px solid #999; margin-right:5px;  }
+.qeditor_preview { padding: 7px; border:1px solid #AAA; background:#FFF;
+  min-height:50px;outline: none;
+  -webkit-user-modify: read-write; word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;}

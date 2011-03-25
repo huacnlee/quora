@@ -1,4 +1,5 @@
-var comment_form = $("#<%= @comment.commentable_type.downcase %>_<%= @comment.commentable_id %>_comments .form");
+var commentForm = $("#<%= @comment.commentable_type.downcase %>_<%= @comment.commentable_id %>_comments .form");
+var commentText = $("textarea", commentForm);
 <% if @success %>
   <%
   html = <<-HTML
@@ -8,8 +9,7 @@ var comment_form = $("#<%= @comment.commentable_type.downcase %>_<%= @comment.co
   </div>
   HTML
   %>
-  comment_form.before("<%= escape_javascript(raw(html)) %>");
-  $("textarea",comment_form).text("").focus();
-<% else %>
-  $("textarea",comment_form).focus();
+  commentForm.before("<%= escape_javascript(raw(html)) %>");
 <% end %>
+commentText.text("").focus();
+
