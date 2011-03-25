@@ -14,12 +14,13 @@ module AsksHelper
 
   def md_body(str)
     str = sanitize(str,:tags => %w(strong b i u strike ol ul li blockquote address br div), :attributes => %w(src))
+    str = auto_link_urls(str,{:target => "_blank", :rel => "nofollow" }, {:limit => 80 })
     return raw str
   end
 
   def truncate_lines(body, lines = 4, max_chars = 400)
     return "" if body.blank?
-    body_lines = body.strip("\n")
+    body_lines = body.split("\n")
     lines = body_lines.count if body_lines.count < lines
     summary = body_lines[0,lines].join("\n")
     summary = inner_truncate_lines(body_lines, lines - 1, summary, max_chars)

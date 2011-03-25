@@ -60,7 +60,7 @@ address, blockquote {
 .md_body blockquote { padding-left:28px; padding-top:8px; background:#FAEBBC url(/images/lquote.gif) left top no-repeat; }
 .md_body blockquote p { padding-right:28px; padding-bottom:8px; font-size:1em; background:url(/images/rquote.gif) bottom right no-repeat; }
 .md_body code { background: #F4F4F4; display:block; margin:5px; padding:2px; font-size:.6em; font-family:monaco,monospace; line-height:120%; }
-.md_body a { background:url(/images/link_out.gif) 4px right no-repeat; padding-right:10px; }
+.md_body a { background:url(/images/link_out.gif) 4px right no-repeat; font-size:13px; padding-right:10px; display:inline-block; }
 
 a.page_more  { margin-top:10px; padding:4px 0px; -moz-border-radius: 3px; -webkit-border-radius: 3px; 
   display:block; text-align:center; font-weight: bold; cursor: pointer; color:#333;

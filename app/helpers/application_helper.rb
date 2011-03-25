@@ -4,8 +4,9 @@ module ApplicationHelper
     return false
   end
 
-  def auto_link_urls(text, href_options = {})
+  def auto_link_urls(text, href_options = {}, options = {})
     extra_options = tag_options(href_options.stringify_keys) || ""
+    limit = options[:limit] || nil
     text.gsub(AUTO_LINK_RE) do
       all, a, b, c = $&, $1, $2, $3
       if a =~ /<a\s/i # don't replace URL's that are already linked
@@ -13,6 +14,9 @@ module ApplicationHelper
       else
         text = b + c
         text = yield(text) if block_given?
+        if(not limit.blank?)
+          text = truncate(text, :length => limit)
+        end
         %(#{a}<a href="#{b=="www."?"http://www.":b}#{c}"#{extra_options}>#{text}</a>)
       end
     end

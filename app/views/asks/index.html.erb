@@ -21,7 +21,7 @@
           <%= user_name_tag(item.last_answer_user) %>, 
           <%= truncate(item.last_answer_user.tagline,:length => 10) %> 
         </div>
-        <div class="md_body"><%= md_body(item.last_answer.body) %></div>
+        <div class="md_body"><%= truncate_lines(strip_tags(item.last_answer.body),4,400) %></div>
       </div>
     <% else %>
       <div class="md_body">
