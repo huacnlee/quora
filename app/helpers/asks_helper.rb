@@ -25,6 +25,18 @@ module AsksHelper
     return summary
   end
 
+  # 检测是否 Vote 过 Answer
+  def voted?(answer,type = :up)
+    return false if current_user.blank?
+    if type == :up
+      return false if answer.up_voter_ids.blank?
+      return answer.up_voter_ids.count(current_user.id) > 0
+    else
+      return false if answer.down_voter_ids.blank?
+      return answer.down_voter_ids.count(current_user.id) > 0
+    end
+  end
+
   private
   def inner_truncate_lines(body_lines, lines, summary, max_chars)
     if summary.length > max_chars
