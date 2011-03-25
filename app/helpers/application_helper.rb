@@ -3,6 +3,14 @@ module ApplicationHelper
     return true if Setting.admin_emails.index(user.email)
     return false
   end
+  
+  def owner?(item)
+    return false if current_user.blank?
+    if item.user_id == current_user.id
+      return true
+    end
+    return false
+  end
 
   def auto_link_urls(text, href_options = {}, options = {})
     extra_options = tag_options(href_options.stringify_keys) || ""
