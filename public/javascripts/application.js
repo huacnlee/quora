@@ -60,6 +60,65 @@ var App = {
     return true;
   },
 
+  in_place_edit : function(el){
+    var link = $(el);
+    var linkId = link.attr("id");
+    var textId = link.attr("data-text-id");
+    var remote_url = link.attr("data-url");
+    var editType = link.attr("data-type");
+
+    textPanel = $("#"+textId);
+    link.parent().hide();
+
+    editHtml = '<input type="text" name="value" value="'+ textPanel.text() +'" />';
+    if(editType == "textarea"){
+      editHtml = '<textarea name="value">'+textPanel.html()+'</textarea>';
+    }
+
+    var csrf_token = $('meta[name=csrf-token]').attr('content'),
+        csrf_param = $('meta[name=csrf-param]').attr('content');
+
+    editPanel = $('<form action="'+remote_url+'" method="post" id="ipe_'+linkId+'" \
+        data-text-id="'+textId+'" data-id="'+linkId+'" class="in_place_editing">\
+                  <input type="hidden" name="id" value="'+linkId+'" /> \
+                  <input type="hidden" name="'+csrf_param+'" value="'+csrf_token+'" /> \
+                  '+ editHtml +' \
+                  <button type="submit">保存</button>\
+                  <a href="#" class="cancel">取消</a>\
+                </form>');
+    link.parent().after(editPanel);
+
+    $("textarea",editPanel).qeditor();
+    $("a.cancel",editPanel).click(function(){
+        linkId = $(this).parent().attr("data-id");
+        editPanel = $("#ipe_"+linkId);
+        editPanel.prev().show();
+        editPanel.hide();
+        return false;
+    });
+
+    editPanel.submit(function(){
+      editPanel = $(this);
+      App.loading();
+      $.ajax({
+        url : remote_url,
+        data : editPanel.serialize(),
+        dataType : "text",
+        type : "post",
+        success : function(res){
+          if(res == "_nologin_"){
+            App.requireUser(res,"text");
+            return;
+          }
+          $("#"+editPanel.attr("data-text-id")).html(res);
+          $("a.cancel",editPanel).click();
+          App.loading(false);
+        }
+      });
+      return false;
+    });
+  },
+
   varsion : function(){
     return "1.0";
   }

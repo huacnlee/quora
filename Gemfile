@@ -10,6 +10,9 @@ gem "mongoid-eager-loading"
 # Vote 插件 for Mongoid
 gem 'voteable_mongoid'
 
+# In place edit
+gem "on_the_spot"
+
 # 用户系统
 gem 'devise', '1.2.rc2'
 

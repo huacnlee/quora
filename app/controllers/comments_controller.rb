@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_filter :require_user_js, :only => [:create]
   def index
     @type = params[:type]
     @id = params[:id]

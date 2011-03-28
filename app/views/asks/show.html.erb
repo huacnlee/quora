@@ -99,12 +99,16 @@
 <%= render 'base' %>
 <div class="ask" id="ask_<%= @ask.id %>">
   <div class="topics"><%= topics_name_tag(@ask.topics) %></div>
-  <h1><%= @ask.title %></h1>
+  <div class="title">
+    <h1 id="ask_title"><%= @ask.title %></h1>
+    <%= in_place_edit_tag @ask, :title, :text_id => "ask_title" %>
+  </div>
   <div class="md_body">
+    <div id="ask_body"><%= md_body(@ask.body) %></div>
     <% if @ask.body.blank? %>
-      <a href="#" class="insite">添加补充说明</a>
+      <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body",:label => "添加补充资料" %>
     <% else %>
-      <%= md_body(@ask.body) %>
+      <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body" %>
     <% end %>
   </div>
   <div class="action">

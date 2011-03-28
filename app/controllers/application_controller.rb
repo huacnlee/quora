@@ -47,6 +47,7 @@ class ApplicationController < ActionController::Base
         return false
       end
     end
+    true
   end
 
   def require_user_json
@@ -60,6 +61,5 @@ class ApplicationController < ActionController::Base
   def require_user_text
     require_user(:format => :text)
   end
-
   
 end

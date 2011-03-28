@@ -1,5 +1,7 @@
 # coding: UTF-8
 class AsksController < ApplicationController
+  before_filter :require_user, :only => [:create, :update, :destroy]
+  before_filter :require_user_js, :only => [:answer]
   
   def index
     @per_page = 10
@@ -82,13 +84,4 @@ class AsksController < ApplicationController
     end
   end
   
-  def destroy
-    @ask = Ask.find(params[:id])
-    @ask.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(asks_path,:notice => "问题删除成功。") }
-      format.json
-    end
-  end
 end

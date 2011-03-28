@@ -1,6 +1,8 @@
 Quora::Application.routes.draw do
   root :to => "home#index"
+
   match "/uploads/*path" => "gridfs#serve"
+  match "/update_in_place" => "home#update_in_place"
 
   # devise_for :users, :path => '', :path_names => {:sign_in => "login", :sign_out => "logout", :sign_up => "register", :registration }
   devise_for :users,  :controllers => { :registrations => "registrations" } do
