@@ -4,8 +4,7 @@ class ApplicationController < ActionController::Base
   helper :all
 
   # set page title, meta keywords, meta description
-  def set_seo_meta(options = {})
-    title = options[:title] || ""
+  def set_seo_meta(title, options = {})
     keywords = options[:keywords] || ""
     description = options[:description] || ""
 

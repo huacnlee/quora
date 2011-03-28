@@ -12,6 +12,7 @@ class AsksController < ApplicationController
     @ask = Ask.find(params[:id])
     @answers = @ask.answers.includes(:user).best_voted
     @answer = Answer.new
+    set_seo_meta(@ask.title)
 
     respond_to do |format|
       format.html # show.html.erb
