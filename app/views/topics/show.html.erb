@@ -1,3 +1,36 @@
-<div id="topic">
-  <h1><%= @topic.name %></h1>
+<%= content_for :scripts do %>
+  <script type="text/javascript">
+    var current_page = 2;
+    function loadAsks(){
+      App.loading();
+      $.get("<%= topic_path(params[:name],:format => :js) %>?page="+current_page,function(){
+          App.loading(false);
+      });
+      return false;
+    }
+  </script>
+<% end %>
+<div id="topic" class="clearfix">
+  <div class="cover">
+    <%= image_tag(@topic.cover.normal.url) %>
+  </div>
+  <div class="info">
+    <h1><%= @topic.name %></h1>
+    <div class="summary">
+      <span id="topic_summary"><%= md_body @topic.summary  %></span>
+      <% if @topic.summary.blank? %>
+        <%= in_place_edit_tag @topic, :summary, :type => :textarea, :text_id => "topic_summary",:label => "添加补充资料" %>
+      <% else %>
+        <%= in_place_edit_tag @topic, :summary, :type => :textarea, :text_id => "topic_summary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div id="asks" style="claer:both;">
+  <% @asks.each do |item| %>
+    <%= render "asks/ask", :item => item %>
+  <% end %>
+  <% if @asks.length == @per_page %>
+    <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
+  <% end %>
 </div>

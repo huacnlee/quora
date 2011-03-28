@@ -8,7 +8,7 @@ module InPlaceEditHelper
                      :class => 'in_place_edit',
                      :'data-type' => options[:type],
                      :'data-text-id' => options[:text_id],
-                     :onclick => "return App.in_place_edit(this);",
+                     :onclick => "return App.inPlaceEdit(this);",
                      :'data-url' => update_url}
 
     content_tag("a", html_options) do

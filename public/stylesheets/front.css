@@ -139,3 +139,7 @@ a.user img.normal { width:100px; height:100px; }
 .user_profile {}
 .user_profile .bio { margin-top:10px; }
 
+#topic { margin-bottom:10px; }
+#topic .cover { width: 100px; float:left; margin-right:20px; }
+#topic .info { float:left; width:500px; }
+

@@ -1,8 +1,4 @@
-<% content_for :styles do %>
-  <%= stylesheet_link_tag("jquery.qeditor") %>
-<% end %>
 <% content_for :scripts do %>
-  <%= javascript_include_tag("jquery.qeditor") %>
   <script type="text/javascript">
     function toggleComments(type,id){
       var el = $("#"+type+"_"+id);

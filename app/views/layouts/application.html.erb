@@ -4,13 +4,13 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title><%= raw @page_title %><%= Setting.app_name %></title>
-  <%= stylesheet_link_tag "application","front","facebox","jquery.jdialog", :cache => "cached_front" %>
+  <%= stylesheet_link_tag "application","front","facebox","jquery.jdialog","jquery.qeditor", :cache => "cached_front" %>
 	<%= yield :styles %>
   <meta name="keywords" content="<%= @meta_keywords %>" />
   <meta name="description" content="<%= @meta_description %>" />
   <link rel="shortcut icon" href="/favicon.ico?v=001" /> 
   <%= csrf_meta_tag %>
-  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","application", :cache => "cached_application" %>
+  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","application", :cache => "cached_application" %>
   <%= yield :scripts %>
   <script type="text/javascript">
     function addAsk(){

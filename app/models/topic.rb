@@ -5,6 +5,7 @@ class Topic
   field :name
   field :summary
   field :cover
+  mount_uploader :cover, CoverUploader
 
   field :asks_count, :type => Integer, :default => 0
 

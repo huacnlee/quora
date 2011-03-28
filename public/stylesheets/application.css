@@ -99,3 +99,6 @@ a.green_button:active {
 #loading .logo{background:url(/images/loading.gif) no-repeat center center;float:left;
   height:30px;width:30px;margin:0 5px 0 10px;}
 #loading .text{float:left;margin:9px 0 0 0; }
+
+.clearfix:before,.clearfix:after{content:'\0020';display:block;overflow:hidden;visibility:hidden;width:0;height:0}.clearfix:after{clear:both}.clearfix{zoom:1}
+

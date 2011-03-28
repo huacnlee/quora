@@ -60,7 +60,7 @@ var App = {
     return true;
   },
 
-  in_place_edit : function(el){
+  inPlaceEdit : function(el){
     var link = $(el);
     var linkId = link.attr("id");
     var textId = link.attr("data-text-id");
@@ -93,7 +93,7 @@ var App = {
         linkId = $(this).parent().attr("data-id");
         editPanel = $("#ipe_"+linkId);
         editPanel.prev().show();
-        editPanel.hide();
+        editPanel.remove();
         return false;
     });
 

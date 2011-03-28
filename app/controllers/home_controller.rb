@@ -7,6 +7,10 @@ class HomeController < ApplicationController
     @asks = Ask.includes(:user,:last_answer,:last_answer_user,:topics)
                   .desc(:answered_at,:id)
                   .paginate(:page => params[:page], :per_page => @per_page)
+
+    if params[:format] == "js"
+      render "/asks/index.js"
+    end
   end
 
   def update_in_place
