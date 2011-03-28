@@ -32,6 +32,13 @@ address, blockquote {
 .sidebar .box { margin-bottom:20px; }
 .sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1em; margin-bottom: 3px; }
 
+.sidebar .sections { font-size:13px; font-weight:bold; }
+.sidebar .sections li { display:inline; }
+.sidebar .sections li a { display:block; padding:5px 18px; margin-bottom:4px;
+  background:url(/images/section_arrow.gif) left -11px no-repeat; }
+.sidebar .sections li a:hover,
+.sidebar .sections li a.active { background-color: #DFEAF4; text-decoration: none; }
+.sidebar .sections li a.active { background-color:#DDD; color:#333; cursor:default; }
 
 #inner_new_ask {}
 #inner_new_ask textarea { display:block; width:387px; height:80px; margin-bottom:8px; }
@@ -62,10 +69,10 @@ address, blockquote {
 .md_body code { background: #F4F4F4; display:block; margin:5px; padding:2px; font-size:.6em; font-family:monaco,monospace; line-height:120%; }
 .md_body a { background:url(/images/link_out.gif) 4px right no-repeat; font-size:13px; padding-right:10px; display:inline-block; }
 
-a.page_more  { margin-top:10px; padding:4px 0px; -moz-border-radius: 3px; -webkit-border-radius: 3px; 
+a.page_more  { margin-top:10px; padding:8px 0px; -moz-border-radius: 3px; -webkit-border-radius: 3px; 
   display:block; text-align:center; font-weight: bold; cursor: pointer; color:#333;
-  background:#ddd url(/images/more_bg.gif); border: 1px solid #bbb; font-size: .9em; }
-a.page_more:hover { color: #19558D; border-bottom: 1px solid #999; text-decoration: none; }
+  background:#FFF url(/images/more_bg.gif) left bottom repeat-x; border: 1px solid #bbb; font-size: .9em; }
+a.page_more:hover { color: #333; border-bottom: 1px solid #999; text-decoration: none; }
 a.page_more:active { background: #E0E0E0; border-color: #999; text-shadow: none; }
 
 a.tag { margin:0px 2px; }

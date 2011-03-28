@@ -2,12 +2,8 @@
 class AsksController < ApplicationController
   
   def index
-    @asks = Ask.includes(:user,:last_answer,:last_answer_user,:topics).desc(:answered_at,:created_at).limit(10)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json
-    end
+    @per_page = 10
+    @asks = Ask.includes(:user,:last_answer,:last_answer_user,:topics).desc(:id).paginate(:page => params[:page], :per_page => @per_page)
   end
 
   def show
