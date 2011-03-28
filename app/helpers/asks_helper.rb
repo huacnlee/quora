@@ -1,14 +1,14 @@
 module AsksHelper
-  def topics_name_tag(topics,limit = 3)
+  def topics_name_tag(topics,limit = 20)
     html = []
     return "" if topics.blank?
     if limit > 0
       topics = topics[0,limit]
     end
     for topic in topics
-      html.append("<a class=\"topic\" href=\"/topic/#{topic.id}\">#{topic.name}</a>")
+      html << "<a class=\"topic\" href=\"/topics/#{topic}\">#{topic}</a>"
     end
-    return raw html.join(",")
+    return raw html.join("")
   end
 
   def md_body(str)

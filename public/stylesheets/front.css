@@ -20,7 +20,7 @@ address, blockquote {
 #header #add_ask input { width:360px; font-size: 16px;height: 18px; line-height:18px; border:0; margin-top: 2px; }
 #header #add_ask a { color: #F0F0F0; font-weight: bold; font-size: 13px; padding: 10px 10px; text-align: center;}
 
-#header #user_bar { padding-top:10px; }
+#header #user_bar { padding-top:10px; text-align:right; margin-right:4px; }
 #header #user_bar a { color: #B9BBBC; font-weight:bold; font-size:13px; display:inline-block; margin-right:8px; }
 #footer { clear:both; padding-top:25px; height:80px; }
 
@@ -46,22 +46,22 @@ address, blockquote {
 
 .ask { margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px; }
 .ask h1 { font-size: 1.8em; line-height: 1.3em; letter-spacing: -1px; margin-bottom: 0; }
+
+.ask .topic { -moz-border-radius: 3px; -webkit-border-radius: 3px; margin-right:5px; margin-bottom:5px;
+  padding: 2px 5px; color:#19558D; display:inline-block; background:#dfeaf4; text-decoration:none; height:18px; line-height:18px; }
+.ask .topic a.remove { background:url(/images/x.gif) center 3px no-repeat; float:right; margin-top:1px; margin-left:3px;
+  -moz-border-radius: 2px; -webkit-border-radius: 2px;  width:16px; height:16px;}
+.ask .topic a.remove:hover { background-color:#19558D; }
+.ask a.topic:hover { background:#19558D; color:#FFF; }
+
 .ask .title { font-size: 1.3em; line-height: 1.2em; font-weight: bold;}
 .ask .title h1 { font-size: 1.2em; line-height: 1.2em; display:inline;  }
 .ask .info { color: #999; margin:3px 0;  }
 .ask .last_answer { margin-top:5px; }
 .ask .last_answer .votes { display:inline-block;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  background-color: #DFEAF4;
-  font-size: 1em;
-  line-height: 1.1em;
-  color: #538DC2;
-  font-weight:bold;
-  width:20px;
-  text-align:center;
-  padding: 1px 3px;
-}
+  -moz-border-radius: 3px; -webkit-border-radius: 3px;
+  background-color: #DFEAF4; font-size: 1em; line-height: 1.1em; color: #538DC2;
+  font-weight:bold; width:20px; text-align:center; padding: 1px 3px; }
 .ask .last_answer .md_body { margin-left:30px; }
 
 .md_body { font-size:1.2em; color: #333; line-height:130%; }

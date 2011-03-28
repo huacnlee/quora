@@ -9,15 +9,15 @@ class Ask
   field :answered_at, :type => DateTime
   field :answers_count, :type => Integer, :default => 0
   field :comments_count, :type => Integer, :default => 0
+  field :topics, :type => Array, :default => []
+
+  index :topics
 
   # 提问人
   belongs_to :user, :inverse_of => :asks
 
   # 评论，内嵌
   embeds_many :comments
-
-  # 所属话题
-  has_many :topics, :store_as => :array
 
   # 回答
   has_many :answers
@@ -37,6 +37,27 @@ class Ask
     if self.answered_at.blank?
       self.answered_at = Time.now
     end
+  end
+
+  # 更新话题
+  # 参数 topics 可以是数组或者字符串
+  # 参数 add  true 增加, false 去掉
+  def update_topics(topics, add = true)
+    self.topics = [] if self.topics.blank?
+    topics = [topics] if topics.class != [].class
+    # 去两边空格
+    topics = topics.collect { |t| t.strip if !t.blank? }.compact
+
+    if add
+      self.topics += topics
+      # 保存为独立的话题
+      Topic.save_topics(topics)
+    else
+      self.topics -= topics
+    end
+    
+    self.topics = self.topics.uniq
+    self.update(:topics => self.topics)
   end
 
 

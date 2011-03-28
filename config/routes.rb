@@ -18,6 +18,8 @@ Quora::Application.routes.draw do
       get "follow"
       get "mute"
       post "answer"
+      post "update_topic"
+      get "update_topic"
     end
   end
   resources :answers do
@@ -26,4 +28,5 @@ Quora::Application.routes.draw do
     end
   end
   resources :comments 
+  resources :topics
 end

@@ -94,11 +94,71 @@
       $(el).attr("droped",1);
       return false;
     }
+
+    function toggleEditTopics(isShow){
+      if(isShow){
+        $(".ask .edit_topics").show();
+        $(".ask .item_list").hide();
+
+      }
+      else{
+        $(".ask .item_list").show();
+        $(".ask .edit_topics").hide();
+      }
+    }
+
+    function addTopic(name){
+      $(".ask .topics .item_list .in_place_edit").before("<a href='/topics/"+name+"' class='topic'>"+name+"</a>");
+      $(".ask .topics .item_list .no_result").remove();
+      exit_topic_count = $(".ask .edit_topics .items .topic").length;
+      $(".ask .edit_topics .items").append('<div class="topic"> \
+            <a href="#" onclick="removeTopic(this,'+(exit_topic_count+1)+',\''+name+'\');" class="remove"></a>\
+            <span>'+name+'</span>\
+          </div>');
+    }
+
+    function removeTopic(el,idx,name){
+      App.loading();
+      $.get("<%= update_topic_ask_path(@ask.id) %>", { name : name }, function(res){
+          $(el).parent().remove();
+          $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
+          App.loading(false);
+      });
+      return false;
+    }
   </script>
 <% end %>
 <%= render 'base' %>
 <div class="ask" id="ask_<%= @ask.id %>">
-  <div class="topics"><%= topics_name_tag(@ask.topics) %></div>
+  <div class="topics">
+    <div class="item_list">
+      <% if !@ask.topics.blank? %>
+        <%= topics_name_tag(@ask.topics) %>
+      <% else %>
+        <span class="no_result">给这个问题选个话题吧，好让别人来回答</span>
+      <% end %>
+      <a href="#" onclick="return toggleEditTopics(true);" class="in_place_edit">修改</a>
+    </div>
+    <div class="edit_topics" style="display:none">
+      <div class="items">
+        <% if !@ask.topics.blank? %>
+          <% @ask.topics.each_with_index do |item,i| %>
+          <div class="topic">
+            <a href="#" onclick="removeTopic(this,<%= i %>,'<%= item %>');" class="remove"></a>
+            <span><%= item %></span>
+          </div>
+          <% end %>
+        <% end %>
+      </div>
+      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" method="post">
+        <%= auth_token  %>
+        <input type="text" style="width:100px;" name="name" value="" placeholder="搜索话题" /> 
+        <input type="hidden" name="add" value="1" /> 
+        <button type="submit" class="small">添加</button> 
+        <a href="#" onclick="return toggleEditTopics(false);">关闭</a>
+      </form>
+    </div>
+  </div>
   <div class="title">
     <h1 id="ask_title"><%= @ask.title %></h1>
     <%= in_place_edit_tag @ask, :title, :text_id => "ask_title" %>

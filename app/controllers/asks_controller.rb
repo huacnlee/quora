@@ -1,7 +1,8 @@
 # coding: UTF-8
 class AsksController < ApplicationController
-  before_filter :require_user, :only => [:create, :update, :destroy]
+  before_filter :require_user, :except => [:show,:answer,:update_topic]
   before_filter :require_user_js, :only => [:answer]
+  before_filter :require_user_text, :only => [:update_topic]
   
   def index
     @per_page = 10
@@ -82,6 +83,21 @@ class AsksController < ApplicationController
         format.html { render :action => "edit" }
         format.json
       end
+    end
+  end
+
+  def update_topic
+    @name = params[:name].strip
+    @add = params[:add] == "1" ? true : false
+
+    @ask = Ask.find(params[:id])
+    if @ask.update_topics(@name,@add)
+      @success = true
+    else
+      @success = false
+    end
+    if not @add
+      render :text => @success
     end
   end
   
