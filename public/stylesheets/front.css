@@ -79,8 +79,7 @@ a.page_more:active { background: #E0E0E0; border-color: #777; text-shadow: none;
 a.tag { margin:0px 2px; }
 
 a.in_place_edit { font-weight:normal; cursor:pointer; background:url(/images/edit.gif) -15px left no-repeat; padding-left:18px; padding-right:5px;
-  font-size:12px; -moz-border-radius: 3px; -webkit-border-radius: 3px; color:#999;
-}
+  font-size:12px; -moz-border-radius: 3px; -webkit-border-radius: 3px; color:#999; }
 a.in_place_edit:hover {color: #405A04; background-color:#c3dd82; text-decoration:none; }
 
 .in_place_editing { }
@@ -113,12 +112,18 @@ a.user img.normal { width:100px; height:100px; }
 .answer .votes { color:#999; margin-bottom:4px; }
 .answer .votes a { color:#999; }
 
+.disabled_answer { background:#ddd; padding:8px; text-align:center; }
+
 .answer .action,
 .ask .action { color:#999; margin:3px 0; }
 .ask .action a,
 .answer .action a { color:#538DC2; }
 .answer .action a.voted { color:#666; }
 .ask .action a.flagged { color:#999; }
+
+.answer_form { }
+.answer_form h2 { color:#999; }
+.answer_form .user_info { margin:5px 0; }
 
 .comments { margin-top:10px; }
 .comments h2 { font-size:1em; color:#333; }

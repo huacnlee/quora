@@ -121,27 +121,40 @@
 </div>
 
 <div class="answers">
+  <% user_answered = false %>
   <% if !@answers.blank? %>
     <% @answers.each do |item| %>
+      <% user_answered = true if owner?(item) %>
       <%= render("answer", :item => item) %>
     <% end %>
   <% end %>
 </div>
 
-<div class="ask from">
-  <h2>回答</h2>
-  <%= form_for(@answer, :remote => true, :url => answer_ask_path(@ask.id)) do |f| %>
-    <div class="row">
-      <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
+<% if user_answered %>
+  <div class="disabled_answer">一个问题你只能回答一次，但你可以对现有的回答进行修改。</div>
+<% else %>
+  <div class="answer_form from">
+    <h2>添加答案</h2>
+    <% if current_user %>
+    <div class="user_info">
+      <%= user_name_tag(current_user) %>
+      <span id="answer_user_tagline"><%= user_tagline_tag(current_user) %></span>
+      <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
     </div>
-    <div class="actions">
-      <button type="submit">提交回答</button>
-    </div>
-  <% end %>
-  <script type="text/javascript">
-    $("#answer_body").qeditor();
-  </script>
-</div>
+    <% end %>
+    <%= form_for(@answer, :remote => true, :url => answer_ask_path(@ask.id)) do |f| %>
+      <div class="row">
+        <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
+      </div>
+      <div class="actions">
+        <button type="submit">提交回答</button>
+      </div>
+    <% end %>
+    <script type="text/javascript">
+      $("#answer_body").qeditor();
+    </script>
+  </div>
+<% end %>
 <% content_for :sidebar do %>
   <div class="box">
     <h2></h2>

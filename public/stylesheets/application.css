@@ -13,14 +13,15 @@ input,textarea { border: 1px solid #999; width: 250px; padding:3px; }
 input.long,textarea.long { width: 700px; }
 textarea.long { height:300px; }
 a.button,
-button { border-color: #062C50; background: #19558D; text-shadow: none; color: white; min-width: 40px; cursor: pointer;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  font-weight: bold; font-size: .9em; display: inline-block; padding: 3px 10px; text-align: center; }
-a.submit,
-button.submit { background:url(/images/button_submit.gif) left top repeat-x; }
+button { border-color: #062C50; background: #2f6ba1 url(/images/button_submit.gif) left bottom repeat-x;
+  color: white; min-width: 40px; cursor: pointer;
+  border:1px solid #062C50; border-bottom:1px solid #003;
+  -moz-border-radius: 3px; -webkit-border-radius: 3px;
+  text-shadow: 0 -1px #19558D;
+  font-weight: bold; font-size:1em; display: inline-block; padding: 7px 16px; text-align: center; }
+
 a.submit:active,
-button.submit:active { background:#19558D; }
+button:active { background:#062C50; }
 
 a.gray_button,
 a.dropdown { 
