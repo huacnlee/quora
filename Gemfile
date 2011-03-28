@@ -28,9 +28,6 @@ gem "oa-openid", '0.2.0.beta3'
 # 后台列表
 # gem 'wice_grid', '3.0.0.pre1'
 
-# Markdown
-gem "BlueCloth"
-
 # 设置
 gem 'settingslogic'
 

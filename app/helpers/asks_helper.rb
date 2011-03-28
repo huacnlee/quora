@@ -1,4 +1,3 @@
-require "bluecloth"
 module AsksHelper
   def topics_name_tag(topics,limit = 3)
     html = []
