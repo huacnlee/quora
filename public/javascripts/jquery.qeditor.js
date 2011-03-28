@@ -28,13 +28,8 @@ QEDITOR_TOOLBAR_HTML = '\<div class="qeditor_toolbar"> \
 
 var QEditor = {
 	action: function(e, a, p) {
-		$(e).parents().each(function() {
-			var obj = $(this);
-			var classes = obj.attr('class').split(' ');
-			if ($.inArray('qeditor_preview', classes) > - 1) {
-				obj.find('.qeditor_preview').focus();
-			}
-		});
+    qeditor_preview = $(".qeditor_preview",$(e).parent().parent());
+    qeditor_preview.focus();
 
 		if (p == null) {
 			p = false;
@@ -45,6 +40,10 @@ var QEditor = {
     else {
   		document.execCommand(a, false, p);
     }
+    if(qeditor_preview != undefined){
+      qeditor_preview.change();
+    }
+
     return false;
 	},
 
@@ -71,11 +70,12 @@ var QEditor = {
         obj.addClass("qeditor");
         preview_editor = $('<div class="qeditor_preview" contentEditable="true"></div>');
         preview_editor.html(obj.val());
-        preview_editor.keyup(function(){
+        preview_editor.change(function(){
           pobj = $(this);
           t = pobj.parent().find('.qeditor');
           t.text($(this).html());
         });
+        preview_editor.keyup(function(){ $(this).change(); });
         obj.after(preview_editor);
         obj.hide();
         obj.wrap('<div class="qeditor_border"></div>');
