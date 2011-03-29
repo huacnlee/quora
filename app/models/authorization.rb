@@ -20,6 +20,7 @@ class Authorization
     a = new(:uid => hash['uid'], :provider => hash['provider'])
     user.authorizations << a
     a.save
+    user
   end
 end
 
