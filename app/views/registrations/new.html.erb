@@ -1,14 +1,29 @@
 <% content_for :sitemap do %><span class="current">加入社区</span><% end %>
 <div class="leftbox">
 	<div class="box">
-    <h1>注册新用户</h1>
-    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name) ) do |f| %>
-      <%= render "shared/error_messages", :target => resource %> 
-      <%= f.input :name %>
-      <%= f.input :email %>
-      <%= f.input :password, :as => :password %>
-      <%= f.input :password_confirmation, :as => :password  %>
-      <div class="actions"><button type="submit" class="button submit">提交注册信息</button></div>
+    <% if not Setting.allow_register %>
+      <h1>如何注册用户？</h1>
+      <div class="content">
+        为控制社区内容质量，加入必须通过别人邀请。<br />
+        你可以动用你的社会化资源，找其他人邀请你。<br /><br />
+        <p style="font-size:14px;">或者把你的个人资料发到: </p>
+        <ul style="margin:10px 20px;">
+          <% Setting.admin_emails.each do |email| %>
+            <li><a href="mailto:<%= email %>"><%= email %></a></li>
+          <% end%>
+        </ul>
+        <p>我们审核过后，如果你符合要求，便会给你发送<b>邀请链接</b>，所以，请尽量描述你自己。
+      </div>
+    <% else %>
+      <h1>注册新用户</h1>
+      <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name) ) do |f| %>
+        <%= render "shared/error_messages", :target => resource %> 
+        <%= f.input :name %>
+        <%= f.input :email %>
+        <%= f.input :password, :as => :password %>
+        <%= f.input :password_confirmation, :as => :password  %>
+        <div class="actions"><button type="submit" class="button submit">提交注册信息</button></div>
+      <% end %>
     <% end %>
   </div>
 </div>

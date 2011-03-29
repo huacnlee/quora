@@ -65,7 +65,7 @@
           <a href="/">首页</a>
           <% if not current_user %>
           <a href="/login">登陆</a>
-          <a href="/register">注册</a>
+          <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
           <% else %>
             <%= user_name_tag(current_user) %>
             <%= link_to('设置', edit_user_registration_path) %>

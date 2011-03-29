@@ -12,6 +12,8 @@ gem 'voteable_mongoid'
 
 # 用户系统
 gem 'devise', '1.2.rc2'
+# 邀请系统
+gem 'devise_invitable', '0.4.rc5'
 
 # 图片上传
 gem 'carrierwave'
@@ -32,7 +34,7 @@ gem "oa-openid", '0.2.0.beta3'
 gem 'settingslogic'
 
 # 前端优化
-gem 'smurf-huacnlee'
+gem 'smurf-huacnlee', :require => "smurf"
 
 # 表单
 gem 'simple_form'

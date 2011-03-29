@@ -71,7 +71,7 @@ a.green_button:active {
 .simple_form label { font-size: 12px; color:#666; display:block; }
 .form span.error-message { color:red; }
 
-.alert_message, .notice_message, .error_explanation {
+.alert_message, .notice_message, .error_explanation, #error_explanation {
   font-family: "adelle-1", "adelle-2", tahoma, sans-serif;
   background: #db0000;
   color: white;
@@ -88,9 +88,13 @@ a.green_button:active {
   
 }
 .notice_message {  background: #00b431;  border-color: #009629; }
-.error_explanation h2 {  text-align: left;  font-weight: bold;  margin-bottom:8px;  font-size: 12px;  margin-bottom: 0px;}
-.error_explanation ul { padding:10px 26px; text-align:left; }
-.error_explanation ul li {  font-size: 12px; padding:5px 0px;  list-style: square;}
+#error_explanation { background: #fff2f5; color:#db0000; border:2px solid #e5806b; }
+#error_explanation h2,
+.error_explanation h2 {  text-align: left;  font-weight: bold; color:#333; margin-top:8px;  font-size: 14px;  margin-bottom: 0px;}
+#error_explanation ul,
+.error_explanation ul { padding:8px 26px; text-align:left; }
+#error_explanation ul li,
+.error_explanation ul li {  font-size: 12px; font-weight:normal; padding:5px 0px;  list-style: square;}
 
 
 #loading{-moz-border-radius:0 5px 5px 0;-webkit-border-radius:0 5px 5px 0;border-radius:0 5px 5px 0;

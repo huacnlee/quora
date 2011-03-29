@@ -10,6 +10,9 @@
     	<li>
     		<a href="/asks" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
     	</li>
+    	<li>
+        <a href="<%= new_user_invitation_path %>">邀请你的朋友注册</a>
+    	</li>
     </ul>
   </div>
 <% end %>

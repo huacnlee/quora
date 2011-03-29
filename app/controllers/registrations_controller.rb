@@ -11,7 +11,12 @@ class RegistrationsController < ApplicationController
 
   # POST /resource
   def create
-    build_resource
+    if not Setting.allow_register
+      render_404
+      return false
+    end
+
+    build_resource    
 
     if resource.save
       if resource.active?

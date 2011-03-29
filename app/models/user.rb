@@ -4,7 +4,7 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Voter
   
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
   field :name
@@ -13,6 +13,10 @@ class User
   field :bio
   field :avatar
   field :website
+
+  # 邀请字段
+  field :invitation_token
+  field :invitation_sent_at, :type => DateTime
 
   field :asks_count, :type => Integer, :default => 0
   has_many :asks
