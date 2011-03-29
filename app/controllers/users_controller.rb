@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 		redirect_to root_path if auth.blank?
 
 		if current_user
-      Authorization.create_form_hash(auth, current_user)
+      Authorization.create_from_hash(auth, current_user)
       flash[:notice] = "成功绑定了 #{auth['provider']} 帐号。"
 			redirect_to edit_user_registration_path
 		elsif @user = Authorization.find_from_hash(auth)
