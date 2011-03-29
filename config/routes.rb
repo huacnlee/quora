@@ -11,7 +11,7 @@ Quora::Application.routes.draw do
     get "/logout", :to => "devise/sessions#destroy" 
   end
   resources :users, :only => :show
-  match "auth/:provider/callback", :to => "registrations#auth_callback"  
+  match "auth/:provider/callback", :to => "users#auth_callback"  
 
   
   resources :asks do

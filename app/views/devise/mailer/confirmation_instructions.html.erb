@@ -1,5 +1,5 @@
-<p>Welcome <%= @resource.email %>!</p>
+<p>欢迎 <%= @resource.email %>!</p>
 
-<p>You can confirm your account through the link below:</p>
+<p>你需要确认邮件地址来激活你的帐号:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<p><%= link_to '确认我的帐号', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
