@@ -51,5 +51,9 @@ class User
     end
   end
 
+  def auths
+    self.authorizations.collect { |a| a.provider }
+  end
+
   
 end

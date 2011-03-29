@@ -1,0 +1,34 @@
+<div class="box" id="omniauth_links">
+  <h2>用其他平台的帐号登陆</h2>
+  <% if not current_user %>
+    <ul>
+      <li class="google"><a href="/auth/google">Google帐号</a></li>
+      <li class="douban"><a href="/auth/douban">豆瓣</a></li>
+      <li class="tqq"><a href="/auth/tqq">QQ帐号(腾讯微博)</a></li>
+      <li class="tsina"><a href="/auth/tsina">新浪微博</a></li>
+    </ul>
+  <% else %>
+    <ul>
+      <% if not current_user.auths.index("google") %>
+        <li><a href="/auth/google">Google帐号</a></li>
+      <% else %>
+        <li>Google帐号<span>[已绑定]</span></li>
+      <% end %>
+      <% if not current_user.auths.index("douban") %>
+        <li><a href="/auth/douban">豆瓣</a></li>
+      <% else %>
+        <li>豆瓣<span>[已绑定]</span></li>
+      <% end %>
+      <% if not current_user.auths.index("tqq") %>
+        <li><a href="/auth/tqq">QQ帐号(腾讯微博)</a></li>
+      <% else %>
+        <li>QQ帐号<span>[已绑定]</span></li>
+      <% end %>
+      <% if not current_user.auths.index("tsina") %>
+        <li><a href="/auth/tsina">新浪微博</a></li>
+      <% else %>
+        <li>新浪微博<span>[已绑定]</span></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

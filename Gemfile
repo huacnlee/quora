@@ -26,6 +26,7 @@ gem 'memcache-client'
 # OAuth
 gem 'omniauth', '0.2.0.beta3'
 gem "oa-openid", '0.2.0.beta3'
+gem "omniauth_china"
 
 # 后台列表
 # gem 'wice_grid', '3.0.0.pre1'

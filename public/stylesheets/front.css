@@ -31,6 +31,7 @@ address, blockquote {
 .sidebar { float:right: width:450px; overflow:hidden; }
 .sidebar .box { margin-bottom:20px; }
 .sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1em; margin-bottom: 3px; }
+.sidebar li { line-height:160%; }
 
 .sidebar .sections { font-size:13px; font-weight:bold; }
 .sidebar .sections li { display:inline; }
@@ -144,3 +145,11 @@ a.user img.normal { width:100px; height:100px; }
 #topic .cover { width: 100px; float:left; margin-right:20px; }
 #topic .info { float:left; width:500px; }
 
+#omniauth_links { }
+#omniauth_links li a { background:url(/images/favicons.png) left top no-repeat; 
+  height:16px; display:inline-block; margin:3px 0; padding-left:18px; }
+#omniauth_links li.tsina a { background-position:0 -16px; }
+#omniauth_links li.tqq a { background-position:0 -64px; }
+#omniauth_links li.tqq1 a { background-position:0 -32px; }
+#omniauth_links li.google a { background-position:0 -48px; }
+#omniauth_links li span { color:#999; margin-left:3px; }
