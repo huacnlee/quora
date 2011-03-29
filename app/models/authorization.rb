@@ -17,7 +17,9 @@ class Authorization
 
   def self.create_from_hash(hash, user = nil)
     user ||= User.create_from_hash(hash)
-    user.authorizations.create(:uid => hash['uid'], :provider => hash['provider'])
+    a = new(:uid => hash['uid'], :provider => hash['provider'])
+    user.authorizations << a
+    a.save
   end
 end
 
