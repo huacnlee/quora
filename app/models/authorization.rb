@@ -1,7 +1,6 @@
 # coding: utf-8
 class Authorization
   include Mongoid::Document
-  include Mongoid::Timestamps
   
   field :provider
   field :uid
@@ -11,15 +10,23 @@ class Authorization
   validates_uniqueness_of :uid, :scope => :provider
   
   def self.find_from_hash(hash)
+    uid = hash['uid']
+    uid = hash['user_info']['username'] if uid.blank?
     User.where("authorizations.provider" => hash['provider'],
-                "authorizations.uid" => hash['uid']).first()
+                "authorizations.uid" => uid).first()
   end
 
   def self.create_from_hash(hash, user = nil)
     user ||= User.create_from_hash(hash)
-    a = new(:uid => hash['uid'], :provider => hash['provider'])
+    uid = hash['uid']
+    uid = hash['user_info']['username'] if uid.blank?
+    a = new(:uid => uid, :provider => hash['provider'])
     user.authorizations << a
-    a.save
+    if a.save
+      Rails.logger.debug { "authorization saved." }
+    else
+      Rails.logger.error { a.errors }
+    end
     user
   end
 end
