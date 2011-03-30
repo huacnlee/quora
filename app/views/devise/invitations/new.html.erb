@@ -10,8 +10,8 @@
 </div>
 <%= simple_form_for resource, :as => resource_name, :url => invitation_path(resource_name) do |f| %>
   <%= devise_error_messages! %>
-  <%= f.input :name %>
-  <%= f.input :email %>
+  <%= f.input :name, :label => "姓名" %>
+  <%= f.input :email, :label => "邮箱" %>
   <button type="submit" class="submit">发送邀请邮件</button>
 <% end %>
 <% content_for :sidebar do %>

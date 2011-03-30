@@ -1,4 +1,4 @@
-body {font-family:"Helvetica Neue",Helvetica,Arial,default;font-size:12px;  }
+body {font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;font-size:12px;  }
 * {margin:0;padding:0;}
 a {text-decoration:none;}
 a:link,a:visited { color: #19558D; }
@@ -10,7 +10,7 @@ h1 {font-size:1.4em;margin:0 0 10px;}
 ul,ol { list-style-position :inside; margin:2px 10px; }
 
 input,textarea { border: 1px solid #999; width: 250px; padding:3px; }
-input.long,textarea.long { width: 700px; }
+input.long,textarea.long { width: 500px; }
 textarea.long { height:300px; }
 a.button,
 button { border-color: #062C50; background: #2f6ba1 url(/images/button_submit.gif) left bottom repeat-x;
@@ -31,7 +31,7 @@ a.dropdown {
   background: #EEE;
   display:inline-block;
   line-height:24px;
-  padding:2px 25px 1px 25px;
+  padding:2px 10px 1px 10px;
   background:#FFF url(/images/gray_button_bg.gif) bottom left repeat-x;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;

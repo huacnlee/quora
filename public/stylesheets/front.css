@@ -7,21 +7,13 @@ address, blockquote {
   border-left: 3px solid #D0E5F2;
 }
 
-#header:after {
-    content:"";
-    display:block;
-    visibility:hidden;
-    height:0;
-    clear:both;
-}
-
 #header {
   background: #505759;
   min-height: 35px;
   padding-top: 18px;
   color:#FFF;
 }
-#header #site_name { background:#a82400; color:#FFF; height:35px; width:68px; text-align:center; line-height:35px;  float:left;
+#header #site_name { background-color:#a82400; color:#FFF; height:35px; width:68px; text-align:center; line-height:35px;  float:left;
   font-size:20px; font-weight:bold;  }
 #header #site_name a { color:#FFF; text-decoration:none; }
 #header #add_ask { display:inline-block; background:#000; height:35px; line-height:35px; padding:0 6px; overflow:hidden; }
@@ -29,8 +21,16 @@ address, blockquote {
 #header #add_ask a { color: #F0F0F0; font-weight: bold; font-size: 13px; padding: 10px 10px; text-align: center;}
 
 #header #user_bar { padding-top:10px; text-align:right; margin-right:4px; width: 210px !important; _width: 220px;  }
-#header #user_bar a { color: #B9BBBC; font-weight:bold; font-size:13px; display:inline-block; margin-right:8px; }
+#header #user_bar a { color: #B9BBBC; font-size:12px; display:inline-block; margin-right:8px; }
 #footer { clear:both; padding-top:25px; height:80px; }
+
+#header:after {
+    content:"";
+    display:block;
+    visibility:hidden;
+    height:0;
+    clear:both;
+}
 
 #main { margin:20px 0; }
 .left_wrapper { float:left; width:630px; }
@@ -41,7 +41,7 @@ address, blockquote {
 .sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1em; margin-bottom: 3px; }
 .sidebar li { line-height:160%; }
 
-.sidebar .sections { font-size:13px; font-weight:bold; }
+.sidebar .sections { font-size:14px; }
 .sidebar .sections li { display:inline; }
 .sidebar .sections li a { display:block; padding:5px 18px; margin-bottom:4px;
   background:url(/images/section_arrow.gif) left -11px no-repeat; }
@@ -63,7 +63,7 @@ address, blockquote {
 .ask .topic a.remove:hover { background-color:#19558D; }
 .ask a.topic:hover { background:#19558D; color:#FFF; }
 
-.ask .title { font-size: 1.3em; line-height: 1.2em; font-weight: bold;}
+.ask .title { font-size: 1.3em; line-height: 1.2em; margin: 2px 0 5px; }
 .ask .title h1 { font-size: 1.2em; line-height: 1.2em; display:inline;  }
 .ask .info { color: #999; margin:3px 0;  }
 .ask .last_answer { margin-top:5px; }
@@ -73,7 +73,7 @@ address, blockquote {
   font-weight:bold; width:20px; text-align:center; padding: 1px 3px; }
 .ask .last_answer .md_body { margin-left:30px; }
 
-.md_body { font-size:1.2em; color: #333; line-height:130%; }
+.md_body { font-size:1.2em; color: #333; line-height:21px; margin: 5px 0; }
 .md_body blockquote { padding-left:28px; padding-top:8px; background:#FAEBBC url(/images/lquote.gif) left top no-repeat; }
 .md_body blockquote p { padding-right:28px; padding-bottom:8px; font-size:1em; background:url(/images/rquote.gif) bottom right no-repeat; }
 .md_body code { background: #F4F4F4; display:block; margin:5px; padding:2px; font-size:.6em; font-family:monaco,monospace; line-height:120%; }
@@ -116,7 +116,7 @@ a.user img.normal { width:100px; height:100px; }
 .answers .answer .info { color: #999; margin:3px 0;  }
 
 .ask .info a.user,
-.answer .author { font-weight:bold; }
+.answer .author { font-weight:normal; }
 .answer .author a.user { font-weight:bold; }
 .answer .votes { color:#999; margin-bottom:4px; }
 .answer .votes a { color:#999; }
@@ -153,7 +153,7 @@ a.user img.normal { width:100px; height:100px; }
 #topic { margin-bottom:10px; }
 #topic h1 { font-size:2em; }
 #topic .cover { width: 100px; float:left; margin-right:20px; }
-#topic .info { float:left; width:500px; }
+#topic .info { float:left; width:450px; }
 
 #omniauth_links { }
 #omniauth_links li a { background:url(/images/favicons.png) left top no-repeat; 
