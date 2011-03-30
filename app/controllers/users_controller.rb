@@ -3,6 +3,9 @@ class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:auth_callback]
   def show
     @user = User.find_by_slug(params[:id])
+    if @user.blank?
+      render_404
+    end
   end
 
   def auth_callback

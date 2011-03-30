@@ -26,7 +26,7 @@ production:
   <<: *defaults
   app_name: "者也"
   # 页脚版权
-  foot_html: "&copy; 者也 zheye.org - 非营利问答平台, 开源项目，<a href=\"http://github.com/huacnlee/quora\">代码</a>。内测期间，如有问题还请谅解。<br />目前暂时只支持Chrome浏览器，请在 1280 宽度以上的分辨率下面浏览。<br />诚邀有志有能之士参与这个项目，需要1个前端，1个有推广。"
+  foot_html: "&copy; 者也 zheye.org - 非营利问答平台, 开源项目，<a href=\"http://github.com/huacnlee/quora\">代码</a>。内测期间，如有问题还请谅解。<br />目前暂时只支持Chrome浏览器，请在 1280 宽度以上的分辨率下面浏览。<br />诚邀有志有能之士参与这个项目，需要1个前端，1个推广。"
   # 网站的域名
   domain: "zheye.org"
   # 配置图片的域名
