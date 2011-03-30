@@ -6,7 +6,7 @@ class AsksController < ApplicationController
   
   def index
     @per_page = 10
-    @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics).desc(:id).paginate(:page => params[:page], :per_page => @per_page)
+    @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
   end
 
   def show

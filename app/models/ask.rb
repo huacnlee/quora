@@ -35,6 +35,7 @@ class Ask
   # 正常可显示的问题, 前台调用都带上这个过滤
   scope :normal, where(:spams_count.lt => Setting.ask_spam_max)
   scope :last_actived, desc(:answered_at)
+  scope :recent, desc("$natural")
 
   before_save :fill_default_values
   def fill_default_values
