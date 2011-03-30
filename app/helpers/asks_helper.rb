@@ -39,6 +39,12 @@ module AsksHelper
     end
   end
 
+  # 检测是否 Spam 过 Ask 
+  def spamed?(ask)
+    return false if current_user.blank? or ask.spam_voter_ids.blank?
+    return ask.spam_voter_ids.count(current_user.id) > 0
+  end
+
   private
   def inner_truncate_lines(body_lines, lines, summary, max_chars)
     if summary.length > max_chars

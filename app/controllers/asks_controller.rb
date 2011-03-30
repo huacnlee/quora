@@ -2,7 +2,7 @@
 class AsksController < ApplicationController
   before_filter :require_user, :except => [:index,:answer,:update_topic,:show]
   before_filter :require_user_js, :only => [:answer]
-  before_filter :require_user_text, :only => [:update_topic]
+  before_filter :require_user_text, :only => [:update_topic,:spam]
   
   def index
     @per_page = 10
@@ -31,6 +31,12 @@ class AsksController < ApplicationController
       @success = false
     end
 
+  end
+
+  def spam 
+    @ask = Ask.find(params[:id])
+    count = @ask.spam(current_user.id)
+    render :text => count
   end
   
   def follow
