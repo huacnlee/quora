@@ -36,6 +36,11 @@ var jDialog = {
      * 提示内容
      */
     content : "",
+
+    /**
+     * 自定义外框的 class
+     */
+    class_name : "",
     
     width : 250,
     
@@ -62,7 +67,7 @@ var jDialog = {
     /*
      * 版本号
      */
-    version : "0.4.1"
+    version : "0.4.2"
   },   
   
   /**
@@ -79,6 +84,7 @@ var jDialog = {
     jDialog.settings.content = "";
     jDialog.settings.title = "Notice";
     jDialog.settings.idName = "paneljDialog";
+    jDialog.settings.class_name = "";
 
     $.extend(jDialog.settings,options);
       
@@ -102,7 +108,7 @@ var jDialog = {
       var cssPosition = 'top:'+ posTop + 'px;left:'+ posLeft +'px;';
       
       var html = '';
-      html += '<div id="'+jDialog.settings.idName+'" class="jdialog_outterbox" style="position:absolute;display:none;'+ cssPosition+ '">';
+      html += '<div id="'+jDialog.settings.idName+'" class="jdialog_outterbox '+jDialog.settings.class_name+'" style="position:absolute;display:none;'+ cssPosition+ '">';
       html += '   <div class="jdialog_dialog_popup" style="width:'+ jDialog.settings.width +'px">';
       html += '       <div class="'+ cssArrow +'"></div>';
       html += '       <div class="contextual_dialog_shadow">'

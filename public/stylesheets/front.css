@@ -153,3 +153,11 @@ a.user img.normal { width:100px; height:100px; }
 #omniauth_links li.tqq1 a { background-position:0 -32px; }
 #omniauth_links li.google a { background-position:0 -48px; }
 #omniauth_links li span { color:#999; margin-left:3px; }
+
+.search_result_dropdown {}
+.search_result_dropdown .contextual_dialog_content { padding:0; }
+.dialog_content .complete { padding:0; margin:0; }
+.dialog_content .complete li { list-style:none; padding:0px 8px; cursor:pointer;
+  overflow:hidden; height:24px; line-height:24px; }
+.dialog_content .complete li:hover { background:#e1f0f7; }
+.dialog_content .complete li .cate { color:#333; margin:0 5px; }
