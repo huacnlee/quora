@@ -1,26 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>The page you were looking for doesn't exist (404)</title>
-  <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
-    }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
-  </style>
-</head>
-
-<body>
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <h1>The page you were looking for doesn't exist.</h1>
-    <p>You may have mistyped the address or the page may have moved.</p>
-  </div>
-</body>
-</html>
+<!DOCTYPE HTML> <html> <head> <meta http-equiv="content-type" content="text/html; charset=utf-8"> <title>404错误-者也</title> <link href="/stylesheets/cached_front.css?1301456497" media="screen" rel="stylesheet" type="text/css" /> <meta name="keywords" content="" /> <meta name="description" content="" /> <link rel="shortcut icon" href="/favicon.ico?v=001" /> <meta name="csrf-param" content="authenticity_token"/> <meta name="csrf-token" content="E/I10RKS41FgulQmvSXsGeCJppmZ7/AE4ROp0rT1C3w="/> <script src="/javascripts/cached_application.js?1301456497" type="text/javascript"></script> <script type="text/javascript"> function addAsk(){ $.facebox({ div : "#hidden_new_ask", overlay : false }); return false; } function showSearchComplete(el,type){ el_width = $(el).width(); html = ""; if(type == "click" || $(el).val() == ""){ html = $(el).attr("placeholder"); } else{ html += '<ul class="complete" style="padding:0px 15px;">'; t = $(el).val().toLowerCase(); searchList = []; for(var i=0;i<searchList.length;i++){ curr = searchList[i].toLowerCase(); if(curr.indexOf(t) >= 0){ html += "<li>"+searchList[i]+"</li>"; } } html += "</ul>"; } $(el).jDialog({ content : html, width : el_width + 250, title_visiable : false, top_offset : 1, left_offset : -1 }); return false; } </script> </head> <body> <div id="header"> <div class="container"> <div class="left_wrapper"> <div id="site_name"> <a href="/asks">者也</a> </div> <div id="add_ask"> <input type="text" placeholder="搜索问题, 话题 或 会员" onclick="return showSearchComplete(this,'click');"  onkeyup="return showSearchComplete(this,'keyup');" /> <a href="/asks/new" onclick="return addAsk();">我要提问</a> </div> </div> <div class="sidebar"> <div id="user_bar"> <a href="/asks">随便看看</a> <a href="/login">登陆</a> <a href="/register">如何才能注册?</a> </div> </div> </div> </div> <div id="main"> <div class="container"> <div class="left_wrapper"> <h1>404，页面不存在</h1> <p> 
+非常抱歉，你请求的页面我们无法找到。
+</p> </div> <div class="sidebar"> </div> </div> </div> <div id="footer"> <div class="container"> <div class="left_wrapper"> <p class="copyright"> &copy; 者也 zheye.org - 非营利问答平台, 开源项目，<a href="http://github.com/huacnlee/quora">代码</a>。内测期间，如有问题还请谅解。<br />目前暂时只支持Chrome浏览器，请在 1280 宽度以上的分辨率下面浏览。<br />诚邀有志有能之士参与这个项目，需要1个前端，1个推广。 </p> </div> </div> </div> <div style="display: none;" id="hidden_new_ask"> <form action="/asks" method="post" id="inner_new_ask"> <input name="authenticity_token" type="hidden" value="E/I10RKS41FgulQmvSXsGeCJppmZ7/AE4ROp0rT1C3w=" /> <textarea type="text" name="ask[title]" class="title" placeholder="在这里输入问题"></textarea> <label>可选:</label>添加更多描述 <textarea type="text" name="ask[body]"></textarea> <button type="submit" class="submit">添加问题</button> <a href="#" onclick="$.facebox.close(); return false;">取消</a> </form> </div> <div style="display: none;" id="loading"> <div class="logo"></div> <div class="text">加载中…</div> </div> </body> </html> 
