@@ -83,7 +83,7 @@ var App = {
                   <input type="hidden" name="id" value="'+linkId+'" /> \
                   <input type="hidden" name="'+csrf_param+'" value="'+csrf_token+'" /> \
                   '+ editHtml +' \
-                  <button type="submit">保存</button>\
+                  <button type="submit" class="small">保存</button>\
                   <a href="#" class="cancel">取消</a>\
                 </form>');
     link.parent().after(editPanel);
