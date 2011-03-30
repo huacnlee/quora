@@ -47,13 +47,14 @@ class User
 		user
   end  
 
-  before_create :auto_slug
+  before_validation :auto_slug
   def auto_slug
     if self.slug.blank?
       self.slug = self.email.split("@")[0]
+      self.slug = self.slug.safe_slug
     end
     # 如果已有他人用这个 slug，就用 id
-    if User.find_by_slug(self.slug)
+    if self.slug.blank? or User.find_by_slug(self.slug)
       self.slug = self.id.to_s
     end
   end
