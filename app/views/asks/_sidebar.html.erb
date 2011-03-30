@@ -1,18 +1,22 @@
 <% content_for :sidebar do %>
   <div class="box">
     <ul class="sections">
-    	<li>
-      <a href="/" class="home<%= ' active' if params[:controller] == "home" and params[:action] == "index" %>">我的首页</a>
-    	</li>
-    	<li>
-    		<a href="/draft" class="draft<%= ' active' if params[:controller] == "home" and params[:action] == "draft" %>">我的草稿</a>
-    	</li>
+      <% if current_user %>
+        <li>
+          <a href="/" class="home<%= ' active' if params[:controller] == "home" and params[:action] == "index" %>">我的首页</a>
+        </li>
+        <li>
+          <a href="/draft" class="draft<%= ' active' if params[:controller] == "home" and params[:action] == "draft" %>">我的草稿</a>
+        </li>
+      <% end %>
     	<li>
     		<a href="/asks" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
     	</li>
-    	<li>
-        <a href="<%= new_user_invitation_path %>">邀请你的朋友注册</a>
-    	</li>
+      <% if current_user %>
+        <li>
+          <a href="<%= new_user_invitation_path %>">邀请你的朋友注册</a>
+        </li>
+      <% end %>
     </ul>
   </div>
 <% end %>

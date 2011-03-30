@@ -2,6 +2,7 @@
 # Hacking for on_the_spot helper
 module InPlaceEditHelper
   def in_place_edit_tag(object, field, options={})
+    return "" if not current_user
     options.reverse_merge!(:label => "修改",:text_id => nil, :type => :input)
     update_url = "/update_in_place"
     html_options = { :id => "#{object.class.name.underscore}__#{field}__#{object.id}",
