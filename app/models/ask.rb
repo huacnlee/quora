@@ -28,6 +28,7 @@ class Ask
 
   attr_protected :user_id
   validates_presence_of :user_id, :title
+  validates_uniqueness_of :title, :message => "已经有同样标题的问题了"
 
   scope :last_actived, desc(:answered_at)
 
