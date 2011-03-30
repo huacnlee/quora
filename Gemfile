@@ -6,6 +6,7 @@ gem "mongoid", "2.0.0.rc.7"
 gem "bson_ext", "~> 1.2.2"
 gem 'mongo-rails-instrumentation'
 gem "mongoid-eager-loading"
+gem "mongoid_rails_migrations"
 
 # Vote 插件 for Mongoid
 gem 'voteable_mongoid'

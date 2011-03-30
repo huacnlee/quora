@@ -121,6 +121,8 @@ a.user img.normal { width:100px; height:100px; }
 .answer .action a { color:#538DC2; }
 .answer .action a.voted { color:#666; }
 .ask .action a.flagged { color:#999; }
+.ask a.spamed,
+.ask a.spamed:hover { cursor:default; text-decoration:none; color:#999; }
 
 .answer_form { }
 .answer_form h2 { color:#999; }

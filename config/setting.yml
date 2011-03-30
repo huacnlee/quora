@@ -17,6 +17,8 @@ default: &defaults
   google_analytics_id: "UA-19702050-1"
   # 是否开放注册
   allow_register: false
+  # 问题被多少次 spam 自动删除
+  ask_spam_max: 8
 
 development:
   <<: *defaults

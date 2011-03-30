@@ -10,6 +10,8 @@ class Ask
   field :answers_count, :type => Integer, :default => 0
   field :comments_count, :type => Integer, :default => 0
   field :topics, :type => Array, :default => []
+  field :spams_count, :type => Integer, :default => 0
+  field :spam_voter_ids, :type => Array, :default => []
 
   index :topics
 
@@ -28,7 +30,10 @@ class Ask
 
   attr_protected :user_id
   validates_presence_of :user_id, :title
+  validates_uniqueness_of :title, :message => "已经有同样标题的问题了"
 
+  # 正常可显示的问题, 前台调用都带上这个过滤
+  scope :normal, where(:spams_count.lt => Setting.ask_spam_max)
   scope :last_actived, desc(:answered_at)
 
   before_save :fill_default_values
@@ -58,6 +63,18 @@ class Ask
     
     self.topics = self.topics.uniq
     self.update(:topics => self.topics)
+  end
+
+  # 提交问题为 spam
+  def spam(voter_id)
+    self.spams_count ||= 0
+    self.spam_voter_ids ||= []
+    # 限制 spam ,一人一次
+    return self.spams_count if self.spam_voter_ids.index(voter_id)
+    self.spams_count += 1
+    self.spam_voter_ids << voter_id
+    self.save()
+    return self.spams_count
   end
 
 

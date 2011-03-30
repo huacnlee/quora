@@ -5,9 +5,6 @@
         <li>
           <a href="/" class="home<%= ' active' if params[:controller] == "home" and params[:action] == "index" %>">我的首页</a>
         </li>
-        <li>
-          <a href="/draft" class="draft<%= ' active' if params[:controller] == "home" and params[:action] == "draft" %>">我的草稿</a>
-        </li>
       <% end %>
     	<li>
     		<a href="/asks" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
