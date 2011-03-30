@@ -1,6 +1,8 @@
 <%= spaceless do %>
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title><%= raw @page_title %><%= Setting.app_name %></title>
@@ -68,7 +70,7 @@
         <div id="user_bar">
           <% if not current_user %>
             <a href="/asks">随便看看</a>
-            <a href="/login">登陆</a>
+            <a href="/login">登录</a>
             <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
           <% else %>
             <a href="/">首页</a>
