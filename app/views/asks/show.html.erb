@@ -179,6 +179,8 @@
     <% else %>
       <a href="#" onclick="return toggleComments('ask','<%= @ask.id %>');"><%= @ask.comments_count %> 条评论</a>
     <% end %>
+    •
+    <span class="date"><%= l @ask.updated_at, :format => :short %></span>
   </div>
 </div>
 
