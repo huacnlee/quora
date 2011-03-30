@@ -32,6 +32,8 @@ class Ask
   validates_presence_of :user_id, :title
   validates_uniqueness_of :title, :message => "已经有同样标题的问题了"
 
+  # 正常可显示的问题, 前台调用都带上这个过滤
+  scope :normal, where(:spams_count.lt => Setting.ask_spam_max)
   scope :last_actived, desc(:answered_at)
 
   before_save :fill_default_values
@@ -70,11 +72,6 @@ class Ask
     # 限制 spam ,一人一次
     return self.spams_count if self.spam_voter_ids.index(voter_id)
     self.spams_count += 1
-    # 如果 spam 达到设定次数,就是删除
-    if self.spams_count >= Setting.ask_spam_max
-      self.delete()
-      return "_deleted_"
-    end
     self.spam_voter_ids << voter_id
     self.save()
     return self.spams_count
