@@ -1,27 +1,27 @@
 <div class="user_profile">
-  <h1><%= current_user.name %></h1>
+  <h1><%= @user.name %></h1>
   <div class="tagline">
-    <%= current_user.tagline %>
+    <%= @user.tagline %>
   </div>
   <ul>
     <li class="info">
-      注册于 <%= l current_user.created_at, :format => :long %>
+      注册于 <%= l @user.created_at, :format => :long %>
     </li>
     <li>
-    <% if !current_user.website.blank? %>
-      <a href="<%= current_user.website %>" rel="nofollow" target="_blank"><%= current_user.website %></a>
+    <% if !@user.website.blank? %>
+      <a href="<%= @user.website %>" rel="nofollow" target="_blank"><%= @user.website %></a>
     <% end %>
     </li>
   </ul>
   <div class="bio md_body">
-    <% if current_user.bio %>
-      <%= current_user.bio %>
+    <% if @user.bio %>
+      <%= @user.bio %>
     <% end %>
   </div>
 </div>
 <% content_for :sidebar do %>
 <div class="box">
-  <%= image_tag(current_user.avatar.normal.url) %>
+  <%= image_tag(@user.avatar.normal.url) %>
 </div>
 <% end %>
 
