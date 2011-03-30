@@ -12,7 +12,7 @@
         <span class="votes"><%= item.last_answer.votes_count %></span>
         <%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user) %> 
       </div>
-      <div class="md_body"><%= truncate_lines(strip_tags(item.last_answer.body),4,400) %></div>
+      <div class="md_body"><%= md_body(item.last_answer.body) %></div>
     </div>
   <% else %>
     <div class="md_body">
