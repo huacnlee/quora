@@ -29,6 +29,9 @@ class User
   attr_accessor  :password_confirmation
   attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website
 
+  validates_presence_of :name, :slug
+  validates_uniqueness_of :slug
+
   def password_required?
     !persisted? || password.present? || password_confirmation.present?
   end
@@ -44,10 +47,14 @@ class User
 		user
   end  
 
-  before_create :auth_slug
-  def auth_slug
+  before_create :auto_slug
+  def auto_slug
     if self.slug.blank?
       self.slug = self.email.split("@")[0]
+    end
+    # 如果已有他人用这个 slug，就用 id
+    if User.find_by_slug(self.slug)
+      self.slug = self.id.to_s
     end
   end
 
@@ -55,5 +62,8 @@ class User
     self.authorizations.collect { |a| a.provider }
   end
 
-  
+  def self.find_by_slug(slug)
+    first(:conditions => {:slug => slug})
+  end
+
 end
