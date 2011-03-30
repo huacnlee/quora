@@ -26,7 +26,9 @@
       $(".action a.vote_"+vtype,answer).addClass("voted");
       App.loading();
       $.get("/answers/"+id+"/vote",{ inc : type },function(votes_count){
-        App.requireUser(votes_count,"text");
+        if(!App.requireUser(votes_count,"text")){
+          return false;
+        }
         vote_callback(id, votes_count);
         App.loading(false);
       });
@@ -131,9 +133,13 @@
       <% if !@ask.topics.blank? %>
         <%= topics_name_tag(@ask.topics) %>
       <% else %>
-        <span class="no_result">给这个问题选个话题吧，好让别人来回答</span>
+        <% if current_user %>
+          <span class="no_result">给这个问题选个话题吧，好让别人来回答</span>
+        <% end %>
       <% end %>
-      <a href="#" onclick="return toggleEditTopics(true);" class="in_place_edit">修改</a>
+      <% if current_user %>
+        <a href="#" onclick="return toggleEditTopics(true);" class="in_place_edit">修改</a>
+      <% end %>
     </div>
     <div class="edit_topics" style="display:none">
       <div class="items">
@@ -186,36 +192,41 @@
   <% end %>
 </div>
 
-<% if user_answered %>
-  <div class="disabled_answer">一个问题你只能回答一次，但你可以对现有的回答进行修改。</div>
-<% else %>
-  <div class="answer_form from">
-    <h2>添加答案</h2>
-    <% if current_user %>
-    <div class="user_info">
-      <%= user_name_tag(current_user) %>
-      <span id="answer_user_tagline"><%= user_tagline_tag(current_user) %></span>
-      <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
+<% if current_user %>
+  <% if user_answered %>
+    <div class="disabled_answer">一个问题你只能回答一次，但你可以对现有的回答进行修改。</div>
+  <% else %>
+    <div class="answer_form from">
+      <h2>添加答案</h2>
+      <% if current_user %>
+      <div class="user_info">
+        <%= user_name_tag(current_user) %>
+        <span id="answer_user_tagline"><%= user_tagline_tag(current_user) %></span>
+        <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
+      </div>
+      <% end %>
+      <%= form_for(@answer, :remote => true, :url => answer_ask_path(@ask.id)) do |f| %>
+        <div class="row">
+          <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
+        </div>
+        <div class="actions">
+          <button type="submit">提交回答</button>
+        </div>
+      <% end %>
+      <script type="text/javascript">
+        $("#answer_body").qeditor();
+      </script>
     </div>
-    <% end %>
-    <%= form_for(@answer, :remote => true, :url => answer_ask_path(@ask.id)) do |f| %>
-      <div class="row">
-        <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
-      </div>
-      <div class="actions">
-        <button type="submit">提交回答</button>
-      </div>
-    <% end %>
-    <script type="text/javascript">
-      $("#answer_body").qeditor();
-    </script>
-  </div>
+  <% end %>
 <% end %>
 <% content_for :sidebar do %>
-  <div class="box">
-    <h2></h2>
-    <div class="inner">
-      <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this);">关注此问题</a>
-      <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a>
+  <% if current_user %>
+    <div class="box">
+      <h2></h2>
+      <div class="inner">
+        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this);">关注此问题</a>
+        <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a>
+      </div>
     </div>
+  <% end %>
 <% end %>

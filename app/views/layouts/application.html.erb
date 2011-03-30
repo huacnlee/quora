@@ -53,7 +53,11 @@
     <div class="container">
       <div class="left_wrapper">
         <div id="site_name">
-          <a href="/"><%= Setting.app_name %></a>
+          <% if current_user %>
+            <a href="/"><%= Setting.app_name %></a>
+          <% else %>
+            <a href="/asks"><%= Setting.app_name %></a>
+          <% end %>
         </div>
         <div id="add_ask">
           <input type="text" placeholder="搜索问题, 话题 或 会员" onclick="return showSearchComplete(this,'click');"  onkeyup="return showSearchComplete(this,'keyup');" />
@@ -62,11 +66,12 @@
       </div>
       <div class="sidebar">
         <div id="user_bar">
-          <a href="/">首页</a>
           <% if not current_user %>
-          <a href="/login">登陆</a>
-          <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
+            <a href="/asks">随便看看</a>
+            <a href="/login">登陆</a>
+            <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
           <% else %>
+            <a href="/">首页</a>
             <%= user_name_tag(current_user) %>
             <%= link_to('设置', edit_user_registration_path) %>
             <a href="/logout">退出</a>
