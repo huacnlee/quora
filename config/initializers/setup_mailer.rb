@@ -2,10 +2,10 @@ ActionMailer::Base.smtp_settings = {
   :address => "smtp.gmail.com",
   :enable_starttls_auto => true,
   :port => 587,
-  :domain => "huacnlee.com",
+  :domain => Setting.domain,
   :authentication => :plain,
-  :user_name => "support@huacnlee.com",
-  :password => "SU_123123"
+  :user_name => Setting.smtp_username,
+  :password => Setting.smtp_password
 }
 # action mailer config
 ActionMailer::Base.default_content_type = "text/html"

@@ -12,8 +12,8 @@ default: &defaults
     - "nowazhu@gmail.com"
     - "lovemoney2008@gmail.com"
     - "huacnlee@gmail.com"
-  smtp_username: 'support@huacnlee.com'
-  smtp_password: 'SU_123123'
+  smtp_username: 'no-reply@zheye.org'
+  smtp_password: 'No_123123'
   google_analytics_id: "UA-19702050-1"
   # 是否开放注册
   allow_register: false
