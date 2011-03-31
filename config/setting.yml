@@ -19,6 +19,7 @@ default: &defaults
   allow_register: false
   # 问题被多少次 spam 自动删除
   ask_spam_max: 8
+  google_analytics_id: "UA-22413508-1"
 
 development:
   <<: *defaults
@@ -35,3 +36,4 @@ production:
   domain: "zheye.org"
   # 配置图片的域名
   upload_url: "http://zheye.org/uploads"
+  google_analytics_id: "UA-22413508-1"
