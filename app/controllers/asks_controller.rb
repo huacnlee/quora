@@ -12,7 +12,8 @@ class AsksController < ApplicationController
 
   def show
     @ask = Ask.find(params[:id])
-    @answers = @ask.answers.includes(:user).best_voted
+    # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
+    @answers = @ask.answers.includes(:user).sort { |a,b| b.votes_point <=> a.votes_point }
     @answer = Answer.new
     set_seo_meta(@ask.title)
 

@@ -12,8 +12,6 @@ class Answer
 
   belongs_to :ask, :inverse_of => :answers, :counter_cache => true
   belongs_to :user, :inverse_of => :answers, :counter_cache => true
-
-  scope :best_voted, order_by(['voteable.votes_point', :desc])
   
   validates_presence_of :user_id, :body
   
@@ -26,4 +24,6 @@ class Answer
                                :last_answer_user_id => self.user_id })
     self.ask.inc(:answers_count,1)
   end
+
+  
 end
