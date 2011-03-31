@@ -121,6 +121,9 @@ a.user img.normal { width:100px; height:100px; }
 .answer .votes { color:#999; margin-bottom:4px; }
 .answer .votes a { color:#999; }
 
+.answers .spam_answer .md_body { color:#999; font-size:12px; text-decoration :line-through; }
+.answers .spam_answer .action { display:none; }
+
 .disabled_answer { background:#ddd; padding:8px; text-align:center; }
 
 .answer .action,
