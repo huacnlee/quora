@@ -37,6 +37,7 @@ class Ask
   scope :recent, desc("$natural")
   # 除开一些 id，如用到 mute 的问题，传入用户的 muted_ask_ids
   scope :exclude_ids, lambda { |id_array| not_in("_id" => (id_array ||= [])) } 
+  scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 
 
   before_save :fill_default_values
   def fill_default_values

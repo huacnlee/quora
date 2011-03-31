@@ -5,7 +5,7 @@ class Answer
   include Mongoid::Voteable
 
   # 投票对应的分数
-  vote_point self, :up => +1, :down => -1
+  voteable self, :up => +1, :down => -1
 
   field :body
   field :comments_count, :type => Integer, :default => 0
@@ -13,6 +13,7 @@ class Answer
   belongs_to :ask, :inverse_of => :answers, :counter_cache => true
   belongs_to :user, :inverse_of => :answers, :counter_cache => true
 
+  scope :best_voted, order_by(['voteable.votes_point', :desc])
   
   validates_presence_of :user_id, :body
   

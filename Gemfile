@@ -9,7 +9,7 @@ gem "mongoid-eager-loading"
 gem "mongoid_rails_migrations"
 
 # Vote 插件 for Mongoid
-gem 'voteable_mongoid'
+gem 'voteable_mongoid', "0.6.0"
 
 # 用户系统
 gem 'devise', '1.2.rc2'
