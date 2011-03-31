@@ -9,7 +9,7 @@
   <% if item.last_answer %>
     <div class="last_answer answer">
       <div class="author">
-        <span class="votes"><%= item.last_answer.votes_count %></span>
+        <span class="votes"><%= item.last_answer.votes_point %></span>
         <%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user) %> 
       </div>
       <div class="md_body"><%= md_body(item.last_answer.body) %></div>
