@@ -1,3 +1,4 @@
+# coding: utf-8
 class HomeController < ApplicationController
   before_filter :require_user_text, :only => [:update_in_place]
   before_filter :require_user
@@ -5,6 +6,7 @@ class HomeController < ApplicationController
   def index
     @per_page = 10
     @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics)
+                  .exclude_ids(current_user.muted_ask_ids)
                   .desc(:answered_at,:id)
                   .paginate(:page => params[:page], :per_page => @per_page)
 
@@ -12,6 +14,25 @@ class HomeController < ApplicationController
       render "/asks/index.js"
     end
   end
+
+  # 查看用户不感兴趣的问题
+  def muted
+    @per_page = 10
+    @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics)
+                  .only_ids(current_user.muted_ask_ids)
+                  .desc(:answered_at,:id)
+                  .paginate(:page => params[:page], :per_page => @per_page)
+
+    set_seo_meta("我屏蔽掉的问题")
+
+    if params[:format] == "js"
+      render "/asks/index.js"
+    else
+      render "index"
+    end
+  end
+
+
 
   def update_in_place
     klass, field, id = params[:id].split('__')

@@ -4,8 +4,8 @@
       <%= user_name_tag(item.user) %> 提出的问题
       • <%= item.answers_count %> 个答案 
       • <a href="<%= follow_ask_path(item.id) %>">关注</a> 
-      • <a href="<%= mute_ask_path(item.id) %>">不感兴趣</a>
-    </div>
+      • <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+    </div> 
   <% if item.last_answer %>
     <div class="last_answer answer">
       <div class="author">

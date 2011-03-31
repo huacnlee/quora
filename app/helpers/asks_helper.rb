@@ -45,6 +45,12 @@ module AsksHelper
     return ask.spam_voter_ids.count(current_user.id) > 0
   end
 
+  # 判断是否是 spam 的回答
+  def spam_answer?(answer)
+    point = answer.votes_point || 0
+    return point <= -5
+  end
+
   private
   def inner_truncate_lines(body_lines, lines, summary, max_chars)
     if summary.length > max_chars
