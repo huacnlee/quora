@@ -5,7 +5,6 @@ h1. Installation
 base on ubuntu 10.04
 
 pre. 
-
 git clone git://github.com/huacnlee/quora.git
 cd quora
 bundle install --path vendor/bundle
