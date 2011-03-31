@@ -53,13 +53,20 @@ class User
   end  
 
   before_validation :auto_slug
+  # 此方法用于处理开始注册是自动生成 slug, 因为没表单,只能自动
   def auto_slug
     if self.slug.blank?
       self.slug = self.email.split("@")[0]
       self.slug = self.slug.safe_slug
+      # 如果 slug 被 safe_slug 后是空的,就用 id 代替
+      if self.slug.blank?
+        self.slug = self.id.to_s
+      end
     end
-    # 如果已有他人用这个 slug，就用 id
-    if self.slug.blank? or User.find_by_slug(self.slug)
+
+    # 防止重复 slug
+    old_user = User.find_by_slug(self.slug)
+    if !old_user.blank? and old_user.id != self.id
       self.slug = self.id.to_s
     end
   end

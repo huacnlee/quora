@@ -11,3 +11,5 @@ $(".answer_form").remove();
 <% else %>
 $("#answer_body").focus();
 <% end %>
+App.loading(false);
+$(".answer_form button.submit").attr("disabled",false);
