@@ -14,6 +14,11 @@ class User
   field :avatar
   field :website
 
+  # 不敢兴趣的问题
+  field :muted_ask_ids, :type => Array, :default => []
+  # 关注的问题
+  field :followed_ask_ids, :type => Array, :default => []
+
   # 邀请字段
   field :invitation_token
   field :invitation_sent_at, :type => DateTime
@@ -65,6 +70,14 @@ class User
 
   def self.find_by_slug(slug)
     first(:conditions => {:slug => slug})
+  end
+
+  # 不感兴趣问题
+  def mute_ask(ask_id)
+    self.muted_ask_ids ||= []
+    return if self.muted_ask_ids.index(ask_id)
+    self.muted_ask_ids << ask_id
+    self.save
   end
 
 end

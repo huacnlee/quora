@@ -30,12 +30,13 @@ class Ask
 
   attr_protected :user_id
   validates_presence_of :user_id, :title
-  validates_uniqueness_of :title, :message => "已经有同样标题的问题了"
 
   # 正常可显示的问题, 前台调用都带上这个过滤
   scope :normal, where(:spams_count.lt => Setting.ask_spam_max)
   scope :last_actived, desc(:answered_at)
   scope :recent, desc("$natural")
+  # 除开一些 id，如用到 mute 的问题，传入用户的 muted_ask_ids
+  scope :exclude_ids, lambda { |id_array| not_in("_id" => (id_array ||= [])) } 
 
   before_save :fill_default_values
   def fill_default_values

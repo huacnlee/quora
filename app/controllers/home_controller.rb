@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   def index
     @per_page = 10
     @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics)
+                  .exclude_ids(current_user.muted_ask_ids)
                   .desc(:answered_at,:id)
                   .paginate(:page => params[:page], :per_page => @per_page)
 

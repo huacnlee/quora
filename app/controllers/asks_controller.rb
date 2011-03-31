@@ -2,7 +2,7 @@
 class AsksController < ApplicationController
   before_filter :require_user, :except => [:index,:answer,:update_topic,:show]
   before_filter :require_user_js, :only => [:answer]
-  before_filter :require_user_text, :only => [:update_topic,:spam]
+  before_filter :require_user_text, :only => [:update_topic,:spam, :mute]
   
   def index
     @per_page = 10
@@ -105,6 +105,16 @@ class AsksController < ApplicationController
     if not @add
       render :text => @success
     end
+  end
+
+  def mute
+    @ask = Ask.find(params[:id])
+    if not @ask
+      render :text => "0"
+      return
+    end
+    current_user.mute_ask(@ask.id)
+    render :text => "1"
   end
   
 end
