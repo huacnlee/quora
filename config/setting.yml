@@ -24,6 +24,9 @@ default: &defaults
 development:
   <<: *defaults
 
+development_mongohq:
+  <<: *defaults
+
 test:
   <<: *defaults
 

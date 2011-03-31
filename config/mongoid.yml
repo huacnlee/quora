@@ -12,6 +12,12 @@ development:
   <<: *defaults
   database: quora_development
 
+development_mongohq:
+  <<: *defaults
+  #uri: mongodb://<user>:<password>@flame.mongohq.com:27070/quora
+  #use demo mongohq database for fast run
+  uri: mongodb://root:666666@flame.mongohq.com:27070/quora
+
 test:
   <<: *defaults
   database: quora_test
