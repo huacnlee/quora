@@ -44,7 +44,7 @@ address, blockquote {
 .sidebar .sections { font-size:14px; }
 .sidebar .sections li { display:inline; }
 .sidebar .sections li a { display:block; padding:5px 18px; margin-bottom:4px;
-  background:url(/images/section_arrow.gif) left -11px no-repeat; }
+  background:url(/images/section_arrow.gif) left center no-repeat; }
 .sidebar .sections li a:hover,
 .sidebar .sections li a.active { background-color: #DFEAF4; text-decoration: none; }
 .sidebar .sections li a.active { background-color:#DDD; color:#333; cursor:default; }
@@ -87,7 +87,7 @@ a.page_more:active { background: #E0E0E0; border-color: #777; text-shadow: none;
 
 a.tag { margin:0px 2px; }
 
-a.in_place_edit { font-weight:normal; cursor:pointer; background:url(/images/edit.gif) -15px left no-repeat; padding-left:18px; padding-right:5px;
+a.in_place_edit { font-weight:normal; cursor:pointer; background:url(/images/edit.gif) left  center no-repeat; padding-left:18px; padding-right:5px;
   font-size:12px; -moz-border-radius: 3px; -webkit-border-radius: 3px; color:#999; }
 a.in_place_edit:hover {color: #405A04; background-color:#c3dd82; text-decoration:none; }
 
