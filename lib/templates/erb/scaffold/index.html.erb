@@ -5,9 +5,11 @@
 
 <div id="<%= plural_table_name %>">
   <%%= grid(@<%= plural_file_name %>, :show_filters => :always) do |g|
-    g.column :column_name => '', :attribute_name => 'id'
+    g.column :column_name => '', :attribute_name => '_id'
 <% for attribute in attributes -%>
-    g.column :column_name => '<%= attribute.name %>', :attribute_name => '<%= attribute.name %>'
+  g.column :column_name => '<%= attribute.name %>', :attribute_name => '<%= attribute.name %>' do |c|
+    c.<%= attribute.name %> if !c.<%= attribute.name %>.blank?
+  end
 <% end -%>
     g.column :column_name => '创建时间', :attribute_name => 'created_at', :td_html_attrs => { :style => "width:120px;" }
     g.column :td_html_attrs => { :style => "width:50px; text-align:right;" } do |c|
