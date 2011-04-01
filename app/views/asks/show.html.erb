@@ -147,6 +147,11 @@
       });
       return false;
     }
+
+    function beforeAnswer(el){
+      $("button.submit",el).attr("disabled","disabled");
+      App.loading();
+    }
   </script>
 <% end %>
 <%= render 'base' %>
@@ -231,12 +236,13 @@
         <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
       </div>
       <% end %>
-      <%= form_for(@answer, :remote => true, :url => answer_ask_path(@ask.id)) do |f| %>
+      <%= form_for(@answer, :remote => true, :html => { :onsubmit => "return beforeAnswer(this);" },
+                   :url => answer_ask_path(@ask.id)) do |f| %>
         <div class="row">
           <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
         </div>
         <div class="actions">
-          <button type="submit">提交回答</button>
+          <button class="submit" type="submit">提交回答</button>
         </div>
       <% end %>
       <script type="text/javascript">
