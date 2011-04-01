@@ -5,6 +5,7 @@ class CpanelController < ApplicationController
   def require_admin
     if current_user.blank?
       render_404
+      return
     end
     if not Setting.admin_emails.index(current_user.email)
       render_404
