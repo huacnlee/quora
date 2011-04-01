@@ -1,0 +1,29 @@
+<%= content_for :sitemap do %>
+<span class="current">列表</span>
+<% end %>
+<%= render 'base' %>
+
+<div id="cpanel_answers">
+  <%= grid(@answers, :show_filters => :always) do |g|
+    g.column :column_name => '', :attribute_name => '_id'
+        g.column :column_name => 'ask_id', :attribute_name => 'ask_id' do |c|
+      c.ask_id if !c.ask_id.blank?
+    end
+        g.column :column_name => 'user_id', :attribute_name => 'user_id' do |c|
+      c.user_id if !c.user_id.blank?
+    end
+    g.column :column_name => 'body', :attribute_name => 'body' do |c|
+      c.body if !c.body.blank?
+    end
+        g.column :column_name => 'comments_count', :attribute_name => 'comments_count' do |c|
+      c.comments_count if !c.comments_count.blank?
+    end
+        g.column :column_name => '创建时间', :attribute_name => 'created_at', :td_html_attrs => { :style => "width:120px;" }
+    g.column :td_html_attrs => { :style => "width:50px; text-align:right;" } do |c|
+      raw "#{link_to '修改', edit_cpanel_answer_path(c.id)}
+      #{link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_answer_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
+    end
+  end %>
+</div>
+
+

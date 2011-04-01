@@ -36,5 +36,8 @@ Quora::Application.routes.draw do
   namespace :cpanel do
     root :to =>  "home#index"
     resources :users
+    resources :asks
+    resources :answers
+    resources :topics
   end
 end
