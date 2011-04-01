@@ -12,6 +12,9 @@ class Ask
   field :topics, :type => Array, :default => []
   field :spams_count, :type => Integer, :default => 0
   field :spam_voter_ids, :type => Array, :default => []
+  field :views_count, :type => Integer, :default => 0
+  # 最后活动时间，这个时间应该设置为该问题下辖最后一条log的发生时间
+  field :last_updated_at, :type => DateTime
 
   index :topics
 
@@ -42,6 +45,7 @@ class Ask
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 
 
   before_save :fill_default_values
+  
   def fill_default_values
     # 默认回复时间为当前时间，已便于排序
     if self.answered_at.blank?
