@@ -2,7 +2,7 @@
 class AsksController < ApplicationController
   before_filter :require_user, :except => [:index,:answer,:update_topic,:show]
   before_filter :require_user_js, :only => [:answer]
-  before_filter :require_user_text, :only => [:update_topic,:spam, :mute]
+  before_filter :require_user_text, :only => [:update_topic,:spam, :mute, :unmute, :follow, :unfollow]
   
   def index
     @per_page = 10
@@ -116,6 +116,36 @@ class AsksController < ApplicationController
       return
     end
     current_user.mute_ask(@ask.id)
+    render :text => "1"
+  end
+  
+  def unmute
+    @ask = Ask.find(params[:id])
+    if not @ask
+      render :text => "0"
+      return
+    end
+    current_user.unmute_ask(@ask.id)
+    render :text => "1"
+  end
+  
+  def follow
+    @ask = Ask.find(params[:id])
+    if not @ask
+      render :text => "0"
+      return
+    end
+    current_user.follow_ask(@ask)
+    render :text => "1"
+  end
+  
+  def unfollow
+    @ask = Ask.find(params[:id])
+    if not @ask
+      render :text => "0"
+      return
+    end
+    current_user.unfollow_ask(@ask)
     render :text => "1"
   end
   

@@ -28,6 +28,7 @@ class User
 
   field :answers_count, :type => Integer, :default => 0
   has_many :answers
+  references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
 
   embeds_many :authorizations
 
@@ -80,11 +81,40 @@ class User
   end
 
   # 不感兴趣问题
+  def ask_muted?(ask_id)
+    self.muted_ask_ids.include?(ask_id)
+  end
+  
+  def ask_followed?(ask)
+    Rails.logger.info { "user: #{self.inspect}" }
+    Rails.logger.info { "asks: #{self.followed_asks.inspect}" }
+    Rails.logger.info { "ask: #{ask.inspect}" }
+    self.followed_asks.include?(ask)
+  end
+  
   def mute_ask(ask_id)
     self.muted_ask_ids ||= []
     return if self.muted_ask_ids.index(ask_id)
     self.muted_ask_ids << ask_id
     self.save
+  end
+  
+  def unmute_ask(ask_id)
+    self.muted_ask_ids.delete(ask_id)
+    self.save
+  end
+  
+  def follow_ask(ask)
+    ask.followers << self
+    ask.save
+  end
+  
+  def unfollow_ask(ask)
+    self.followed_asks.delete(ask)
+    self.save
+    
+    ask.followers.delete(self)
+    ask.save
   end
 
 end

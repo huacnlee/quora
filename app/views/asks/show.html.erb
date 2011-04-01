@@ -92,16 +92,17 @@
     }
 
 
-    function follow(el){
-      if($(el).text() == "关注此问题"){
-        f = 1;
-        $(el).removeClass("green_button").text("取消关注");
-      }
-      else{
-        f = 0;
-        $(el).addClass("green_button").text("关注此问题");
-      }
-      $.get("/asks/<%= @ask.id %>/follow",{follow:f},function(s){ });
+    function follow(el, id){
+			$.get("/asks/"+id+"/follow",{}, function(res){
+					$(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @ask.id %>\');">取消关注</a>');
+	    });
+      return false;
+    }
+		
+		function unfollow(el, id){
+			$.get("/asks/"+id+"/unfollow",{}, function(res){
+	        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @ask.id %>\');">关注此问题</a>');
+	    });
       return false;
     }
 
@@ -256,8 +257,12 @@
     <div class="box">
       <h2></h2>
       <div class="inner">
-        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this);">关注此问题</a>
-        <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a>
+				<% if current_user.ask_followed?(@ask) %>
+				<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, '<%= @ask.id %>');">取消关注</a>
+				<% else %>
+        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, '<%= @ask.id %>');">关注此问题</a>
+        <!-- <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a> -->
+				<% end %>
       </div>
     </div>
   <% end %>
