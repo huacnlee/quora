@@ -15,9 +15,9 @@ class BaseUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  def filename
-    "#{Time.now.to_i}.jpg"
-  end
+  # def filename
+  #   "#{Time.now.to_i}.jpg"
+  # end
 
 end
 
