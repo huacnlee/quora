@@ -3,7 +3,7 @@ Gemfile.lock
 db/*.sqlite3
 log/*.log
 tmp/
-config/*.default
+config/*.yml
 public/javascripts/cached_*
 public/stylesheets/cached_*
 
