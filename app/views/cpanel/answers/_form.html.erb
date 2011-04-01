@@ -1,6 +1,6 @@
 <div id="cpanel_answer" class="form">
 <%= simple_form_for(@answer, 
-  :url => (@answer.id.blank? ? cpanel_answers_path : cpanel_answer_path(@answer.id)) ) do |f| %>
+                    :url => (@answer.id.blank? ? cpanel_answers_path : cpanel_answer_path(@answer.id)), :html => { :enctype =>  "multipart/form-data" } ) do |f| %>
 
   <div class="inputs">
   <%= f.input :ask_id %>

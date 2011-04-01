@@ -1,11 +1,17 @@
 <div id="cpanel_topic" class="form">
 <%= simple_form_for(@topic, 
-  :url => (@topic.id.blank? ? cpanel_topics_path : cpanel_topic_path(@topic.id)) ) do |f| %>
+  :url => (@topic.id.blank? ? cpanel_topics_path : cpanel_topic_path(@topic.id)), :html => { :enctype =>  "multipart/form-data" } ) do |f| %>
 
   <div class="inputs">
   <%= f.input :name %>
   <%= f.input :summary, :as => :text %>
   <%= f.input :cover %>
+  <% if not @topic.cover.blank? %>
+  <div class="row">
+    <label>预览</label>
+    <%= image_tag(@topic.cover.normal.url) %>
+  </div>
+  <% end %>
   <%= f.input :asks_count %>
   </div>
   <div class="actions">

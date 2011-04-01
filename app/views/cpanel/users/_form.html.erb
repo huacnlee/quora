@@ -1,6 +1,6 @@
 <div id="cpanel_user" class="form">
 <%= simple_form_for(@user, 
-  :url => (@user.id.blank? ? cpanel_users_path : cpanel_user_path(@user.id)) ) do |f| %>
+  :url => (@user.id.blank? ? cpanel_users_path : cpanel_user_path(@user.id)) , :html => { :enctype =>  "multipart/form-data" }) do |f| %>
 
   <div class="inputs">
   <%= f.input :email %>
@@ -9,6 +9,12 @@
   <%= f.input :tagline %>
   <%= f.input :bio %>
   <%= f.input :avatar %>
+  <% if not @user.avatar.blank? %>
+  <div class="row">
+    <label>预览</label>
+    <%= image_tag(@user.avatar.normal.url) %>
+  </div>
+  <% end %>
   <%= f.input :website %>
   </div>
   <div class="actions">
