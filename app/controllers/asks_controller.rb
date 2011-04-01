@@ -119,4 +119,14 @@ class AsksController < ApplicationController
     render :text => "1"
   end
   
+  def unmute
+    @ask = Ask.find(params[:id])
+    if not @ask
+      render :text => "0"
+      return
+    end
+    current_user.unmute_ask(@ask.id)
+    render :text => "1"
+  end
+  
 end

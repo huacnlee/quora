@@ -20,6 +20,7 @@ Quora::Application.routes.draw do
       get "spam"
       get "follow"
       get "mute"
+      get "unmute"
       post "answer"
       post "update_topic"
       get "update_topic"

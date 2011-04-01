@@ -80,10 +80,19 @@ class User
   end
 
   # 不感兴趣问题
+  def ask_muted?(ask_id)
+    self.muted_ask_ids.include?(ask_id)
+  end
+  
   def mute_ask(ask_id)
     self.muted_ask_ids ||= []
     return if self.muted_ask_ids.index(ask_id)
     self.muted_ask_ids << ask_id
+    self.save
+  end
+  
+  def unmute_ask(ask_id)
+    self.muted_ask_ids.delete(ask_id)
     self.save
   end
 
