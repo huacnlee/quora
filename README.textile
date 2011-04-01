@@ -8,6 +8,8 @@ pre.
 git clone git://github.com/huacnlee/quora.git
 cd quora
 bundle install --path vendor/bundle
+cp config/mongoid.yml.default config/mongoid.yml
+cp config/setting.yml.default config/setting.yml
 script/rails s -e development_mongohq
 
 Then, open your browser, points to localhost:3000
