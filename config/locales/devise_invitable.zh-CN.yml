@@ -7,4 +7,4 @@
       no_invitations_remaining: "没有邀请码。"
     mailer:
       invitation_instructions:
-        subject: '邀请说明'
+        subject: '有人邀请你加入者也'
