@@ -24,8 +24,9 @@ address, blockquote {
 #header #user_bar a { color: #B9BBBC; font-size:12px; display:inline-block; margin-right:8px; }
 
 #header #nav { font-size:16px; width:500px; text-align:center; } 
+#header #nav a { padding:0 8px; font-weight:bold; }
 #footer { clear:both; padding-top:25px; height:80px; }
-#sitemap { margin:5px auto; }
+#sitemap { margin:5px auto; border-bottom:1px solid #ddd; padding:5px 0 10px 0; }
 
 #header:after {
     content:"";
@@ -60,67 +61,7 @@ pre {
 .pagination { clear:both; margin-top:10px; text-align: left;}
 
 
-
-.button {
-  -moz-border-radius:      3px;
-  -webkit-border-radius:   3px;
-  border-radius:           3px;
-  background:              #DDD; /* Image fallback */
-  background:             -moz-linear-gradient(0% 170% 90deg, #c4c4c4, white);
-  background:             -webkit-gradient(linear, 0% 0%, 0% 170%, from(white), to(#c4c4c4));
-  border:                  1px solid;
-  border-color:            #e0e0e0 #aaa #aaa #e0e0e0;  
-  color:                   #404040;
-  display:                 inline-block;
-  font-family:            "helvetica neue", helvetica, arial, freesans, "liberation sans", "numbus sans l", sans-serif;
-  font-size:               12px;
-  outline                  0;
-  padding:                 5px 13px 5px;
-  text-align:              center;
-  text-decoration:         none;
-  text-shadow:             1px 1px 0 rgba(255,255,255,60); 
-  white-space:             nowrap; 
-  cursor:pointer;  
-}
-
-input[type='submit'].button,
-button[type='submit'] { font-weight:bold;}
-
-.button.small { padding: 2px 10px 2px; font-weight:normal; }
-/* 工具栏 */
-.button.group { 
-  -moz-border-radius:0;
-  -webkit-border-radius:0;
-  border-radius:0px; 
-  padding: 3px 10px 3px;
-}
-.button.group.left { 
-  padding: 3px 10px 3px;
-  -moz-border-radius:      3px 0 0 3px;
-  -webkit-border-radius:   3px 0 0 3px;
-  border-radius:           3px 0 0 3px;
-}
-.button.group.right { 
-  padding: 3px 10px 3px;
-  -moz-border-radius:      0 3px 3px 0;
-  -webkit-border-radius:   0 3px 3px 0;
-  border-radius:           0 3px 3px 0;
-}
-
-
-
-a.button { color:#404040; text-decoration: none; margin:0; }
-.button:hover {
-  background:           -moz-linear-gradient(0% 170% 90deg, #b8b8b8, white);
-  background:           -webkit-gradient(linear, 0% 0%, 0% 170%, from(white), to(#b8b8b8));    
-  border-color:         #e0e0e0 #999 #999 #e0e0e0;  
-  color:                 #333333; 
-}
-
-.button:focus,
-.button:active,
 .button.checked {
-
   text-shadow: 0 1px 0 #666; 
   top:                   0px; 
   background-position:   0 -25px;

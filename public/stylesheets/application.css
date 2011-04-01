@@ -20,6 +20,8 @@ button { border-color: #062C50; background: #2f6ba1 url(/images/button_submit.gi
   text-shadow: 0 -1px #19558D;
   font-weight: bold; font-size:1em; display: inline-block; padding: 7px 16px; text-align: center; }
 
+a.button:hover { text-decoration:none; }
+
 a.button.small,
 button.small { padding:2px 10px; }
 
