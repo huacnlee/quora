@@ -16,7 +16,7 @@ default: &defaults
   smtp_password: 'SU_123123'
   google_analytics_id: "UA-19702050-1"
   # 是否开放注册
-  allow_register: false
+  allow_register: true
   # 问题被多少次 spam 自动删除
   ask_spam_max: 8
   google_analytics_id: "UA-22413508-1"

@@ -27,6 +27,8 @@ class Ask
   belongs_to :last_answer, :class_name => 'Answer'
   # 最后回答者
   belongs_to :last_answer_user, :class_name => 'User'
+  # Followers
+  references_and_referenced_in_many :followers, :stored_as => :array, :inverse_of => :followed_asks, :class_name => "User"
 
   attr_protected :user_id
   validates_presence_of :user_id, :title
@@ -79,6 +81,5 @@ class Ask
     self.save()
     return self.spams_count
   end
-
 
 end

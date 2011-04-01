@@ -3,18 +3,24 @@
     <div class="info">
       <%= user_name_tag(item.user) %> 提出的问题
       • <%= item.answers_count %> 个答案 
-      • <a href="<%= follow_ask_path(item.id) %>">关注</a> 
-			<% if @current_user.ask_muted?(item.id) %>
-			• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
-			<% else %>
-      • <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+			<% if current_user %>
+				<% if current_user.ask_followed?(item) %>
+      	• <a href="#" onclick="return Asks.unfollow(this,'<%= item.id %>')">取消关注</a> 
+				<% else %>
+				• <a href="#" onclick="return Asks.follow(this,'<%= item.id %>')">关注</a> 
+				<% end %>
+				<% if current_user.ask_muted?(item.id) %>
+				• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+				<% else %>
+      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+				<% end %>
 			<% end %>
     </div> 
   <% if item.last_answer %>
     <div class="last_answer answer">
       <div class="author">
         <span class="votes"><%= item.last_answer.votes_count %></span>
-        <%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user) %> 
+        <% if item.last_answer_user %><%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user) %> <% else %>匿名用户<% end %>
       </div>
       <div class="md_body"><%= md_body(item.last_answer.body) %></div>
     </div>
