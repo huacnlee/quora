@@ -5,14 +5,13 @@ class Answer
   include Mongoid::Voteable
 
   # 投票对应的分数
-  vote_point self, :up => +1, :down => -1
+  voteable self, :up => +1, :down => -1
 
   field :body
   field :comments_count, :type => Integer, :default => 0
 
   belongs_to :ask, :inverse_of => :answers, :counter_cache => true
   belongs_to :user, :inverse_of => :answers, :counter_cache => true
-
   
   validates_presence_of :user_id, :body
   
@@ -25,4 +24,6 @@ class Answer
                                :last_answer_user_id => self.user_id })
     self.ask.inc(:answers_count,1)
   end
+
+  
 end
