@@ -9,11 +9,8 @@
         g.column :column_name => 'ask_id', :attribute_name => 'ask_id' do |c|
       c.ask_id if !c.ask_id.blank?
     end
-        g.column :column_name => 'user_id', :attribute_name => 'user_id' do |c|
-      c.user_id if !c.user_id.blank?
-    end
-    g.column :column_name => 'body', :attribute_name => 'body' do |c|
-      c.body if !c.body.blank?
+    g.column :column_name => 'body', :attribute_name => 'body', :td_html_attrs => { :style => "width:420px;" } do |c|
+      truncate(c.body,:length => 200) if !c.body.blank?
     end
         g.column :column_name => 'comments_count', :attribute_name => 'comments_count' do |c|
       c.comments_count if !c.comments_count.blank?
