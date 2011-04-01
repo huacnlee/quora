@@ -31,7 +31,7 @@
       <% end %>
       • <a class="usefull" onclick="return usefull('<%= item.id %>',1);" href="#">感谢</a> 
       • <a class="notusefull" onclick="return usefull('<%= item.id %>',0);" href="#">没有帮助</a>
-      • <%= l item.created_at, :format => :short %>
+      • <%= l item.created_at.getlocal, :format => :short %>
     </div>
   </div>
 </div>

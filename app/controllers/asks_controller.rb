@@ -12,9 +12,12 @@ class AsksController < ApplicationController
 
   def show
     @ask = Ask.find(params[:id])
+    @ask.views_count += 1
+    @ask.save
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
     @answers = @ask.answers.includes(:user).sort { |a,b| b.votes_point <=> a.votes_point }
     @answer = Answer.new
+    @relation_asks = Ask.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
     set_seo_meta(@ask.title)
 
     respond_to do |format|
