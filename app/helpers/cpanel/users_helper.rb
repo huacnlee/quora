@@ -1,0 +1,2 @@
+module Cpanel::UsersHelper
+end

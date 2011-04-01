@@ -15,10 +15,9 @@ class BaseUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  def url
-    super + "?#{model.created_at.to_i}"
-  end
-  
+  # def filename
+  #   "#{Time.now.to_i}.jpg"
+  # end
 
 end
 

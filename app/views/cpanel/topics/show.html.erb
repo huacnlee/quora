@@ -1,0 +1,26 @@
+<%= content_for :sitemap do %>
+<span class="current">查看</span>
+<% end %>
+<%= render 'base' %>
+<div class="tools">
+  <%= link_to '修改', edit_cpanel_topic_path(@topic) %> |
+  <%= link_to '返回', cpanel_topics_path %>
+</div>
+<div id="cpanel_topic">
+    <p>
+    <b>Name:</b>
+    <%= @topic.name %>
+  </p>
+    <p>
+    <b>Summary:</b>
+    <%= @topic.summary %>
+  </p>
+    <p>
+    <b>Cover:</b>
+    <%= @topic.cover %>
+  </p>
+    <p>
+    <b>Asks count:</b>
+    <%= @topic.asks_count %>
+  </p>
+  </div>

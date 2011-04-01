@@ -1,0 +1,76 @@
+.container { width:960px; margin:0 auto; text-align:left; }
+
+address, blockquote {
+  font-style: normal;
+  padding: 0 0 0 10px;
+  border-left: 3px solid #D0E5F2;
+}
+
+#header {
+  background: #505759;
+  min-height: 35px;
+  padding-top: 18px;
+  color:#FFF;
+}
+#header a {color:#fff; }
+#header #site_name { background-color:#a82400; color:#FFF; height:35px; width:68px; text-align:center; line-height:35px;  float:left;
+  font-size:20px; font-weight:bold;  }
+#header #site_name a { color:#FFF; text-decoration:none; }
+#header #add_ask { display:inline-block; background:#000; height:35px; line-height:35px; padding:0 6px; overflow:hidden; }
+#header #add_ask input { width:360px; font-size: 16px;height: 18px; line-height:18px; border:0; margin-top: 2px; }
+#header #add_ask a { color: #F0F0F0; font-weight: bold; font-size: 13px; padding: 10px 10px; text-align: center;}
+
+#header #user_bar { padding-top:10px; text-align:right; margin-right:4px; width: 210px !important; _width: 220px;  }
+#header #user_bar a { color: #B9BBBC; font-size:12px; display:inline-block; margin-right:8px; }
+
+#header #nav { font-size:16px; width:500px; text-align:center; } 
+#header #nav a { padding:0 8px; font-weight:bold; }
+#footer { clear:both; padding-top:25px; height:80px; }
+#sitemap { margin:5px auto; border-bottom:1px solid #ddd; padding:5px 0 10px 0; }
+
+#header:after {
+    content:"";
+    display:block;
+    visibility:hidden;
+    height:0;
+    clear:both;
+}
+
+#main { margin:20px 0; text-align:center; }
+#navbar li { margin:0;}
+#navbar li a:link,
+#navbar li a:visited { padding:0 6px 0 3px; margin-right:3px;  }
+#navbar li a:hover { text-decoration: underline; background:none;}
+#navbar li.current a:link,
+#navbar li.current a:visited { background:none; color:#000;}
+input.button,
+input.radio { width:auto; }
+label.collection_radio { display:inline-block; margin-right:8px;}
+
+table.wice_grid { margin:10px 0;}
+table.wice_grid input { width:auto;}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+.group { margin-bottom:20px; }
+.group h2 { font-size:12px; margin-bottom:8px; }
+.group ul { margin:0 20px;}
+.pagination { clear:both; margin-top:10px; text-align: left;}
+
+
+.button.checked {
+  text-shadow: 0 1px 0 #666; 
+  top:                   0px; 
+  background-position:   0 -25px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#999)); /* for webkit browsers */
+  background: -moz-linear-gradient(top,  #666,  #999); /* for firefox 3.6+ */
+  color:                 #fff;
+  border: 1px solid #555;
+}
+
+
+.tools { margin-bottom:10px; text-align: right; }
+.simple_form textarea { width:900px;}

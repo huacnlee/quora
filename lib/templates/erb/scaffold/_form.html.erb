@@ -1,6 +1,6 @@
 <div id="<%= singular_table_name %>" class="form">
 <%%= simple_form_for(@<%= file_name %>, 
-  :url => (@<%= file_name %>.id.blank? ? <%= index_helper %>_path : <%= singular_table_name %>_path(@<%= file_name %>)) ) do |f| %>
+  :url => (@<%= file_name %>.id.blank? ? <%= index_helper %>_path : <%= singular_table_name %>_path(@<%= file_name %>.id)) ) do |f| %>
 
   <div class="inputs">
 <% for attribute in attributes -%>
@@ -8,7 +8,8 @@
 <% end -%>
   </div>
   <div class="actions">
-    <%%= f.submit "提交", :class => "button" %> 或者 <%%= link_to '返回', <%= index_helper %>_path %>
+    <button type="submit">提交</button>
+     或者 <%%= link_to '返回', <%= index_helper %>_path %>
   </div>
 <%% end %>
 </div>

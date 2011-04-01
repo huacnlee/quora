@@ -1,0 +1,179 @@
+/*  This is just an example, so feel free to re-style it completely */ 
+
+.wice_grid {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  border-spacing: 0px
+}
+
+.wice_grid .clickable{
+  cursor: pointer;
+}
+
+.wice_grid th {    
+  padding: 6px;
+  font-weight:normal;
+}
+.wice_grid th a { 
+  color: #666;
+}
+.wice_grid th a:hover { 
+  color: #333; 
+}
+
+.wice_grid tr.wice_grid_filter_row th{
+  background-color: #FFF;  
+}
+
+.wice_grid tr.wice_grid_title_row th {
+  background:#f5f5f5;   
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f0f0f0));
+	background: -moz-linear-gradient(top,  #fff,  #f0f0f0); 
+  border-bottom:1px solid #DDD;
+}
+
+
+.wice_grid th.filter_icons, .wice_grid th.hide_show_icon {
+  text-align: right ;
+}
+
+.wice_grid thead {
+  border-bottom: 1px solid #ddd;
+}
+
+.wice_grid tfoot tr td {
+  border-bottom: 1px solid #ddd;
+}
+
+.wice_grid tr.odd {
+  background-color: #fff;
+}
+
+.wice_grid tr.even {
+  background-color: #F9F9F9;
+}
+
+.wice_grid td {
+  border-bottom: 1px solid #eee;  
+  padding: 6px;
+}
+
+.wice_grid tr:hover td { background:#f2f7ff; cursor:default;}
+
+.wice_grid .desc,  .wice_grid .asc{ 
+  padding-right: 18px; 
+  text-decoration:none;
+}
+
+.wice_grid .desc { 
+  background: transparent url(/images/icons/grid/arrow_down.gif) right no-repeat
+  
+}
+.wice_grid .asc  { 
+  background: transparent url(/images/icons/grid/arrow_up.gif) right no-repeat
+}
+
+.wice_grid th div.date-filter {
+  text-align: left;
+}
+
+.wice_grid tr.even td.active_filter  { background-color: #ddddff; }
+.wice_grid tr.odd td.active_filter  { background-color: #eeeeff; }
+
+.wice_grid tr.even td.sorted { background-color: #ffffcc; }
+.wice_grid tr.odd td.sorted { background-color: #ffffee; }
+
+
+.wice_grid a.date_label {text-decoration: none;}
+.wice_grid a.date_label:hover {text-decoration: line-through;}
+
+.wice_grid td.sel{
+  text-align: center;
+}
+
+.wice_grid_container .pagination {
+  float: left;
+}
+
+.wice_grid_container .pagination_status {
+  font-weight: bold;
+  float: right;
+}
+
+.wice_grid_container .pagination_status .show_all_link a {
+  text-decoration: none;
+  font-size: 80%;
+}
+
+.wice_grid .custom_dropdown_container { position: relative; padding-right: 9px;}
+.wice_grid .custom_dropdown_container .toggle_multi_select_icon { position:absolute; top:0; right:0;  }
+
+.wice_grid .text_filter_container { position: relative; padding-right: 13px;}
+.wice_grid .text_filter_container .negation_checkbox { position:absolute; top:0; right:0;  }
+
+
+/*  Saved Queries  */
+
+.wice_grid_container h3 {
+  font-family: 'Lucida Grande';
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.wice_grid_query_panel {
+  width: 400px;
+  border:1px solid #ddd;
+  margin-top : 10px;
+  margin-bottom : 10px;
+  padding : 5px;
+}
+
+
+.wice_grid_query_panel .query_list{
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-left : 0px;  
+}
+
+.wice_grid_query_panel .query_list li a.query_load_link {
+  text-decoration: none;
+}
+
+
+.wice_grid_query_panel .query_list li a.current {
+  font-weight: bold;
+  text-decoration: underline;  
+}
+
+
+.wice_grid_query_panel .query_list li a.query_load_link:hover {
+  text-decoration: underline;
+}
+
+
+.wice_grid_query_panel  .wice_grid_notice {
+  padding:.4em;
+  margin-bottom:1em;
+  border:2px solid #ddd;
+  background:#FFF6BF;
+  color:#514721;
+  border-color:#FFD324;
+}
+
+
+.wice_grid_query_panel  .errorExplanation {
+  padding:.4em;
+  margin-bottom:1em;
+  border:2px solid #ddd;
+  background:#FBE3E4;
+  color:#8a1f11;
+  border-color:#FBC2C4;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-left : 0px;
+}
+

@@ -3,6 +3,9 @@ Gemfile.lock
 db/*.sqlite3
 log/*.log
 tmp/
-config/*.default
+config/*.yml
 public/javascripts/cached_*
 public/stylesheets/cached_*
+
+#以bundle install --path vendor/bundle方式安装，不影响开发者现有gems环境
+vendor/bundle

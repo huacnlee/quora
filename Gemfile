@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.5'
 
 # MongoDB
-gem "mongoid", "2.0.0.rc.7"
+gem "mongoid", "2.0.0"
 gem "bson_ext", "~> 1.2.2"
 gem 'mongo-rails-instrumentation'
 gem "mongoid-eager-loading"
@@ -47,5 +47,8 @@ gem 'tagged-cache'
 
 # PUT 颜色
 gem 'colorize'
+
+# 后台表格
+gem 'mongoid_wice_grid', :require => "wice_grid"
 
 

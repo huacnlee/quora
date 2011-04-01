@@ -1,0 +1,2 @@
+module Cpanel::AsksHelper
+end

@@ -1,0 +1,17 @@
+<div id="cpanel_answer" class="form">
+<%= simple_form_for(@answer, 
+                    :url => (@answer.id.blank? ? cpanel_answers_path : cpanel_answer_path(@answer.id)), :html => { :enctype =>  "multipart/form-data" } ) do |f| %>
+
+  <div class="inputs">
+  <%= f.input :ask_id %>
+  <%= f.input :user_id %>
+  <%= f.input :body, :as => :text %>
+  <%= f.input :votes, :as => :text %>
+  <%= f.input :comments_count %>
+  </div>
+  <div class="actions">
+    <button type="submit">提交</button>
+     或者 <%= link_to '返回', cpanel_answers_path %>
+  </div>
+<% end %>
+</div>
