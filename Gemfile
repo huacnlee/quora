@@ -48,4 +48,7 @@ gem 'tagged-cache'
 # PUT 颜色
 gem 'colorize'
 
+# 后台表格
+gem 'mongoid_wice_grid', :require => "wice_grid"
+
 

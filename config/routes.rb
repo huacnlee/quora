@@ -32,4 +32,9 @@ Quora::Application.routes.draw do
   end
   resources :comments 
   resources :topics
+
+  namespace :cpanel do
+    root :to =>  "home#index"
+    resources :users
+  end
 end

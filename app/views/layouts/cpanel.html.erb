@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <title><%= Setting.app_name %> - 后台</title> 
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
+  <%= stylesheet_link_tag "application","cpanel","wice_grid", :cache => "cached_cpanel" %>
+  <%= javascript_include_tag "jquery.min","rails","wice_grid", :cache => "cached_cpanel" %>
+  <%= csrf_meta_tag %>
+</head> 
+<body> 
+  <div id="header">
+    <div class="container">
+      <table> 
+        <tr> 
+          <td id="app_name"> 
+            控制台 <a href="<%= root_path %>" class="out">回前台</a> 
+          </td>          
+          <td id="nav">
+            <a href="<%= cpanel_users_path %>">用户</a>
+          </td>
+					<td id="user_bar"> 
+            <% if current_user %>
+            你好 <strong><%= current_user.name %></strong>  <a href="<%= logout_path %>">登出</a> 
+						<% end %>
+          </td> 
+				</tr> 
+			</table> 
+	  </div> 
+  </div> 
+  <div id="sitemap"> 
+    <div class="container">
+		 导航: <a href="<%= cpanel_root_path %>">控制台</a> &gt; <%= yield :sitemap %>
+   </div>
+	</div> 
+  <div id="main">
+    <div class="container">
+      <% if !notice.blank? %>
+        <div class="notice_message"><%= notice %></div>
+        <script type="text/javascript">
+          $(".notice_message").fadeOut().fadeIn();    
+        </script>
+      <% end %>
+      <% if !alert.blank? %>
+        <div class="alert_message"><%= alert %></div>
+        <script type="text/javascript">
+          $(".alert_message").fadeOut().fadeIn();    
+        </script>
+      <% end %> 
+      <%= yield %>
+		</div> 
+  </div> 
+  <div id="footer" class="container"> 
+    <div class="container">
+      <%= raw Setting.foot_html %>
+    </div>
+  </div> 
+</body> 
+</html> 

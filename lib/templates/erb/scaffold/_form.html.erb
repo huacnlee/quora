@@ -1,6 +1,6 @@
 <div id="<%= singular_table_name %>" class="form">
 <%%= simple_form_for(@<%= file_name %>, 
-  :url => (@<%= file_name %>.id.blank? ? <%= index_helper %>_path : <%= singular_table_name %>_path(@<%= file_name %>)) ) do |f| %>
+  :url => (@<%= file_name %>.id.blank? ? <%= index_helper %>_path : <%= singular_table_name %>_path(@<%= file_name %>.id)) ) do |f| %>
 
   <div class="inputs">
 <% for attribute in attributes -%>
