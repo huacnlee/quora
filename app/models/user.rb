@@ -13,6 +13,8 @@ class User
   field :bio
   field :avatar
   field :website
+  # 软删除标记，1 表示已经删除
+  field :deleted, :type => Integer
 
   # 不感兴趣的问题
   field :muted_ask_ids, :type => Array, :default => []
@@ -119,5 +121,18 @@ class User
     ask.followers.delete(self)
     ask.save
   end
+
+  # 软删除
+  # 只是把用户信息修改了
+  def soft_delete
+    # assuming you have deleted_at column added already
+    return false if self.deleted == 1
+    self.deleted = 1
+    self.name = "#{self.name}[已注销]"
+    self.email = "#{self.id}@zheye.org"
+    self.slug = "#{self.id}"
+    self.save
+  end
+  
 
 end
