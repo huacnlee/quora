@@ -17,7 +17,7 @@ class Log
 end
 
 class AskLog < Log
-  
+  belongs_to :ask, :inverse_of => :logs, :foreign_key => :target_id
 end
 
 class TopicLog < Log
@@ -29,7 +29,7 @@ class UserLog < Log
 end
 
 class AnswerLog < Log
-  
+  belongs_to :answer, :inverse_of => :logs, :foreign_key => :target_id
 end
 
 class CommentLog < Log

@@ -27,6 +27,8 @@ class Ask
 
   # 回答
   has_many :answers
+  # Log
+  has_many :logs, :class_name => "Log", :foreign_key => "target_id"
   # 最后个回答
   belongs_to :last_answer, :class_name => 'Answer'
   # 最后回答者
