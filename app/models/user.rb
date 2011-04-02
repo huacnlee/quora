@@ -13,11 +13,15 @@ class User
   field :bio
   field :avatar
   field :website
+  # 软删除标记，1 表示已经删除
+  field :deleted, :type => Integer
 
-  # 不敢兴趣的问题
+  # 不感兴趣的问题
   field :muted_ask_ids, :type => Array, :default => []
   # 关注的问题
   field :followed_ask_ids, :type => Array, :default => []
+  # 回答过的问题
+  field :answered_ask_ids, :type => Array, :default => []
 
   # 邀请字段
   field :invitation_token
@@ -28,6 +32,7 @@ class User
 
   field :answers_count, :type => Integer, :default => 0
   has_many :answers
+
   references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
   references_and_referenced_in_many :followed_topics, :stored_as => :array, :inverse_of => :followers, :class_name => "Topic"
 
@@ -162,5 +167,18 @@ class User
       end
       
     end
+
+  # 软删除
+  # 只是把用户信息修改了
+  def soft_delete
+    # assuming you have deleted_at column added already
+    return false if self.deleted == 1
+    self.deleted = 1
+    self.name = "#{self.name}[已注销]"
+    self.email = "#{self.id}@zheye.org"
+    self.slug = "#{self.id}"
+    self.save
+  end
+  
 
 end

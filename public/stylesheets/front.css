@@ -27,7 +27,8 @@ address, blockquote {
 
 #header #user_bar { padding-top:10px; text-align:right; margin-right:4px; width: 210px !important; _width: 220px;  }
 #header #user_bar a { color: #B9BBBC; font-size:12px; display:inline-block; margin-right:8px; }
-#footer { clear:both; padding-top:25px; height:80px; }
+#footer { clear:both; padding-top:25px; height:80px;  }
+#footer .links {   margin-bottom:5px;  }
 
 #header:after {
     content:"";
@@ -130,8 +131,8 @@ a.user img.normal { width:100px; height:100px; }
 .answers .answer .info { color: #999; margin:3px 0;  }
 
 .ask .info a.user,
-.answer .author { font-weight:normal; }
-.answer .author a.user { font-weight:bold; }
+.answer .author { color:#666; }
+.answer .author a.user { font-weight:bold; margin-right:2px; }
 .answer .votes { color:#999; margin-bottom:4px; }
 .answer .votes a { color:#999; }
 
@@ -165,6 +166,13 @@ a.user img.normal { width:100px; height:100px; }
 
 
 .user_profile {}
+.user_profile .tabs { border-bottom:3px solid #ddd; margin-top:10px; padding:5px 0; margin-bottom:10px;  }
+.user_profile .tabs a { -moz-border-radius: 15px; -webkit-border-radius: 15px;
+  display: inline-block; font-weight: bold; margin-right: 3px; padding: 3px 15px 3px; color: #19558D; }
+.user_profile .tabs a.actived { color:#333; background:#ddd; }
+.user_profile .tabs a.actived:hover { text-decoration:none; }
+.user_profile h1 { display:inline;padding:0;margin:0;}
+.user_profile .avatar { width: 110px; float:left; }
 .user_profile .bio { margin-top:10px; }
 
 #topic { margin-bottom:10px; }

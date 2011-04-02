@@ -66,14 +66,26 @@ var App = {
     var textId = link.attr("data-text-id");
     var remote_url = link.attr("data-url");
     var editType = link.attr("data-type");
+    var editRich = link.attr("data-rich");
+    var editWidth = link.attr("data-width");
+    var editHeight = link.attr("data-height");
 
     textPanel = $("#"+textId);
     link.parent().hide();
 
-    editHtml = '<input type="text" name="value" value="'+ textPanel.text() +'" />';
-    if(editType == "textarea"){
-      editHtml = '<textarea name="value">'+textPanel.html()+'</textarea>';
+    sizeStyle = ""
+    if(editWidth != undefined){
+      sizeStyle += "width:"+editWidth+"px;"
     }
+    if(editHeight != undefined){
+      sizeStyle += "height:"+editHeight+"px;"
+    }
+    
+    editHtml = '<input type="text" name="value" style="'+sizeStyle+'" value="'+ textPanel.text() +'" />';
+    if(editType == "textarea"){
+      editHtml = '<textarea name="value" style="'+sizeStyle+'">'+textPanel.html()+'</textarea>';
+    }
+    
 
     var csrf_token = $('meta[name=csrf-token]').attr('content'),
         csrf_param = $('meta[name=csrf-param]').attr('content');
@@ -88,7 +100,9 @@ var App = {
                 </form>');
     link.parent().after(editPanel);
 
-    $("textarea",editPanel).qeditor();
+    if(editRich == "true"){
+      $("textarea",editPanel).qeditor();
+    }
     $("a.cancel",editPanel).click(function(){
         linkId = $(this).parent().attr("data-id");
         editPanel = $("#ipe_"+linkId);

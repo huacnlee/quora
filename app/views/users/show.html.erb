@@ -1,27 +1,14 @@
 <div class="user_profile">
-  <h1><%= @user.name %></h1>
-  <div class="tagline">
-    <%= @user.tagline %>
-  </div>
-  <ul>
-    <li class="info">
-      注册于 <%= l @user.created_at, :format => :long %>
-    </li>
-    <li>
-    <% if !@user.website.blank? %>
-      <a href="<%= @user.website %>" rel="nofollow" target="_blank"><%= @user.website %></a>
-    <% end %>
-    </li>
-  </ul>
-  <div class="bio md_body">
-    <% if @user.bio %>
-      <%= @user.bio %>
-    <% end %>
+  <%= render "head", :user => @user %>
+  <div class="bio">
+    <span id="user_bio">
+      <% if @user.bio.blank? and (not owner?@user) %>
+        <%= @user.name %>还没来得及写他的个人介绍.
+      <% else %>
+        <%= md_body @user.bio %>
+      <% end %>
+    </span>
+    <% if owner?@user %> <%= in_place_edit_tag(@user,:bio,:type => :textarea, :text_id => "user_bio") %> <% end %>
   </div>
 </div>
-<% content_for :sidebar do %>
-<div class="box">
-  <%= image_tag(@user.avatar.normal.url) %>
-</div>
-<% end %>
-
+<%= render "sidebar", :user => @user %>

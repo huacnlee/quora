@@ -25,45 +25,67 @@
       $(".action a",answer).removeClass("voted");
       $(".action a.vote_"+vtype,answer).addClass("voted");
       App.loading();
-      $.get("/answers/"+id+"/vote",{ inc : type },function(votes_count){
-        if(!App.requireUser(votes_count,"text")){
+      $.get("/answers/"+id+"/vote",{ inc : type },function(res){
+        if(!App.requireUser(res,"text")){
           return false;
         }
-        vote_callback(id, votes_count);
+        res_a = res.split("|");
+        vote_callback(id, vtype, res_a[0], res_a[1]);
         App.loading(false);
       });
       return false;
     }
 
-    function vote_callback(id,votes_count){
+    function vote_callback(id, vtype,new_up_count, new_down_count){
       var answer = $("#answer_"+id);
       var answer_votes = $(".votes",answer);
+      answer.attr("data-uc", new_up_count);
+      answer.attr("data-dc", new_down_count);
+      
+      /* Change value for visable label */
       if(answer_votes.length > 0){
-        $(".num",answer_votes).text(votes_count);
+        if(new_up_count <= 0){
+          /* remove up vote count label if up_votes_count is zero */
+          $(answer_votes).remove();
+        }
+        else{
+          $(".num",answer_votes).text(new_up_count);
+        }
       }
       else {
-        $(".author",answer).after("<div class=\"votes\"><span class=\"num\">"+votes_count+"</span> 票</div>");
+        if(vtype == "up"){
+          $(".author",answer).after("<div class=\"votes\"><span class=\"num\">"+new_up_count+"</span> 票</div>");
+        }
       }
 
       var answers = $(".answer");
       var position_changed = false;
+
       for(var i =0;i<answers.length;i++){
         a = answers[i];
+        /* Skip current voted Answer self */
         if($(a).attr("id") == answer.attr("id")){
           continue;
         }
-        v_count = 0;
-        votes = $(".votes",a);
-        if(votes.length > 0){
-          v_count = parseInt($(".num",votes).text());
-        }
-        if(votes_count > v_count){
-          $(a).before(answer);
-          position_changed = true;
-          break;
+        /* Get next Answer uc and dc */
+        u_count = parseInt($(a).attr("data-uc"));
+        d_count = parseInt($(a).attr("data-dc"));
+
+        /* Change the Ask position */
+        if(vtype == "up"){
+          if(new_up_count > u_count){
+            $(a).before(answer);
+            position_changed = true;
+            break;
+          }
         }
         else{
-          $(a).after(answer);
+          /* down vote */
+          if(new_up_count <= u_count && new_down_count < d_count){
+            $(a).after(answer);
+            position_changed = true;
+            break;
+          }
         }
       }
       answer.fadeOut(100).fadeIn(200);
@@ -93,15 +115,19 @@
 
 
     function follow(el, id){
+      App.loading();
 			$.get("/asks/"+id+"/follow",{}, function(res){
-					$(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @ask.id %>\');">取消关注</a>');
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @ask.id %>\');">取消关注</a>');
 	    });
       return false;
     }
 		
 		function unfollow(el, id){
+      App.loading();
 			$.get("/asks/"+id+"/unfollow",{}, function(res){
-	        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @ask.id %>\');">关注此问题</a>');
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @ask.id %>\');">关注此问题</a>');
 	    });
       return false;
     }
@@ -129,7 +155,15 @@
       }
     }
 
+    function beforeAddTopic(el){
+      App.loading();
+    }
+
     function addTopic(name){
+      App.loading(false);
+      if(name.trim() == ""){
+        return false;
+      }
       $(".ask .topics .item_list .in_place_edit").before("<a href='/topics/"+name+"' class='topic'>"+name+"</a>");
       $(".ask .topics .item_list .no_result").remove();
       exit_topic_count = $(".ask .edit_topics .items .topic").length;
@@ -142,9 +176,9 @@
     function removeTopic(el,idx,name){
       App.loading();
       $.get("<%= update_topic_ask_path(@ask.id) %>", { name : name }, function(res){
-          $(el).parent().remove();
-          $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
-          App.loading(false);
+        $(el).parent().remove();
+        $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
+        App.loading(false);
       });
       return false;
     }
@@ -181,7 +215,7 @@
           <% end %>
         <% end %>
       </div>
-      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" method="post">
+      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" onsubmit="return beforeAddTopic(this);" method="post">
         <%= auth_token  %>
         <input type="text" class="name" style="width:100px;" name="name" value="" placeholder="搜索话题" /> 
         <input type="hidden" name="add" value="1" /> 
@@ -232,7 +266,7 @@
       <h2>添加答案</h2>
       <% if current_user %>
       <div class="user_info">
-        <%= user_name_tag(current_user) %>
+        <%= user_name_tag(current_user) %>,
         <span id="answer_user_tagline"><%= user_tagline_tag(current_user) %></span>
         <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
       </div>

@@ -1,10 +1,36 @@
 # coding: utf-8
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:auth_callback]
-  def show
+  before_filter :init_user
+
+  def init_user
     @user = User.find_by_slug(params[:id])
     if @user.blank?
       render_404
+    end
+  end
+
+  def answered
+    @per_page = 2
+    @asks = Ask.normal.recent.find(@user.answered_ask_ids)
+                  .paginate(:page => params[:page], :per_page => @per_page)
+    set_seo_meta("#{@user.name}回答过的问题")
+    if params[:format] == "js"
+      render "/asks/index.js"
+    end
+  end
+
+  def show
+    set_seo_meta(@user.name)
+  end
+
+  def asked
+    @per_page = 10
+    @asks = @user.asks.normal.recent
+                  .paginate(:page => params[:page], :per_page => @per_page)
+    set_seo_meta("#{@user.name}问过的问题")
+    if params[:format] == "js"
+      render "/asks/index.js"
     end
   end
 

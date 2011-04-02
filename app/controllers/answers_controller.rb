@@ -23,6 +23,6 @@ class AnswersController < ApplicationController
     end
     
     answer.reload
-    render :text => answer.votes_point
+    render :text => "#{answer.up_votes_count}|#{answer.down_votes_count}"
   end
 end

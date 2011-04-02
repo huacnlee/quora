@@ -2,6 +2,7 @@
 class HomeController < ApplicationController
   before_filter :require_user_text, :only => [:update_in_place]
   before_filter :require_user
+  caches_page :about
 
   def index
     @per_page = 20
@@ -55,7 +56,15 @@ class HomeController < ApplicationController
 
 
   def update_in_place
+    # TODO: Here need to chack permission
     klass, field, id = params[:id].split('__')
+    puts params[:id]
+
+    # 验证权限,用户是否有修改制定信息的权限
+    case klass
+    when "user" then return if current_user.id.to_s != id
+    end
+
     object = klass.camelize.constantize.find(id)
     if ["ask"].include?(klass) and current_user
       object.update_attributes(:current_user_id => current_user.id)
@@ -66,6 +75,10 @@ class HomeController < ApplicationController
       Rails.logger.info "object.errors.full_messages: #{object.errors.full_messages}"
       render :text => object.errors.full_messages.join("\n"), :status => 422
     end
+  end
+
+  def about
+    @users = User.any_in(:email => Setting.admin_emails)
   end
 
 end

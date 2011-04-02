@@ -9,6 +9,8 @@ class Comment
   belongs_to :user
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
 
+  validates_presence_of :body
+
   before_create :fix_commentable_id
   def fix_commentable_id
     if self.commentable_id.class == "".class
