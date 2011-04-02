@@ -15,8 +15,11 @@
   <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","application","asks", :cache => "cached_application" %>
   <%= yield :scripts %>
   <script type="text/javascript">
-    function addAsk(){
+    function addAsk(){      
+      var txtTitle = $("#hidden_new_ask textarea:nth-of-type(1)");
+      txtTitle.text($("#add_ask input").val());
       $.facebox({ div : "#hidden_new_ask", overlay : false });
+      txtTitle.focus();
       return false;
     }
 
@@ -35,19 +38,21 @@
           success : function(res){
             html = '<ul class="complete">';
             App.loading(false);            
-            if(res.length == 0){
-              return false;
-            }
-            for(var i=0;i<res.length;i++){
-              html += '<li onclick="location.href = $(\'a\',this).attr(\'href\');">';
-              if(res[i].topics.length > 0){
-                html += '<span class="cate">'+res[i].topics[0]+'</span>';
+            if(res.length > 0){
+              for(var i=0;i<res.length;i++){
+                html += '<li onclick="location.href = $(\'a\',this).attr(\'href\');">';
+                if(res[i].topics.length > 0){
+                  html += '<span class="cate">'+res[i].topics[0]+'</span>';
+                }
+                item_title = res[i].title;
+                html += '<a href="/asks/'+res[i]._id+'">'+item_title+'</a>';
+                html += '</li>';
               }
-              item_title = res[i].title;
-              html += '<a href="/asks/'+res[i]._id+'">'+item_title+'</a>';
-              html += '</li>';
+              html += '<li class="more" onclick="location.href=\'<%= search_asks_path %>?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';
             }
-            html += '<li class="more" onclick="location.href=\'<%= search_asks_path %>?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';
+            else{
+              html += '<li>没有找到关于“'+t+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></li>';
+            }
             html += "</ul>";
             searchCallback(el,html);
           }
