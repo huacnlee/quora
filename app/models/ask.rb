@@ -111,7 +111,7 @@ class Ask
     words = []
     result.raw_result[:words].each do |w|
       next if w[0] == "ask"
-      words << ((w[0] == "rubi" and text.downcase == "ruby") ? "ruby" : w[0])
+      words << ((w[0] == "rubi" and text.downcase.index("ruby")) ? "ruby" : w[0])
     end
     out_result = {:items => [], :words => words} 
     out_result[:items] = Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
