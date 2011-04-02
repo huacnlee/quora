@@ -7,7 +7,7 @@ var Asks = {
           return false;
         }
         // $(el).replaceWith('<span class="muted">不再显示</span>');
-				$(el).parent().parent().fadeOut("slow");
+				$(el).parent().parent().fadeOut("fast");
     });
     return false;
   },
@@ -20,7 +20,7 @@ var Asks = {
           return false;
         }
         // $(el).replaceWith('<span class="muted">不再显示</span>');
-				$(el).parent().parent().fadeOut("slow");
+				$(el).parent().parent().fadeOut("fast");
     });
     return false;
   },
@@ -46,7 +46,7 @@ var Asks = {
           return false;
         }
         // $(el).replaceWith('<a href="/asks'+id+'/follow">关注</a>');
-				$(el).parent().parent().fadeOut("slow");
+				$(el).parent().parent().fadeOut("fast");
     });
     return false;
   },
