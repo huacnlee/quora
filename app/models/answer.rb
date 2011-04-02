@@ -24,6 +24,12 @@ class Answer
                                :last_answer_id => self.id,
                                :last_answer_user_id => self.user_id })
     self.ask.inc(:answers_count,1)
+    
+    # 保存用户回答过的问题列表
+    if !self.user.answered_ask_ids.index(self.ask_id)
+      self.user.answered_ask_ids << self.ask_id
+      self.user.save
+    end
   end
 
   

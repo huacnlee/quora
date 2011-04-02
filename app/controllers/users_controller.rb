@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def answered
-    @per_page = 2
+    @per_page = 10
     @asks = Ask.normal.recent.find(@user.answered_ask_ids)
                   .paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("#{@user.name}回答过的问题")

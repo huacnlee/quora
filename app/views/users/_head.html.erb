@@ -21,6 +21,6 @@
 <% end %>
 <div class="tabs">
   <a<%= ' class=actived' if params[:action] == "show" %> href="<%= user_path(user.slug) %>">个人介绍</a>
-  <a<%= ' class=actived' if params[:action] == "asked" %> href="<%= asked_user_path(user.slug) %>">问过</a>
-  <a<%= ' class=actived' if params[:action] == "answered" %> href="<%= answered_user_path(user.slug) %>">回答过</a>
+  <a<%= ' class=actived' if params[:action] == "asked" %> href="<%= asked_user_path(user.slug) %>">问过(<%= user.asks_count %>)</a>
+  <a<%= ' class=actived' if params[:action] == "answered" %> href="<%= answered_user_path(user.slug) %>">回答过(<%= user.answered_ask_ids.count %>)</a>
 </div>
