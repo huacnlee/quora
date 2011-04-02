@@ -1,0 +1,10 @@
+<div class="user_profile">
+  <%= render "head", :user => @user %>
+</div>
+<div class="asks">
+  <% @asks.each do |item| %>
+    <%= render "/asks/ask", :item => item %>
+  <% end %>
+</div>
+<%= render "sidebar", :user => @user %>
+

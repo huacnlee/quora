@@ -1,0 +1,15 @@
+<div class="uname">
+  <h1 id="user_name"><%= user.name %></h1>
+  <% if owner?user %> <%= in_place_edit_tag(user,:name,:text_id => "user_name") %> <% end %>
+</div>
+<% if !user.website.blank? %>
+  <div class="website">
+    <a href="<%= user.website %>" rel="nofollow" target="_blank" id="user_website"><%= user.website %></a>
+    <% if owner?user %> <%= in_place_edit_tag(user,:website, :text_id => "user_website") %> <% end %>
+  </div>
+<% end %>
+<div class="tabs">
+  <a<%= ' class=actived' if params[:action] == "show" %> href="<%= user_path(user.slug) %>">个人介绍</a>
+  <a<%= ' class=actived' if params[:action] == "asked" %> href="<%= asked_user_path(user.slug) %>">问过</a>
+  <a<%= ' class=actived' if params[:action] == "answered" %> href="<%= answered_user_path(user.slug) %>">回答过</a>
+</div>

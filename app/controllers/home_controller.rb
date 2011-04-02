@@ -50,6 +50,7 @@ class HomeController < ApplicationController
 
 
   def update_in_place
+    # TODO: Here need to chack permission
     klass, field, id = params[:id].split('__')
     object = klass.camelize.constantize.find(id)
     if object.update_attributes(field => params[:value])

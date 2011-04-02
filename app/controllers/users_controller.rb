@@ -1,11 +1,27 @@
 # coding: utf-8
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:auth_callback]
-  def show
+  before_filter :init_user
+
+  def init_user
     @user = User.find_by_slug(params[:id])
     if @user.blank?
       render_404
     end
+  end
+
+  def answered
+    @asks = Ask.normal.recent.find(@user.answered_ask_ids,:limit => 13)
+    set_seo_meta("#{@user.name}回答过的问题")
+  end
+
+  def show
+    set_seo_meta(@user.name)
+  end
+
+  def asked
+    @asks = @user.asks.normal.recent.limit(13)
+    set_seo_meta("#{@user.name}问过的问题")
   end
 
   def auth_callback

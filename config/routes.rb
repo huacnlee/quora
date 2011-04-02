@@ -12,7 +12,12 @@ Quora::Application.routes.draw do
     get "/login", :to => "devise/sessions#new" 
     get "/logout", :to => "devise/sessions#destroy" 
   end
-  resources :users, :only => :show
+  resources :users do
+    member do
+      get "answered"
+      get "asked"
+    end
+  end
   match "auth/:provider/callback", :to => "users#auth_callback"  
 
   

@@ -14,10 +14,12 @@ class User
   field :avatar
   field :website
 
-  # 不敢兴趣的问题
+  # 不感兴趣的问题
   field :muted_ask_ids, :type => Array, :default => []
   # 关注的问题
   field :followed_ask_ids, :type => Array, :default => []
+  # 回答过的问题
+  field :answered_ask_ids, :type => Array, :default => []
 
   # 邀请字段
   field :invitation_token
@@ -28,6 +30,7 @@ class User
 
   field :answers_count, :type => Integer, :default => 0
   has_many :answers
+
   references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
 
   embeds_many :authorizations

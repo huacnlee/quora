@@ -164,6 +164,13 @@ a.user img.normal { width:100px; height:100px; }
 
 
 .user_profile {}
+.user_profile .tabs { border-bottom:3px solid #ddd; margin-top:10px; padding:5px 0; margin-bottom:10px;  }
+.user_profile .tabs a { -moz-border-radius: 15px; -webkit-border-radius: 15px;
+  display: inline-block; font-weight: bold; margin-right: 3px; padding: 3px 15px 3px; color: #19558D; }
+.user_profile .tabs a.actived { color:#333; background:#ddd; }
+.user_profile .tabs a.actived:hover { text-decoration:none; }
+.user_profile h1 { display:inline;padding:0;margin:0;}
+.user_profile .avatar { width: 110px; float:left; }
 .user_profile .bio { margin-top:10px; }
 
 #topic { margin-bottom:10px; }
