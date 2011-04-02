@@ -43,7 +43,13 @@ Quora::Application.routes.draw do
     end
   end
   resources :comments 
-  resources :topics
+  resources :topics do
+    member do
+      get "follow"
+      get "unfollow"
+    end
+  end
+  resources :logs
 
   namespace :cpanel do
     root :to =>  "home#index"

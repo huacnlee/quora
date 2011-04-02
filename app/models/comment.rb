@@ -7,6 +7,7 @@ class Comment
   
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
+  has_many :logs, :class_name => "Log", :foreign_key => "target_id"
 
   validates_presence_of :body
 
