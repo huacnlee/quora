@@ -12,3 +12,4 @@ script/rails s -e development_mongohq
 
 Then, open your browser, points to localhost:3000
 That is it, enjoy yourself.
+

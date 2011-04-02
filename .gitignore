@@ -2,6 +2,7 @@
 Gemfile.lock
 db/*.sqlite3
 log/*.log
+log/*.pid
 tmp/
 config/*.yml
 public/javascripts/cached_*
@@ -10,3 +11,5 @@ db/sphinx
 
 #以bundle install --path vendor/bundle方式安装，不影响开发者现有gems环境
 vendor/bundle
+
+db/sphinx

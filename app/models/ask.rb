@@ -2,6 +2,7 @@
 class Ask
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Sphinx
   
   field :title
   field :body
@@ -43,6 +44,11 @@ class Ask
   # 除开一些 id，如用到 mute 的问题，传入用户的 muted_ask_ids
   scope :exclude_ids, lambda { |id_array| not_in("_id" => (id_array ||= [])) } 
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 
+
+  # FullText indexes
+  search_index(:fields => [:title,:body, :topics],
+               :attributes => [:title, :body, :created_at],
+               :options => {} )
 
   before_save :fill_default_values
   
@@ -86,9 +92,16 @@ class Ask
     return self.spams_count
   end
 
-  def self.search_title(text)
-    t = text.split(" ").join("|")
-    Ask.only(:id,:title).find(:all, :conditions => {:title => /#{t}/i})
+  def self.search_title(text,options = {})
+    limit = options[:limit] || 10
+
+    result = Ask.search(text,:max_matches => 1)
+    words = []
+    result.raw_result[:words].each do |w|
+      next if w[0] == "ask"
+      words << /#{w[0]}/i
+    end
+    Ask.all_in(:title => words).recent.normal.limit(limit)
   end
 
 end
