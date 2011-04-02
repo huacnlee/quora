@@ -9,6 +9,6 @@ class AnswersController < ApplicationController
     end
     success = answer.vote(:voter_id => current_user.id, :value => vote_type)
     answer.reload
-    render :text => answer.votes_point
+    render :text => "#{answer.up_votes_count}|#{answer.down_votes_count}"
   end
 end
