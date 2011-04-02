@@ -13,4 +13,4 @@ db/sphinx
 vendor/bundle
 
 db/sphinx
-
+development.*

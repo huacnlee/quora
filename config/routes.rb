@@ -17,6 +17,9 @@ Quora::Application.routes.draw do
 
   
   resources :asks do
+    collection do
+      get "search"
+    end
     member do
       get "spam"
       get "follow"

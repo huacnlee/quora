@@ -2,6 +2,7 @@
 class Ask
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Sphinx
   
   field :title
   field :body
@@ -44,6 +45,11 @@ class Ask
   scope :exclude_ids, lambda { |id_array| not_in("_id" => (id_array ||= [])) } 
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 
 
+  # FullText indexes
+  search_index(:fields => [:title,:body, :topics],
+               :attributes => [:title, :body, :created_at],
+               :options => {} )
+
   before_save :fill_default_values
   
   def fill_default_values
@@ -84,6 +90,20 @@ class Ask
     self.spam_voter_ids << voter_id
     self.save()
     return self.spams_count
+  end
+
+  def self.search_title(text,options = {})
+    limit = options[:limit] || 10
+
+    result = Ask.search(text,:max_matches => 1)
+    words = []
+    result.raw_result[:words].each do |w|
+      next if w[0] == "ask"
+      words << w[0]
+    end
+    out_result = {:items => [], :words => words} 
+    out_result[:items] = Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
+    out_result
   end
 
 end
