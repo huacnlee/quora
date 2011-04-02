@@ -7,7 +7,7 @@ class Log
   field :target_attr
   field :action
   field :diff
-  field :target_id, :type => Integer
+  field :target_id
   
   index :target_attr
   index :action
