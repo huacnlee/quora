@@ -14,8 +14,9 @@ module UsersHelper
     raw "<a href=\"#{user_path(user.slug)}\" class=\"user\" title=\"#{user.name}\">#{image_tag(url, :class => size)}</a>"
   end
 
-  def user_tagline_tag(user)
+  def user_tagline_tag(user,options = {})
+    prefix = options[:prefix] || ""
     return "" if user.tagline.blank?
-    ", #{truncate(user.tagline, :length => 30)}"
+    raw "#{prefix}#{truncate(user.tagline, :length => 30)}"
   end
 end

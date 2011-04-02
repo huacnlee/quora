@@ -244,7 +244,7 @@
       <h2>添加答案</h2>
       <% if current_user %>
       <div class="user_info">
-        <%= user_name_tag(current_user) %>
+        <%= user_name_tag(current_user) %>,
         <span id="answer_user_tagline"><%= user_tagline_tag(current_user) %></span>
         <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
       </div>

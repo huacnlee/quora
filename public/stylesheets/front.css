@@ -129,8 +129,8 @@ a.user img.normal { width:100px; height:100px; }
 .answers .answer .info { color: #999; margin:3px 0;  }
 
 .ask .info a.user,
-.answer .author { font-weight:normal; }
-.answer .author a.user { font-weight:bold; }
+.answer .author { color:#666; }
+.answer .author a.user { font-weight:bold; margin-right:2px; }
 .answer .votes { color:#999; margin-bottom:4px; }
 .answer .votes a { color:#999; }
 

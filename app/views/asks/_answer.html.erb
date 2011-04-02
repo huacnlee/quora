@@ -9,7 +9,7 @@
     <%= user_avatar_tag(item.user, :small) %>
   </div>
   <div class="answer_border">
-    <div class="author"><%= user_name_tag(item.user) %><%= user_tagline_tag(item.user) %></div>
+    <div class="author"><%= user_name_tag(item.user) %><%= user_tagline_tag(item.user,:prefix => ",") %></div>
     <% if !item.votes_point.blank? and item.votes_point != 0 %>
     <div class="votes"> 
       <span class="num"><%= item.votes_point %></span> 票

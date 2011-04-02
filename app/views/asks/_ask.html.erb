@@ -20,7 +20,7 @@
     <div class="last_answer answer">
       <div class="author">
         <span class="votes"><%= item.last_answer.votes_count %></span>
-        <% if item.last_answer_user %><%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user) %> <% else %>匿名用户<% end %>
+      <% if item.last_answer_user %><%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user,:prefix => ",") %> <% else %>匿名用户<% end %>
       </div>
       <div class="md_body"><%= md_body(item.last_answer.body) %></div>
     </div>
