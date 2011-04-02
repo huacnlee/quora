@@ -101,9 +101,11 @@ class Ask
     words = []
     result.raw_result[:words].each do |w|
       next if w[0] == "ask"
-      words << /#{w[0]}/i
+      words << w[0]
     end
-    Ask.all_in(:title => words).recent.normal.limit(limit)
+    out_result = {:items => [], :words => words} 
+    out_result[:items] = Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
+    out_result
   end
 
 end
