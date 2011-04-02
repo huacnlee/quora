@@ -52,6 +52,13 @@ class HomeController < ApplicationController
   def update_in_place
     # TODO: Here need to chack permission
     klass, field, id = params[:id].split('__')
+    puts params[:id]
+
+    # 验证权限,用户是否有修改制定信息的权限
+    case klass
+    when "user" then return if current_user.id.to_s != id
+    end
+
     object = klass.camelize.constantize.find(id)
     if object.update_attributes(field => params[:value])
       render :text => object.send(field).to_s
