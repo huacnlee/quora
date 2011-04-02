@@ -5,6 +5,7 @@ Quora::Application.routes.draw do
   match "/update_in_place" => "home#update_in_place"
   match "/muted" => "home#muted"
   match "/followed" => "home#followed"
+  match "/about" => "home#about"
 
   # devise_for :users, :path => '', :path_names => {:sign_in => "login", :sign_out => "logout", :sign_up => "register", :registration }
   devise_for :users,  :controllers => { :registrations => "registrations" } do

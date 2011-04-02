@@ -26,7 +26,8 @@ address, blockquote {
 
 #header #user_bar { padding-top:10px; text-align:right; margin-right:4px; width: 210px !important; _width: 220px;  }
 #header #user_bar a { color: #B9BBBC; font-size:12px; display:inline-block; margin-right:8px; }
-#footer { clear:both; padding-top:25px; height:80px; }
+#footer { clear:both; padding-top:25px; height:80px;  }
+#footer .links {   margin-bottom:5px;  }
 
 #header:after {
     content:"";

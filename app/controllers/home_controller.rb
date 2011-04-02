@@ -2,6 +2,7 @@
 class HomeController < ApplicationController
   before_filter :require_user_text, :only => [:update_in_place]
   before_filter :require_user
+  caches_page :about
 
   def index
     @per_page = 20
@@ -65,6 +66,10 @@ class HomeController < ApplicationController
     else
       render :text => object.errors.full_messages.join("\n"), :status => 422
     end
+  end
+
+  def about
+    @users = User.any_in(:email => Setting.admin_emails)
   end
 
 end
