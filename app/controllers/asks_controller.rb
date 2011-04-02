@@ -13,7 +13,7 @@ class AsksController < ApplicationController
   def search
     if params[:format] == "json"
       @asks = Ask.search_title(params["w"],:limit => 10)
-      render :json => @asks.to_json(:only => [:topics,:id,:title])
+      render :json => @asks.to_json(:only => [:topics,:_id,:title])
     else
       @asks = Ask.search_title(params["w"],:limit => 20)
       set_seo_meta("关于“#{params[:w]}”的搜索结果")
