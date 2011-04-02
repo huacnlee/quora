@@ -71,6 +71,7 @@ class AsksController < ApplicationController
   def create
     @ask = Ask.new(params[:ask])
     @ask.user_id = current_user.id
+    @ask.followers << current_user
 
     respond_to do |format|
       if @ask.save
