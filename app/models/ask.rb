@@ -86,4 +86,9 @@ class Ask
     return self.spams_count
   end
 
+  def self.search_title(text)
+    t = text.split(" ").join("|")
+    Ask.only(:id,:title).find(:all, :conditions => {:title => /#{t}/i})
+  end
+
 end
