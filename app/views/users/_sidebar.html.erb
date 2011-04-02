@@ -6,7 +6,10 @@
   <h2></h2>
   <div class="inner">
     <span id="user_tagline"><%= user.tagline %></span>
-    <% if owner?user %> <%= in_place_edit_tag(user,:tagline, :type => :textarea, :text_id => "user_tagline") %> <% end %>
+    <% if owner?user %>
+      <%= in_place_edit_tag(user,:tagline, :type => :textarea,:width => 200, :height => 80, 
+                            :rich => false, :text_id => "user_tagline") %> 
+    <% end %>
   </div>
 </div>
 <div class="box gray">

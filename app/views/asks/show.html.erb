@@ -93,15 +93,19 @@
 
 
     function follow(el, id){
+      App.loading();
 			$.get("/asks/"+id+"/follow",{}, function(res){
-					$(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @ask.id %>\');">取消关注</a>');
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @ask.id %>\');">取消关注</a>');
 	    });
       return false;
     }
 		
 		function unfollow(el, id){
+      App.loading();
 			$.get("/asks/"+id+"/unfollow",{}, function(res){
-	        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @ask.id %>\');">关注此问题</a>');
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @ask.id %>\');">关注此问题</a>');
 	    });
       return false;
     }
@@ -129,7 +133,15 @@
       }
     }
 
+    function beforeAddTopic(el){
+      App.loading();
+    }
+
     function addTopic(name){
+      App.loading(false);
+      if(name.trim() == ""){
+        return false;
+      }
       $(".ask .topics .item_list .in_place_edit").before("<a href='/topics/"+name+"' class='topic'>"+name+"</a>");
       $(".ask .topics .item_list .no_result").remove();
       exit_topic_count = $(".ask .edit_topics .items .topic").length;
@@ -142,9 +154,9 @@
     function removeTopic(el,idx,name){
       App.loading();
       $.get("<%= update_topic_ask_path(@ask.id) %>", { name : name }, function(res){
-          $(el).parent().remove();
-          $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
-          App.loading(false);
+        $(el).parent().remove();
+        $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
+        App.loading(false);
       });
       return false;
     }
@@ -181,7 +193,7 @@
           <% end %>
         <% end %>
       </div>
-      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" method="post">
+      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" onsubmit="return beforeAddTopic(this);" method="post">
         <%= auth_token  %>
         <input type="text" class="name" style="width:100px;" name="name" value="" placeholder="搜索话题" /> 
         <input type="hidden" name="add" value="1" /> 

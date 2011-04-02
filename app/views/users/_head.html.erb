@@ -1,6 +1,5 @@
 <div class="uname">
   <h1 id="user_name"><%= user.name %></h1>
-  <% if owner?user %> <%= in_place_edit_tag(user,:name,:text_id => "user_name") %> <% end %>
 </div>
 <% if !user.website.blank? %>
   <div class="website">
