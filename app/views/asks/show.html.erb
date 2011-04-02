@@ -92,16 +92,17 @@
     }
 
 
-    function follow(el){
-      if($(el).text() == "关注此问题"){
-        f = 1;
-        $(el).removeClass("green_button").text("取消关注");
-      }
-      else{
-        f = 0;
-        $(el).addClass("green_button").text("关注此问题");
-      }
-      $.get("/asks/<%= @ask.id %>/follow",{follow:f},function(s){ });
+    function follow(el, id){
+			$.get("/asks/"+id+"/follow",{}, function(res){
+					$(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @ask.id %>\');">取消关注</a>');
+	    });
+      return false;
+    }
+		
+		function unfollow(el, id){
+			$.get("/asks/"+id+"/unfollow",{}, function(res){
+	        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @ask.id %>\');">关注此问题</a>');
+	    });
       return false;
     }
 
@@ -209,7 +210,7 @@
     <% end %>
     • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友评价为烂问题后,问题将会自动删除" href="#">烂问题</a>
     <% if !@ask.spams_count.blank? %>(<span id="spams_count"><%= @ask.spams_count %></span>人认为)<% end %>
-    • <span class="date"><%= l @ask.updated_at, :format => :short %></span>
+    • <span class="date"><%= l @ask.updated_at.getlocal, :format => :short %></span>
   </div>
 </div>
 
@@ -254,11 +255,40 @@
 <% content_for :sidebar do %>
   <% if current_user %>
     <div class="box">
-      <h2></h2>
       <div class="inner">
-        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this);">关注此问题</a>
-        <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a>
+				<% if current_user.ask_followed?(@ask) %>
+				<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, '<%= @ask.id %>');">取消关注</a>
+				<% else %>
+        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, '<%= @ask.id %>');">关注此问题</a>
+        <!-- <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a> -->
+				<% end %>
       </div>
+		</div>
+
+		<div class="box standard">
+			<h2>相关问题</h2>
+			<div class="inner">
+				<ul>
+				<% for ask in @relation_asks %>
+					<li><a href="/asks/<%= ask.id %>"><%= ask.title %></a></li>
+				<% end %>
+				<ul>
+			</div>
+    </div>
+
+		<div class="box standard gray">
+			<h2>问题状态</h2>
+			<div class="inner">
+				<p>最近活动：<%= l @ask.last_updated_at ? @ask.last_updated_at.getlocal : (@ask.answered_at ? @ask.answered_at.getlocal : @ask.updated_at.getlocal), :format => :min %></p>
+				<p>被浏览 <%= @ask.views_count %> 次，<%= @ask.followers.count %> 人关注了该问题</p>
+				<div class="followers">
+					<% for follower in @ask.followers %>
+					<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
+						<%= user_avatar_tag(follower, :small) %>
+					</a>
+					<% end %>
+				</div>
+			</div>
     </div>
   <% end %>
 <% end %>

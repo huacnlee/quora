@@ -7,6 +7,10 @@ address, blockquote {
   border-left: 3px solid #D0E5F2;
 }
 
+.gray {
+	color: gray;
+}
+
 #header {
   background: #505759;
   min-height: 35px;
@@ -38,8 +42,17 @@ address, blockquote {
 #main .left_wrapper { margin-left:70px; margin-right:20px; width:605px; }
 .sidebar { float:right; width:210px; overflow:hidden; _width:190px; }
 .sidebar .box { margin-bottom:20px; }
-.sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1em; margin-bottom: 3px; }
+.sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1.2em; margin-bottom: 3px; }
 .sidebar li { line-height:160%; }
+.sidebar .standard ul {
+	margin: 0;
+	padding: 0;
+}
+.sidebar .standard ul li {
+	list-style: none;
+	font-weight: bold;
+	margin: 5px 0 7px;
+}
 
 .sidebar .sections { font-size:14px; }
 .sidebar .sections li { display:inline; }
@@ -178,3 +191,11 @@ a.user img.normal { width:100px; height:100px; }
   overflow:hidden; height:24px; line-height:24px; }
 .dialog_content .complete li:hover { background:#e1f0f7; }
 .dialog_content .complete li .cate { color:#333; margin:0 5px; }
+
+.followers {
+	margin: 7px 0;
+}
+
+.followers a {
+	margin: 0 1px 3px 0;
+}

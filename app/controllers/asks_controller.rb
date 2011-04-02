@@ -2,7 +2,7 @@
 class AsksController < ApplicationController
   before_filter :require_user, :except => [:index,:answer,:update_topic,:show]
   before_filter :require_user_js, :only => [:answer]
-  before_filter :require_user_text, :only => [:update_topic,:spam, :mute]
+  before_filter :require_user_text, :only => [:update_topic,:spam, :mute, :unmute, :follow, :unfollow]
   
   def index
     @per_page = 10
@@ -12,9 +12,12 @@ class AsksController < ApplicationController
 
   def show
     @ask = Ask.find(params[:id])
+    @ask.views_count += 1
+    @ask.save
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
     @answers = @ask.answers.includes(:user).sort { |a,b| b.votes_point <=> a.votes_point }
     @answer = Answer.new
+    @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
     set_seo_meta(@ask.title)
 
     respond_to do |format|
@@ -116,6 +119,36 @@ class AsksController < ApplicationController
       return
     end
     current_user.mute_ask(@ask.id)
+    render :text => "1"
+  end
+  
+  def unmute
+    @ask = Ask.find(params[:id])
+    if not @ask
+      render :text => "0"
+      return
+    end
+    current_user.unmute_ask(@ask.id)
+    render :text => "1"
+  end
+  
+  def follow
+    @ask = Ask.find(params[:id])
+    if not @ask
+      render :text => "0"
+      return
+    end
+    current_user.follow_ask(@ask)
+    render :text => "1"
+  end
+  
+  def unfollow
+    @ask = Ask.find(params[:id])
+    if not @ask
+      render :text => "0"
+      return
+    end
+    current_user.unfollow_ask(@ask)
     render :text => "1"
   end
   

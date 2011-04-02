@@ -5,4 +5,6 @@
 <p><%= link_to '接受邀请', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token) %></p>
 <p>如果你的邮件无法现实链接，请用这个：<br />
 <%= accept_invitation_url(@resource, :invitation_token => @resource.invitation_token) %></p>
+<br>
+<p>注册成功后，您将可以<a href="http://zheye.org/users/invitation/new">邀请</a>您的朋友进入者也。</p>
 <p>如果你不感兴趣，请忽略此邮件.</p>
