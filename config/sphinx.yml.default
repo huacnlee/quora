@@ -1,0 +1,17 @@
+default: &defaults
+  listen: localhost:3312
+  charset_dictpath: "db/dict/"
+  charset_type: "zh_cn.utf-8"
+
+development:
+  <<: *defaults
+
+development_mongohq:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
