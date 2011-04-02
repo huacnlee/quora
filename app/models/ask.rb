@@ -54,8 +54,19 @@ class Ask
                :options => {} )
 
   before_save :fill_default_values
-  after_create :create_log
+  after_create :create_log, :inc_counter_cache
+  after_destroy :dec_counter_cache
   before_update :update_log
+
+  def inc_counter_cache
+    self.user.inc(:asks_count, 1)
+  end
+
+  def dec_counter_cache
+    if self.user.asks_count > 0
+      self.user.inc(:asks_count, -1)
+    end
+  end
   
   def update_log
     insert_action_log("EDIT") if self.title_changed? or self.body_changed?
