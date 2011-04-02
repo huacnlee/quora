@@ -1,3 +1,15 @@
+<%= content_for :scripts do %>
+  <script type="text/javascript">
+    var current_page = 2;
+    function loadAsks(){
+      App.loading();
+      $.get("<%= request.path %>.js?page="+current_page,function(){
+          App.loading(false);
+      });
+      return false;
+    }
+  </script>
+<% end %>
 <div class="uname">
   <h1 id="user_name"><%= user.name %></h1>
 </div>

@@ -11,8 +11,13 @@ class UsersController < ApplicationController
   end
 
   def answered
-    @asks = Ask.normal.recent.find(@user.answered_ask_ids,:limit => 13)
+    @per_page = 2
+    @asks = Ask.normal.recent.find(@user.answered_ask_ids)
+                  .paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("#{@user.name}回答过的问题")
+    if params[:format] == "js"
+      render "/asks/index.js"
+    end
   end
 
   def show
@@ -20,8 +25,13 @@ class UsersController < ApplicationController
   end
 
   def asked
-    @asks = @user.asks.normal.recent.limit(13)
+    @per_page = 10
+    @asks = @user.asks.normal.recent
+                  .paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("#{@user.name}问过的问题")
+    if params[:format] == "js"
+      render "/asks/index.js"
+    end
   end
 
   def auth_callback
