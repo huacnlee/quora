@@ -6,7 +6,12 @@ gem "mongoid", "2.0.0"
 gem "bson_ext", "~> 1.2.2"
 gem 'mongo-rails-instrumentation'
 gem "mongoid-eager-loading"
+gem "mongoid-sphinx-huacnlee", :git => "git://github.com/huacnlee/mongoid-sphinx.git", 
+                      :require => "mongoid_sphinx"
 gem "mongoid_rails_migrations"
+
+# to_xs 方法，Mongoid-sphinx 需要
+gem 'fast_xs'
 
 # Vote 插件 for Mongoid
 gem 'voteable_mongoid', "0.6.0"

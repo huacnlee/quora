@@ -10,6 +10,17 @@ class AsksController < ApplicationController
     set_seo_meta("最新提出的问题")
   end
 
+  def search
+    if params[:format] == "json"
+      @asks = Ask.search_title(params["w"],:limit => 10)
+      render :json => @asks.to_json(:only => [:topics,:_id,:title])
+    else
+      @asks = Ask.search_title(params["w"],:limit => 20)
+      set_seo_meta("关于“#{params[:w]}”的搜索结果")
+      render "index"
+    end
+  end
+
   def show
     @ask = Ask.find(params[:id])
     @ask.views_count += 1
