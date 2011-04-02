@@ -16,6 +16,7 @@
     <%= f.input :website, :input_html => { :placeholder => "http://", :class => "long" }, :label => "个人站点" %>
     <%= f.input :tagline, :input_html => { :class => "long" }, :label => "最能概括你的标志性语言" %>
     <%= f.input :bio, :as => :text, :input_html => { :class => "long", :style => "height:120px;"}, :label => "个人经历" %>
+    <script type="text/javascript">$("#user_bio").qeditor();</script>
     <div class="actions">
       <button type="submit">保存</button>
     </div>
