@@ -5,7 +5,7 @@ class AsksController < ApplicationController
   before_filter :require_user_text, :only => [:update_topic,:spam, :mute, :unmute, :follow, :unfollow]
   
   def index
-    @per_page = 10
+    @per_page = 20
     @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("最新提出的问题")
   end

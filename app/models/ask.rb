@@ -27,6 +27,8 @@ class Ask
 
   # 回答
   has_many :answers
+  # Log
+  has_many :logs, :class_name => "Log", :foreign_key => "target_id"
   # 最后个回答
   belongs_to :last_answer, :class_name => 'Answer'
   # 最后回答者
@@ -51,6 +53,16 @@ class Ask
                :options => {} )
 
   before_save :fill_default_values
+  # after_save :action_log
+  
+  def action_log
+    log = AskLog.new
+    log.title = self.title
+    log.ask = self
+    log.target_id = self.id
+    # log.target_attr = 
+    Rails.logger.info "new_record?: #{self.new_record?}"
+  end
   
   def fill_default_values
     # 默认回复时间为当前时间，已便于排序
@@ -99,7 +111,7 @@ class Ask
     words = []
     result.raw_result[:words].each do |w|
       next if w[0] == "ask"
-      words << w[0]
+      words << ((w[0] == "rubi" and text.downcase == "ruby") ? "ruby" : w[0])
     end
     out_result = {:items => [], :words => words} 
     out_result[:items] = Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)

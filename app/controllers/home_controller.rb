@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   before_filter :require_user
 
   def index
-    @per_page = 10
+    @per_page = 20
     @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics)
                   .exclude_ids(current_user.muted_ask_ids)
                   .desc(:answered_at,:id)

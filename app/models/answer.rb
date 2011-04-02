@@ -12,6 +12,7 @@ class Answer
 
   belongs_to :ask, :inverse_of => :answers, :counter_cache => true
   belongs_to :user, :inverse_of => :answers, :counter_cache => true
+  has_many :logs, :class_name => "Log", :foreign_key => "target_id"
   
   validates_presence_of :user_id, :body
   

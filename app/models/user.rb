@@ -86,9 +86,9 @@ class User
   end
   
   def ask_followed?(ask)
-    Rails.logger.info { "user: #{self.inspect}" }
-    Rails.logger.info { "asks: #{self.followed_asks.inspect}" }
-    Rails.logger.info { "ask: #{ask.inspect}" }
+    # Rails.logger.info { "user: #{self.inspect}" }
+    # Rails.logger.info { "asks: #{self.followed_asks.inspect}" }
+    # Rails.logger.info { "ask: #{ask.inspect}" }
     self.followed_asks.include?(ask)
   end
   
