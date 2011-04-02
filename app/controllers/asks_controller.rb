@@ -7,7 +7,7 @@ class AsksController < ApplicationController
   def index
     @per_page = 20
     @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
-    set_seo_meta("最新提出的问题")
+    set_seo_meta("所有问题")
   end
 
   def search
@@ -88,6 +88,7 @@ class AsksController < ApplicationController
     @ask = Ask.new(params[:ask])
     @ask.user_id = current_user.id
     @ask.followers << current_user
+    @ask.current_user_id = current_user.id
 
     respond_to do |format|
       if @ask.save
@@ -102,6 +103,7 @@ class AsksController < ApplicationController
   
   def update
     @ask = Ask.find(params[:id])
+    @ask.current_user_id = current_user.id
 
     respond_to do |format|
       if @ask.update_attributes(params[:ask])
@@ -119,7 +121,7 @@ class AsksController < ApplicationController
     @add = params[:add] == "1" ? true : false
 
     @ask = Ask.find(params[:id])
-    if @ask.update_topics(@name,@add)
+    if @ask.update_topics(@name,@add,current_user.id)
       @success = true
     else
       @success = false

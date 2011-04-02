@@ -15,9 +15,14 @@ class HomeController < ApplicationController
     end
   end
   
+  def timeline
+    @per_page = 20
+    # @logs = Log.any_in(:user_id => curr)
+  end
+  
   def followed
     @per_page = 10
-    @asks = current_user ? current_user.followed_asks : Ask.normal
+    @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}, {:follower_ids.in => [current_user.id]}) : Ask.normal
     @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
                   .exclude_ids(current_user.muted_ask_ids)
                   .desc(:answered_at,:id)
@@ -52,9 +57,13 @@ class HomeController < ApplicationController
   def update_in_place
     klass, field, id = params[:id].split('__')
     object = klass.camelize.constantize.find(id)
+    if ["ask"].include?(klass) and current_user
+      object.update_attributes(:current_user_id => current_user.id)
+    end
     if object.update_attributes(field => params[:value])
       render :text => object.send(field).to_s
     else
+      Rails.logger.info "object.errors.full_messages: #{object.errors.full_messages}"
       render :text => object.errors.full_messages.join("\n"), :status => 422
     end
   end

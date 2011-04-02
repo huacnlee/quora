@@ -1,0 +1,132 @@
+<%
+action = log.action.gsub("ADDTOPIC", "ADD_TOPIC").gsub("DELTOPIC", "DEL_TOPIC")
+
+case log._type
+when "AskLog"
+	item = log.ask
+%>
+	<div class="ask" ask-id="<%= log.id %>">
+	  <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+	    <div class="info">
+				<%
+					case action
+					when "NEW"
+				%>
+	      <%= user_name_tag(log.user) %> 添加了该问题
+				<% when "EDIT" %>
+				<%= user_name_tag(log.user) %> <%= log.target_attr == "TITLE" ? "修改了该问题" : "修改了该问题的补充说明" %>
+				<% when "ADD_TOPIC" %>
+				<%= user_name_tag(log.user) %> 给该问题添加了话题 
+					<%
+						topics = log.title.split(',')
+						for topic in topics
+					%>
+					<a href="/topics/<%= topic %>">#<%= topic %></a> &nbsp;
+					<% end %>
+				<% when "DEL_TOPIC" %>
+				<%= user_name_tag(log.user) %> 从该问题删除了话题 
+					<%
+						topics = log.title.split(',')
+						for topic in topics
+					%>
+					<a href="/topics/<%= topic %>">#<%= topic %></a> &nbsp;
+					<% end %>
+				<% end %>
+				
+				<% if ["NEW", "EDIT"].include?(log.action) %>
+	      	• <%= item.answers_count %> 个答案 
+					<% if current_user %>
+						<% if current_user.ask_followed?(item) %>
+		      	• <a href="#" onclick="return Asks.unfollow(this,'<%= item.id %>')">取消关注</a> 
+						<% else %>
+						• <a href="#" onclick="return Asks.follow(this,'<%= item.id %>')">关注</a> 
+						<% end %>
+						<% if current_user.ask_muted?(item.id) %>
+						• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+						<% else %>
+		      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+						<% end %>
+					<% end %>
+				<% end %>
+	    </div> 
+	</div>
+<%
+when "UserLog"
+	answer = item = nil
+	if ["FOLLOW", "UNFOLLOW"].include?(action)
+		item = Ask.find(log.target_id)
+	elsif ["FOLLOW_TOPIC", "UNFOLLOW_TOPIC"].include?(action)
+		item = Topic.find(log.target_id)
+	elsif ["AGREE"].include?(action)
+		answer = Answer.find(log.target_id)
+		item = answer.ask
+	end
+%>	
+	<div class="ask" ask-id="<%= log.id %>">
+		<% if ["FOLLOW_TOPIC", "UNFOLLOW_TOPIC"].include?(action) %>
+	  <div class="title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_TOPIC" ? "关注" : "取消关注" %>了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
+		<% else %>
+		<div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+		  <div class="info">
+				<%= user_name_tag(log.user) %> <%= action == "FOLLOW" ? "关注" : (action == "UNFOLLOW" ? "取消关注了该问题" : "赞同该回答") %>
+				• <%= item.answers_count %> 个答案 
+				<% if current_user %>
+					<% if current_user.ask_followed?(item) %>
+	      	• <a href="#" onclick="return Asks.unfollow(this,'<%= item.id %>')">取消关注</a> 
+					<% else %>
+					• <a href="#" onclick="return Asks.follow(this,'<%= item.id %>')">关注</a> 
+					<% end %>
+					<% if current_user.ask_muted?(item.id) %>
+					• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+					<% else %>
+	      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+					<% end %>
+				<% end %>
+	    </div>
+			<% if ["AGREE"].include?(action) %>
+			<div class="last_answer answer">
+	      <div class="author">
+	        <span class="votes"><%= answer.votes_count %></span>
+	        <%= user_name_tag(log.user) %><%= user_tagline_tag(log.user) %>
+	      </div>
+	      <div class="md_body"><%= md_body(answer.body) %></div>
+	    </div>
+			<% end %>
+		<% end %>
+	</div>
+<%
+when "AnswerLog"
+	item = log.answer.ask
+%>
+	<div class="ask" ask-id="<%= item.id %>">
+	  <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+	    <div class="info">
+	      <%= user_name_tag(log.user) %> <%= action == "NEW" ? "回答了该问题" : "修改了自己的回答" %>
+	      • <%= item.answers_count %> 个答案 
+				<% if current_user %>
+					<% if current_user.ask_followed?(item) %>
+	      	• <a href="#" onclick="return Asks.unfollow(this,'<%= item.id %>')">取消关注</a> 
+					<% else %>
+					• <a href="#" onclick="return Asks.follow(this,'<%= item.id %>')">关注</a> 
+					<% end %>
+					<% if current_user.ask_muted?(item.id) %>
+					• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+					<% else %>
+	      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+					<% end %>
+				<% end %>
+	    </div> 
+			<% if action == "NEW" %>
+	    <div class="last_answer answer">
+	      <div class="author">
+	        <span class="votes"><%= log.answer.votes_count %></span>
+	        <%= user_name_tag(log.user) %><%= user_tagline_tag(log.user) %>
+	      </div>
+	      <div class="md_body"><%= md_body(log.answer.body) %></div>
+	    </div>
+			<% end %>
+	</div>
+	
+<%
+end
+%>

@@ -12,4 +12,24 @@ class TopicsController < ApplicationController
       render "/asks/index.js"
     end
   end
+  
+  def follow
+    @topic = Topic.find(params[:id])
+    if not @topic
+      render :text => "0"
+      return
+    end
+    current_user.follow_topic(@topic)
+    render :text => "1"
+  end
+  
+  def unfollow
+    @topic = Topic.find(params[:id])
+    if not @topic
+      render :text => "0"
+      return
+    end
+    current_user.unfollow_topic(@topic)
+    render :text => "1"
+  end
 end

@@ -1,5 +1,5 @@
 Quora::Application.routes.draw do
-  root :to => "home#index"
+  root :to => "home#followed"
 
   match "/uploads/*path" => "gridfs#serve"
   match "/update_in_place" => "home#update_in_place"
@@ -37,7 +37,13 @@ Quora::Application.routes.draw do
     end
   end
   resources :comments 
-  resources :topics
+  resources :topics do
+    member do
+      get "follow"
+      get "unfollow"
+    end
+  end
+  resources :logs
 
   namespace :cpanel do
     root :to =>  "home#index"
