@@ -30,8 +30,8 @@ gem 'will_paginate', '3.0.pre'
 gem 'memcache-client'
 
 # OAuth
-gem 'omniauth', '0.2.0.beta3'
-gem "oa-openid", '0.2.0.beta3'
+gem 'omniauth', '0.2.0'
+gem "oa-openid", '0.2.0'
 # gem "omniauth_china", :path => "/Users/jason/work/omniauth_china"
 gem "omniauth_china", "0.0.6"
 
