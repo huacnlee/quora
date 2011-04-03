@@ -116,6 +116,7 @@
 
     function follow(el, id){
       App.loading();
+			$(el).attr("onclick", "return false;");
 			$.get("/asks/"+id+"/follow",{}, function(res){
         App.loading(false);
         $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @ask.id %>\');">取消关注</a>');
@@ -125,6 +126,7 @@
 		
 		function unfollow(el, id){
       App.loading();
+			$(el).attr("onclick", "return false;");
 			$.get("/asks/"+id+"/unfollow",{}, function(res){
         App.loading(false);
         $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @ask.id %>\');">关注此问题</a>');

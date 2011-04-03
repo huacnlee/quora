@@ -15,6 +15,7 @@ class Log
   index :action
   
   belongs_to :user, :inverse_of => :logs
+  
   attr_protected :user_id
 end
 
@@ -28,6 +29,11 @@ end
 
 class UserLog < Log
   # belongs_to :user, :inverse_of => :logs, :foreign_key => :target_id
+  
+  validates_uniqueness_of :target_id, 
+                          :scope => [:user_id, :target_id, :target_parent_id], 
+                          :if => proc { |obj| obj.action == "AGREE" }
+
 end
 
 class AnswerLog < Log

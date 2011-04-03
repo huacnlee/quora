@@ -95,7 +95,7 @@ when "UserLog"
     <div class="last_answer answer">
       <div class="author">
         <span class="votes"><%= answer.votes_count %></span>
-        <%= user_name_tag(log.user) %><%= user_tagline_tag(log.user) %>
+        <%= user_name_tag(answer.user) %><%= user_tagline_tag(answer.user) %>
       </div>
       <div class="md_body"><%= md_body(answer.body) %></div>
     </div>

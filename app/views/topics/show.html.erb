@@ -10,6 +10,7 @@
     }
 
 		function follow(el, id){
+			$(el).attr("onclick", "return false;");
 			$.get("/topics/"+id+"/follow",{}, function(res){
 					$(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @topic.id %>\');">取消关注</a>');
 	    });
@@ -17,6 +18,7 @@
     }
 		
 		function unfollow(el, id){
+			$(el).attr("onclick", "return false;");
 			$.get("/topics/"+id+"/unfollow",{}, function(res){
 	        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @topic.id %>\');">关注此话题</a>');
 	    });
