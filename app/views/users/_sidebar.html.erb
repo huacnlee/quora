@@ -23,7 +23,7 @@
 <% content_for :sidebar do %>
 <div class="box">
   <div class="inner">
-    <% if current_user != @user %>
+    <% if current_user and current_user != @user %>
 	    <div class="box">
 	      <div class="inner">
 	        <% if current_user.followed?(@user) %>
@@ -34,6 +34,8 @@
 					<% end %>
 	      </div>
 			</div>
+		<% else %>
+			登录后你可以关注他
 		<% end %>
   </div>
 </div>
