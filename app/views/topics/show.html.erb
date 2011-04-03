@@ -8,6 +8,20 @@
       });
       return false;
     }
+
+		function follow(el, id){
+			$.get("/topics/"+id+"/follow",{}, function(res){
+					$(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @topic.id %>\');">取消关注</a>');
+	    });
+      return false;
+    }
+		
+		function unfollow(el, id){
+			$.get("/topics/"+id+"/unfollow",{}, function(res){
+	        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @topic.id %>\');">关注此话题</a>');
+	    });
+      return false;
+    }
   </script>
 <% end %>
 <div id="topic" class="clearfix">
@@ -34,3 +48,30 @@
     <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
   <% end %>
 </div>
+
+<% content_for :sidebar do %>
+  <% if current_user %>
+    <div class="box">
+      <div class="inner">
+				<% if current_user.topic_followed?(@topic) %>
+				<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, '<%= @topic.name %>');">取消关注</a>
+				<% else %>
+        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, '<%= @topic.name %>');">关注此话题</a>
+				<% end %>
+      </div>
+		</div>
+	<% end %>
+
+		<div class="box standard gray">
+			<h2>最近关注此话题的人</h2>
+			<div class="inner">
+				<div class="followers">
+					<% for follower in @topic.followers.desc("$natural").limit(40) %>
+					<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
+						<%= user_avatar_tag(follower, :small) %>
+					</a>
+					<% end %>
+				</div>
+			</div>
+    </div>
+<% end %>

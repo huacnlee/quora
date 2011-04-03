@@ -8,6 +8,8 @@ class Log
   field :action
   field :diff
   field :target_id
+  field :target_parent_id
+  field :target_parent_title
   
   index :target_attr
   index :action
@@ -21,11 +23,11 @@ class AskLog < Log
 end
 
 class TopicLog < Log
-  
+  belongs_to :topic, :inverse_of => :logs, :foreign_key => :target_id
 end
 
 class UserLog < Log
-  
+  # belongs_to :user, :inverse_of => :logs, :foreign_key => :target_id
 end
 
 class AnswerLog < Log
@@ -33,5 +35,5 @@ class AnswerLog < Log
 end
 
 class CommentLog < Log
-  
+  belongs_to :comment, :inverse_of => :logs, :foreign_key => :target_id
 end

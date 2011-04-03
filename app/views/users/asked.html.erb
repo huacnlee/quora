@@ -6,5 +6,8 @@
     <%= render "/asks/ask", :item => item %>
   <% end %>
 </div>
+<% if @asks.length == @per_page %>
+  <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
+<% end %>
 <%= render "sidebar", :user => @user %>
 

@@ -7,7 +7,7 @@ module UsersHelper
   
   def user_avatar_tag(user,size)
     return "" if user.blank?
-    url = eval("user.avatar.small.url")
+    url = eval("user.avatar.#{size}.url")
     if url.blank?
       url = ""
     end

@@ -23,7 +23,7 @@ QEDITOR_TOOLBAR_HTML = '\<div class="qeditor_toolbar"> \
   <a href="#" onclick="return QEditor.action(this,\'formatBlock\',\'address\');"><img src="/images/qeditor/quote.gif" title="引用" alt="引用" /></a> \
   <a href="#" onclick="return QEditor.action(this,\'insertorderedlist\');"><img src="/images/qeditor/ol.gif" title="有序列表" alt="有序列表" /></a> \
   <a href="#" class="qeditor_glast" onclick="return QEditor.action(this,\'insertunorderedlist\');"><img src="/images/qeditor/ul.gif" title="无序列表" alt="无序列表" /></a> \
-  <a href="#" class="qeditor_glast" onclick="return QEditor.action(this,\'insertimage\',prompt(\'Image URL\'));"><img src="/images/qeditor/image.gif" title="插入图片" alt="插入图片" /></a> \
+  <a href="#" class="qeditor_glast" style="display:none;" onclick="return QEditor.action(this,\'insertimage\',prompt(\'Image URL\'));"><img src="/images/qeditor/image.gif" title="插入图片" alt="插入图片" /></a> \
 </div>';
 
 var QEditor = {

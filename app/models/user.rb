@@ -13,6 +13,8 @@ class User
   field :bio
   field :avatar
   field :website
+  # 软删除标记，1 表示已经删除
+  field :deleted, :type => Integer
 
   # 不感兴趣的问题
   field :muted_ask_ids, :type => Array, :default => []
@@ -32,8 +34,13 @@ class User
   has_many :answers
 
   references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
+  references_and_referenced_in_many :followed_topics, :stored_as => :array, :inverse_of => :followers, :class_name => "Topic"
+  
+  references_and_referenced_in_many :following, :class_name => 'User', :inverse_of => :followers, :index => true, :stored_as => :array
+  references_and_referenced_in_many :followers, :class_name => 'User', :inverse_of => :following, :index => true, :stored_as => :array
 
   embeds_many :authorizations
+  has_many :logs, :class_name => "Log", :foreign_key => "target_id"
 
   attr_accessor  :password_confirmation
   attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website
@@ -95,6 +102,14 @@ class User
     self.followed_asks.include?(ask)
   end
   
+  def followed?(user)
+    self.following.include?(user)
+  end
+  
+  def topic_followed?(topic)
+    self.followed_topics.include?(topic)
+  end
+  
   def mute_ask(ask_id)
     self.muted_ask_ids ||= []
     return if self.muted_ask_ids.index(ask_id)
@@ -110,6 +125,8 @@ class User
   def follow_ask(ask)
     ask.followers << self
     ask.save
+    
+    insert_follow_log("FOLLOW_ASK", ask)
   end
   
   def unfollow_ask(ask)
@@ -118,6 +135,74 @@ class User
     
     ask.followers.delete(self)
     ask.save
+    
+    insert_follow_log("UNFOLLOW_ASK", ask)
   end
+  
+  def follow_topic(topic)
+    topic.followers << self
+    topic.save
+    
+    insert_follow_log("FOLLOW_TOPIC", topic)
+  end
+  
+  def unfollow_topic(topic)
+    self.followed_topics.delete(topic)
+    self.save
+    
+    topic.followers.delete(self)
+    topic.save
+    
+    insert_follow_log("UNFOLLOW_TOPIC", topic)
+  end
+  
+  def follow(user)
+    user.followers << self
+    user.save
+    
+    insert_follow_log("FOLLOW_USER", user)
+  end
+  
+  def unfollow(user)
+    self.following.delete(user)
+    self.save
+    
+    user.followers.delete(self)
+    user.save
+    
+    insert_follow_log("FOLLOW_USER", user)
+  end
+  
+  protected
+  
+    def insert_follow_log(action, item)
+      begin
+        log = UserLog.new
+        log.user_id = self.id
+        log.title = self.name
+        log.target_id = item.id
+        log.action = action
+        log.target_parent_id = item.id
+        log.target_parent_title = item.is_a?(Ask) ? item.title : item.name
+        log.diff = ""
+        log.save
+      rescue Exception => e
+        
+      end
+      
+    end
+
+  # 软删除
+  # 只是把用户信息修改了
+  def soft_delete
+    # assuming you have deleted_at column added already
+    return false if self.deleted == 1
+    self.deleted = 1
+    self.name = "#{self.name}[已注销]"
+    self.email = "#{self.id}@zheye.org"
+    self.slug = "#{self.id}"
+    self.save
+  end
+  
 
 end

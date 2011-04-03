@@ -11,17 +11,58 @@ class UsersController < ApplicationController
   end
 
   def answered
-    @asks = Ask.normal.recent.find(@user.answered_ask_ids,:limit => 13)
+    @per_page = 10
+    @asks = Ask.normal.recent.find(@user.answered_ask_ids)
+                  .paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("#{@user.name}回答过的问题")
+    if params[:format] == "js"
+      render "/asks/index.js"
+    end
   end
 
   def show
+    @per_page = 10
+    @logs = Log.desc("$natural").where(:user_id => @user.id).paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta(@user.name)
   end
 
   def asked
-    @asks = @user.asks.normal.recent.limit(13)
+    @per_page = 10
+    @asks = @user.asks.normal.recent
+                  .paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("#{@user.name}问过的问题")
+    if params[:format] == "js"
+      render "/asks/index.js"
+    end
+  end
+  
+  def following_topics
+    @per_page = 10
+    @topics = @user.followed_topics.desc("$natural")
+                  .paginate(:page => params[:page], :per_page => @per_page)
+    
+    set_seo_meta("#{@user.name}关注的话题")
+    if params[:format] == "js"
+      render "following_topics.js"
+    end
+  end
+  
+  def follow
+    if not @user
+      render :text => "0"
+      return
+    end
+    current_user.follow(@user)
+    render :text => "1"
+  end
+  
+  def unfollow
+    if not @user
+      render :text => "0"
+      return
+    end
+    current_user.unfollow(@user)
+    render :text => "1"
   end
 
   def auth_callback
