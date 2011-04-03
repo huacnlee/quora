@@ -42,4 +42,9 @@ class Topic
   def self.find_by_name(name)
     find(:first,:conditions => {:name => name})
   end
+
+  def self.search_name(name, options = {})
+    limit = options[:limit] || 10
+    where(:name => /#{name}/i ).desc(:asks_count).limit(limit)
+  end
 end

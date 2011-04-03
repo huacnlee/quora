@@ -1,5 +1,5 @@
 default: &defaults
-  listen: localhost:3312
+  listen: localhost:9312
   charset_dictpath: "db/dict/"
   charset_type: "zh_cn.utf-8"
 

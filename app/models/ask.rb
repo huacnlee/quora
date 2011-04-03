@@ -18,6 +18,7 @@ class Ask
   field :last_updated_at, :type => DateTime
 
   index :topics
+  index :title
 
   # 提问人
   belongs_to :user, :inverse_of => :asks
