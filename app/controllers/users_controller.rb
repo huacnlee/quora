@@ -1,7 +1,7 @@
 # coding: utf-8
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:auth_callback]
-  before_filter :init_user
+  before_filter :init_user, :except => [:auth_callback]
 
   def init_user
     @user = User.find_by_slug(params[:id])
