@@ -126,7 +126,7 @@ when "AnswerLog"
 					<% end %>
 				<% end %>
 	    </div> 
-			<% if action == "NEW"
+			<% if action == "NEW" and log.user
 				Rails.logger.info "log: #{log.inspect}"
 				 %>
 	    <div class="last_answer answer">
