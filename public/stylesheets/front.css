@@ -92,6 +92,7 @@ address, blockquote {
 .ask a.topic:hover { background:#19558D; color:#FFF; }
 
 .ask .title { font-size: 1.3em; line-height: 1.2em; margin: 2px 0 5px; }
+.ask .small_title { font-size:12px; margin:0px; color:#999; }
 .ask .title h1 { font-size: 1.2em; line-height: 1.2em; display:inline;  }
 .ask .info { color: #999; margin:3px 0;  }
 .ask .last_answer { margin-top:5px; }
@@ -299,6 +300,7 @@ a.user img.normal { width:100px; height:100px; }
 #omniauth_links li.t163 a { background-position:0 -80px; }
 #omniauth_links li.tsohu a { background-position:0 -96px; }
 #omniauth_links li.google a { background-position:0 -48px; }
+#omniauth_links li.github a { background-position:0 -113px; }
 #omniauth_links li span { color:#999; margin-left:3px; }
 
 .search_result_dropdown {}

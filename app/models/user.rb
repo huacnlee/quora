@@ -55,10 +55,15 @@ class User
   mount_uploader :avatar, AvatarUploader
 
   def self.create_from_hash(auth)  
+    Rails.logger.debug { "---------#{auth}"}
 		user = User.new
 		user.name = auth["user_info"]["name"]  
 		user.email = auth['user_info']['email']
-		user.save(false)
+    if user.email.blank?
+      user.errors.add("Email","三方网站没有提供你的Email信息，无法直接注册。")
+      return user
+    end
+		user.save
 		user.reset_persistence_token! #set persistence_token else sessions will not be created
 		user
   end  
@@ -67,8 +72,10 @@ class User
   # 此方法用于处理开始注册是自动生成 slug, 因为没表单,只能自动
   def auto_slug
     if self.slug.blank?
-      self.slug = self.email.split("@")[0]
-      self.slug = self.slug.safe_slug
+      if !self.email.blank?
+        self.slug = self.email.split("@")[0]
+        self.slug = self.slug.safe_slug
+      end
       # 如果 slug 被 safe_slug 后是空的,就用 id 代替
       if self.slug.blank?
         self.slug = self.id.to_s

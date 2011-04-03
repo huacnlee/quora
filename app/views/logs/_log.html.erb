@@ -69,9 +69,9 @@ when "UserLog"
 %>	
 	<div class="ask" ask-id="<%= log.id %>">
 		<% if ["FOLLOW_TOPIC", "UNFOLLOW_TOPIC"].include?(action) %>
-	  <div class="title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_TOPIC" ? "关注" : "取消关注" %>了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
+	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_TOPIC" ? "关注" : "取消关注" %>了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
 		<% elsif ["FOLLOW_USER", "UNFOLLOW_USER"].include?(action) %>
-	  <div class="title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_USER" ? "关注" : "取消关注" %>了 <%= user_name_tag(item) %></div>
+	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_USER" ? "关注" : "取消关注" %>了 <%= user_name_tag(item) %></div>
 		<% else %>
       <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
       <div class="info">
@@ -146,7 +146,7 @@ when "TopicLog"
 	if !item.nil?
 %>
 	<div class="ask" ask-id="<%= log.id %>">
-	  <div class="title"><%= user_name_tag(log.user) %> 创建了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
+	  <div class="title small_title"><%= user_name_tag(log.user) %> 创建了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
 	</div>
 <%
 	end
