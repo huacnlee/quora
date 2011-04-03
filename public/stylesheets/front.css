@@ -12,6 +12,18 @@ address, blockquote {
 	font-color: 1em;
 }
 
+.orange {
+	color: #db841c;
+}
+
+.green {
+	color: #009c3a;
+}
+
+.purple {
+	color: #754962;
+}
+
 #header {
   background: #505759;
   min-height: 35px;
@@ -30,7 +42,7 @@ address, blockquote {
 #footer { clear:both; padding-top:25px; height:80px; color: gray;  }
 #footer .links {   margin-bottom:5px;  }
 
-#header:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after {
+#header:after, #main:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after {
     content:"";
     display:block;
     visibility:hidden;
@@ -246,6 +258,30 @@ a.user img.normal { width:100px; height:100px; }
 	font-size: 12px;
 }
 
+.newbie {
+	font-size: 1.2em;
+}
+
+.newbie h2 {
+	font-weight: normal;
+	font-size: 14px;
+}
+
+.newbie ul.hot-topics, .newbie ul.hot-asks {
+	margin: 10px 5px;
+}
+
+.newbie ul.hot-topics li {
+	list-style: none;
+	float: left;
+	margin: 3px 20px 3px 5px;
+	line-height: 19px;
+}
+
+.newbie ul.hot-asks li {
+	margin: 5px 0 5px 10px;
+}
+
 #topic { margin-bottom:10px; }
 #topic h1 { font-size:2em; }
 #topic .cover { width: 100px; float:left; margin-right:20px; }
@@ -277,3 +313,7 @@ a.user img.normal { width:100px; height:100px; }
 
 .followers { margin: 7px 0; }
 .followers a { margin: 0 1px 3px 0; }
+
+#footer {
+	margin-top: 50px;
+}

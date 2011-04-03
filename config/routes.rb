@@ -4,6 +4,7 @@ Quora::Application.routes.draw do
   match "/uploads/*path" => "gridfs#serve"
   match "/update_in_place" => "home#update_in_place"
   match "/muted" => "home#muted"
+  match "/newbie" => "home#newbie"
   match "/followed" => "home#followed"
   match "/about" => "home#about"
 
