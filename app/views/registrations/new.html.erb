@@ -16,6 +16,7 @@
       </div>
     <% else %>
       <h1>注册新用户</h1>
+      <p style="color:green; margin-bottom:10px;">目前是临时开放注册期间，如果你还没有<%= Setting.app_name %>帐号的话，赶紧注册吧！</p>
       <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name) ) do |f| %>
         <%= render "shared/error_messages", :target => resource %> 
         <%= f.input :name, :label => "姓名（注册后不可更改）" %>
@@ -33,5 +34,12 @@
     <p style="line-height:20px;">
     <%= render :partial => "devise/shared/links" %>
     </p>
+  </div>
+  <div class="box">
+    <h2>关于注册</h2>
+    <div class="inner">
+      <%= Setting.app_name %>本身需要邀请才可以注册的，但是我们会偶尔在一些特别的日子临时性的开放注册。<br />
+      如果你看到了这个页面，那恭喜你，赶紧注册吧，如果你还没有<%= Setting.app_name %>帐号的话。
+    </div>
   </div>
 <% end %>
