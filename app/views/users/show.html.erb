@@ -11,6 +11,7 @@
 
 		function follow(el, id){
       App.loading();
+			$(el).attr("onclick", "return false;");
 			$.get("/users/"+id+"/follow",{}, function(res){
         App.loading(false);
         $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');">取消关注</a>');
@@ -20,6 +21,7 @@
 		
 		function unfollow(el, id){
       App.loading();
+			$(el).attr("onclick", "return false;");
 			$.get("/users/"+id+"/unfollow",{}, function(res){
         App.loading(false);
         $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @user.slug %>\');">关注</a>');
