@@ -27,10 +27,10 @@ address, blockquote {
 
 #header #user_bar { padding-top:10px; text-align:right; margin-right:4px; width: 210px !important; _width: 220px;  }
 #header #user_bar a { color: #B9BBBC; font-size:12px; display:inline-block; margin-right:8px; }
-#footer { clear:both; padding-top:25px; height:80px;  }
+#footer { clear:both; padding-top:25px; height:80px; color: gray;  }
 #footer .links {   margin-bottom:5px;  }
 
-#header:after {
+#header:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after {
     content:"";
     display:block;
     visibility:hidden;
@@ -166,14 +166,85 @@ a.user img.normal { width:100px; height:100px; }
 
 
 .user_profile {}
-.user_profile .tabs { border-bottom:3px solid #ddd; margin-top:10px; padding:5px 0; margin-bottom:10px;  }
+.user_profile .tabs { border-bottom:3px solid #ddd; margin-top:20px; padding:5px 0; margin-bottom:10px;  }
 .user_profile .tabs a { -moz-border-radius: 15px; -webkit-border-radius: 15px;
   display: inline-block; font-weight: bold; margin-right: 3px; padding: 3px 15px 3px; color: #19558D; }
 .user_profile .tabs a.actived { color:#333; background:#ddd; }
 .user_profile .tabs a.actived:hover { text-decoration:none; }
-.user_profile h1 { display:inline;padding:0;margin:0;}
+.user_profile h1 { padding:0;margin:0;}
+.user_profile h1 span {font-size: 12px; font-weight:normal;}
 .user_profile .avatar { width: 110px; float:left; }
 .user_profile .bio { margin-top:10px; }
+.user_profile .detail {
+	margin-left: 120px;
+	font-size: 1.2em;
+}
+
+.user_profile .detail p {
+	margin: 10px 0;
+}
+
+.follow-stats a {
+	display: block;
+}
+
+.follow-stats a:link {
+	color: gray;
+}
+
+.follow-stats li {
+	list-style: none;
+	font-size: 1.2em;
+	border-right: 1px solid #E9E9E9;
+	float: left;
+	margin: 10px 15px 0 0;
+	padding: 0 15px 0 0;
+}
+
+.follow-stats li.last {
+	border: none;
+	margin: 10px 0 0 0;
+}
+
+.follow-stats li strong {
+	color: black;
+	display: block;
+	font-size: 16px;
+}
+
+.user-regdate {
+	margin: 10px 0 10px 10px;
+}
+
+.followed-item {
+	padding: 0;
+	margin: 0;
+	font-size: 1.1em;
+}
+
+.followed-item li {
+	list-style: none;
+	padding: 10px 0;
+	border-top: 1px dotted #C8C8C8;
+} 
+
+.topic-listing li {
+	border-top: none;
+	border-bottom: 1px dotted #C8C8C8;
+}
+
+.topic-listing li.last {
+	border: none;
+}
+
+.followed-item li .item {
+	float: left;
+}
+
+.followed-item li .action {
+	float: right;
+	font-size: 12px;
+}
 
 #topic { margin-bottom:10px; }
 #topic h1 { font-size:2em; }

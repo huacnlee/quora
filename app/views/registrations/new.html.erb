@@ -18,10 +18,10 @@
       <h1>注册新用户</h1>
       <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name) ) do |f| %>
         <%= render "shared/error_messages", :target => resource %> 
-        <%= f.input :name %>
-        <%= f.input :email %>
-        <%= f.input :password, :as => :password %>
-        <%= f.input :password_confirmation, :as => :password  %>
+        <%= f.input :name, :label => "姓名（注册后不可更改）" %>
+        <%= f.input :email, :label => "邮箱" %>
+        <%= f.input :password, :as => :password, :label => "密码" %>
+        <%= f.input :password_confirmation, :as => :password, :label => "确认密码"  %>
         <div class="actions"><button type="submit" class="button submit">提交注册信息</button></div>
       <% end %>
     <% end %>

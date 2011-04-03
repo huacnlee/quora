@@ -14,7 +14,7 @@ class TopicsController < ApplicationController
   end
   
   def follow
-    @topic = Topic.find(params[:id])
+    @topic = Topic.find_by_name(params[:id])
     if not @topic
       render :text => "0"
       return
@@ -24,7 +24,7 @@ class TopicsController < ApplicationController
   end
   
   def unfollow
-    @topic = Topic.find(params[:id])
+    @topic = Topic.find_by_name(params[:id])
     if not @topic
       render :text => "0"
       return

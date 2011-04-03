@@ -1,14 +1,45 @@
+<%= content_for :scripts do %>
+  <script type="text/javascript">
+    var current_page = 2;
+    function loadLogs(){
+      App.loading();
+      $.get("/logs.js?page="+current_page,function(){
+          App.loading(false);
+      });
+      return false;
+    }
+
+		function follow(el, id){
+      App.loading();
+			$.get("/users/"+id+"/follow",{}, function(res){
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');">取消关注</a>');
+	    });
+      return false;
+    }
+		
+		function unfollow(el, id){
+      App.loading();
+			$.get("/users/"+id+"/unfollow",{}, function(res){
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @user.slug %>\');">关注</a>');
+	    });
+      return false;
+    }
+  </script>
+<% end %>
+
 <div class="user_profile">
   <%= render "head", :user => @user %>
-  <div class="bio">
-    <span id="user_bio">
-      <% if @user.bio.blank? and (not owner?@user) %>
-        <%= @user.name %>还没来得及写他的个人介绍.
-      <% else %>
-        <%= md_body @user.bio %>
-      <% end %>
-    </span>
-    <% if owner?@user %> <%= in_place_edit_tag(@user,:bio,:type => :textarea, :text_id => "user_bio") %> <% end %>
-  </div>
+  
+	<br>
+	<% for log in @logs %>
+	<%= render "logs/log", :log => log %>
+	<% end %>
+
+	<% if @logs.length == @per_page %>
+	  <div class="pagination"><a class="page_more" href="#" onclick="return loadLogs();">查看更多...</a></div>
+	<% end %>
 </div>
 <%= render "sidebar", :user => @user %>
+<br>

@@ -17,6 +17,12 @@ Quora::Application.routes.draw do
     member do
       get "answered"
       get "asked"
+      get "follow"
+      get "unfollow"
+      get "followers"
+      get "following"
+      get "following_topics"
+      get "following_asks"
     end
   end
   match "auth/:provider/callback", :to => "users#auth_callback"  

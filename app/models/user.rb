@@ -35,6 +35,9 @@ class User
 
   references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
   references_and_referenced_in_many :followed_topics, :stored_as => :array, :inverse_of => :followers, :class_name => "Topic"
+  
+  references_and_referenced_in_many :following, :class_name => 'User', :inverse_of => :followers, :index => true, :stored_as => :array
+  references_and_referenced_in_many :followers, :class_name => 'User', :inverse_of => :following, :index => true, :stored_as => :array
 
   embeds_many :authorizations
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
@@ -99,6 +102,10 @@ class User
     self.followed_asks.include?(ask)
   end
   
+  def followed?(user)
+    self.following.include?(user)
+  end
+  
   def topic_followed?(topic)
     self.followed_topics.include?(topic)
   end
@@ -147,6 +154,23 @@ class User
     topic.save
     
     insert_follow_log("UNFOLLOW_TOPIC", topic)
+  end
+  
+  def follow(user)
+    user.followers << self
+    user.save
+    
+    insert_follow_log("FOLLOW_USER", user)
+  end
+  
+  def unfollow(user)
+    self.following.delete(user)
+    self.save
+    
+    user.followers.delete(self)
+    user.save
+    
+    insert_follow_log("FOLLOW_USER", user)
   end
   
   protected

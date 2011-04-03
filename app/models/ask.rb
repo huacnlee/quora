@@ -138,7 +138,7 @@ class Ask
   protected
   
     def insert_topic_action_log(action, topics, current_user_id)
-      # begin
+      begin
         log = AskLog.new
         log.user_id = current_user_id
         log.title = topics.join(',')
@@ -149,9 +149,9 @@ class Ask
         log.target_parent_title = self.title
         log.diff = ""
         log.save
-      # rescue Exception => e
+      rescue Exception => e
         
-      # end
+      end
     end
   
     def insert_action_log(action)
