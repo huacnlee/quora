@@ -98,6 +98,7 @@ class HomeController < ApplicationController
   end
 
   def about
+    set_seo_meta("关于")
     @users = User.any_in(:email => Setting.admin_emails)
   end
 
