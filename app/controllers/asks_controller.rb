@@ -29,6 +29,7 @@ class AsksController < ApplicationController
   def show
     @ask = Ask.find(params[:id])
     @ask.views_count += 1
+    @ask.current_user_id = current_user ? current_user.id : "NULL"
     @ask.save
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
     @answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc)
