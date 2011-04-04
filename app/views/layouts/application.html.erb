@@ -1,4 +1,4 @@
-<%= spaceless do %>
+<% spaceless do %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 
@@ -43,7 +43,7 @@
           cachedItems = searchCache.get(t);
           if(cachedItems == null){
             $.ajax({
-              url : "<%= search_asks_path(:format => 'json') %>",
+              url : "/search.json",
               data : { w : t },
               dataType : "json",
               success : function(res){
@@ -74,7 +74,7 @@
           html += '<a href="/asks/'+res[i]._id+'">'+item_title+'</a>';
           html += '</li>';
         }
-        html += '<li class="more" onclick="location.href=\'<%= search_asks_path %>?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';
+        html += '<li class="more" onclick="location.href=\'/search?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';
       }
       else{
         html += '<li>没有找到关于“'+t+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></li>';
@@ -101,9 +101,9 @@
       <div class="left_wrapper">
         <div id="site_name">
           <% if current_user %>
-            <a href="/"><%= Setting.app_name %></a>
+            <a href="/"><%= image_tag("logo.png") %></a>
           <% else %>
-            <a href="/asks"><%= Setting.app_name %></a>
+            <a href="/asks"><%= image_tag("logo.png") %></a>
           <% end %>
         </div>
         <div id="add_ask">

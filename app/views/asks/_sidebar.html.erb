@@ -3,7 +3,7 @@
     <ul class="sections">
       <% if current_user %>
 			<li>
-    		<a href="/" class="home<%= ' active' if params[:controller] == "home" and params[:action] == "index" %>">我的首页</a>
+    		<a href="/" class="home<%= ' active' if params[:controller] == "home" and ["index","newbie"].index(params[:action]) %>">我的首页</a>
     	</li>
 			<li>
     		<a href="/followed" class="followed<%= ' active' if params[:controller] == "home" and params[:action] == "followed" %>">我关注的问题</a>
@@ -13,7 +13,7 @@
     	</li>
 			<% end %>
 			<li>
-        <a href="/asks" class="asks<%= ' active' if params[:controller] == "ask" and params[:action] == "index" %>">所有问题</a>
+        <a href="/asks" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
       </li>
 			<li>
         <a href="/logs" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>">者也正在发生</a>

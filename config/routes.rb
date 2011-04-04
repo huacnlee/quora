@@ -28,11 +28,13 @@ Quora::Application.routes.draw do
   end
   match "auth/:provider/callback", :to => "users#auth_callback"  
 
+  resources :search do
+    collection do
+      get "topics"
+    end
+  end
   
   resources :asks do
-    collection do
-      get "search"
-    end
     member do
       get "spam"
       get "follow"
@@ -44,6 +46,7 @@ Quora::Application.routes.draw do
       get "update_topic"
     end
   end
+
   resources :answers do
     member do
       get "vote"

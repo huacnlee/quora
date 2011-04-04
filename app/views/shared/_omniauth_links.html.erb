@@ -3,6 +3,7 @@
   <% if not current_user %>
     <ul>
       <li class="google"><a href="/auth/google">Google帐号</a></li>
+      <li class="github"><a href="/auth/github">Github</a></li>
       <li class="douban"><a href="/auth/douban">豆瓣</a></li>
       <li class="tqq"><a href="/auth/tqq">QQ帐号(腾讯微博)</a></li>
       <li class="tsina"><a href="/auth/tsina">新浪微博</a></li>
@@ -15,6 +16,11 @@
         <li class="google"><a href="/auth/google">Google帐号</a></li>
       <% else %>
         <li class="google"><a href="#" class="disabled">Google帐号</a><span>[已绑定]</span></li>
+      <% end %>
+      <% if not current_user.auths.index("github") %>
+        <li class="github"><a href="/auth/github">Github</a></li>
+      <% else %>
+        <li class="github"><a href="#" class="disabled">Github</a><span>[已绑定]</span></li>
       <% end %>
       <% if not current_user.auths.index("douban") %>
         <li class="douban"><a href="/auth/douban">豆瓣</a></li>

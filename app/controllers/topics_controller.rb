@@ -6,7 +6,11 @@ class TopicsController < ApplicationController
     name = params[:id].strip
     @per_page = 10
     @topic = Topic.find_by_name(name)
+    if @topic.blank?
+      return render_404
+    end
     @asks = Ask.all_in(:topics => [name]).desc(:id).paginate(:page => params[:page], :per_page => @per_page)
+    set_seo_meta(@topic.name,:description => @topic.summary)
 
     if params[:format] == "js"
       render "/asks/index.js"
