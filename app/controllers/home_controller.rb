@@ -25,15 +25,19 @@ class HomeController < ApplicationController
   def newbie
     ask_logs = Log.any_of({:_type => "AskLog"}, {:_type => "UserLog", :action.in => ["FOLLOW_ASK", "UNFOLLOW_ASK"]}).where(:created_at.gte => (Time.now - 1.day))
     answer_logs = Log.any_of({:_type => "AnswerLog"}, {:_type => "UserLog", :action => "AGREE"}).where(:created_at.gte => (Time.now - 1.day))
-    @asks = Ask.any_of({:_id.in => ask_logs.map {|l| l.target_id}.uniq}, {:_id.in => answer_logs.map {|l| l.target_parent_id}.uniq})
+    @asks = Ask.any_of({:_id.in => ask_logs.map {|l| l.target_id}.uniq}, {:_id.in => answer_logs.map {|l| l.target_parent_id}.uniq}).desc("$natural")
     h = {} 
-    @asks.inject([]) { |memo, ask|
-      Rails.logger.info "topics: #{ask.topics.inspect}"
+    @hot_topics = @asks.inject([]) { |memo, ask|
       memo += ask.topics
-    }.each { |str| 
+    }
+    @hot_topics.delete("者也")
+    @hot_topics.delete("知乎")
+    @hot_topics.delete("反馈")
+    
+    @hot_topics.each { |str| 
       h[str] = (h[str] || 0) + 1 
     }
-    @hot_topics = h.sort{|a, b|b[1]<=>a[1]}.collect{|tmp|tmp[0]}[0..6]
+    @hot_topics = h.sort{|a, b|b[1]<=>a[1]}.collect{|tmp|tmp[0]}[0..8]
   end
   
   def timeline
