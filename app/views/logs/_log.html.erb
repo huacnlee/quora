@@ -9,7 +9,6 @@ when "AskLog"
 	<div class="ask" ask-id="<%= log.id %>">
     <%
       case action
-      when "NEW"
     %>
     <% when "ADD_TOPIC", "DEL_TOPIC","EDIT" %>
       <div class="title small_title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
