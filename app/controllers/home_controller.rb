@@ -23,8 +23,8 @@ class HomeController < ApplicationController
   end
   
   def newbie
-    ask_logs = Log.any_of({:_type => "AskLog"}, {:_type => "UserLog", :action.in => ["FOLLOW_ASK", "UNFOLLOW_ASK"]}).where(:created_at.gte => (Time.now - 1.day))
-    answer_logs = Log.any_of({:_type => "AnswerLog"}, {:_type => "UserLog", :action => "AGREE"}).where(:created_at.gte => (Time.now - 1.day))
+    ask_logs = Log.any_of({:_type => "AskLog"}, {:_type => "UserLog", :action.in => ["FOLLOW_ASK", "UNFOLLOW_ASK"]}).where(:created_at.gte => (Time.now - 2.hours))
+    answer_logs = Log.any_of({:_type => "AnswerLog"}, {:_type => "UserLog", :action => "AGREE"}).where(:created_at.gte => (Time.now - 2.hours))
     @asks = Ask.any_of({:_id.in => ask_logs.map {|l| l.target_id}.uniq}, {:_id.in => answer_logs.map {|l| l.target_parent_id}.uniq}).desc("answers_count")
     h = {} 
     @hot_topics = @asks.inject([]) { |memo, ask|
@@ -33,6 +33,9 @@ class HomeController < ApplicationController
     @hot_topics.delete("者也")
     @hot_topics.delete("知乎")
     @hot_topics.delete("反馈")
+    @hot_topics.delete("zheye")
+    @hot_topics.delete("Quora")
+    @hot_topics.delete("quora")
     
     @hot_topics.each { |str| 
       h[str] = (h[str] || 0) + 1 
