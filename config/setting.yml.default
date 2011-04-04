@@ -17,6 +17,7 @@ default: &defaults
   # 问题被多少次 spam 自动删除
   ask_spam_max: 8
   google_analytics_id: "UA-22413508-1"
+  spam_words: /敏感词1|敏感词2/
 
 development:
   <<: *defaults

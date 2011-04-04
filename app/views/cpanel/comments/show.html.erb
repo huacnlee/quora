@@ -1,0 +1,26 @@
+<%= content_for :sitemap do %>
+<span class="current">查看</span>
+<% end %>
+<%= render 'base' %>
+<div class="tools">
+  <%= link_to '修改', edit_cpanel_comment_path(@comment) %> |
+  <%= link_to '返回', cpanel_comments_path %>
+</div>
+<div id="cpanel_comment">
+    <p>
+    <b>Body:</b>
+    <%= @comment.body %>
+  </p>
+    <p>
+    <b>User:</b>
+    <%= @comment.user_id %>
+  </p>
+    <p>
+    <b>Commentable type:</b>
+    <%= @comment.commentable_type %>
+  </p>
+    <p>
+    <b>Commentable:</b>
+    <%= @comment.commentable_id %>
+  </p>
+  </div>

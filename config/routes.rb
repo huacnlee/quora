@@ -67,5 +67,6 @@ Quora::Application.routes.draw do
     resources :asks
     resources :answers
     resources :topics
+    resources :comments
   end
 end
