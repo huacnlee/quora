@@ -39,7 +39,8 @@ class Ask
 
   attr_protected :user_id
   attr_accessor :current_user_id
-  validates_presence_of :user_id, :title, :current_user_id
+  validates_presence_of :user_id, :title
+  validates_presence_of :current_user_id, :if => proc { |obj| obj.title_changed? or obj.body_changed? }
 
   # 正常可显示的问题, 前台调用都带上这个过滤
   scope :normal, where(:spams_count.lt => Setting.ask_spam_max)
