@@ -118,6 +118,7 @@ class Ask
     return self.spams_count if self.spam_voter_ids.index(voter_id)
     self.spams_count += 1
     self.spam_voter_ids << voter_id
+    self.current_user_id = "NULL"
     self.save()
     return self.spams_count
   end
