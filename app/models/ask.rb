@@ -1,5 +1,5 @@
 # coding: utf-8
-class Ask
+class Ask < BaseModel
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Sphinx
@@ -58,6 +58,23 @@ class Ask
   after_create :create_log, :inc_counter_cache
   after_destroy :dec_counter_cache
   before_update :update_log
+
+  # 敏感词验证
+  before_validation :check_spam_words
+  def check_spam_words
+    if self.spam?("title")
+      return false
+    end
+
+    if self.spam?("body")
+      return false
+    end
+
+    if self.spam?("topics")
+      return false
+    end
+    
+  end
 
   def inc_counter_cache
     self.user.inc(:asks_count, 1)

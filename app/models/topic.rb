@@ -1,5 +1,5 @@
 # coding: utf-8
-class Topic
+class Topic < BaseModel
   include Mongoid::Document
   
   field :name
@@ -17,6 +17,17 @@ class Topic
 
   validates_presence_of :name
   validates_uniqueness_of :name, :case_insensitive => true
+  # 敏感词验证
+  before_validation :check_spam_words
+  def check_spam_words
+    if self.spam?("name")
+      return false
+    end
+
+    if self.spam?("summary")
+      return false
+    end
+  end
 
   def self.save_topics(topics, current_user_id)
     topics.each do |item|

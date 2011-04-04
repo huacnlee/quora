@@ -72,6 +72,8 @@ a.green_button:active {
 .simple_form .actions { margin:5px 0 10px 0; }
 .simple_form label { font-size: 12px; color:#666; display:block; }
 .form span.error-message { color:red; }
+.simple_form span.error { display:block; color:red; display:block; }
+.form span.error { display:block; color:red; display:block; }
 
 .alert_message, .notice_message, .error_explanation, #error_explanation {
   font-family: "adelle-1", "adelle-2", tahoma, sans-serif;

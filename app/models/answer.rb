@@ -1,5 +1,5 @@
 # coding: utf-8
-class Answer
+class Answer < BaseModel
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voteable
@@ -15,6 +15,13 @@ class Answer
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
   
   validates_presence_of :user_id, :body
+  # 敏感词验证
+  before_validation :check_spam_words
+  def check_spam_words
+    if self.spam?("body")
+      return false
+    end
+  end
 
   after_create :save_to_ask_and_update_answered_at
   before_update :log_update
