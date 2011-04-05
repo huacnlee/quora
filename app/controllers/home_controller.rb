@@ -11,7 +11,7 @@ class HomeController < ApplicationController
     #                   .paginate(:page => params[:page], :per_page => @per_page)
     
     @per_page = 20
-    @logs = Log.any_of({:user_id.in => current_user.following_ids}, {:target_id.in => current_user.followed_ask_ids}, {:target_id.in => current_user.followed_topic_ids}).excludes(:user_id => current_user.id).desc("$natural").paginate(:page => params[:page], :per_page => @per_page)
+    @logs = Log.any_of({:user_id.in => current_user.following_ids}, {:target_id.in => current_user.followed_ask_ids}).excludes(:user_id => current_user.id).desc("$natural").paginate(:page => params[:page], :per_page => @per_page)
     redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
 
     if params[:format] == "js"
