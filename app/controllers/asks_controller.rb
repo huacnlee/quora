@@ -86,6 +86,12 @@ class AsksController < ApplicationController
   end
   
   def create
+    @ask = Ask.find_by_title(params[:ask][:title])
+    if @ask
+      flash[:notice] = "已有相同的问题存在，已重定向。"
+      redirect_to ask_path(@ask.id)
+      return 
+    end
     @ask = Ask.new(params[:ask])
     @ask.user_id = current_user.id
     @ask.followers << current_user

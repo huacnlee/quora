@@ -154,6 +154,10 @@ class Ask < BaseModel
     out_result[:items] = Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
     out_result
   end
+
+  def self.find_by_title(title)
+    first(:conditions => {:title => title})
+  end
   
   protected
   
