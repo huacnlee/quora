@@ -17,11 +17,24 @@
 	</ul>
 	<% end %>
 	
-	<% if @asks.size > 0 %>
+	<% 
+	waiting_asks = @asks.where(:answers_count.lte => 2).where(:created_at.lte => (Time.now - 12.hours)).limit(10)
+	if waiting_asks.size > 0
+	%>
 	<br>
 	<h2>又或者是去给这些等待回答的问题添加一些你所知道的答案：</h2>
 	<ul class="hot-asks">
-		<% for ask in @asks.limit(10) %>
+		<% for ask in waiting_asks %>
+		<li><a href="<%= ask_path(ask) %>"><%= ask.title %></a></li>
+		<% end %>
+	</ul>
+	<% end %>
+	
+	<% if @asks.size > 0 %>
+	<br>
+	<h2>还可以看看这些热门问题：</h2>
+	<ul class="hot-asks">
+		<% for ask in @asks.order_by(:answers_count.desc, :views_count.desc).limit(10) %>
 		<li><a href="<%= ask_path(ask) %>"><%= ask.title %></a></li>
 		<% end %>
 	</ul>
