@@ -1,6 +1,13 @@
 # coding: utf-8
-class Search < RedisModel
-  attr_accessor :type, :title, :id
+class Search
+  attr_accessor :type, :title, :id, :exts
+  def initialize(options = {})
+    self.exts = []
+    options.keys.each do |k|
+      eval("self.#{k} = options[k]")
+    end
+  end
+
   def self.key_prefix
     "quora:searchs:"
   end
@@ -10,7 +17,12 @@ class Search < RedisModel
   end
 
   def save
-    res = $redis.set Search.generate_key(self.title), {:title => self.title, :id => self.id, :type => self.type}.to_json
+    data = {:title => self.title, :id => self.id, :type => self.type}
+    self.exts.each do |f|
+      data[f[0]] = f[1]
+    end
+    
+    res = $redis.set Search.generate_key(self.title), data.to_json
     if res == "OK"
       return true
     end
@@ -37,6 +49,6 @@ class Search < RedisModel
       rescue
       end
     end
-    result
+    result.sort { |b,a| a[:type] <=> b[:type] }
   end
 end

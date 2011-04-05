@@ -56,12 +56,30 @@ class Ask
                :attributes => [:title, :body, :created_at],
                :options => {} )
 
-  redis_search_index(:title_field => :title)
+  redis_search_index(:title_field => :title,:ext_fields => [:topics])
 
   before_save :fill_default_values
   after_create :create_log, :inc_counter_cache
   after_destroy :dec_counter_cache
   before_update :update_log
+
+  def inc_counter_cache
+    self.user.inc(:asks_count, 1)
+  end
+
+  def dec_counter_cache
+    if self.user.asks_count > 0
+      self.user.inc(:asks_count, -1)
+    end
+  end
+
+  def update_log
+    insert_action_log("EDIT") if self.title_changed? or self.body_changed?
+  end
+  
+  def create_log
+    insert_action_log("NEW")
+  end
 
   # 敏感词验证
   before_validation :check_spam_words
@@ -79,24 +97,6 @@ class Ask
     end
   end
 
-  def inc_counter_cache
-    self.user.inc(:asks_count, 1)
-  end
-
-  def dec_counter_cache
-    if self.user.asks_count > 0
-      self.user.inc(:asks_count, -1)
-    end
-  end
-  
-  def update_log
-    insert_action_log("EDIT") if self.title_changed? or self.body_changed?
-  end
-  
-  def create_log
-    insert_action_log("NEW")
-  end
-  
   def fill_default_values
     # 默认回复时间为当前时间，已便于排序
     if self.answered_at.blank?

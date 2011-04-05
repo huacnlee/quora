@@ -316,6 +316,7 @@ a.user img.normal { width:100px; height:100px; }
 .dialog_content .complete li .cate { color:#333; margin:0 5px; float:right; }
 .dialog_content .complete li a .light { font-weight:bold;  }
 .dialog_content .complete li.more { font-weight:bold; color:#000; }
+.dialog_content .complete li .type { margin-left:8px; }
 
 .followers { margin: 7px 0; }
 .followers a { margin: 0 1px 3px 0; }

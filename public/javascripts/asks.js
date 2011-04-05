@@ -110,11 +110,22 @@ function searchAjaxCallback(el,res){
   if(res.length > 0){
     for(var i=0;i<res.length;i++){
       html += '<li onclick="location.href = $(\'a\',this).attr(\'href\');">';
-      if(res[i].topics.length > 0){
-        html += '<span class="cate">'+res[i].topics[0]+'</span>';
-      }
       item_title = res[i].title;
-      html += '<a href="/asks/'+res[i]._id+'">'+item_title+'</a>';
+      item_type = res[i].type;
+      if(item_type == "Topic"){
+        html += '<a href="/topics/'+res[i].title+'">'+item_title+'</a><span class="type">话题</span>';
+      }
+      else if(item_type == "User"){
+        html += '<a href="/users/'+res[i].slug+'">'+item_title+'</a><span class="type">会员</span>';
+      }
+      else{
+        if(res[i].topics != null){
+          if(res[i].topics.length > 0){
+            html += '<span class="cate">'+res[i].topics[0]+'</span>';
+          }
+        }
+        html += '<a href="/asks/'+res[i].id+'">'+item_title+'</a>';
+      }
       html += '</li>';
     }
     html += '<li class="more" onclick="location.href=\'/search?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';

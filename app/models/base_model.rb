@@ -15,16 +15,28 @@ module BaseModel
         return false
       end
     end
+
   end
 
   module ClassMethods
     # Redis 搜索存储索引
     def redis_search_index(options = {})
-      title_field = options[:title_field] || "title"
+      title_field = options[:title_field] || :title
+      ext_fields = options[:ext_fields] || []
       class_eval %(
+        def redis_search_ext_fields(ext_fields)
+          exts = {}
+          ext_fields.each do |f|
+            exts[f] = instance_eval(f.to_s)
+          end
+          exts
+        end
+
         after_create :create_search_index
         def create_search_index
-          s = Search.new(:title => self.#{title_field}, :id => self.id, :type => self.class.to_s)
+          s = Search.new(:title => self.#{title_field}, :id => self.id, 
+                          :exts => self.redis_search_ext_fields(#{ext_fields}), 
+                          :type => self.class.to_s)
           s.save
         end
 
@@ -36,8 +48,7 @@ module BaseModel
         after_update :update_search_index
         def update_search_index
           Search.remove(:title => self.#{title_field}_was, :type => self.class.to_s)
-          s = Search.new(:title => self.#{title_field}, :id => self.id, :type => self.class.to_s)
-          s.save
+          self.create_search_index
         end
       )
     end

@@ -18,6 +18,9 @@ class Topic
 
   validates_presence_of :name
   validates_uniqueness_of :name, :case_insensitive => true
+
+  redis_search_index(:title_field => :name)
+
   # 敏感词验证
   before_validation :check_spam_words
   def check_spam_words
