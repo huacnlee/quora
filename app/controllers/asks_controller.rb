@@ -32,7 +32,7 @@ class AsksController < ApplicationController
     @ask.current_user_id = current_user ? current_user.id : "NULL"
     @ask.save
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
-    @answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc)
+    @answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc,:"created_at".asc)
     @answer = Answer.new
     @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
     set_seo_meta(@ask.title)
