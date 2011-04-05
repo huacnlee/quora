@@ -2,7 +2,6 @@
 class HomeController < ApplicationController
   before_filter :require_user_text, :only => [:update_in_place]
   before_filter :require_user
-  caches_page :about
 
   def index
     # @per_page = 20
