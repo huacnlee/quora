@@ -47,6 +47,7 @@ class User < BaseModel
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug
+  validates_format_of :slug, :with => /[a-z0-9\-\_]+/i
   # 敏感词验证
   before_validation :check_spam_words
   def check_spam_words
@@ -71,7 +72,6 @@ class User < BaseModel
   mount_uploader :avatar, AvatarUploader
 
   def self.create_from_hash(auth)  
-    Rails.logger.debug { "---------#{auth}"}
 		user = User.new
 		user.name = auth["user_info"]["name"]  
 		user.email = auth['user_info']['email']
@@ -95,6 +95,8 @@ class User < BaseModel
       if self.slug.blank?
         self.slug = self.id.to_s
       end
+    else
+      self.slug = self.slug.safe_slug
     end
 
     # 防止重复 slug
