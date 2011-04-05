@@ -13,6 +13,8 @@ class Answer < BaseModel
   belongs_to :ask, :inverse_of => :answers, :counter_cache => true
   belongs_to :user, :inverse_of => :answers, :counter_cache => true
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
+  field :spams_count, :type => Integer, :default => 0
+  field :spam_voter_ids, :type => Array, :default => []
   
   validates_presence_of :user_id, :body
   # 敏感词验证
@@ -21,6 +23,18 @@ class Answer < BaseModel
     if self.spam?("body")
       return false
     end
+  end
+
+  # 没有帮助
+  def spam(voter_id)
+    self.spams_count ||= 0
+    self.spam_voter_ids ||= []
+    # 限制 spam ,一人一次
+    return self.spams_count if self.spam_voter_ids.index(voter_id)
+    self.spams_count += 1
+    self.spam_voter_ids << voter_id
+    self.save()
+    return self.spams_count
   end
 
   after_create :save_to_ask_and_update_answered_at

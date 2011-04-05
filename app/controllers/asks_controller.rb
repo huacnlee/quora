@@ -60,7 +60,7 @@ class AsksController < ApplicationController
     count = @ask.spam(current_user.id)
     render :text => count
   end
-  
+
   def follow
     @ask = Ask.find(params[:id])
     if params[:follow].blank?

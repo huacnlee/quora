@@ -50,6 +50,7 @@ Quora::Application.routes.draw do
   resources :answers do
     member do
       get "vote"
+      get "spam"
     end
   end
   resources :comments 

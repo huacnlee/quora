@@ -102,12 +102,20 @@
         if(!App.requireUser(count,"text")){
           return false;
         }
-        if(count == "_deleted_"){
-          alert("此问题已被<%= Setting.ask_spam_max %>个网友评价为烂问题,系统已自动删除.\n确定后将会回到首页.");
-          location.href = "/";
+        $("#ask_spam_count").val(count);
+        App.loading(false);
+      });
+      return false;
+    }
+
+    function spamAnswer(el,id){
+      App.loading();
+      $(el).addClass("spamed");
+      $(el).text("已提交");
+      $.get("/answers/"+id+"/spam",function(count){
+        if(!App.requireUser(count,"text")){
           return false;
         }
-        $("#ask_spam_count").val(count);
         App.loading(false);
       });
       return false;

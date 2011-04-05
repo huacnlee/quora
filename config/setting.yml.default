@@ -14,8 +14,10 @@ default: &defaults
   smtp_password: '111111'
   # 是否开放注册
   allow_register: true
-  # 问题被多少次 spam 自动删除
+  # 问题被多少次 spam 隐藏
   ask_spam_max: 8
+  # 回答被多少次 spam 会删除线
+  answer_spam_max: 5
   google_analytics_id: "UA-22413508-1"
   spam_words: /敏感词1|敏感词2/
 

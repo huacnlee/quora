@@ -27,4 +27,11 @@ class AnswersController < ApplicationController
     answer.reload
     render :text => "#{answer.up_votes_count}|#{answer.down_votes_count}"
   end
+
+  def spam
+    @answer = Answer.find(params[:id])
+    count = @answer.spam(current_user.id)
+    render :text => count
+  end
+  
 end
