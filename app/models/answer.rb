@@ -17,6 +17,8 @@ class Answer < BaseModel
   field :spam_voter_ids, :type => Array, :default => []
   
   validates_presence_of :user_id, :body
+  validates_uniqueness_of :user_id, :scope => [:ask_id]
+
   # 敏感词验证
   before_validation :check_spam_words
   def check_spam_words
