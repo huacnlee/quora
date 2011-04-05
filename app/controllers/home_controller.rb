@@ -26,6 +26,7 @@ class HomeController < ApplicationController
     answer_logs = Log.any_of({:_type => "AnswerLog"}, {:_type => "UserLog", :action => "AGREE"}).where(:created_at.gte => (Time.now - 12.hours))
     @asks = Ask.any_of({:_id.in => ask_logs.map {|l| l.target_id}.uniq}, {:_id.in => answer_logs.map {|l| l.target_parent_id}.uniq}).order_by(:answers_count.asc, :views_count.asc)
     h = {} 
+    # 将回答次数*topic，以加入回答次数
     @hot_topics = @asks.inject([]) { |memo, ask|
       memo += ask.topics
     }

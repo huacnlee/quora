@@ -3,20 +3,20 @@
     <ul class="sections">
       <% if current_user %>
 			<li>
-    		<a href="/" class="home<%= ' active' if params[:controller] == "home" and ["index","newbie"].index(params[:action]) %>">我的首页</a>
+    		<a href="<%= root_path %>" class="home<%= ' active' if params[:controller] == "home" and ["index","newbie"].index(params[:action]) %>">我的首页</a>
     	</li>
 			<li>
-    		<a href="/followed" class="followed<%= ' active' if params[:controller] == "home" and params[:action] == "followed" %>">我关注的问题</a>
+    		<a href="<%= followed_path %>" class="followed<%= ' active' if params[:controller] == "home" and params[:action] == "followed" %>">我关注的问题</a>
     	</li>
     	<li>
-    		<a href="/muted" class="muted<%= ' active' if params[:controller] == "home" and params[:action] == "muted" %>">我屏蔽的问题</a>
+    		<a href="<%= muted_path %>" class="muted<%= ' active' if params[:controller] == "home" and params[:action] == "muted" %>">我屏蔽的问题</a>
     	</li>
 			<% end %>
 			<li>
-        <a href="/asks" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
+        <a href="<%= asks_path %>" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
       </li>
 			<li>
-        <a href="/logs" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>">者也正在发生</a>
+        <a href="<%= doing_path %>" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>">者也正在发生</a>
       </li>
     </ul>
   </div>
