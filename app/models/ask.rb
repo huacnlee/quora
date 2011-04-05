@@ -123,7 +123,7 @@ class Ask < BaseModel
     end
     
     self.current_user_id = current_user_id
-    self.topics = self.topics.uniq
+    self.topics = self.topics.uniq { |s| s.downcase }
     self.update(:topics => self.topics)
     insert_topic_action_log(action, topics, current_user_id)
   end

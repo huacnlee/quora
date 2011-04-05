@@ -51,7 +51,7 @@ class Topic < BaseModel
   end
 
   def self.find_by_name(name)
-    find(:first,:conditions => {:name => name})
+    find(:first,:conditions => {:name => /^#{name}$/i})
   end
 
   def self.search_name(name, options = {})
