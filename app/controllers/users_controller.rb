@@ -24,6 +24,10 @@ class UsersController < ApplicationController
     @per_page = 10
     @logs = Log.desc("$natural").where(:user_id => @user.id).paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta(@user.name)
+    
+    if params[:format] == "js"
+      render "/logs/index.js"
+    end
   end
 
   def asked
