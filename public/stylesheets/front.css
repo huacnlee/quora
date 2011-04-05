@@ -129,15 +129,13 @@ a.user img.normal { width:100px; height:100px; }
 
 .answers { margin:20px 0; }
 .answers .vote_buttons { float:left; width:20px; position:relative; margin-top:5px; margin-right:8px; margin-left:-27px; }
-.answers .vote_buttons a:link,
-.answers .vote_buttons a:visited {  display:block; width:20px; height:17px;  background: #DFEAF4 url(/images/vote.gif); margin-bottom: 1px;
+.answers .vote_buttons a:link, 
+.answers .vote_buttons a:visited {  display:block; width:20px; height:17px;  background-color: #DFEAF4; background-image: url(/images/vote.gif); background-position: top left; background-repeat: no-repeat; margin-bottom: 1px;
   -moz-border-radius: 3px; -webkit-border-radius: 3px; }
-.answers .vote_buttons a:hover,
-.answers .vote_buttons a.voted { background-color:#19558D; background-position: -17px left; }
-.answers .vote_buttons a.vote_down:link,
-.answers .vote_buttons a.vote_down:visited { background-position: top -20px; }
-.answers .vote_buttons a.vote_down:hover,
-.answers .vote_buttons a.vote_down.voted { background-color:#19558D; background-position: -20px -17px; }
+.answers .vote_buttons a:hover, .answers .vote_buttons a.voted { background-color:#19558D; background-position: left -17px; }
+.answers .vote_buttons a.vote_down:link, 
+.answers .vote_buttons a.vote_down:visited { background-position: -20px top; }
+.answers .vote_buttons a.vote_down:hover, .answers .vote_buttons a.vote_down.voted { background-color:#19558D; background-position: -20px -17px; }
 .answers .answer_border { padding-right:30px; }
 .answers .avatar_border { margin-top:2px; float:right; width:24px; margin-left:6px; }
 
