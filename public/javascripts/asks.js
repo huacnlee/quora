@@ -60,11 +60,6 @@ var Asks = {
 function addAsk(){      
   var txtTitle = $("#hidden_new_ask textarea:nth-of-type(1)");
   ask_search_text = $("#add_ask input").val();
-  if(ask_search_text.length == 0){
-    $("#add_ask input").focus();
-    $("#add_ask input").click();
-    return false;
-  }
   txtTitle.text(ask_search_text);
   $.facebox({ div : "#hidden_new_ask", overlay : false });
   txtTitle.focus();
