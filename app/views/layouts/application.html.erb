@@ -17,7 +17,13 @@
   <script type="text/javascript">
     function addAsk(){      
       var txtTitle = $("#hidden_new_ask textarea:nth-of-type(1)");
-      txtTitle.text($("#add_ask input").val());
+      ask_search_text = $("#add_ask input").val();
+      if(ask_search_text.length == 0){
+        $("#add_ask input").focus();
+        $("#add_ask input").click();
+        return false;
+      }
+      txtTitle.text(ask_search_text);
       $.facebox({ div : "#hidden_new_ask", overlay : false });
       txtTitle.focus();
       return false;
@@ -29,9 +35,9 @@
     function showSearchComplete(el,type){
       clearTimeout(searchTimer);
       html = "";
-      if(type == "click" || $(el).val() == ""){
+      if(type == "click" && $(el).val() == ""){
         html = $(el).attr("placeholder");
-        searchCallback(html);
+        searchCallback(el,html);
       }
       else{
         searchTimer = setTimeout(function(){
@@ -107,7 +113,7 @@
           <% end %>
         </div>
         <div id="add_ask">
-          <input type="text" placeholder="搜索问题, 话题 或 会员" onclick="return showSearchComplete(this,'click');" onkeyup="return showSearchComplete(this,'keyup');" />
+          <input type="text" placeholder="提问前，先搜索问题" onclick="return showSearchComplete(this,'click');" onkeyup="return showSearchComplete(this,'keyup');" />
           <a href="/asks/new" onclick="return addAsk();">我要提问</a>
         </div>
       </div>
