@@ -15,16 +15,15 @@
 	<div class="detail">
 		<h1 id="user_name"><%= user.name %><span>，</span><span id="user_tagline"><%= user.tagline %></span>
     <% if owner?user %>
-      <%= in_place_edit_tag(user,:tagline, :type => :textarea,:width => 200, :height => 80, 
-                            :rich => false, :text_id => "user_tagline") %> 
+      <%= in_place_edit_tag(user,:tagline,:rich => false, :text_id => "user_tagline") %> 
     <% end %></h1>
 		<% if !user.website.blank? %>
-		  <p class="website">
+		  <div class="website">
 		    <a href="<%= user.website %>" rel="nofollow" target="_blank" id="user_website"><%= user.website %></a>
 		    <% if owner?user %> <%= in_place_edit_tag(user,:website, :text_id => "user_website") %> <% end %>
-		  </p>
+		  </div>
 		<% end %>
-		<p>
+		<div>
 			<span id="user_bio">
 	      <% if @user.bio.blank? and (not owner?@user) %>
 	        <%= @user.name %>还没来得及写他的个人介绍.
@@ -33,7 +32,7 @@
 	      <% end %>
 	    </span>
 	    <% if owner?@user %> <%= in_place_edit_tag(@user,:bio,:type => :textarea, :text_id => "user_bio", :label => "修改个人经历") %> <% end %>
-		</p>
+		</div>
 	</div>
 </div>
 

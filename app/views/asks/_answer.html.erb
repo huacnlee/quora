@@ -30,8 +30,7 @@
       <% else %>
         <a href="#" onclick="return toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> 条评论</a>
       <% end %>
-      • <a class="usefull" onclick="return usefull('<%= item.id %>',1);" href="#">感谢</a> 
-      • <a class="notusefull" onclick="return usefull('<%= item.id %>',0);" href="#">没有帮助</a>
+      • <a class="notusefull<%= ' spamed' if spam_answered?(item) %>" onclick="return spamAnswer(this,'<%= item.id %>');" href="#">没有帮助</a>
       • <%= l item.created_at.getlocal, :format => :short %>
     </div>
   </div>
