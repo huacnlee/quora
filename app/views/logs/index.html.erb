@@ -3,7 +3,7 @@
     var current_page = 2;
     function loadLogs(){
       App.loading();
-      $.get("/logs.js?page="+current_page,function(){
+      $.get("<%= request.path %>.js?page="+current_page,function(){
           App.loading(false);
       });
       return false;
