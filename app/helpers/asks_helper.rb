@@ -13,7 +13,7 @@ module AsksHelper
 
   def md_body(str)
     return "" if str.blank?
-    str = sanitize(str,:tags => %w(strong b i u strike ol ul li blockquote address br div), :attributes => %w(src))
+    str = sanitize(str,:tags => %w(strong b i u strike s ol ul li blockquote address br div), :attributes => %w(src))
     str = auto_link_urls(str,{:target => "_blank", :rel => "nofollow" }, {:limit => 80 })
     return raw str
   end
