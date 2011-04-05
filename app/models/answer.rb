@@ -1,8 +1,9 @@
 # coding: utf-8
-class Answer < BaseModel
+class Answer
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voteable
+  include BaseModel
 
   # 投票对应的分数
   voteable self, :up => +1, :down => -1

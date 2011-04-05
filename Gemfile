@@ -10,6 +10,8 @@ gem "mongoid-sphinx-huacnlee", :git => "git://github.com/huacnlee/mongoid-sphinx
                       :require => "mongoid_sphinx"
 gem "mongoid_rails_migrations"
 
+gem "redis"
+
 # to_xs 方法，Mongoid-sphinx 需要
 gem 'fast_xs'
 

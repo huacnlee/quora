@@ -1,8 +1,9 @@
 # coding: utf-8
-class User < BaseModel
+class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voter
+  include BaseModel
   
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

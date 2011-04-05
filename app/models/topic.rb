@@ -1,6 +1,7 @@
 # coding: utf-8
-class Topic < BaseModel
+class Topic
   include Mongoid::Document
+  include BaseModel
   
   field :name
   field :summary

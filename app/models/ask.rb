@@ -1,8 +1,9 @@
 # coding: utf-8
-class Ask < BaseModel
+class Ask
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Sphinx
+  include BaseModel
   
   field :title
   field :body
@@ -55,6 +56,8 @@ class Ask < BaseModel
                :attributes => [:title, :body, :created_at],
                :options => {} )
 
+  redis_search_index(:title_field => :title)
+
   before_save :fill_default_values
   after_create :create_log, :inc_counter_cache
   after_destroy :dec_counter_cache
@@ -74,7 +77,6 @@ class Ask < BaseModel
     if self.spam?("topics")
       return false
     end
-    
   end
 
   def inc_counter_cache
