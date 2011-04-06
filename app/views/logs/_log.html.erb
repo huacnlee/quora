@@ -65,7 +65,7 @@ when "UserLog"
 	if ["FOLLOW", "UNFOLLOW"].include?(action)
 		item = Ask.find(log.target_id)
 	elsif ["FOLLOW_TOPIC", "UNFOLLOW_TOPIC"].include?(action)
-		item = Topic.find(log.target_id)
+		item = Topic.first(:conditions => {:id => log.target_id})
 	elsif ["FOLLOW_USER", "UNFOLLOW_USER"].include?(action)
 		item = User.find(log.target_id)
 	elsif ["AGREE"].include?(action)
