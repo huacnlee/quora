@@ -5,9 +5,9 @@ class AsksController < ApplicationController
   before_filter :require_user_text, :only => [:update_topic,:spam, :mute, :unmute, :follow, :unfollow]
   
   def index
-    @per_page = 10
+    @per_page = 20
     @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
-    set_seo_meta("最新提出的问题")
+    set_seo_meta("所有问题")
   end
 
   def search
@@ -29,9 +29,10 @@ class AsksController < ApplicationController
   def show
     @ask = Ask.find(params[:id])
     @ask.views_count += 1
+    @ask.current_user_id = current_user ? current_user.id : "NULL"
     @ask.save
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
-    @answers = @ask.answers.includes(:user).sort { |a,b| b.votes_point <=> a.votes_point }
+    @answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc,:"created_at".asc)
     @answer = Answer.new
     @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
     set_seo_meta(@ask.title)
@@ -59,7 +60,7 @@ class AsksController < ApplicationController
     count = @ask.spam(current_user.id)
     render :text => count
   end
-  
+
   def follow
     @ask = Ask.find(params[:id])
     if params[:follow].blank?
@@ -85,9 +86,16 @@ class AsksController < ApplicationController
   end
   
   def create
+    @ask = Ask.find_by_title(params[:ask][:title])
+    if @ask
+      flash[:notice] = "已有相同的问题存在，已重定向。"
+      redirect_to ask_path(@ask.id)
+      return 
+    end
     @ask = Ask.new(params[:ask])
     @ask.user_id = current_user.id
     @ask.followers << current_user
+    @ask.current_user_id = current_user.id
 
     respond_to do |format|
       if @ask.save
@@ -102,6 +110,7 @@ class AsksController < ApplicationController
   
   def update
     @ask = Ask.find(params[:id])
+    @ask.current_user_id = current_user.id
 
     respond_to do |format|
       if @ask.update_attributes(params[:ask])
@@ -119,7 +128,7 @@ class AsksController < ApplicationController
     @add = params[:add] == "1" ? true : false
 
     @ask = Ask.find(params[:id])
-    if @ask.update_topics(@name,@add)
+    if @ask.update_topics(@name,@add,current_user.id)
       @success = true
     else
       @success = false

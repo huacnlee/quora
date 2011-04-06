@@ -4,7 +4,10 @@ Quora::Application.routes.draw do
   match "/uploads/*path" => "gridfs#serve"
   match "/update_in_place" => "home#update_in_place"
   match "/muted" => "home#muted"
+  match "/newbie" => "home#newbie"
   match "/followed" => "home#followed"
+  match "/about" => "home#about"
+  match "/doing" => "logs#index"
 
   # devise_for :users, :path => '', :path_names => {:sign_in => "login", :sign_out => "logout", :sign_up => "register", :registration }
   devise_for :users,  :controllers => { :registrations => "registrations" } do
@@ -12,14 +15,27 @@ Quora::Application.routes.draw do
     get "/login", :to => "devise/sessions#new" 
     get "/logout", :to => "devise/sessions#destroy" 
   end
-  resources :users, :only => :show
+  resources :users do
+    member do
+      get "answered"
+      get "asked"
+      get "follow"
+      get "unfollow"
+      get "followers"
+      get "following"
+      get "following_topics"
+      get "following_asks"
+    end
+  end
   match "auth/:provider/callback", :to => "users#auth_callback"  
 
+  resources :search do
+    collection do
+      get "topics"
+    end
+  end
   
   resources :asks do
-    collection do
-      get "search"
-    end
     member do
       get "spam"
       get "follow"
@@ -31,13 +47,21 @@ Quora::Application.routes.draw do
       get "update_topic"
     end
   end
+
   resources :answers do
     member do
       get "vote"
+      get "spam"
     end
   end
   resources :comments 
-  resources :topics
+  resources :topics do
+    member do
+      get "follow"
+      get "unfollow"
+    end
+  end
+  resources :logs
 
   namespace :cpanel do
     root :to =>  "home#index"
@@ -45,5 +69,6 @@ Quora::Application.routes.draw do
     resources :asks
     resources :answers
     resources :topics
+    resources :comments
   end
 end

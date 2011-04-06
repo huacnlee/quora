@@ -1,0 +1,3 @@
+#!/bin/sh
+DATE_NAME=`date +%y%m%d`
+mongodump -d quora -o ~/backups/mongodb/quora_$DATE_NAME

@@ -1,0 +1,27 @@
+<%= content_for :sitemap do %>
+<span class="current">列表</span>
+<% end %>
+<%= render 'base' %>
+
+<div id="cpanel_comments">
+  <%= grid(@comments, :show_filters => :false) do |g|
+    g.column :column_name => 'body', :attribute_name => 'body' do |c|
+      c.body if !c.body.blank?
+    end
+    g.column :column_name => 'user_id', :attribute_name => 'user_id' do |c|
+      c.user_id if !c.user_id.blank?
+    end
+    g.column :column_name => 'commentable_type', :attribute_name => 'commentable_type' do |c|
+      c.commentable_type if !c.commentable_type.blank?
+    end
+    g.column :column_name => 'commentable_type', :attribute_name => 'commentable_type' do |c|
+      c.commentable_id if !c.commentable_id.blank?
+    end
+    g.column :column_name => '创建时间', :attribute_name => 'created_at', :td_html_attrs => { :style => "width:120px;" }
+    g.column :td_html_attrs => { :style => "width:50px; text-align:right;" } do |c|
+      raw "#{link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_comment_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
+    end
+  end %>
+</div>
+
+

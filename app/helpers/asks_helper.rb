@@ -13,7 +13,7 @@ module AsksHelper
 
   def md_body(str)
     return "" if str.blank?
-    str = sanitize(str,:tags => %w(strong b i u strike ol ul li blockquote address br div), :attributes => %w(src))
+    str = sanitize(str,:tags => %w(strong b i u strike s ol ul li blockquote address br div), :attributes => %w(src))
     str = auto_link_urls(str,{:target => "_blank", :rel => "nofollow" }, {:limit => 80 })
     return raw str
   end
@@ -47,8 +47,16 @@ module AsksHelper
 
   # 判断是否是 spam 的回答
   def spam_answer?(answer)
-    point = answer.votes_point || 0
-    return point <= -5
+    point = answer.spams_count || 0
+    return point > 5
+  end
+
+  # 判断是否是 spam 过这个回答
+  def spam_answered?(answer)
+    return false if current_user.blank?
+    return false if answer.spam_voter_ids.blank?
+    return answer.spam_voter_ids.count(current_user.id) > 0
+    return
   end
 
   private

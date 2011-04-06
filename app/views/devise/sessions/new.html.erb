@@ -12,6 +12,14 @@
     <div class="field"><button type="submit" class="button submit">登录</button></div>
     <% end %>
   </div>
+  <% if Setting.allow_register %>
+  <div class="box" style="margin-top:20px;">
+    <div class="inner" style="line-height:180%;padding:8px;background:#fff5c9;">
+      <%= Setting.app_name %>本身需要邀请才可以注册的，但是我们会偶尔在一些特别的日子临时性的开放注册。<br />
+      当你看到这个提示的时候赶紧<a href="/register" style="color:green;margin:0 4px;">注册</a>吧，如果你还没有<%= Setting.app_name %>帐号的话。
+    </div>
+  </div>
+  <% end %>
 </div>
 <% content_for :sidebar do %>
   <div class="box">

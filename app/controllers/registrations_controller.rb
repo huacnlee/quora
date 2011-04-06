@@ -6,6 +6,7 @@ class RegistrationsController < ApplicationController
 
   # GET /resource/sign_up
   def new
+    set_seo_meta("注册")
     build_resource({})
     render_with_scope :new
   end
@@ -36,6 +37,7 @@ class RegistrationsController < ApplicationController
 
   # GET /resource/edit
   def edit
+    set_seo_meta("个人设置")
     render_with_scope :edit
   end
 
@@ -53,8 +55,8 @@ class RegistrationsController < ApplicationController
 
   # DELETE /resource
   def destroy
-    resource.destroy
-    sign_out_and_redirect(self.resource)
+    resource.soft_delete
+    sign_out_and_redirect("/login")
     set_flash_message :notice, :destroyed
   end
 

@@ -1,4 +1,4 @@
-<%= spaceless do %>
+<% spaceless do %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 
@@ -10,90 +10,10 @@
 	<%= yield :styles %>
   <meta name="keywords" content="<%= @meta_keywords %>" />
   <meta name="description" content="<%= @meta_description %>" />
-  <link rel="shortcut icon" href="/favicon.ico?v=001" /> 
+  <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
   <%= csrf_meta_tag %>
   <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jcaches","application","asks", :cache => "cached_application" %>
   <%= yield :scripts %>
-  <script type="text/javascript">
-    function addAsk(){      
-      var txtTitle = $("#hidden_new_ask textarea:nth-of-type(1)");
-      txtTitle.text($("#add_ask input").val());
-      $.facebox({ div : "#hidden_new_ask", overlay : false });
-      txtTitle.focus();
-      return false;
-    }
-
-    var searchCache = new jCaches(40,false);
-    var lastSearchText = null;
-    var searchTimer = null;
-    function showSearchComplete(el,type){
-      clearTimeout(searchTimer);
-      html = "";
-      if(type == "click" || $(el).val() == ""){
-        html = $(el).attr("placeholder");
-        searchCallback(html);
-      }
-      else{
-        searchTimer = setTimeout(function(){
-          t = $(el).val().trim();
-          if(t == lastSearchText){
-            return false;
-          }
-          lastSearchText = t;
-          cachedItems = searchCache.get(t);
-          if(cachedItems == null){
-            $.ajax({
-              url : "<%= search_asks_path(:format => 'json') %>",
-              data : { w : t },
-              dataType : "json",
-              success : function(res){
-                searchCache.add(t,res);
-                searchAjaxCallback(el,res);
-              }
-            });
-          }
-          else{
-            searchAjaxCallback(el,cachedItems);
-          }
-        },200);
-      }
-
-      return false;
-    }
-
-    function searchAjaxCallback(el,res){
-      html = '<ul class="complete">';
-      App.loading(false);            
-      if(res.length > 0){
-        for(var i=0;i<res.length;i++){
-          html += '<li onclick="location.href = $(\'a\',this).attr(\'href\');">';
-          if(res[i].topics.length > 0){
-            html += '<span class="cate">'+res[i].topics[0]+'</span>';
-          }
-          item_title = res[i].title;
-          html += '<a href="/asks/'+res[i]._id+'">'+item_title+'</a>';
-          html += '</li>';
-        }
-        html += '<li class="more" onclick="location.href=\'<%= search_asks_path %>?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';
-      }
-      else{
-        html += '<li>没有找到关于“'+t+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></li>';
-      }
-      html += "</ul>";
-      searchCallback(el,html);
-    }
-
-    function searchCallback(el, html){
-      el_width = $(el).width();
-      $(el).jDialog({
-        content : html,
-        width : el_width + 250,
-        title_visiable : false,
-        top_offset : 1,
-        left_offset : -1
-      });
-    }
-  </script>
 </head>
 <body>
   <div id="header">
@@ -101,13 +21,13 @@
       <div class="left_wrapper">
         <div id="site_name">
           <% if current_user %>
-            <a href="/"><%= Setting.app_name %></a>
+            <a href="/"><%= image_tag("logo.png") %></a>
           <% else %>
-            <a href="/asks"><%= Setting.app_name %></a>
+            <a href="/asks"><%= image_tag("logo.png") %></a>
           <% end %>
         </div>
         <div id="add_ask">
-          <input type="text" placeholder="搜索问题, 话题 或 会员" onclick="return showSearchComplete(this,'click');" onkeyup="return showSearchComplete(this,'keyup');" />
+          <input type="text" placeholder="搜索问题" onclick="return showSearchComplete(this,'click');" onkeyup="return showSearchComplete(this,'keyup');" />
           <a href="/asks/new" onclick="return addAsk();">我要提问</a>
         </div>
       </div>
@@ -152,6 +72,14 @@
   <div id="footer">
     <div class="container">
       <div class="left_wrapper">
+        <div class="links">
+          <a href="/about">关于者也</a> • 
+          <a href="http://blog.zheye.org" target="_blank">博客</a> •
+          <a href="/register">如何注册</a> •
+          <a href="http://twitter.com/zheyecn" target="_blank">Twitter</a> •
+          <a href="mailto:nowazhu@gmail.com">合作联系</a> •
+          <a href="mailto:huacnlee@gmail.com">反馈</a>
+        </div>
         <p class="copyright">
           <%= raw Setting.foot_html %>
         </p>
@@ -172,6 +100,9 @@
     <div class="logo"></div> 
     <div class="text">加载中…</div> 
   </div> 
+  <div style="width:0px;height;0px;overflow:hidden;">
+    <%= image_tag("loading.gif") %>
+  </div>
   <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '<%= Setting.google_analytics_id %>']);

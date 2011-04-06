@@ -11,7 +11,7 @@
     }
   </script>
 <% end %>
-<div id="asks">
+<div id="asks" class="listing">
   <% @asks.each do |item| %>
     <%= render "asks/ask", :item => item %>
   <% end %>

@@ -1,27 +1,38 @@
-<div class="user_profile">
-  <h1><%= @user.name %></h1>
-  <div class="tagline">
-    <%= @user.tagline %>
-  </div>
-  <ul>
-    <li class="info">
-      注册于 <%= l @user.created_at, :format => :long %>
-    </li>
-    <li>
-    <% if !@user.website.blank? %>
-      <a href="<%= @user.website %>" rel="nofollow" target="_blank"><%= @user.website %></a>
-    <% end %>
-    </li>
-  </ul>
-  <div class="bio md_body">
-    <% if @user.bio %>
-      <%= @user.bio %>
-    <% end %>
-  </div>
-</div>
-<% content_for :sidebar do %>
-<div class="box">
-  <%= image_tag(@user.avatar.normal.url) %>
-</div>
+<%= content_for :scripts do %>
+  <script type="text/javascript">
+		function follow(el, id){
+      App.loading();
+			$(el).attr("onclick", "return false;");
+			$.get("/users/"+id+"/follow",{}, function(res){
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');">取消关注</a>');
+	    });
+      return false;
+    }
+		
+		function unfollow(el, id){
+      App.loading();
+			$(el).attr("onclick", "return false;");
+			$.get("/users/"+id+"/unfollow",{}, function(res){
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @user.slug %>\');">关注</a>');
+	    });
+      return false;
+    }
+  </script>
 <% end %>
 
+<div class="user_profile">
+  <%= render "head", :user => @user %>
+  
+	<br>
+	<% for log in @logs %>
+	<%= render "logs/log", :log => log %>
+	<% end %>
+
+	<% if @logs.length == @per_page %>
+	  <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
+	<% end %>
+</div>
+<%= render "sidebar", :user => @user %>
+<br>

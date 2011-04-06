@@ -1,0 +1,13 @@
+<div class="user_profile">
+  <%= render "head", :user => @user %>
+</div>
+<ul class="followed-item topic-listing">
+  <% @topics.each do |item| %>
+    <%= render "topic", :topic => item %>
+  <% end %>
+	<% if @topics.length == @per_page %>
+	<li class="pagination last"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></li>
+	<% end %>
+</ul>
+<%= render "sidebar", :user => @user %>
+

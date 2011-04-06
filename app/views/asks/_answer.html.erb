@@ -1,4 +1,5 @@
-<div id="answer_<%= item.id %>" class="answer<%= ' spam_answer' if spam_answer?(item) %>">
+<div id="answer_<%= item.id %>" data-uc="<%= item.up_votes_count %>" data-dc="<%= item.down_votes_count %>"
+    class="answer<%= ' spam_answer' if spam_answer?(item) %>">
   <div class="vote_buttons">
     <% if not owner?(item) %>
       <a class="vote_up<%= ' voted' if voted?(item, :up) %>" onclick="return vote('<%= item.id %>',1);" href="#"></a>
@@ -9,11 +10,11 @@
     <%= user_avatar_tag(item.user, :small) %>
   </div>
   <div class="answer_border">
-    <div class="author"><%= user_name_tag(item.user) %><%= user_tagline_tag(item.user) %></div>
-    <% if !item.votes_point.blank? and item.votes_point != 0 %>
-    <div class="votes"> 
-      <span class="num"><%= item.votes_point %></span> 票
-    </div>
+    <div class="author"><%= user_name_tag(item.user) %><%= user_tagline_tag(item.user,:prefix => ",") %></div>
+    <% if item.up_votes_count != 0 %>
+      <div class="votes"> 
+        <span class="num"><%= item.up_votes_count %></span>人支持
+      </div>
     <% end %>
     <div class="md_body">
       <div id="answer_body_<%= item.id %>">
@@ -29,8 +30,7 @@
       <% else %>
         <a href="#" onclick="return toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> 条评论</a>
       <% end %>
-      • <a class="usefull" onclick="return usefull('<%= item.id %>',1);" href="#">感谢</a> 
-      • <a class="notusefull" onclick="return usefull('<%= item.id %>',0);" href="#">没有帮助</a>
+      • <a class="notusefull<%= ' spamed' if spam_answered?(item) %>" onclick="return spamAnswer(this,'<%= item.id %>');" href="#">没有帮助</a>
       • <%= l item.created_at.getlocal, :format => :short %>
     </div>
   </div>

@@ -64,7 +64,7 @@ class Cpanel::UsersController < CpanelController
   
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
+    @user.soft_delete
 
     respond_to do |format|
       format.html { redirect_to(cpanel_users_path,:notice => "删除成功。") }

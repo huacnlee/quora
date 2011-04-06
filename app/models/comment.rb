@@ -1,5 +1,5 @@
 # coding: utf-8
-class Comment
+class Comment < BaseModel
   include Mongoid::Document
   include Mongoid::Timestamps
   
@@ -7,6 +7,17 @@ class Comment
   
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
+  has_many :logs, :class_name => "Log", :foreign_key => "target_id"
+
+  validates_presence_of :body
+
+  # 敏感词验证
+  before_validation :check_spam_words
+  def check_spam_words
+    if self.spam?("body")
+      return false
+    end
+  end
 
   before_create :fix_commentable_id
   def fix_commentable_id

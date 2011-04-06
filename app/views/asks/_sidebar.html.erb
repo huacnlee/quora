@@ -2,24 +2,32 @@
   <div class="box">
     <ul class="sections">
       <% if current_user %>
-        <li>
-          <a href="/" class="home<%= ' active' if params[:controller] == "home" and params[:action] == "index" %>">所有问题</a>
-        </li>
 			<li>
-    		<a href="/followed" class="asks<%= ' active' if params[:controller] == "home" and params[:action] == "followed" %>">我关注的问题</a>
+    		<a href="<%= root_path %>" class="home<%= ' active' if params[:controller] == "home" and ["index","newbie"].index(params[:action]) %>">我的首页</a>
+    	</li>
+			<li>
+    		<a href="<%= followed_path %>" class="followed<%= ' active' if params[:controller] == "home" and params[:action] == "followed" %>">我关注的问题</a>
     	</li>
     	<li>
-    		<a href="/muted" class="asks<%= ' active' if params[:controller] == "home" and params[:action] == "muted" %>">我屏蔽的问题</a>
+    		<a href="<%= muted_path %>" class="muted<%= ' active' if params[:controller] == "home" and params[:action] == "muted" %>">我屏蔽的问题</a>
     	</li>
 			<% end %>
 			<li>
-    		<a href="/asks" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">最新提出的问题</a>
-    	</li>
-      <% if current_user %>
-        <li>
-          <a href="<%= new_user_invitation_path %>">邀请你的朋友注册</a>
-        </li>
-      <% end %>
+        <a href="<%= asks_path %>" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
+      </li>
+			<li>
+        <a href="<%= doing_path %>" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>">者也正在发生</a>
+      </li>
     </ul>
   </div>
+	<% if current_user %>
+	<div class="box">
+		<h2>邀请好友</h2>
+    <ul class="sections">
+			<li>
+	      <a href="<%= new_user_invitation_path %>">邀请你的朋友注册</a>
+	    </li>
+		</ul>
+	</div>
+  <% end %>
 <% end %>

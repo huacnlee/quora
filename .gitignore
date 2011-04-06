@@ -7,9 +7,11 @@ tmp/
 config/*.yml
 public/javascripts/cached_*
 public/stylesheets/cached_*
+public/about.html
 db/sphinx
 
 #以bundle install --path vendor/bundle方式安装，不影响开发者现有gems环境
 vendor/bundle
 
 db/sphinx
+development.*
