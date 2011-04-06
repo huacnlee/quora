@@ -52,8 +52,12 @@ class User
   validates_uniqueness_of :slug
   validates_format_of :slug, :with => /[a-z0-9\-\_]+/i
 
+  # 以下两个方法是给 redis search index 用
   def avatar_small
     self.avatar.small.url
+  end
+  def avatar_small_changed?
+    self.avatar_changed?
   end
   redis_search_index(:title_field => :name, :ext_fields => [:slug,:avatar_small,:tagline])
 

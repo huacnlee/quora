@@ -47,9 +47,20 @@ module BaseModel
 
         before_update :update_search_index
         def update_search_index
-          Rails.logger.debug { self.#{title_field}_was }
-          Search.remove(:title => self.#{title_field}_was, :type => self.class.to_s)
-          self.create_search_index
+          index_fields_changed = false
+          #{ext_fields}.each do |f|
+            if instance_eval(f.to_s + "_changed?")
+              index_fields_changed = true
+            end
+          end
+          if(self.#{title_field}_changed?)
+            index_fields_changed = true
+          end
+          if index_fields_changed
+            Rails.logger.debug { "-- update_search_index --" }
+            Search.remove(:title => self.#{title_field}_was, :type => self.class.to_s)
+            self.create_search_index
+          end
         end
       )
     end
