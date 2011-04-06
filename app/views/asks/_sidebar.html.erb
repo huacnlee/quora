@@ -11,10 +11,12 @@
     	<li>
     		<a href="<%= muted_path %>" class="muted<%= ' active' if params[:controller] == "home" and params[:action] == "muted" %>">我屏蔽的问题</a>
     	</li>
-			<% end %>
 			<li>
         <a href="<%= asks_path %>" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
       </li>
+      <% else %>
+        <li> <a href="<%= root_path %>" class="asks<%= ' active' if params[:controller] == "home" and params[:action] == "index" %>">所有问题</a> </li>
+			<% end %>
 			<li>
         <a href="<%= doing_path %>" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>">者也正在发生</a>
       </li>

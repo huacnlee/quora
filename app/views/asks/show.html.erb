@@ -254,6 +254,7 @@
     <% end %>
     • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友评价为烂问题后,问题将会自动删除" href="#">烂问题</a>
     <% if !@ask.spams_count.blank? %>(<span id="spams_count"><%= @ask.spams_count %></span>人认为)<% end %>
+    • <a href="#new_answer" onclick="return $('#new_answer .qeditor_preview').focus();">添加答案</a>
     • <span class="date"><%= l @ask.created_at.getlocal, :format => :short %></span>
   </div>
 </div>
