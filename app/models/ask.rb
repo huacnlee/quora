@@ -143,18 +143,20 @@ class Ask
     return self.spams_count
   end
 
-  def self.search_title(text,options = {})
-    limit = options[:limit] || 10
-
+  def self.mmseg_text(text)
     result = Ask.search(text,:max_matches => 1)
     words = []
     result.raw_result[:words].each do |w|
       next if w[0] == "ask"
       words << ((w[0] == "rubi" and text.downcase.index("ruby")) ? "ruby" : w[0])
     end
-    out_result = {:items => [], :words => words} 
-    out_result[:items] = Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
-    out_result
+    words
+  end
+
+  def self.search_title(text,options = {})
+    limit = options[:limit] || 10
+    words = mmseg_text(text)
+    Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
   end
 
   def self.find_by_title(title)

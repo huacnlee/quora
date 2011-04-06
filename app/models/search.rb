@@ -33,9 +33,11 @@ class Search
     $redis.del(generate_key(options[:title]))
   end
 
-  def self.query(words,options = {})
+  def self.query(text,options = {})
+    return [] if text.strip.blank?
+
+    words = Ask.mmseg_text(text)
     limit = options[:limit] || 10
-    words = words.class == [].class ? words : [words]
     word_match = words.collect(&:downcase).join("*")
     word_match = "#{Search.key_prefix}*#{word_match}*"
     puts "keys:#{word_match}"
@@ -45,10 +47,13 @@ class Search
       # TODO: 这里需要改为 mult get
       r = $redis.get(k)
       begin
-        result << JSON.parse(r)
-      rescue
+        item = JSON.parse(r)
+        # item['title'] = Search.highlight(item['title'],words)
+        result << item
+      rescue => e
+        Rails.logger.info { "Search.query failed: #{e}" }
       end
     end
-    result.sort { |b,a| a[:type] <=> b[:type] }
+    result.sort { |b,a| a['type'] <=> b['type'] }
   end
 end
