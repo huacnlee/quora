@@ -45,8 +45,9 @@ module BaseModel
           Search.remove(:title => self.#{title_field}, :type => self.class.to_s)
         end
 
-        after_update :update_search_index
+        before_update :update_search_index
         def update_search_index
+          Rails.logger.debug { self.#{title_field}_was }
           Search.remove(:title => self.#{title_field}_was, :type => self.class.to_s)
           self.create_search_index
         end
