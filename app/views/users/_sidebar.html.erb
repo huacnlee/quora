@@ -34,7 +34,7 @@
 					<% end %>
 	      </div>
 			</div>
-		<% elsif current_user == @user %>
+		<% elsif owner? @user %>
 			这就是你自己
 		<% else %>
       登录后你可以关注<%= user_sex_title(@user) %>
