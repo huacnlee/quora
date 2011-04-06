@@ -95,6 +95,10 @@ class Ask < BaseModel
     insert_action_log("NEW")
   end
   
+  def chomp_body
+    self.body == "<br>" ? "" : self.body.gsub("<div><br></di>", "")
+  end
+  
   def fill_default_values
     # 默认回复时间为当前时间，已便于排序
     if self.answered_at.blank?

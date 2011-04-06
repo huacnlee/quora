@@ -25,7 +25,7 @@
         <span class="votes"><%= mine_answer.votes_count %></span>
       </div>
       <div class="data">
-      	<div class="md_body"><%= md_body(mine_answer.body.gsub("<div><br></div>", "")) %></div>
+      	<div class="md_body"><%= md_body(mine_answer.chomp_body) %></div>
       </div>
     </div>
   <% else %>

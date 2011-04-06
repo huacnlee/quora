@@ -107,7 +107,7 @@ when "UserLog"
 				<div class="author">
 					<%= user_name_tag(answer.user) %><%= user_tagline_tag(answer.user) %>
 				</div>
-				<div class="md_body"><%= md_body(answer.body) %></div>
+				<div class="md_body"><%= md_body(answer.chomp_body) %></div>
 			</div>
     </div>
     <% end %>
@@ -148,7 +148,7 @@ when "AnswerLog"
 					<div class="author">
 						<%= user_name_tag(log.user) %>，<%= user_tagline_tag(log.user) %>
 					</div>
-					<div class="md_body"><%= md_body(log.answer.body) %></div>
+					<div class="md_body"><%= md_body(log.answer.chomp_body) %></div>
 				</div>
 	    </div>
 			<% end %>
