@@ -58,4 +58,5 @@ gem 'colorize'
 # 后台表格
 gem 'mongoid_wice_grid', :require => "wice_grid"
 
-
+# Crontab 辅助
+gem 'whenever'
