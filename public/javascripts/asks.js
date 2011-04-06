@@ -68,12 +68,18 @@ function addAsk(){
 
 var searchCache = new jCaches(40,false);
 var lastSearchText = null;
+var lastSearchCompleteHTML = null;
 var searchTimer = null;
 function showSearchComplete(el,type){
   clearTimeout(searchTimer);
   html = "";
-  if(type == "click" && $(el).val() == ""){
-    html = $(el).attr("placeholder");
+  if(type == "click"){
+    if(lastSearchCompleteHTML != null){
+      html = lastSearchCompleteHTML;
+    }
+    else {
+      html = $(el).attr("placeholder");
+    }
     searchCallback(el,html);
   }
   else{
@@ -148,6 +154,7 @@ function searchAjaxCallback(el,res){
 }
 
 function searchCallback(el, html){
+  lastSearchCompleteHTML = html;
   el_width = $(el).width();
   $(el).jDialog({
     content : html,
