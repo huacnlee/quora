@@ -3,7 +3,7 @@ gem 'rails', '3.0.5'
 
 # MongoDB
 gem "mongoid", "2.0.0"
-gem "bson_ext", "~> 1.2.2"
+gem "bson_ext", "1.3.0"
 gem 'mongo-rails-instrumentation'
 gem "mongoid-eager-loading"
 gem "mongoid-sphinx-huacnlee", :git => "git://github.com/huacnlee/mongoid-sphinx.git", 
@@ -52,7 +52,7 @@ gem 'settingslogic'
 gem 'smurf-huacnlee', :require => "smurf"
 
 # 表单
-gem 'simple_form'
+gem 'simple_form', "1.3.1"
 
 # 缓存管理
 gem 'tagged-cache'

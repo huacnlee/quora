@@ -5,6 +5,7 @@
   <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
 	<%= render "shared/error_messages", :target => resource %> 
 	  <%= f.input :slug, :label => "个性域名" %>
+    <%= f.input :girl, :as => :boolean, :label => "我是女性" %>
 	  <%= f.input :email, :label => "邮箱" %>
     <%= f.input :avatar, :label => "头像" %>
     <% if not @user.avatar.blank? %>

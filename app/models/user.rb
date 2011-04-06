@@ -14,6 +14,8 @@ class User
   field :bio
   field :avatar
   field :website
+  # 是否是女人
+  field :girl, :type => Boolean, :default => false
   # 软删除标记，1 表示已经删除
   field :deleted, :type => Integer
 
@@ -44,7 +46,7 @@ class User
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
 
   attr_accessor  :password_confirmation
-  attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website
+  attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website, :girl
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug

@@ -1,23 +1,24 @@
 # coding: utf-8
 class HomeController < ApplicationController
   before_filter :require_user_text, :only => [:update_in_place]
-  before_filter :require_user, :except => [:about]
+  before_filter :require_user, :except => [:about,:index]
 
   def index
-    # @per_page = 20
-    #     @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics)
-    #                   .exclude_ids(current_user.muted_ask_ids)
-    #                   .desc(:answered_at,:id)
-    #                   .paginate(:page => params[:page], :per_page => @per_page)
-    
     @per_page = 20
-    @logs = Log.any_of({:user_id.in => current_user.following_ids}, {:target_id.in => current_user.followed_ask_ids}).excludes(:user_id => current_user.id).desc("$natural").paginate(:page => params[:page], :per_page => @per_page)
-    redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
+    if current_user
+      @logs = Log.any_of({:user_id.in => current_user.following_ids}, {:target_id.in => current_user.followed_ask_ids}).excludes(:user_id => current_user.id).desc("$natural").paginate(:page => params[:page], :per_page => @per_page)
+      redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
 
-    if params[:format] == "js"
-      render "/logs/index.js"
+      if params[:format] == "js"
+        render "/logs/index.js"
+      else
+        render "/logs/index"
+      end
     else
-      render "/logs/index"
+      @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
+      if params[:format] == "js"
+        render "/asks/index.js"
+      end
     end
   end
   
@@ -49,7 +50,7 @@ class HomeController < ApplicationController
   end
   
   def followed
-    @per_page = 10
+    @per_page = 20
     @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}, {:follower_ids.in => [current_user.id]}) : Ask.normal
     @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
                   .exclude_ids(current_user.muted_ask_ids)
@@ -65,7 +66,7 @@ class HomeController < ApplicationController
 
   # 查看用户不感兴趣的问题
   def muted
-    @per_page = 10
+    @per_page = 20
     @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics)
                   .only_ids(current_user.muted_ask_ids)
                   .desc(:answered_at,:id)

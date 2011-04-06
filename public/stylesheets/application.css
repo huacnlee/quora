@@ -70,7 +70,10 @@ a.green_button:active {
 .simple_form { }
 .simple_form .row,
 .simple_form .actions { margin:5px 0 10px 0; }
+.simple_form .row.radio { margin:10px 0; }
 .simple_form label { font-size: 12px; color:#666; display:block; }
+.simple_form label.boolean { display:inline; margin-right:8px; }
+.simple_form input.boolean { width:auto; margin-right:3px; }
 .form span.error-message { color:red; }
 .simple_form span.error { display:block; color:red; display:block; }
 .form span.error { display:block; color:red; display:block; }

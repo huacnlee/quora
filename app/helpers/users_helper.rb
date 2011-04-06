@@ -19,4 +19,11 @@ module UsersHelper
     return "" if user.tagline.blank?
     raw "#{prefix}#{truncate(user.tagline, :length => 30)}"
   end
+
+  def user_sex_title(user)
+    if current_user
+      return "我" if user.id == current_user.id
+    end
+    user.girl.blank? == true ? "他" : "她"
+  end
 end
