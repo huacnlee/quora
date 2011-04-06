@@ -3,7 +3,7 @@
 </div>
 <div class="asks">
   <% @asks.each do |item| %>
-    <%= render "/asks/ask", :item => item %>
+    <%= render "/users/answered_ask", :item => item %>
   <% end %>
 </div>
 <% if @asks.length == @per_page %>

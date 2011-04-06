@@ -16,16 +16,16 @@
 				<% end %>
 			<% end %>
     </div> 
-  <% if item.last_answer %>
+  <%
+	mine_answer = item.answers.where(:user_id => @user.id).first
+	if mine_answer
+	%>
     <div class="last_answer answer">
       <div class="attr">
-        <span class="votes"><%= item.last_answer.votes_count %></span>
+        <span class="votes"><%= mine_answer.votes_count %></span>
       </div>
       <div class="data">
-				<div class="author">
-					<% if item.last_answer_user %><%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user,:prefix => ",") %> <% else %>匿名用户<% end %>
-				</div>
-      	<div class="md_body"><%= md_body(item.last_answer.body) %></div>
+      	<div class="md_body"><%= md_body(mine_answer.body.gsub("<div><br></div>", "")) %></div>
       </div>
     </div>
   <% else %>
