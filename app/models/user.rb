@@ -55,7 +55,7 @@ class User
   def avatar_small
     self.avatar.small.url
   end
-  redis_search_index(:title_field => :name, :ext_fields => [:slug,:avatar_small])
+  redis_search_index(:title_field => :name, :ext_fields => [:slug,:avatar_small,:tagline])
 
   # 敏感词验证
   before_validation :check_spam_words
