@@ -10,6 +10,13 @@ gem "mongoid-sphinx-huacnlee", :git => "git://github.com/huacnlee/mongoid-sphinx
                       :require => "mongoid_sphinx"
 gem "mongoid_rails_migrations"
 
+gem "redis"
+
+# 分词
+# ferret from fork https://github.com/huacnlee/ferret
+# gem "ferret", "0.11.6"
+# gem "rmmseg-cpp-huacnlee"
+
 # to_xs 方法，Mongoid-sphinx 需要
 gem 'fast_xs'
 

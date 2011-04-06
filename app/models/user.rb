@@ -1,8 +1,9 @@
 # coding: utf-8
-class User < BaseModel
+class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voter
+  include BaseModel
   
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -48,6 +49,9 @@ class User < BaseModel
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug
   validates_format_of :slug, :with => /[a-z0-9\-\_]+/i
+
+  redis_search_index(:title_field => :name, :ext_fields => [:slug,:avatar])
+
   # 敏感词验证
   before_validation :check_spam_words
   def check_spam_words
