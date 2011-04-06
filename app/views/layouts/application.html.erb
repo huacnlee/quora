@@ -14,6 +14,13 @@
   <%= csrf_meta_tag %>
   <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jcaches","application","asks", :cache => "cached_application" %>
   <%= yield :scripts %>
+  <script type="text/javascript">
+    <% if current_user %>
+    var logined = true;
+    <% else %>
+    var logined = false;
+    <% end %>
+  </script>
 </head>
 <body>
   <div id="header">

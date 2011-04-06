@@ -58,6 +58,10 @@ var Asks = {
 
 /* 添加问题 */
 function addAsk(){      
+  if(!logined){
+    location.href = "/login";
+    return false;
+  }
   var txtTitle = $("#hidden_new_ask textarea:nth-of-type(1)");
   ask_search_text = $("#add_ask input").val();
   txtTitle.text(ask_search_text);

@@ -27,6 +27,10 @@ class Answer
       return false
     end
   end
+  
+  def chomp_body
+    self.body.gsub("<div><br></div>", "")
+  end
 
   # 没有帮助
   def spam(voter_id)

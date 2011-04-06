@@ -23,7 +23,7 @@
 		    <% if owner?user %> <%= in_place_edit_tag(user,:website, :text_id => "user_website") %> <% end %>
 		  </div>
 		<% end %>
-		<div>
+		<div class="bio">
 			<span id="user_bio">
 	      <% if @user.bio.blank? and (not owner?@user) %>
 	        <%= @user.name %>还没来得及写他的个人介绍.
