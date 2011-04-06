@@ -37,7 +37,7 @@
 		<% elsif current_user == @user %>
 			这就是你自己
 		<% else %>
-			登录后你可以关注他
+      登录后你可以关注<%= user_sex_title(@user) %>
 		<% end %>
   </div>
 </div>
@@ -47,13 +47,13 @@
 		<li>
 			<a href="<%= followers_user_path(@user.slug) %>" onclick="return false;"><strong>
 			<%= @user.follower_ids.size %></strong>
-			<span>关注他的人</span>
+			<span>关注<%= user_sex_title(@user) %>的人</span>
 			</a>
 		</li>
 		<li class="last">
 			<a href="<%= following_user_path(@user.slug) %>" onclick="return false;"><strong>
 			<%= @user.following_ids.size %></strong>
-			<span>他关注的人</span>
+			<span><%= user_sex_title(@user) %>关注的人</span>
 			</a>
 		</li>
 	</ul>
@@ -73,7 +73,7 @@
 
 <% if @user.follower_ids.size > 0 %>
 <div class="box standard gray">
-	<h2>最近关注他的人</h2>
+  <h2>最近关注<%= user_sex_title(@user) %>的人</h2>
 	<div class="inner">
 		<div class="followers">
 			<% for follower in @user.followers.desc("$natural").limit(40) %>
@@ -88,7 +88,7 @@
 
 <% if @user.following_ids.size > 0 %>
 <div class="box standard gray">
-	<h2>他最近关注的人</h2>
+  <h2><%= user_sex_title(@user) %>最近关注的人</h2>
 	<div class="inner">
 		<div class="followers">
 			<% for follower in @user.following.desc("$natural").limit(40) %>

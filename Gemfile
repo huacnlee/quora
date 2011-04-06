@@ -45,7 +45,7 @@ gem 'settingslogic'
 gem 'smurf-huacnlee', :require => "smurf"
 
 # 表单
-gem 'simple_form'
+gem 'simple_form', "1.3.1"
 
 # 缓存管理
 gem 'tagged-cache'
