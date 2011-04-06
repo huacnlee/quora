@@ -48,6 +48,7 @@ class AsksController < ApplicationController
     @answer = Answer.new(params[:answer])
     @answer.ask_id = params[:id]
     @answer.user_id = current_user.id
+    
     if @answer.save
       @success = true
     else

@@ -97,9 +97,16 @@ class Ask
     end
   end
 
-  
   def chomp_body
-    self.body == "<br>" ? "" : self.body.gsub("<div><br></di>", "")
+    if self.body == "<br>"
+      return ""
+    else
+      chomped = self.body
+      while chomped =~ /<div><br><\/div>$/i
+        chomped = chomped.gsub(/<div><br><\/div>$/i, "")
+      end
+      return chomped
+    end
   end
   
   def fill_default_values
