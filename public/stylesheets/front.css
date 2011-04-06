@@ -308,13 +308,17 @@ a.user img.normal { width:100px; height:100px; }
 .search_result_dropdown .contextual_dialog_content { padding:0; }
 .dialog_content .complete { padding:0; margin:0; }
 .dialog_content .complete li { list-style:none; padding:0px 8px; cursor:pointer;
-  overflow:hidden; height:24px; line-height:24px; }
+  overflow:hidden; line-height:24px; }
 .dialog_content .complete li:hover { background:#e1f0f7; }
 .dialog_content .complete li:hover a { color:#256098; }
 .dialog_content .complete li .cate { color:#333; margin:0 5px; float:right; }
 .dialog_content .complete li a .light { font-weight:bold;  }
 .dialog_content .complete li.more { font-weight:bold; color:#000; }
 .dialog_content .complete li .type { margin-left:8px; }
+.dialog_content .complete li .avatar {  margin:10px 0;margin-right:8px; float:left; }
+.dialog_content .complete li .uinfo { margin:5px 0; line-height:150%; }
+.dialog_content .complete li .uinfo a { line-height:18px;}
+.dialog_content .complete li .tagline { color:#999; font-size:12px; }
 
 .followers { margin: 7px 0; }
 .followers a { margin: 0 1px 3px 0; }
