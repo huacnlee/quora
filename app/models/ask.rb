@@ -1,8 +1,9 @@
 # coding: utf-8
-class Ask < BaseModel
+class Ask
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Sphinx
+  include BaseModel
   
   field :title
   field :body
@@ -55,10 +56,30 @@ class Ask < BaseModel
                :attributes => [:title, :body, :created_at],
                :options => {} )
 
+  redis_search_index(:title_field => :title,:ext_fields => [:topics])
+
   before_save :fill_default_values
   after_create :create_log, :inc_counter_cache
   after_destroy :dec_counter_cache
   before_update :update_log
+
+  def inc_counter_cache
+    self.user.inc(:asks_count, 1)
+  end
+
+  def dec_counter_cache
+    if self.user.asks_count > 0
+      self.user.inc(:asks_count, -1)
+    end
+  end
+
+  def update_log
+    insert_action_log("EDIT") if self.title_changed? or self.body_changed?
+  end
+  
+  def create_log
+    insert_action_log("NEW")
+  end
 
   # 敏感词验证
   before_validation :check_spam_words
@@ -74,25 +95,11 @@ class Ask < BaseModel
     if self.spam?("topics")
       return false
     end
-    
   end
 
-  def inc_counter_cache
-    self.user.inc(:asks_count, 1)
-  end
-
-  def dec_counter_cache
-    if self.user.asks_count > 0
-      self.user.inc(:asks_count, -1)
-    end
-  end
   
-  def update_log
-    insert_action_log("EDIT") if self.title_changed? or self.body_changed?
-  end
-  
-  def create_log
-    insert_action_log("NEW")
+  def chomp_body
+    self.body == "<br>" ? "" : self.body.gsub("<div><br></di>", "")
   end
   
   def fill_default_values
@@ -141,18 +148,20 @@ class Ask < BaseModel
     return self.spams_count
   end
 
-  def self.search_title(text,options = {})
-    limit = options[:limit] || 10
-
+  def self.mmseg_text(text)
     result = Ask.search(text,:max_matches => 1)
     words = []
     result.raw_result[:words].each do |w|
       next if w[0] == "ask"
       words << ((w[0] == "rubi" and text.downcase.index("ruby")) ? "ruby" : w[0])
     end
-    out_result = {:items => [], :words => words} 
-    out_result[:items] = Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
-    out_result
+    words
+  end
+
+  def self.search_title(text,options = {})
+    limit = options[:limit] || 10
+    words = mmseg_text(text)
+    Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
   end
 
   def self.find_by_title(title)

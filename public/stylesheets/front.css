@@ -26,7 +26,7 @@ address, blockquote {
 
 #header {
   background: #505759;
-  min-height: 35px;
+  height: 35px;
   padding-top: 18px;
   color:#FFF;
 }
@@ -43,7 +43,7 @@ address, blockquote {
 #footer { clear:both; padding-top:25px; height:80px; color: gray;  }
 #footer .links {   margin-bottom:5px;  }
 
-#header:after, #main:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after {
+#header:after, #main:after, .answer:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after {
     content:"";
     display:block;
     visibility:hidden;
@@ -65,8 +65,8 @@ address, blockquote {
 }
 .sidebar .standard ul li {
 	list-style: none;
-	font-weight: bold;
-	margin: 5px 0 7px;
+	margin: 6px 0 8px;
+	*text-indent: -16px;
 }
 
 .sidebar .sections { font-size:14px; }
@@ -82,6 +82,7 @@ address, blockquote {
 #inner_new_ask textarea.title { font-size:16px; font-weight:bold; }
 
 .ask { margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px; }
+.the-ask { border-bottom:3px solid #ddd; margin-bottom:1px; }
 .ask h1 { font-size: 1.8em; line-height: 1.3em; letter-spacing: -1px; margin-bottom: 0; }
 
 .ask .topic { -moz-border-radius: 3px; -webkit-border-radius: 3px; margin-right:5px; margin-bottom:5px;
@@ -93,7 +94,7 @@ address, blockquote {
 
 .ask .title { font-size: 1.3em; line-height: 1.2em; margin: 2px 0 5px; }
 .ask .small_title { font-size:12px; margin:0px; color:#999; }
-.ask .title h1 { font-size: 1.2em; line-height: 1.2em; display:inline;  }
+.ask .title h1 { font-size: 1.2em; line-height: 1.2em; display:inline; *font-size: 16px; }
 .ask .info { color: #999; margin:3px 0;  }
 .ask .last_answer { margin-top:5px; }
 .ask .last_answer .votes { display:inline-block;
@@ -102,7 +103,7 @@ address, blockquote {
   font-weight:bold; width:20px; text-align:center; padding: 1px 3px; }
 .ask .last_answer .md_body { margin-left:30px; }
 
-.md_body { font-size:1.2em; color: #333; line-height:21px; margin: 5px 0; }
+.md_body { font-size:1.2em; color: #333; line-height:21px; margin: 8px 0; }
 .md_body blockquote { padding-left:28px; padding-top:8px; background:#FAEBBC url(/images/lquote.gif) left top no-repeat; }
 .md_body blockquote p { padding-right:28px; padding-bottom:8px; font-size:1em; background:url(/images/rquote.gif) bottom right no-repeat; }
 .md_body code { background: #F4F4F4; display:block; margin:5px; padding:2px; font-size:.6em; font-family:monaco,monospace; line-height:120%; }
@@ -127,7 +128,7 @@ a.in_place_edit:hover {color: #405A04; background-color:#c3dd82; text-decoration
 a.user img.small { width:25px; height:25px; }
 a.user img.normal { width:100px; height:100px; }
 
-.answers { margin:20px 0; }
+.answers { margin:10px 0 20px; }
 .answers .vote_buttons { float:left; width:20px; position:relative; margin-top:5px; margin-right:8px; margin-left:-27px; }
 .answers .vote_buttons a:link, 
 .answers .vote_buttons a:visited {  display:block; width:20px; height:17px;  background-color: #DFEAF4; background-image: url(/images/vote.gif); background-position: top left; background-repeat: no-repeat; margin-bottom: 1px;
@@ -147,6 +148,18 @@ a.user img.normal { width:100px; height:100px; }
 .answer .author a.user { font-weight:bold; margin-right:2px; }
 .answer .votes { color:#999; margin-bottom:4px; }
 .answer .votes a { color:#999; }
+.answer .attr {
+	float: left;
+	margin-top: 2px;
+}
+
+.answer .data {
+	margin-left: 10px;
+}
+
+.answer .data .md_body, .answer .data .author {
+	margin-left: 25px;
+}
 
 .answers .spam_answer .md_body { color:#999; font-size:12px; text-decoration :line-through; }
 .answers .spam_answer .action { display:none; }
@@ -189,7 +202,7 @@ a.user img.normal { width:100px; height:100px; }
 .user_profile h1 { padding:0;margin:0;}
 .user_profile h1 span {font-size: 12px; font-weight:normal;}
 .user_profile .avatar { width: 110px; float:left; }
-.user_profile .bio { margin-top:10px; }
+.user_profile .bio { margin-top:10px; line-height: 21px; }
 .user_profile .detail {
 	margin-left: 120px;
 	font-size: 1.2em;
@@ -214,6 +227,7 @@ a.user img.normal { width:100px; height:100px; }
 	float: left;
 	margin: 10px 15px 0 0;
 	padding: 0 15px 0 0;
+	*margin: 10px 18px 0 0;
 }
 
 .follow-stats li.last {
@@ -304,19 +318,33 @@ a.user img.normal { width:100px; height:100px; }
 #omniauth_links li.github a { background-position:0 -113px; }
 #omniauth_links li span { color:#999; margin-left:3px; }
 
-.search_result_dropdown {}
-.search_result_dropdown .contextual_dialog_content { padding:0; }
-.dialog_content .complete { padding:0; margin:0; }
+.search_result_dropdown { background:#ddd; }
+.search_result_dropdown .contextual_dialog_content { padding:0; background:#ddd; }
+.dialog_content .tip { padding:8px 8px; background:#ddd; }
+.dialog_content .complete { padding:0; margin:0; background:#FFF; }
 .dialog_content .complete li { list-style:none; padding:0px 8px; cursor:pointer;
-  overflow:hidden; height:24px; line-height:24px; }
+  overflow:hidden; line-height:24px; }
 .dialog_content .complete li:hover { background:#e1f0f7; }
 .dialog_content .complete li:hover a { color:#256098; }
 .dialog_content .complete li .cate { color:#333; margin:0 5px; float:right; }
 .dialog_content .complete li a .light { font-weight:bold;  }
 .dialog_content .complete li.more { font-weight:bold; color:#000; }
+.dialog_content .complete li .type { margin-left:8px; }
+.dialog_content .complete li .avatar { width:25px; height:25px; margin:8px 0;margin-right:8px; float:left; }
+.dialog_content .complete li .uinfo { margin:2px 0; line-height:150%; }
+.dialog_content .complete li .uinfo a { line-height:18px;}
+.dialog_content .complete li .tagline { color:#999; font-size:12px; }
 
 .followers { margin: 7px 0; }
 .followers a { margin: 0 1px 3px 0; }
+
+.answers-count {
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 8px 0;
+	color: #999;
+	font-size: 13px;
+}
 
 #footer {
 	margin-top: 50px;

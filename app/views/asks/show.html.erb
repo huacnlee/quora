@@ -200,7 +200,7 @@
   </script>
 <% end %>
 <%= render 'base' %>
-<div class="ask" id="ask_<%= @ask.id %>">
+<div class="ask the-ask" id="ask_<%= @ask.id %>">
   <div class="topics">
     <div class="item_list">
       <% if !@ask.topics.blank? %>
@@ -239,8 +239,8 @@
     <%= in_place_edit_tag @ask, :title, :text_id => "ask_title" %>
   </div>
   <div class="md_body">
-    <div id="ask_body"><%= md_body(@ask.body) %></div>
-    <% if @ask.body.blank? %>
+    <div id="ask_body"<% if @ask.chomp_body.blank? %> class="blank-body"<% end %>><%= md_body(@ask.chomp_body) %></div>
+    <% if @ask.chomp_body.blank? %>
       <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body",:label => "添加补充资料" %>
     <% else %>
       <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body" %>
@@ -258,6 +258,12 @@
     • <span class="date"><%= l @ask.created_at.getlocal, :format => :short %></span>
   </div>
 </div>
+
+<% if @ask.answers_count > 0 %>
+<div class="answers-count">
+	有<%= @ask.answers_count %>个回答
+</div>
+<% end %>
 
 <div class="answers">
   <% user_answered = false %>

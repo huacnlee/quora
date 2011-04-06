@@ -58,6 +58,10 @@ var Asks = {
 
 /* 添加问题 */
 function addAsk(){      
+  if(!logined){
+    location.href = "/login";
+    return false;
+  }
   var txtTitle = $("#hidden_new_ask textarea:nth-of-type(1)");
   ask_search_text = $("#add_ask input").val();
   txtTitle.text(ask_search_text);
@@ -68,12 +72,18 @@ function addAsk(){
 
 var searchCache = new jCaches(40,false);
 var lastSearchText = null;
+var lastSearchCompleteHTML = null;
 var searchTimer = null;
 function showSearchComplete(el,type){
   clearTimeout(searchTimer);
   html = "";
-  if(type == "click" && $(el).val() == ""){
-    html = $(el).attr("placeholder");
+  if(type == "click"){
+    if(lastSearchCompleteHTML != null){
+      html = lastSearchCompleteHTML;
+    }
+    else {
+      html = "<div class='tip'>"+ $(el).attr("placeholder") + "</div>";
+    }
     searchCallback(el,html);
   }
   else{
@@ -105,34 +115,60 @@ function showSearchComplete(el,type){
 }
 
 function searchAjaxCallback(el,res){
-  html = '<ul class="complete">';
   App.loading(false);            
   if(res.length > 0){
+    html = '<ul class="complete">';
     for(var i=0;i<res.length;i++){
       html += '<li onclick="location.href = $(\'a\',this).attr(\'href\');">';
-      if(res[i].topics.length > 0){
-        html += '<span class="cate">'+res[i].topics[0]+'</span>';
-      }
       item_title = res[i].title;
-      html += '<a href="/asks/'+res[i]._id+'">'+item_title+'</a>';
+      item_type = res[i].type;
+      if(item_type == "Topic"){
+        /* 话题 */
+        html += '<a href="/topics/'+res[i].title+'">'+item_title+'</a><span class="type">话题</span>';
+      }
+      else if(item_type == "User"){
+        /* 用户 */
+        avatar = res[i].avatar_small;
+        if(/http:\/\//.test(avatar) == false){
+          avatar = "/images/" + avatar;
+        }
+        tagline = "";
+        if(res[i].tagline != null){
+          tagline = res[i].tagline;
+        }
+        html += '<img class="avatar" src="'+ avatar +'" />';
+        html += '<div class="uinfo"><p><a href="/users/'+res[i].slug+'">'+item_title+'</a></p>';
+        html += '<p class="tagline">'+tagline+'</p></div>';
+      }
+      else{
+        /* 问题 */
+        if(res[i].topics != null){
+          if(res[i].topics.length > 0){
+            html += '<span class="cate">'+res[i].topics[0]+'</span>';
+          }
+        }
+        html += '<a href="/asks/'+res[i].id+'">'+item_title+'</a>';
+      }
       html += '</li>';
     }
     html += '<li class="more" onclick="location.href=\'/search?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';
+    html += "</ul>";
   }
   else{
-    html += '<li>没有找到关于“'+t+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></li>';
+    html = '<div class="tip">没有找到关于“'+t+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></div>';
   }
-  html += "</ul>";
   searchCallback(el,html);
 }
 
 function searchCallback(el, html){
+  lastSearchCompleteHTML = html;
   el_width = $(el).width();
   $(el).jDialog({
     content : html,
+    class_name : "search_result_dropdown",
     width : el_width + 250,
     title_visiable : false,
-    top_offset : 1,
+    top_offset : -1,
     left_offset : -1
   });
 }

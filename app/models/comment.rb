@@ -1,7 +1,8 @@
 # coding: utf-8
-class Comment < BaseModel
+class Comment
   include Mongoid::Document
   include Mongoid::Timestamps
+  include BaseModel
   
   field :body
   

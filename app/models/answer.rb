@@ -1,8 +1,9 @@
 # coding: utf-8
-class Answer < BaseModel
+class Answer
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voteable
+  include BaseModel
 
   # 投票对应的分数
   voteable self, :up => +1, :down => -1
@@ -25,6 +26,10 @@ class Answer < BaseModel
     if self.spam?("body")
       return false
     end
+  end
+  
+  def chomp_body
+    self.body.gsub("<div><br></div>", "")
   end
 
   # 没有帮助

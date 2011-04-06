@@ -28,6 +28,7 @@ class AsksController < ApplicationController
 
   def show
     @ask = Ask.find(params[:id])
+    # TODO: 严重性能问题，没有 skip Model callback 事件
     @ask.views_count += 1
     @ask.current_user_id = current_user ? current_user.id : "NULL"
     @ask.save

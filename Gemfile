@@ -3,12 +3,14 @@ gem 'rails', '3.0.5'
 
 # MongoDB
 gem "mongoid", "2.0.0"
-gem "bson_ext", "1.3.0"
+gem "bson_ext", "1.2.4"
 gem 'mongo-rails-instrumentation'
 gem "mongoid-eager-loading"
 gem "mongoid-sphinx-huacnlee", :git => "git://github.com/huacnlee/mongoid-sphinx.git", 
                       :require => "mongoid_sphinx"
 gem "mongoid_rails_migrations"
+
+gem "redis"
 
 # to_xs 方法，Mongoid-sphinx 需要
 gem 'fast_xs'
