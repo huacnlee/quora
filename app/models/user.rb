@@ -52,7 +52,10 @@ class User
   validates_uniqueness_of :slug
   validates_format_of :slug, :with => /[a-z0-9\-\_]+/i
 
-  redis_search_index(:title_field => :name, :ext_fields => [:slug,:avatar])
+  def avatar_small
+    self.avatar.small.url
+  end
+  redis_search_index(:title_field => :name, :ext_fields => [:slug,:avatar_small])
 
   # 敏感词验证
   before_validation :check_spam_words

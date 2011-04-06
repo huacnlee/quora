@@ -116,7 +116,11 @@ function searchAjaxCallback(el,res){
         html += '<a href="/topics/'+res[i].title+'">'+item_title+'</a><span class="type">话题</span>';
       }
       else if(item_type == "User"){
-        html += '<a href="/users/'+res[i].slug+'">'+item_title+'</a><span class="type">会员</span>';
+        avatar = res[i].avatar_small;
+        if(/http:\/\//.test(avatar) == false){
+          avatar = "/images/" + avatar;
+        }
+        html += '<img src="'+ avatar +'" /><a href="/users/'+res[i].slug+'">'+item_title+'</a><span class="type">会员</span>';
       }
       else{
         if(res[i].topics != null){
