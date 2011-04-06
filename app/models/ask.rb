@@ -63,6 +63,10 @@ class Ask
   after_destroy :dec_counter_cache
   before_update :update_log
 
+  def view!
+    write_attribute(:views_count, views_count + 1)
+  end
+
   def inc_counter_cache
     self.user.inc(:asks_count, 1)
   end
