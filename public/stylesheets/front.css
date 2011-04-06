@@ -26,7 +26,7 @@ address, blockquote {
 
 #header {
   background: #505759;
-  min-height: 35px;
+  height: 35px;
   padding-top: 18px;
   color:#FFF;
 }
@@ -304,9 +304,10 @@ a.user img.normal { width:100px; height:100px; }
 #omniauth_links li.github a { background-position:0 -113px; }
 #omniauth_links li span { color:#999; margin-left:3px; }
 
-.search_result_dropdown {}
-.search_result_dropdown .contextual_dialog_content { padding:0; }
-.dialog_content .complete { padding:0; margin:0; }
+.search_result_dropdown { background:#ddd; }
+.search_result_dropdown .contextual_dialog_content { padding:0; background:#ddd; }
+.dialog_content .tip { padding:8px 8px; background:#ddd; }
+.dialog_content .complete { padding:0; margin:0; background:#FFF; }
 .dialog_content .complete li { list-style:none; padding:0px 8px; cursor:pointer;
   overflow:hidden; line-height:24px; }
 .dialog_content .complete li:hover { background:#e1f0f7; }
@@ -315,8 +316,8 @@ a.user img.normal { width:100px; height:100px; }
 .dialog_content .complete li a .light { font-weight:bold;  }
 .dialog_content .complete li.more { font-weight:bold; color:#000; }
 .dialog_content .complete li .type { margin-left:8px; }
-.dialog_content .complete li .avatar {  margin:10px 0;margin-right:8px; float:left; }
-.dialog_content .complete li .uinfo { margin:5px 0; line-height:150%; }
+.dialog_content .complete li .avatar { width:25px; height:25px; margin:8px 0;margin-right:8px; float:left; }
+.dialog_content .complete li .uinfo { margin:2px 0; line-height:150%; }
 .dialog_content .complete li .uinfo a { line-height:18px;}
 .dialog_content .complete li .tagline { color:#999; font-size:12px; }
 

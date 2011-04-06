@@ -78,7 +78,7 @@ function showSearchComplete(el,type){
       html = lastSearchCompleteHTML;
     }
     else {
-      html = $(el).attr("placeholder");
+      html = "<div class='tip'>"+ $(el).attr("placeholder") + "</div>";
     }
     searchCallback(el,html);
   }
@@ -111,14 +111,15 @@ function showSearchComplete(el,type){
 }
 
 function searchAjaxCallback(el,res){
-  html = '<ul class="complete">';
   App.loading(false);            
   if(res.length > 0){
+    html = '<ul class="complete">';
     for(var i=0;i<res.length;i++){
       html += '<li onclick="location.href = $(\'a\',this).attr(\'href\');">';
       item_title = res[i].title;
       item_type = res[i].type;
       if(item_type == "Topic"){
+        /* 话题 */
         html += '<a href="/topics/'+res[i].title+'">'+item_title+'</a><span class="type">话题</span>';
       }
       else if(item_type == "User"){
@@ -132,9 +133,11 @@ function searchAjaxCallback(el,res){
           tagline = res[i].tagline;
         }
         html += '<img class="avatar" src="'+ avatar +'" />';
-        html += '<div class="uinfo"><p><a href="/users/'+res[i].slug+'">'+item_title+'</a></p><p class="tagline">'+tagline+'</p></div>';
+        html += '<div class="uinfo"><p><a href="/users/'+res[i].slug+'">'+item_title+'</a></p>';
+        html += '<p class="tagline">'+tagline+'</p></div>';
       }
       else{
+        /* 问题 */
         if(res[i].topics != null){
           if(res[i].topics.length > 0){
             html += '<span class="cate">'+res[i].topics[0]+'</span>';
@@ -145,11 +148,11 @@ function searchAjaxCallback(el,res){
       html += '</li>';
     }
     html += '<li class="more" onclick="location.href=\'/search?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';
+    html += "</ul>";
   }
   else{
-    html += '<li>没有找到关于“'+t+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></li>';
+    html = '<div class="tip">没有找到关于“'+t+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></div>';
   }
-  html += "</ul>";
   searchCallback(el,html);
 }
 
@@ -158,9 +161,10 @@ function searchCallback(el, html){
   el_width = $(el).width();
   $(el).jDialog({
     content : html,
+    class_name : "search_result_dropdown",
     width : el_width + 250,
     title_visiable : false,
-    top_offset : 1,
+    top_offset : -1,
     left_offset : -1
   });
 }
