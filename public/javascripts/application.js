@@ -81,9 +81,9 @@ var App = {
       sizeStyle += "height:"+editHeight+"px;"
     }
     
-    editHtml = '<input type="text" name="value" style="'+sizeStyle+'" value="'+ textPanel.text() +'" />';
+    editHtml = '<input type="text" class="main_edit" name="value" style="'+sizeStyle+'" />';
     if(editType == "textarea"){
-      editHtml = '<textarea name="value" style="'+sizeStyle+'">'+textPanel.html()+'</textarea>';
+      editHtml = '<textarea name="value" style="'+sizeStyle+'"></textarea>';
     }
     
 
@@ -100,9 +100,17 @@ var App = {
                 </form>');
     link.parent().after(editPanel);
 
+    if(editType == "textarea"){
+      $("textarea",editPanel).val(textPanel.html());
+    }
+    else{
+      $("input.main_edit",editPanel).val(textPanel.text());
+    }
+    
     if(editRich == "true"){
       $("textarea",editPanel).qeditor();
     }
+
     $("a.cancel",editPanel).click(function(){
         linkId = $(this).parent().attr("data-id");
         editPanel = $("#ipe_"+linkId);
