@@ -29,7 +29,11 @@ class Answer
   end
   
   def chomp_body
-    self.body.gsub("<div><br></div>", "")
+    chomped = self.body
+    while chomped =~ /<div><br><\/div>$/i
+      chomped = chomped.gsub(/<div><br><\/div>$/i, "")
+    end
+    return chomped
   end
 
   # 没有帮助
