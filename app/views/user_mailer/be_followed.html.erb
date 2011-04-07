@@ -1,0 +1,10 @@
+<table style="border:0;margin-bottom:10px; ">
+  <tr>
+    <td valign="top" style="width:100px; padding-right:10px;"><%= user_avatar_tag(@follower,:normal) %></td>
+    <td valign="top">
+      <p style="font-weight:bold;"><%= user_name_tag(@follower) %></p>
+      <p><%= @follower.asks_count %>个问题, <%= @follower.answers_count %>个回答 </p>
+      <p>关注了<%= @follower.followed_topics.count %>个话题: <%= @follower.followed_topics.limit(3).collect { |t| t.name }.join(",") %>... </p>
+    </td>
+  </tr>
+</table>

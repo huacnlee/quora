@@ -9,7 +9,7 @@ ActionMailer::Base.smtp_settings = {
 }
 # action mailer config
 ActionMailer::Base.default_content_type = "text/html"
-ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.delivery_method = :sendmail
 ActionMailer::Base.default_charset = "utf-8"
-ActionMailer::Base.default_url_options[:host] = Setting.domain
+ActionMailer::Base.default_url_options[:host] = "http://#{Setting.domain}"
 ActionMailer::Base.raise_delivery_errors = true

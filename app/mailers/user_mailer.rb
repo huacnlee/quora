@@ -1,0 +1,30 @@
+# coding: utf-8
+class UserMailer < BaseMailer
+  def welcome(user_id)
+    @user = User.find(user_id)
+    @subject = "欢迎加入#{Setting.app_name}"
+    mail(:to => @user.email,:subject => @subject)
+  end
+
+  # 被关注
+  def be_followed(user_id, follower_id)
+    @user = User.find(user_id)
+    @follower = User.find(follower_id)
+    @subject = "#{@follower.name}在#{Setting.app_name}关注了你"
+    mail(:to => @user.email,
+         :subject => @subject)
+  end
+
+  # 问题有了新回答
+  def new_answer(answer_id)
+    @answer = Answer.find(answer_id)
+    @ask = Ask.find(@answer.ask_id)
+    
+    @title = "问题“#{@ask.title}”有了新的回答"
+
+    @ask.followers.each do |user|
+      mail(:to => user.email,
+           :subject => @title)
+    end
+  end
+end

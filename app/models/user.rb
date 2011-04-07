@@ -78,6 +78,11 @@ class User
     end
   end
 
+  after_create :mail_deliver_welcome
+  def mail_deliver_welcome
+    UserMailer.welcome(self.id).deliver
+  end
+
   def password_required?
     !persisted? || password.present? || password_confirmation.present?
   end
@@ -196,6 +201,9 @@ class User
   def follow(user)
     user.followers << self
     user.save
+
+    # 发送被 Follow 的邮件
+    UserMailer.be_followed(user.id,self.id).deliver
     
     insert_follow_log("FOLLOW_USER", user)
   end
