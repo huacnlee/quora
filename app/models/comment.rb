@@ -9,6 +9,8 @@ class Comment
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
+  belongs_to :ask, :foreign_key => "commentable_id"
+  belongs_to :answer, :foreign_key => "commentable_id"
 
   validates_presence_of :body
 
@@ -27,9 +29,28 @@ class Comment
     end
   end
 
-  after_create :inc_counter_cache
+  after_create :inc_counter_cache, :create_log
   def inc_counter_cache
     self.commentable.safely.inc(:comments_count,1)
+  end
+  
+  def create_log
+    log = CommentLog.new
+    log.user_id = self.user_id
+    log.comment = self
+    log.target_id = self.id
+    log.action = "NEW_#{self.commentable_type.upcase}_COMMENT"
+    if self.commentable_type == "Answer"
+      log.target_parent_id = (self.answer and self.answer.ask) ? self.answer.ask.id : ""
+      log.target_parent_title = (self.answer and self.answer.ask) ? self.answer.ask.title : ""
+      log.title = self.commentable_id
+    else
+      log.target_parent_title = self.ask ? self.ask.title : ""
+      log.target_parent_id = self.commentable_id
+      log.title = log.target_parent_title
+    end
+    log.diff = ""
+    log.save
   end
 
   before_destroy :dec_counter_cache
