@@ -34,10 +34,39 @@ class UserLog < Log
                           :scope => [:user_id, :target_id, :target_parent_id], 
                           :if => proc { |obj| obj.action == "AGREE" }
 
+  after_save :send_notification
+  
+  def send_notification
+    case self.action
+    when "FOLLOW_USER"
+      Notification.create(user_id: self.target_id, 
+                          log_id: self.id, 
+                          target_id: self.target_id, 
+                          action: "FOLLOW")
+    when "AGREE"
+      answer = Answer.find(self.target_id)
+      Notification.create(user_id: answer.user_id, 
+                          log_id: self.id, 
+                          target_id: self.target_parent_id, 
+                          action: "AGREE_ANSWER") if answer
+    end
+  end
 end
 
 class AnswerLog < Log
   belongs_to :answer, :inverse_of => :logs, :foreign_key => :target_id
+  
+  after_save :send_notification
+  
+  def send_notification
+    case self.action
+    when "NEW"
+      Notification.create(user_id: self.answer.ask.user_id, 
+                          log_id: self.id, 
+                          target_id: self.target_parent_id, 
+                          action: "NEW_ANSWER") if self.answer and self.answer.ask
+    end
+  end
 end
 
 class CommentLog < Log

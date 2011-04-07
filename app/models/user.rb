@@ -241,7 +241,6 @@ class User
       rescue Exception => e
         
       end
-      
     end
 
 end
