@@ -16,7 +16,7 @@ class UsersController < ApplicationController
                   .paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("#{@user.name}回答过的问题")
     if params[:format] == "js"
-      render "/asks/index.js"
+      render "/users/answered_asks.js"
     end
   end
 
