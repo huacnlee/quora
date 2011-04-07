@@ -78,11 +78,6 @@ class User
     end
   end
 
-  after_create :mail_deliver_welcome
-  def mail_deliver_welcome
-    UserMailer.welcome(self.id).deliver
-  end
-
   def password_required?
     !persisted? || password.present? || password_confirmation.present?
   end
@@ -218,6 +213,18 @@ class User
     insert_follow_log("FOLLOW_USER", user)
   end
   
+  # 软删除
+  # 只是把用户信息修改了
+  def soft_delete
+    # assuming you have deleted_at column added already
+    return false if self.deleted == 1
+    self.deleted = 1
+    self.name = "#{self.name}[已注销]"
+    self.email = "#{self.id}@zheye.org"
+    self.slug = "#{self.id}"
+    self.save
+  end
+  
   protected
   
     def insert_follow_log(action, item)
@@ -237,17 +244,6 @@ class User
       
     end
 
-  # 软删除
-  # 只是把用户信息修改了
-  def soft_delete
-    # assuming you have deleted_at column added already
-    return false if self.deleted == 1
-    self.deleted = 1
-    self.name = "#{self.name}[已注销]"
-    self.email = "#{self.id}@zheye.org"
-    self.slug = "#{self.id}"
-    self.save
-  end
   
 
 end
