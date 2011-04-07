@@ -3,7 +3,7 @@ ActionMailer::Base.smtp_settings = {
   :enable_starttls_auto => true,
   :port => 587,
   :domain => Setting.domain,
-  :authentication => :plain,
+  :authentication => :login,
   :user_name => Setting.smtp_username,
   :password => Setting.smtp_password
 }
@@ -11,5 +11,5 @@ ActionMailer::Base.smtp_settings = {
 ActionMailer::Base.default_content_type = "text/html"
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.default_charset = "utf-8"
-ActionMailer::Base.default_url_options[:host] = Setting.domain
+ActionMailer::Base.default_url_options[:host] = "#{Setting.domain}"
 ActionMailer::Base.raise_delivery_errors = true

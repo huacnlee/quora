@@ -1,0 +1,6 @@
+<div><b><%= @answer.user.name %>说:</b></div>
+<div style="margin-bottom:20px;"><%= md_body(@answer.body) %></div>
+<div>
+  <b>你可以点击下面的链接查看这个问题以及回答:</b><br />
+  <a href="<%= ask_url(@ask.id, :anchor => "answer_#{@answer.id}") %>"><%= ask_url(@ask.id) %></a>
+</div>

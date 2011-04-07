@@ -30,6 +30,11 @@ class Answer
       return false
     end
   end
+
+  after_create :mail_deliver_new_answer
+  def mail_deliver_new_answer
+    # UserMailer.new_answer_to_followers(self.id)
+  end
   
   def chomp_body
     chomped = self.body
