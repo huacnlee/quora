@@ -1,4 +1,4 @@
-body {font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;font-size:12px;  }
+body {font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", 'Microsoft Yahei', STHeiti !important;font-size:12px;  }
 * {margin:0;padding:0;}
 a {text-decoration:none;}
 a:link,a:visited { color: #19558D; }
