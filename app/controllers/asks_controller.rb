@@ -28,10 +28,12 @@ class AsksController < ApplicationController
 
   def show
     @ask = Ask.find(params[:id])
-    # TODO: 严重性能问题，没有 skip Model callback 事件
-    @ask.views_count += 1
-    @ask.current_user_id = current_user ? current_user.id : "NULL"
-    @ask.save
+#    # TODO: 严重性能问题，没有 skip Model callback 事件
+#    @ask.views_count += 1
+#    @ask.current_user_id = current_user ? current_user.id : "NULL"
+#    @ask.save
+    @ask.view!
+    
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
     @answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc,:"created_at".asc)
     @answer = Answer.new
