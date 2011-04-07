@@ -56,4 +56,7 @@ gem 'colorize'
 # 后台表格
 gem 'mongoid_wice_grid', :require => "wice_grid"
 
+# AWS SES
+gem "aws-ses", "0.4.2", :require => 'aws/ses'
+
 
