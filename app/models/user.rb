@@ -207,7 +207,7 @@ class User
     user.followers.delete(self)
     user.save
     
-    insert_follow_log("FOLLOW_USER", user)
+    insert_follow_log("UNFOLLOW_USER", user)
   end
 
   # 软删除
