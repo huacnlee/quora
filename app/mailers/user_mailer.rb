@@ -2,17 +2,17 @@
 class UserMailer < BaseMailer
   def welcome(user_id)
     @user = User.find(user_id)
-    @subject = "欢迎加入#{Setting.app_name}"
-    mail(:to => @user.email,:subject => @subject)
+    @title = "欢迎加入#{Setting.app_name}"
+    mail(:to => @user.email,:subject => @title)
   end
 
   # 被关注
   def be_followed(user_id, follower_id)
     @user = User.find(user_id)
     @follower = User.find(follower_id)
-    @subject = "#{@follower.name}在#{Setting.app_name}关注了你"
+    @title = "#{@follower.name}在#{Setting.app_name}关注了你"
     mail(:to => @user.email,
-         :subject => @subject)
+         :subject => @title)
   end
 
   # 问题有了新回答

@@ -1,0 +1,1 @@
+RAILS_ENV=development COUNT=10 QUEUE=MAILER rake resque:work >> log/resque.log 2>&1

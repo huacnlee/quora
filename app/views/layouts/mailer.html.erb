@@ -1,3 +1,4 @@
+<%= spaceless do %>
 <div style="background:#FFF; font-size:12px; font-family:'helvetica neue', helvetica, arial, sans-serif;">
   <table>
     <tr style="height:35px;">
@@ -9,7 +10,7 @@
       </td>
     </tr>
     <tr>
-      <td valign="top" style="width:80px; text-align:right; padding-right:10px;"></td>
+      <td valign="top" style="width:80px; text-align:right; padding-right:5px;"></td>
       <td valign="top" style="font-size:12px;">
         <%= yield %>
         <div style="margin-top:25px; padding:8px; text-align:right;">
@@ -23,3 +24,4 @@
     </tr>
   </table>
 </div>
+<% end %>

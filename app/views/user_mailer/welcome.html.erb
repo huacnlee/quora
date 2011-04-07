@@ -1,3 +1,6 @@
 <p>你已经成功的注册成为了<%= Setting.app_name %>的会员.</p>
-<p><a href="<%= login_url %>">登陆</a></p>
+<ul>
+<li>姓名: <%= @user.name %></li>
+<li>帐号: <%= @user.email %></li>
+</ul>
 
