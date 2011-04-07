@@ -21,10 +21,9 @@ class UserMailer < BaseMailer
     @ask = Ask.find(@answer.ask_id)
     
     @title = "问题“#{@ask.title}”有了新的回答"
+    emails = @ask.followers.excludes(:id => @answer.user_id).collect { |u| u.email }
 
-    @ask.followers.each do |user|
-      mail(:to => user.email,
-           :subject => @title)
-    end
+    mail(:bcc => emails.join(","), :subject => @title)
   end
+
 end
