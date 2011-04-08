@@ -7,5 +7,7 @@ class Notification
   field :action
   
   belongs_to :log
-  belongs_to :user
+  belongs_to :user, :inverse_of => :notifications
+  
+  scope :unread, where(:has_read => false) 
 end

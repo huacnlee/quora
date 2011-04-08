@@ -8,6 +8,9 @@
 			<li>
     		<a href="<%= followed_path %>" class="followed<%= ' active' if params[:controller] == "home" and params[:action] == "followed" %>">我关注的问题</a>
     	</li>
+			<li>
+    		<a href="<%= recommended_path %>" class="recommended<%= ' active' if params[:controller] == "home" and params[:action] == "recommended" %>">推荐给我的问题</a>
+    	</li>
     	<li>
     		<a href="<%= muted_path %>" class="muted<%= ' active' if params[:controller] == "home" and params[:action] == "muted" %>">我屏蔽的问题</a>
     	</li>

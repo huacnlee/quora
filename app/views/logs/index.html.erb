@@ -8,7 +8,97 @@
       });
       return false;
     }
+
+		function mark_notifies_as_read(ids) {
+			App.loading();
+			$.get("/mark_notifies_as_read?ids="+ids,function(){
+          App.loading(false);
+      });
+      return false;
+		}
+
+		function expand_notification(el, type, id) {
+			var items = $("#N" + type + "_" + id + "_items");
+			
+			if (items.hasClass("force-show")) {
+				items.removeClass("force-show");
+				$(el).text("展开");
+			} else {
+				items.addClass("force-show");
+				$(el).text("收起");
+			}
+			return false;
+		}
   </script>
+<% end %>
+
+<% if @notifies and @notifies.size > 0 %>
+<div class="listing notifications box standard-box">
+	<h3>新通知</h3>
+	<%
+	@notifies.each do |k, children|
+		next if k.to_s.blank?
+	%>
+	<div class="notification">
+		<%
+		case children[:type]
+		when "USER"
+		%>
+		<%= raw children[:items].map {|n| (n.log and n.log.user) ? user_name_tag(User.find(n.log.user_id)) : "" }.uniq.join("、") %> 关注了你
+		<%
+		when "ASK"
+			ask = Ask.find(k)
+			if ask
+		%>
+				<%
+				if children[:items].size > 1
+					items = []; comments = []
+					children[:items].each do |item|
+						if item.action == "NEW_COMMENT" and !comments.include?("#{item.targer_id},#{item.user_id}")
+							items << item
+							comments << "#{item.targer_id},#{item.user_id}"
+						elsif item.action != "NEW_COMMENT"
+							items << item
+						end
+					end
+				%>
+					<div class="notification-title" id="NASK_<%= ask.id %>_title">
+						<div class="title">
+							<%= items.size %>项关于问题 <a href="<%= ask_path(ask) %>"><%= ask.title %></a>&nbsp; • <a href="#" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')">展开</a>
+						</div>
+					</div>
+					<ul class="notification-items" id="NASK_<%= ask.id %>_items">
+						<%
+						items.each do |item|
+							if item.log
+						%>
+						<li><%= raw ask_notification_tag(item.target_id, item.log, item.action, false) %></li>
+						<%
+							end
+						end
+						%>
+					</ul>
+				<%
+				else
+					notify = children[:items].first
+					if notify and notify.log
+				%>
+				<%= raw ask_notification_tag(notify.target_id, notify.log, notify.action, true) %>
+				<%
+					end
+				end
+				%>
+		<%
+			end
+		end
+		%>
+	</div>
+	<% end %>
+	<div class="actions">
+		<a href="#" onclick="return mark_notifies_as_read('<%= @notifications.map {|n| n.id}.join(',') %>');">我知道了</a>
+	</div>
+</div>
+<br>
 <% end %>
 
 <div class="listing">
