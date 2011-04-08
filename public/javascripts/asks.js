@@ -51,6 +51,90 @@ var Asks = {
     return false;
   },
 
+  dropdown_menu : function(el){
+    html = '<ul class="menu">';
+    if(ask_redirected == true){
+      html += '<li><a onclick="return Asks.redirect_ask_cancel(this);" href="#">取消重定向</a></li>';
+    }
+    else{
+      html += '<li><a onclick="return Asks.redirect_ask(this);" href="#">问题重定向</a></li>';
+    }
+    $(el).jDialog({
+      title_visiable : false,
+      width : 160,
+      class_name : "dropdown_menu",
+      top_offset : -1,
+      content : html
+    });
+    $(el).attr("droped",1);
+    return false;
+  },
+
+  redirect_ask : function(el){
+    if(!logined){
+      location.href = "/login";
+      return false;
+    }
+    jDialog.close();
+    $.facebox({ div : "#redirect_ask", overlay : false });
+    $("#redirect_ask_panel input.search").autocomplete("/search/asks",{
+      minChars: 1,
+      width: 455,
+      scroll : false,
+    });
+    $("#redirect_ask_panel input.search").result(function(e,data,formatted){
+      if(data){
+        $("#redirect_ask_panel .r_id").val(data[1]);
+        $("#redirect_ask_panel .r_title").val(data[0]);
+      }
+    });
+  },
+
+  redirect_ask_save : function(el){
+    r_id = $("#redirect_ask_panel .r_id").val();
+    r_title = $("#redirect_ask_panel input.r_title").val();
+    if(r_id.length == ""){
+      $("#redirect_ask_panel input.search").focus();
+    }
+    $.get("/asks/"+ask_id+"/redirect",{ new_id : r_id }, function(res){
+        if(res == "1"){
+          ask_redirected = true;
+          Asks.redirected_tip(r_title,r_id, 'nr', ask_id );
+          $.facebox.close();
+        }
+        else{
+          alert("循环重定向，不允许这么关联。");
+          return false;
+        }
+    });
+    return false;
+  },
+
+  redirect_ask_cancel : function(el){
+    $.get("/asks/"+ask_id+"/redirect",{ cancel : 1 });
+    Asks.redirected_tip();
+    ask_redirected = false;
+    jDialog.close();
+  },
+
+  redirected_tip : function(title, id, type, rf_id){
+    if(title == undefined){
+      $("#redirected_tip").remove();
+    }
+    else{
+      label_text = "问题已重定向到: "
+      ask_link = "/asks/" + id + "?nr=1&rf=" + rf_id;
+      if(type == "rf"){
+        label_text = "重定向来自: ";
+        ask_link = "/asks/" + id + "?nr=1";
+      }
+      html = '<div id="redirected_tip"><div class="container">';
+      html += '<label>'+label_text+'</label><a href="'+ask_link+'">'+title+'</a>';
+      html += '</div></div>';
+      $("#main").before(html);
+    }
+  },
+
   version : function(){
   }
 

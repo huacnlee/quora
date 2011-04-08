@@ -1,5 +1,7 @@
 <% content_for :scripts do %>
   <script type="text/javascript">
+    var ask_id = '<%= @ask.id %>';
+    var ask_redirected = false;
     function toggleComments(type,id){
       var el = $("#"+type+"_"+id);
       var comments = $(".comments",el);
@@ -142,17 +144,6 @@
       return false;
     }
 
-    function dropdownSettings(el){
-      $(el).jDialog({
-        title_visiable : false,
-        width : 160,
-        top_offset : -1,
-        content : "<ul><li>asdgasdgasdgasdg</li></ul>"
-      });
-      $(el).attr("droped",1);
-      return false;
-    }
-
     function toggleEditTopics(isShow){
       if(isShow){
         $(".ask .edit_topics").show();
@@ -200,6 +191,17 @@
   </script>
 <% end %>
 <%= render 'base' %>
+<% if not @rf_ask.blank? %>
+  <script type="text/javascript">
+    Asks.redirected_tip('<%= @rf_ask.title %>', '<%= @rf_ask.id %>','rf');
+  </script>
+<% end %>
+<% if not @r_ask.blank? %>
+  <script type="text/javascript">
+    ask_redirected = true;
+    Asks.redirected_tip('<%= @r_ask.title %>', '<%= @r_ask.id %>','nr', '<%= @ask.id %>');
+  </script>
+<% end %>
 <div class="ask the-ask" id="ask_<%= @ask.id %>">
   <div class="topics">
     <div class="item_list">
@@ -304,18 +306,36 @@
   <% end %>
 <% end %>
 <% content_for :sidebar do %>
-  <% if current_user %>
-    <div class="box">
-      <div class="inner">
-				<% if current_user.ask_followed?(@ask) %>
-				<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, '<%= @ask.id %>');">取消关注</a>
-				<% else %>
-        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, '<%= @ask.id %>');">关注此问题</a>
-        <!-- <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a> -->
-				<% end %>
+    <% if current_user %>
+      <div class="box">
+        <div class="inner">
+          <% if current_user.ask_followed?(@ask) %>
+          <a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, '<%= @ask.id %>');">取消关注</a>
+          <% else %>
+          <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, '<%= @ask.id %>');">关注此问题</a>
+          <% end %>
+          <a href="#" class="dropdown" onclick="return Asks.dropdown_menu(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a>
+        </div>
       </div>
-		</div>
-	<% end %>
+    <% end %>
+
+    <div style="display:none" id="redirect_ask">
+      <div id="redirect_ask_panel" class="facebox_window simple_form">
+        <form action="" onsubmit="return Asks.redirect_ask_save(this);">
+          <h3>指向另外个已经存在的问题</h3>
+          <div class="field">
+            <label>把问题“<%= @ask.title %>”指向:</label>
+            <input type="text" class="search" style="width:450px;" placeholder="搜索标题" />
+            <input type="hidden" class="r_title" />
+            <input type="hidden" class="r_id" />
+          </div>
+          <div class="actions">
+            <button type="submit">确定重定向</button>
+            <a style="margin-left:10px;" onclick="$.facebox.close(); return false;" href="#">取消</a>
+          </div>
+        </form>
+      </div>
+    </div>
 
 		<div class="box standard">
 			<h2>相关问题</h2>

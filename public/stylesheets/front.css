@@ -335,6 +335,19 @@ a.user img.normal { width:100px; height:100px; }
 .dialog_content .complete li .uinfo a { line-height:18px;}
 .dialog_content .complete li .tagline { color:#999; font-size:12px; }
 
+.dropdown_menu { background:#ddd; }
+.dropdown_menu .contextual_dialog_content { border:1px solid #aaa; padding:0; background:#FFF; }
+.dialog_content .menu { margin:0; padding:0; }
+.dialog_content .menu li { display:inline; padding:0; margin:0;}
+.dialog_content .menu li a { display:block; color:#333; padding:5px; 
+  text-decoration:none; }
+.dialog_content .menu li a:hover {background:#e1f0f7;}
+
+
+/* 重定向问题窗口 */
+.facebox_window { }
+.facebox_window h3 { font-size:14px; margin-bottom:10px; color:#333;  }
+
 .followers { margin: 7px 0; }
 .followers a { margin: 0 1px 3px 0; }
 
@@ -349,3 +362,10 @@ a.user img.normal { width:100px; height:100px; }
 #footer {
 	margin-top: 50px;
 }
+
+.dropdown_menu { background:#DDD; }
+
+#redirected_tip { background: #FFC; border-bottom: 3px solid #CC9;
+  font-size: 1.2em; font-weight: bold;
+  padding: 5px 10px; z-index: 101;}
+#redirected_tip label { margin-left:70px; }

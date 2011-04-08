@@ -38,6 +38,7 @@ class Search
 
     words = Ask.mmseg_text(text)
     limit = options[:limit] || 10
+    type = options[:type] || nil
     word_match = words.collect(&:downcase).join("*")
     word_match = "#{Search.key_prefix}*#{word_match}*"
     puts "keys:#{word_match}"

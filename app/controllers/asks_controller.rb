@@ -2,7 +2,7 @@
 class AsksController < ApplicationController
   before_filter :require_user, :except => [:index,:answer,:update_topic,:show]
   before_filter :require_user_js, :only => [:answer]
-  before_filter :require_user_text, :only => [:update_topic,:spam, :mute, :unmute, :follow, :unfollow]
+  before_filter :require_user_text, :only => [:update_topic,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
   
   def index
     @per_page = 20
@@ -28,11 +28,24 @@ class AsksController < ApplicationController
 
   def show
     @ask = Ask.find(params[:id])
-#    # TODO: 严重性能问题，没有 skip Model callback 事件
-#    @ask.views_count += 1
-#    @ask.current_user_id = current_user ? current_user.id : "NULL"
-#    @ask.save
     @ask.view!
+
+    if !@ask.redirect_ask_id.blank?
+      if params[:nr].blank?
+        # 转向问题
+        redirect_to ask_path(@ask.redirect_ask_id,:rf => params[:id], :nr => "1")
+        return
+      else
+        @r_ask = Ask.find(@ask.redirect_ask_id)
+      end
+    end
+
+    if params[:rf]
+      @rf_ask = Ask.find(params[:rf])
+      if !@ask.redirect_ask_id.blank?
+        @r_ask = Ask.find(@ask.redirect_ask_id)
+      end
+    end
     
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
     @answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc,:"created_at".asc)
@@ -43,6 +56,17 @@ class AsksController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json
+    end
+  end
+
+  def redirect
+    return render :text => "-2" if params[:id] == params[:new_id]
+    @ask = Ask.find(params[:id])
+    if params[:cancel].blank?
+      render :text => @ask.redirect_to_ask(params[:new_id])
+    else
+      @ask.redirect_cancel
+      render :text => "1"
     end
   end
 

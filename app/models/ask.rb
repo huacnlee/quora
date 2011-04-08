@@ -17,6 +17,8 @@ class Ask
   field :views_count, :type => Integer, :default => 0
   # 最后活动时间，这个时间应该设置为该问题下辖最后一条log的发生时间
   field :last_updated_at, :type => DateTime
+  # 重定向问题编号
+  field :redirect_ask_id
 
   index :topics
   index :title
@@ -176,6 +178,24 @@ class Ask
 
   def self.find_by_title(title)
     first(:conditions => {:title => title})
+  end
+  
+  # 重定向问题
+  def redirect_to_ask(to_id)
+    # 不能重定向自己
+    return -2 if to_id.to_s == self.id.to_s
+    @to_ask = Ask.find(to_id)
+    # 如果重定向目标的是重定向目前这个问题的，就跳过，防止无限重定向
+    return -1 if @to_ask.redirect_ask_id.to_s == self.id.to_s
+    self.redirect_ask_id = to_id
+    self.save
+    1
+  end
+
+  # 取消重定向
+  def redirect_cancel
+    self.redirect_ask_id = nil
+    self.save
   end
   
   protected
