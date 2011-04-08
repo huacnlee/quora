@@ -70,6 +70,9 @@ class Answer
                                :current_user_id => self.user_id })
     self.ask.inc(:answers_count,1)
     
+    # 回答默认关注问题
+    self.user.follow_ask(self.ask) if !self.user.ask_followed?(self.ask)
+    
     # 保存用户回答过的问题列表
     if !self.user.answered_ask_ids.index(self.ask_id)
       self.user.answered_ask_ids << self.ask_id
