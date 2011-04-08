@@ -10,8 +10,9 @@ default: &defaults
   # 设置管理员，在下面填写需要设置为管理员的用户 email
   admin_emails: 
     - "huacnlee@gmail.com"
-  smtp_username: 'no-reply@zheye.org'
-  smtp_password: '111111'
+  email_sender: 'no-reply@zheye.org'
+  aws_access_key_id: 'your aws access_key_id'
+  aws_secret_access_key: 'your aws secret_access_key'
   # 是否开放注册
   allow_register: true
   # 问题被多少次 spam 隐藏

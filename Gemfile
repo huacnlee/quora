@@ -61,6 +61,9 @@ gem 'mongoid_wice_grid', :require => "wice_grid"
 
 # Crontab 辅助
 gem 'whenever'
+#
+# AWS SES
+gem "aws-ses", "0.4.2", :require => 'aws/ses'
 
 # Background Jobs
 gem "resque"
