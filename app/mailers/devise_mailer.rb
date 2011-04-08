@@ -1,6 +1,6 @@
 class DeviseMailer < Devise::Mailer
   include Resque::Mailer
-  default :sender => Setting.smtp_username
+  default :sender => Setting.email_sender
   helper :application,:users,:asks
   layout "mailer"
 
@@ -13,10 +13,11 @@ class DeviseMailer < Devise::Mailer
     @scope_name     = Devise::Mapping.find_scope!(record)
     @devise_mapping = Devise.mappings[@scope_name]
     @resource       = instance_variable_set("@#{@devise_mapping.name}", record)
+    @title = translate(@devise_mapping, action)
 
     headers = {
-      :subject => translate(@devise_mapping, action),
-      :from => mailer_sender(@devise_mapping),
+      :subject => @title,
+      :from => Setting.email_sender,
       :to => record.email,
       :template_path => template_paths,
     }
