@@ -70,13 +70,13 @@ var QEditor = {
         obj.addClass("qeditor");
         preview_editor = $('<div class="qeditor_preview" contentEditable="true"></div>');
         preview_editor.html(obj.val());
+        obj.after(preview_editor);
         preview_editor.change(function(){
           pobj = $(this);
           t = pobj.parent().find('.qeditor');
-          t.text($(this).html());
+          t.val($(this).html());
         });
         preview_editor.keyup(function(){ $(this).change(); });
-        obj.after(preview_editor);
         obj.hide();
         obj.wrap('<div class="qeditor_border"></div>');
         obj.after(preview_editor);
