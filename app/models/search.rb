@@ -9,11 +9,11 @@ class Search
   end
 
   def self.key_prefix
-    "quora:searchs:"
+    "quora.searchs"
   end
 
-  def self.generate_key(title)
-    "#{Search.key_prefix}#{title.downcase}"
+  def self.generate_key(title,type)
+    "#{Search.key_prefix}#!##{title.downcase}#!##{type}"
   end
 
   def save
@@ -22,7 +22,7 @@ class Search
       data[f[0]] = f[1]
     end
     
-    res = $redis.set Search.generate_key(self.title), data.to_json
+    res = $redis.set Search.generate_key(self.title,self.type), data.to_json
     if res == "OK"
       return true
     end
@@ -30,7 +30,7 @@ class Search
   end
 
   def self.remove(options = {})
-    $redis.del(generate_key(options[:title]))
+    $redis.del(generate_key(options[:title],options[:type]))
   end
 
   def self.query(text,options = {})
@@ -40,8 +40,12 @@ class Search
     limit = options[:limit] || 10
     type = options[:type] || nil
     word_match = words.collect(&:downcase).join("*")
-    word_match = "#{Search.key_prefix}*#{word_match}*"
-    puts "keys:#{word_match}"
+    if type.blank?
+      word_match = "#{Search.key_prefix}#!#*#{word_match}*"
+    else
+      word_match = "#{Search.key_prefix}#!#*#{word_match}*#!##{type}"
+    end
+    puts word_match
     keys = $redis.keys(word_match)[0,limit]
     result = []
     keys.each do |k|

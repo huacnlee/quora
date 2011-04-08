@@ -20,7 +20,7 @@ class SearchController < ApplicationController
   end
 
   def asks
-    result = Search.query(params[:q],:limit => 10)
+    result = Search.query(params[:q],:type => "Ask",:limit => 10)
     if params[:format] == "json"
       render :json => result.to_json
     else
