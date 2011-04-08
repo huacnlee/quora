@@ -91,12 +91,14 @@ var Asks = {
   },
 
   redirect_ask_save : function(el){
+    App.loading();
     r_id = $("#redirect_ask_panel .r_id").val();
     r_title = $("#redirect_ask_panel input.r_title").val();
     if(r_id.length == ""){
       $("#redirect_ask_panel input.search").focus();
     }
     $.get("/asks/"+ask_id+"/redirect",{ new_id : r_id }, function(res){
+        App.loading(false);
         if(res == "1"){
           ask_redirected = true;
           Asks.redirected_tip(r_title,r_id, 'nr', ask_id );
