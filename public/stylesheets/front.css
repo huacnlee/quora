@@ -381,6 +381,10 @@ a.user img.normal { width:100px; height:100px; }
 	margin-bottom: 15px;
 }
 
+.notifications {
+	margin-bottom: 20px;
+}
+
 .notifications h3 {
 	*font-size: 16px;
 	margin: 10px 0;

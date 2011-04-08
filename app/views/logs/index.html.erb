@@ -9,10 +9,11 @@
       return false;
     }
 
-		function mark_notifies_as_read(ids) {
+		function mark_notifies_as_read(el, ids) {
 			App.loading();
 			$.get("/mark_notifies_as_read?ids="+ids,function(){
           App.loading(false);
+					$(el).parent().parent().fadeOut();
       });
       return false;
 		}
@@ -95,10 +96,9 @@
 	</div>
 	<% end %>
 	<div class="actions">
-		<a href="#" onclick="return mark_notifies_as_read('<%= @notifications.map {|n| n.id}.join(',') %>');">我知道了</a>
+		<a href="#" onclick="return mark_notifies_as_read(this, '<%= @notifications.map {|n| n.id}.join(',') %>');">我知道了</a>
 	</div>
 </div>
-<br>
 <% end %>
 
 <div class="listing">

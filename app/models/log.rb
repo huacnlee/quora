@@ -64,7 +64,7 @@ class AnswerLog < Log
       Notification.create(user_id: self.answer.ask.user_id, 
                           log_id: self.id, 
                           target_id: self.target_parent_id, 
-                          action: "NEW_ANSWER") if self.answer and self.answer.ask
+                          action: "NEW_ANSWER") if self.answer and self.answer.ask and self.answer.user_id != self.answer.ask.user_id
     end
   end
 end
