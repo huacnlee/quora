@@ -35,6 +35,7 @@ class User
 
   field :answers_count, :type => Integer, :default => 0
   has_many :answers
+  has_many :notifications
 
   references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
   references_and_referenced_in_many :followed_topics, :stored_as => :array, :inverse_of => :followers, :class_name => "Topic"

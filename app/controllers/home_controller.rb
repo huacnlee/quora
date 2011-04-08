@@ -6,7 +6,15 @@ class HomeController < ApplicationController
   def index
     @per_page = 20
     if current_user
-      @logs = Log.any_of({:user_id.in => current_user.following_ids}, {:target_id.in => current_user.followed_ask_ids}).excludes(:user_id => current_user.id).desc("$natural").paginate(:page => params[:page], :per_page => @per_page)
+      @notifies = {}
+      @notifications = current_user.notifications.unread.includes(:log)
+      @notifications.each do |notify|
+        @notifies[notify.target_id] ||= {}
+        @notifies[notify.target_id][:items] ||= []
+        @notifies[notify.target_id][:type] = (notify.action == "FOLLOW" ? "USER" : "ASK")
+        @notifies[notify.target_id][:items] << notify
+      end
+      @logs = Log.any_of({:user_id.in => current_user.following_ids}, {:target_id.in => current_user.followed_ask_ids}).and(:action.in => ["NEW", "AGREE", "EDIT"], :_type.in => ["AskLog", "AnswerLog", "CommentLog", "UserLog"]).excludes(:user_id => current_user.id).desc("$natural").paginate(:page => params[:page], :per_page => @per_page)
       redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
 
       if params[:format] == "js"
@@ -51,7 +59,7 @@ class HomeController < ApplicationController
   
   def followed
     @per_page = 20
-    @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}, {:follower_ids.in => [current_user.id]}) : Ask.normal
+    @asks = current_user ? current_user.followed_asks.normal : Ask.normal
     @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
                   .exclude_ids(current_user.muted_ask_ids)
                   .desc(:answered_at,:id)
@@ -61,6 +69,19 @@ class HomeController < ApplicationController
       render "/asks/index.js"
     else
       render "index"
+    end
+  end
+  
+  def recommended
+    @per_page = 20
+    @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}).not_in(:follower_ids => [current_user.id]) : Ask.normal
+    @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
+                  .exclude_ids(current_user.muted_ask_ids)
+                  .desc(:answered_at,:id)
+                  .paginate(:page => params[:page], :per_page => @per_page)
+
+    if params[:format] == "js"
+      render "/asks/recommended.js"
     end
   end
 
@@ -80,8 +101,6 @@ class HomeController < ApplicationController
       render "index"
     end
   end
-
-
 
   def update_in_place
     # TODO: Here need to chack permission
@@ -108,6 +127,19 @@ class HomeController < ApplicationController
   def about
     set_seo_meta("关于")
     @users = User.any_in(:email => Setting.admin_emails)
+  end
+  
+  def mark_notifies_as_read
+    if !params[:ids]
+      render :text => "0"
+    else
+      notifications = current_user.notifications.any_in(:_id => params[:ids].split(","))
+      notifications.each do |notify|
+        # Rails.logger.info "mark_notifies_as_read\n"
+        notify.update_attribute(:has_read, true)
+      end
+      render :text => "1"
+    end
   end
 
 end

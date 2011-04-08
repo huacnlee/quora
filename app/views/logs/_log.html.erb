@@ -7,6 +7,9 @@ when "AskLog"
 	if !item.nil?
 %>
 	<div class="ask" ask-id="<%= log.id %>">
+		<div class="savatar">
+      <%= user_avatar_tag(log.user,:small) %>
+    </div>
     <%
       case action
     %>
@@ -80,6 +83,9 @@ when "UserLog"
 		<% elsif ["FOLLOW_USER", "UNFOLLOW_USER"].include?(action) %>
 	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_USER" ? "关注" : "取消关注" %>了 <%= user_name_tag(item) %></div>
 		<% else %>
+			<div class="savatar">
+	      <%= user_avatar_tag(log.user,:small) %>
+	    </div>
       <div class="title<% if ["FOLLOW", "UNFOLLOW"].include?(action) %> small_title<% end %>"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
       <div class="info">
         <%= user_name_tag(log.user) %> <%= action == "FOLLOW" ? "关注了该问题" : (action == "UNFOLLOW" ? "取消关注了该问题" : "赞同该回答") %>
@@ -107,7 +113,14 @@ when "UserLog"
 				<div class="author">
 					<%= user_name_tag(answer.user) %><%= user_tagline_tag(answer.user) %>
 				</div>
-				<div class="md_body"><%= md_body(answer.chomp_body) %></div>
+				<div class="md_body">
+					<% if answer.chomp_body.gsub(/<.*?>/,'').length <= 100 %>
+					<%= md_body(answer.chomp_body) %>
+					<% else %>
+					<div class="full-body" id="awb_<%= log.id %>_<%= answer.id %>"><%= md_body(answer.chomp_body) %></div>
+					<div id="aws_<%= log.id %>_<%= answer.id %>"><%= truncate(answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> <a href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= answer.id %>')">显示全部</a></div>
+					<% end %>
+				</div>
 			</div>
     </div>
     <% end %>
@@ -120,6 +133,9 @@ when "AnswerLog"
 		if !item.nil?
 %>
 	<div class="ask" ask-id="<%= item.id %>">
+		<div class="savatar">
+      <%= user_avatar_tag(log.user,:small) %>
+    </div>
 	  <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
 	    <div class="info">
 	      <%= user_name_tag(log.user) %> <%= action == "NEW" ? "回答了该问题" : "修改了自己的回答" %>
@@ -148,7 +164,14 @@ when "AnswerLog"
 					<div class="author">
 						<%= user_name_tag(log.user) %>，<%= user_tagline_tag(log.user) %>
 					</div>
-					<div class="md_body"><%= md_body(log.answer.chomp_body) %></div>
+					<div class="md_body">
+						<% if log.answer.chomp_body.gsub(/<.*?>/,'').length <= 100 %>
+						<%= md_body(log.answer.chomp_body) %>
+						<% else %>
+						<div class="full-body" id="awb_<%= log.id %>_<%= log.answer.id %>"><%= md_body(log.answer.chomp_body) %></div>
+						<div id="aws_<%= log.id %>_<%= log.answer.id %>"><%= truncate(log.answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> <a href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= log.answer.id %>')">显示全部</a></div>
+						<% end %>
+					</div>
 				</div>
 	    </div>
 			<% end %>

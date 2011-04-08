@@ -145,3 +145,9 @@ var App = {
     return "1.0";
   }
 }
+
+function show_all_answer_body(log_id, answer_id) {
+	$('#aws_' + log_id + '_' + answer_id).addClass("force-hide");
+	$('#awb_' + log_id + '_' + answer_id).addClass("force-show");
+	return false;
+}
