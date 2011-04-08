@@ -7,6 +7,20 @@ address, blockquote {
   border-left: 3px solid #D0E5F2;
 }
 
+.box {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+
+	background-color: #fff;
+}
+
+.standard-box {
+	background-color: #f7f7f7;
+	padding: 3px 10px;
+}
+
 .gray {
 	color: gray;
 	font-color: 1em;
@@ -43,7 +57,7 @@ address, blockquote {
 #footer { clear:both; padding-top:25px; height:80px; color: gray;  }
 #footer .links {   margin-bottom:5px;  }
 
-#header:after, #main:after, .answer:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after {
+#header:after, #main:after, .notification-title:after, .answer:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after {
     content:"";
     display:block;
     visibility:hidden;
@@ -344,6 +358,53 @@ a.user img.normal { width:100px; height:100px; }
 	padding: 8px 0;
 	color: #999;
 	font-size: 13px;
+}
+
+.listing-title {
+	font-size: 14px;
+	border-bottom: 2px solid #ddd;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+}
+
+.notifications h3 {
+	*font-size: 16px;
+	margin: 10px 0;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
+	color: #FE7A15;
+}
+
+.notifications .notification {
+	font-size: 13px;
+	*font-size: 12px;
+	margin: 10px 0;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #dedede;
+}
+
+.notifications .notification .notification-title .title {
+	
+}
+
+.notifications .notification .notification-items {
+	display: none;
+	margin-top: 5px;
+}
+
+.notifications .notification .force-show {
+	display: block;
+}
+
+.notifications .notification .notification-items li {
+	list-style: none;
+	text-indent: 10px;
+	margin: 5px 0;
+}
+
+.notifications .actions {
+	margin-bottom: 5px;
+	text-align: right;
 }
 
 #footer {

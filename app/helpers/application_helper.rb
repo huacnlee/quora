@@ -1,4 +1,26 @@
+# coding: utf-8
 module ApplicationHelper
+  def ask_notification_tag(ask_id, log, a, show_ask = true)
+    return if ask_id.nil?
+    tag = ""
+    ask = Ask.find(ask_id)
+    return "" if ask.nil? or log.user.nil?
+    # ask_tag = "<a href=\"#{ask_path(ask)}\">#{ask.title}</a>"
+    user_tag = "<a href=\"/users/#{log.user.slug}\">#{log.user.name}</a>"
+    
+    case a
+    when "AGREE_ANSWER", "NEW_ANSWER_COMMENT"
+      tag += user_tag + " #{a == "AGREE_ANSWER" ? "赞成" : "评论"}了你在"
+      ask_tag = "<a href=\"#{ask_path(ask)}#{a == "AGREE_ANSWER" ? "#answer_" + log.target_id.to_s : "?eawc=yes&awid=" + log.title.to_s + "#answer_" + log.title.to_s}\">#{show_ask ? ask.title : "该问题中的回答"}</a>" + (show_ask ? " 中的回答" : "")
+      tag += show_ask ? "问题 " : "" + ask_tag
+    when "NEW_ANSWER", "NEW_ASK_COMMENT"
+      tag += user_tag + " #{a == "NEW_ANSWER" ? "回答" : "评论"}了"
+      ask_tag = "<a href=\"#{ask_path(ask)}#{a == "NEW_ASK_COMMENT" ? "?easc=yes&asid=" + log.target_parent_id.to_s : ""}#answer_#{log.target_id.to_s}\">#{show_ask ? ask.title : "该问题"}</a>"
+      tag += show_ask ? "问题 " : "" + ask_tag
+    end
+    return tag
+  end
+  
   def admin?(user)
     return true if Setting.admin_emails.index(user.email)
     return false

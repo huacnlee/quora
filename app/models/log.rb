@@ -71,4 +71,21 @@ end
 
 class CommentLog < Log
   belongs_to :comment, :inverse_of => :logs, :foreign_key => :target_id
+  
+  after_save :send_notification
+  
+  def send_notification
+    case self.action
+    when "NEW_ASK_COMMENT"
+      Notification.create(user_id: self.comment.ask.user_id, 
+                          log_id: self.id, 
+                          target_id: self.target_parent_id, 
+                          action: self.action) if self.comment and self.comment.ask and self.comment.ask.user_id != self.comment.user_id
+    when "NEW_ANSWER_COMMENT"
+      Notification.create(user_id: self.comment.answer.user_id, 
+                          log_id: self.id, 
+                          target_id: self.target_parent_id, 
+                          action: self.action) if self.comment and self.comment.answer and self.comment.answer.ask and self.comment.answer.user_id != self.comment.user_id
+    end
+  end
 end
