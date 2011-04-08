@@ -198,7 +198,7 @@ class User
     user.save
 
     # 发送被 Follow 的邮件
-    # UserMailer.be_followed(user.id,self.id).deliver
+    UserMailer.be_followed(user.id,self.id).deliver
     
     insert_follow_log("FOLLOW_USER", user)
   end
