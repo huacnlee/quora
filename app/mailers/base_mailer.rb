@@ -1,7 +1,7 @@
 require "resque"
 class BaseMailer < ActionMailer::Base
   include Resque::Mailer
-  default :sender => Setting.smtp_username
+  default :sender => Setting.email_sender
   helper :application,:users,:asks
   layout "mailer"
 end

@@ -14,8 +14,11 @@ class Answer
   belongs_to :ask, :inverse_of => :answers, :counter_cache => true
   belongs_to :user, :inverse_of => :answers, :counter_cache => true
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
+  
   field :spams_count, :type => Integer, :default => 0
   field :spam_voter_ids, :type => Array, :default => []
+  
+  has_many :comments, :conditions => {:commentable_type => "Answer"}, :foreign_key => "commentable_id", :class_name => "Comment"
   
   validates_presence_of :user_id, :body
   validates_uniqueness_of :user_id, :scope => [:ask_id]
@@ -30,7 +33,7 @@ class Answer
 
   after_create :mail_deliver_new_answer
   def mail_deliver_new_answer
-    # UserMailer.new_answer_to_followers(self.id)
+    UserMailer.new_answer_to_followers(self.id)
   end
   
   def chomp_body

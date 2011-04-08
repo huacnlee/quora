@@ -165,5 +165,23 @@ when "TopicLog"
 	</div>
 <%
 	end
+when "CommentLog"
+	item = log.comment
+	if !item.nil?
+		case item.commentable_type
+		when "Ask"
+%>
+	<div class="ask" ask-id="<%= log.id %>">
+	  <div class="title small_title"><%= user_name_tag(log.user) %> 评论了问题 <a href="/asks/<%= log.target_parent_id %>?easc=yes&asid=<%= log.target_parent_id %>#ask_comments">#<%= log.title %></a></div>
+	</div>
+<%
+		when "Answer"
+%>
+	<div class="ask" ask-id="<%= log.id %>">
+	  <div class="title small_title"><%= user_name_tag(log.user) %> 评论了问题 <a href="/asks/<%= log.target_parent_id %>?eawc=yes&awid=<%= log.title %>#answer_<%= log.title %>">#<%= log.target_parent_title %></a> 中的回答</div>
+	</div>
+<%
+		end
+	end
 end
 %>

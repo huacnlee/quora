@@ -1,6 +1,6 @@
 class DeviseMailer < Devise::Mailer
   include Resque::Mailer
-  default :sender => Setting.smtp_username
+  default :sender => Setting.email_sender
   helper :application,:users,:asks
   layout "mailer"
 

@@ -198,7 +198,7 @@ class User
     user.save
 
     # 发送被 Follow 的邮件
-    # UserMailer.be_followed(user.id,self.id).deliver
+    UserMailer.be_followed(user.id,self.id).deliver
     
     insert_follow_log("FOLLOW_USER", user)
   end
@@ -210,9 +210,9 @@ class User
     user.followers.delete(self)
     user.save
     
-    insert_follow_log("FOLLOW_USER", user)
+    insert_follow_log("UNFOLLOW_USER", user)
   end
-  
+
   # 软删除
   # 只是把用户信息修改了
   def soft_delete
@@ -224,7 +224,7 @@ class User
     self.slug = "#{self.id}"
     self.save
   end
-  
+
   protected
   
     def insert_follow_log(action, item)
@@ -241,9 +241,6 @@ class User
       rescue Exception => e
         
       end
-      
     end
-
-  
 
 end

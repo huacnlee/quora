@@ -343,3 +343,12 @@
 			</div>
     </div>
 <% end %>
+<% if params[:eawc] == "yes" or params[:easc] == "yes" %>
+	<% content_for :scripts do %>
+	  <script type="text/javascript">
+			$(document).ready(function() {
+				toggleComments('<%= params[:eawc] == "yes" ? "answer" : "ask" %>','<%= params[:eawc] == "yes" ? params[:awid] : params[:asid] %>');
+			});
+		</script>
+	<% end %>
+<% end %>

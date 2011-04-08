@@ -3,7 +3,7 @@ class UserMailer < BaseMailer
   def welcome(user_id)
     @user = User.find(user_id)
     @title = "欢迎加入#{Setting.app_name}"
-    mail(:to => @user.email,:subject => @title)
+    mail(:to => @user.email,:subject => @title, :from => Setting.email_sender)
   end
 
   # 被关注
@@ -12,7 +12,7 @@ class UserMailer < BaseMailer
     @follower = User.find(follower_id)
     @title = "#{@follower.name}在#{Setting.app_name}关注了你"
     mail(:to => @user.email,
-         :subject => @title)
+         :subject => @title, :from => Setting.email_sender)
   end
 
   def self.new_answer_to_followers(answer_id)
@@ -31,7 +31,7 @@ class UserMailer < BaseMailer
     @answer = Answer.find(answer_id)
     @ask = Ask.find(@answer.ask_id)
     @title = "问题“#{@ask.title}”有了新的回答"
-    mail(:to => email, :subject => @title)
+    mail(:to => email, :subject => @title, :from => Setting.email_sender)
   end
 
 

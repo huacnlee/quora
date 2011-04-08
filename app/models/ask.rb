@@ -24,9 +24,6 @@ class Ask
   # 提问人
   belongs_to :user, :inverse_of => :asks
 
-  # 评论，内嵌
-  # embeds_many :comments
-
   # 回答
   has_many :answers
   # Log
@@ -37,6 +34,8 @@ class Ask
   belongs_to :last_answer_user, :class_name => 'User'
   # Followers
   references_and_referenced_in_many :followers, :stored_as => :array, :inverse_of => :followed_asks, :class_name => "User"
+  # Comments
+  has_many :comments, :conditions => {:commentable_type => "Ask"}, :foreign_key => "commentable_id", :class_name => "Comment"
 
   attr_protected :user_id
   attr_accessor :current_user_id
