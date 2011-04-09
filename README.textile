@@ -6,10 +6,13 @@ base on ubuntu 10.04
 
 pre. 
 git clone git://github.com/huacnlee/quora.git
+sudo apt-get install mongodb
+sudo apt-get install redis-server
 cd quora
 bundle install --path vendor/bundle
 cp config/mongoid.yml.default config/mongoid.yml
 cp config/setting.yml.default config/setting.yml
+cp config/redis.yml.default config/redis.yml
 script/rails s -e development_mongohq
 
 Then, open your browser, points to localhost:3000
