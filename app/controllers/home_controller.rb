@@ -74,10 +74,10 @@ class HomeController < ApplicationController
   
   def recommended
     @per_page = 20
-    @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}).not_in(:follower_ids => [current_user.id]) : Ask.normal
+    @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}).not_in(:follower_ids => [current_user.id]).and(:answers_count.lte => 2) : Ask.normal
     @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
                   .exclude_ids(current_user.muted_ask_ids)
-                  .desc(:answered_at,:id)
+                  .desc(:answers_count,:id)
                   .paginate(:page => params[:page], :per_page => @per_page)
 
     if params[:format] == "js"
