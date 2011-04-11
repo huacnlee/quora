@@ -120,7 +120,8 @@ when "UserLog"
 					<%= md_body(answer.chomp_body) %>
 					<% else %>
 					<div class="full-body" id="awb_<%= log.id %>_<%= answer.id %>"><%= md_body(answer.chomp_body) %></div>
-					<div id="aws_<%= log.id %>_<%= answer.id %>"><%= truncate(answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> <a href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= answer.id %>')">显示全部</a></div>
+          <div id="aws_<%= log.id %>_<%= answer.id %>"><%= raw truncate(answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> 
+          <a class="smore" href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= answer.id %>')">(更多)</a></div>
 					<% end %>
 				</div>
 			</div>
@@ -171,7 +172,8 @@ when "AnswerLog"
 						<%= md_body(log.answer.chomp_body) %>
 						<% else %>
 						<div class="full-body" id="awb_<%= log.id %>_<%= log.answer.id %>"><%= md_body(log.answer.chomp_body) %></div>
-						<div id="aws_<%= log.id %>_<%= log.answer.id %>"><%= truncate(log.answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> <a href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= log.answer.id %>')">显示全部</a></div>
+            <div id="aws_<%= log.id %>_<%= log.answer.id %>"><%= raw truncate(log.answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> 
+              <a href="#" class="smore" onclick="return show_all_answer_body('<%= log.id %>', '<%= log.answer.id %>')">(更多)</a></div>
 						<% end %>
 					</div>
 				</div>
