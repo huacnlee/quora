@@ -14,7 +14,11 @@ class HomeController < ApplicationController
         @notifies[notify.target_id][:type] = (notify.action == "FOLLOW" ? "USER" : "ASK")
         @notifies[notify.target_id][:items] << notify
       end
-      @logs = Log.any_of({:user_id.in => current_user.following_ids}, {:target_id.in => current_user.followed_ask_ids}).and(:action.in => ["NEW", "AGREE", "EDIT"], :_type.in => ["AskLog", "AnswerLog", "CommentLog", "UserLog"]).excludes(:user_id => current_user.id).desc("$natural").paginate(:page => params[:page], :per_page => @per_page)
+      @logs = Log.any_of({:user_id.in => current_user.following_ids},
+                         {:target_id.in => current_user.followed_ask_ids})
+                        .and(:action.in => ["NEW", "AGREE", "EDIT"], :_type.in => ["AskLog", "AnswerLog", "CommentLog", "UserLog"])
+                        .excludes(:user_id => current_user.id).desc("$natural")
+                        .paginate(:page => params[:page], :per_page => @per_page)
       redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
 
       if params[:format] == "js"
@@ -113,10 +117,11 @@ class HomeController < ApplicationController
     end
 
     object = klass.camelize.constantize.find(id)
-    if ["ask"].include?(klass) and current_user
-      object.update_attributes(:current_user_id => current_user.id)
+    update_hash = {field => params[:value]}
+    if ["ask","topic"].include?(klass) and current_user
+      update_hash[:current_user_id] = current_user.id
     end
-    if object.update_attributes(field => params[:value])
+    if object.update_attributes(update_hash)
       render :text => object.send(field).to_s
     else
       Rails.logger.info "object.errors.full_messages: #{object.errors.full_messages}"

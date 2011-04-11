@@ -137,6 +137,19 @@ var Asks = {
     }
   },
 
+
+  completeTopic : function(el){
+    $(el).autocomplete("/search/topics",{
+      minChars: 1,
+      width: 200,
+      scroll : false,
+    });
+  },
+
+  beforeSubmitComment : function(el){
+    App.loading();
+  },
+
   version : function(){
   }
 

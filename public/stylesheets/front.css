@@ -73,6 +73,8 @@ address, blockquote {
 .sidebar { float:right; width:210px; overflow:hidden; _width:190px; }
 .sidebar .box { margin-bottom:20px; }
 .sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1.2em; margin-bottom: 3px; }
+.leftbox .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1.2em; margin-bottom: 3px; }
+.leftbox .box { margin-bottom:20px; }
 .sidebar li { line-height:160%; }
 .sidebar .standard ul {
 	margin: 0;
@@ -200,9 +202,9 @@ a.user img.normal { width:100px; height:100px; }
 
 .comments { margin-top:10px; }
 .comments h2 { font-size:1em; color:#333; }
-.comments .comment { padding-left:15px; margin-top:8px; background:url(/images/comment_bg.gif) left top no-repeat; }
-.comments .comment .md_body { font-size:80%; }
-.comments .comment .info {font-size: .9em;}
+.comments .comment { font-size:.9em; *font-size:12px; padding-left:15px; margin-top:8px; background:url(/images/comment_bg.gif) left top no-repeat; }
+.comments .comment .md_body { }
+.comments .comment .info { }
 .comments .form { height: 50px; }
 .comments .form textarea { float:left; height: 30px; width:300px; margin-right:6px;  }
 
@@ -318,6 +320,9 @@ a.user img.normal { width:100px; height:100px; }
 #topic { margin-bottom:10px; }
 #topic h1 { font-size:2em; }
 #topic .cover { width: 100px; float:left; margin-right:20px; }
+#topic .cover .edit { display:none; position: relative; background:url(/images/shadow1.png);  margin-top:-22px;  width: 100%;}
+#topic .cover .edit a {display:block; background:url(/images/edit1.gif) 15px center no-repeat; color:#fff;
+  height:22px; line-height:22px; padding-left:30px; overflow:hidden; }
 #topic .info { float:left; width:450px; }
 
 #omniauth_links { }
@@ -382,49 +387,25 @@ a.user img.normal { width:100px; height:100px; }
 	margin-bottom: 15px;
 }
 
-.notifications {
-	margin-bottom: 20px;
-}
+.notifications { margin-left: 0; padding: 10px; overflow: hidden; border-radius: 5px;
+  -moz-border-radius: 5px; -webkit-border-radius: 5px; background-color: #DFEAF4;
+  border: 3px solid #BED4E8; margin-bottom: 20px; }
+.notifications h3 { display: block; padding-bottom: 5px; color: #333;
+  font-weight: bold; font-size:1.1em; }
+.notifications .notification { font-size: 12px; padding-bottom: 10px;
+  border-top: 1px solid #C2D7EA; padding: 5px 0; }
 
-.notifications h3 {
-	*font-size: 16px;
-	margin: 10px 0;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #efefef;
-	color: #FE7A15;
-}
+.notifications .notification .notification-title .title { }
+.notifications .notification .notification-items { display: none; margin-top: 5px; }
 
-.notifications .notification {
-	font-size: 13px;
-	*font-size: 12px;
-	margin: 10px 0;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #efefef;
-}
+#main .force-show { display: block; }
 
-.notifications .notification .notification-title .title {
-	
-}
+.notifications .notification .notification-items li { list-style: none; text-indent: 10px; margin: 5px 0; }
 
-.notifications .notification .notification-items {
-	display: none;
-	margin-top: 5px;
-}
-
-#main .force-show {
-	display: block;
-}
-
-.notifications .notification .notification-items li {
-	list-style: none;
-	text-indent: 10px;
-	margin: 5px 0;
-}
-
-.notifications .actions {
-	margin-bottom: 5px;
-	text-align: right;
-}
+.notifications .notification .time { display:inline-block; color:#999;}
+.notifications .notification a.expand { color:#333; border-bottom:1px solid #19558D; }
+.notifications .notification a.expand:hover { color:#19558D; text-decoration:none; }
+.notifications .actions { margin-top: 5px; text-align: left; }
 
 .full-body {
 	display: none;

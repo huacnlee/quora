@@ -23,10 +23,8 @@
 			
 			if (items.hasClass("force-show")) {
 				items.removeClass("force-show");
-				$(el).text("展开");
 			} else {
 				items.addClass("force-show");
-				$(el).text("收起");
 			}
 			return false;
 		}
@@ -65,7 +63,7 @@
 				%>
 					<div class="notification-title" id="NASK_<%= ask.id %>_title">
 						<div class="title">
-							<%= items.size %>项关于问题 <a href="<%= ask_path(ask) %>"><%= ask.title %></a>&nbsp; • <a href="#" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')">展开</a>
+              <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %>项</a> 关于问题 <a href="<%= ask_path(ask) %>"><%= ask.title %></a>
 						</div>
 					</div>
 					<ul class="notification-items" id="NASK_<%= ask.id %>_items">
@@ -73,7 +71,7 @@
 						items.each do |item|
 							if item.log
 						%>
-						<li><%= raw ask_notification_tag(item.target_id, item.log, item.action, false) %></li>
+            <li><%= raw ask_notification_tag(item.target_id, item.log, item.action, false) %><span class="time"><%= l item.log.created_at, :format => :short %></span></li>
 						<%
 							end
 						end
@@ -85,6 +83,7 @@
 					if notify and notify.log
 				%>
 				<%= raw ask_notification_tag(notify.target_id, notify.log, notify.action, true) %>
+        <span class="time"><%= l notify.log.created_at, :format => :short %></span>
 				<%
 					end
 				end
@@ -96,7 +95,7 @@
 	</div>
 	<% end %>
 	<div class="actions">
-		<a href="#" onclick="return mark_notifies_as_read(this, '<%= @notifications.map {|n| n.id}.join(',') %>');">我知道了</a>
+		<a href="#" class="gray_button small" onclick="return mark_notifies_as_read(this, '<%= @notifications.map {|n| n.id}.join(',') %>');">清除这些提醒</a>
 	</div>
 </div>
 <% end %>

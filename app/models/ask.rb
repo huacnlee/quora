@@ -124,7 +124,7 @@ class Ask
   # 更新话题
   # 参数 topics 可以是数组或者字符串
   # 参数 add  true 增加, false 去掉
-  def update_topics(topics, add = true, current_user_id)
+  def update_topics(topics, add = true, current_user_id = nil)
     self.topics = [] if self.topics.blank?
     topics = [topics] if topics.class != [].class
     # 去两边空格
@@ -132,9 +132,9 @@ class Ask
     action = nil
 
     if add
-      self.topics += topics
       # 保存为独立的话题
-      Topic.save_topics(topics, current_user_id)
+      new_topics = Topic.save_topics(topics, current_user_id)
+      self.topics += new_topics
       action = "ADD_TOPIC"
     else
       self.topics -= topics

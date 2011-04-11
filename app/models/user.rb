@@ -25,6 +25,9 @@ class User
   field :followed_ask_ids, :type => Array, :default => []
   # 回答过的问题
   field :answered_ask_ids, :type => Array, :default => []
+  # Email 提醒的状态
+  field :mail_be_followed, :type => Boolean, :default => true
+  field :mail_new_answer, :type => Boolean, :default => true
 
   # 邀请字段
   field :invitation_token
@@ -47,7 +50,7 @@ class User
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
 
   attr_accessor  :password_confirmation
-  attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website, :girl
+  attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website, :girl, :mail_new_answer, :mail_be_followed
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug
@@ -61,6 +64,7 @@ class User
     self.avatar_changed?
   end
   redis_search_index(:title_field => :name, :ext_fields => [:slug,:avatar_small,:tagline])
+
 
   # 敏感词验证
   before_validation :check_spam_words

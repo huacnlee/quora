@@ -9,6 +9,8 @@ class UserMailer < BaseMailer
   # 被关注
   def be_followed(user_id, follower_id)
     @user = User.find(user_id)
+    # 跳过，如果用户不允许发邮件
+    return if @user.mail_be_followed == false
     @follower = User.find(follower_id)
     @title = "#{@follower.name}在#{Setting.app_name}关注了你"
     mail(:to => @user.email,
@@ -19,7 +21,12 @@ class UserMailer < BaseMailer
     Thread.new {
       @answer = Answer.find(answer_id)
       @ask = Ask.find(@answer.ask_id)
-      emails = @ask.followers.excludes(:id => @answer.user_id).collect { |u| u.email }
+      emails = []
+      @ask.followers.excludes(:id => @answer.user_id).each do |u|
+        # 跳过，如果用户不允许发邮件
+        next if u.mail_new_answer == false
+        emails << u.email
+      end
       emails.each do |email|
         UserMailer.new_answer(answer_id,email).deliver
       end

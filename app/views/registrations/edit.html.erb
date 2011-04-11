@@ -1,28 +1,40 @@
 <% content_for :sitemap do %><span class="current">设置</span><% end %>
 <div class="leftbox">
-<div class="box">
-	<h1>个人资料</h1>
-  <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
-	<%= render "shared/error_messages", :target => resource %> 
-	  <%= f.input :slug, :label => "个性域名" %>
-    <%= f.input :girl, :as => :boolean, :label => "我是女性" %>
-	  <%= f.input :email, :label => "邮箱" %>
-    <%= f.input :avatar, :label => "头像" %>
-    <% if not @user.avatar.blank? %>
-    <div class="row">
-      <label>预览</label>
-      <%= image_tag(@user.avatar.normal.url) %>
-    </div>
+  <div class="box">
+    <h2>个人资料</h2>
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
+    <%= render "shared/error_messages", :target => resource %> 
+      <%= f.input :slug, :label => "个性域名" %>
+      <%= f.input :girl, :as => :boolean, :label => "我是女性" %>
+      <%= f.input :email, :label => "邮箱" %>
+      <%= f.input :avatar, :label => "头像" %>
+      <% if not @user.avatar.blank? %>
+      <div class="row">
+        <label>预览</label>
+        <%= image_tag(@user.avatar.normal.url) %>
+      </div>
+      <% end %>
+      <%= f.input :website, :input_html => { :placeholder => "http://", :class => "long" }, :label => "个人站点" %>
+      <%= f.input :tagline, :input_html => { :class => "long" }, :label => "最能概括你的标志性语言" %>
+      <%= f.input :bio, :as => :text, :input_html => { :class => "long", :style => "height:120px;"}, :label => "个人经历" %>
+      <script type="text/javascript">$("#user_bio").qeditor();</script>
+      <div class="actions">
+        <button type="submit">保存</button>
+      </div>
     <% end %>
-    <%= f.input :website, :input_html => { :placeholder => "http://", :class => "long" }, :label => "个人站点" %>
-    <%= f.input :tagline, :input_html => { :class => "long" }, :label => "最能概括你的标志性语言" %>
-    <%= f.input :bio, :as => :text, :input_html => { :class => "long", :style => "height:120px;"}, :label => "个人经历" %>
-    <script type="text/javascript">$("#user_bio").qeditor();</script>
-    <div class="actions">
-      <button type="submit">保存</button>
+  </div>
+  <div class="box">
+    <h2>邮件提醒设置</h2>
+    <div class="content">
+      <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
+        <%= f.input :mail_be_followed, :as => :boolean, :label => "被人关注" %>
+        <%= f.input :mail_new_answer, :as => :boolean, :label => "关注的问题有新回答" %>
+        <div class="actions">
+          <button type="submit">保存</button>
+        </div>
+      <% end %>
     </div>
-	<% end %>
-</div>
+  </div>
 </div>
 <% content_for :sidebar do %>
   <%= render "/shared/omniauth_links" %>
