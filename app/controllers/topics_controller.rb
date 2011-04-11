@@ -9,7 +9,7 @@ class TopicsController < ApplicationController
     if @topic.blank?
       return render_404
     end
-    @asks = Ask.all_in(:topics => [name]).recent.paginate(:page => params[:page], :per_page => @per_page)
+    @asks = Ask.all_in(:topics => [/#{name}/i]).normal.recent.paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta(@topic.name,:description => @topic.summary)
 
     if params[:format] == "js"

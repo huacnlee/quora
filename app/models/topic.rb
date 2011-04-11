@@ -34,6 +34,7 @@ class Topic
   end
 
   def self.save_topics(topics, current_user_id)
+    new_topics = []
     topics.each do |item|
       topic = find_by_name(item.strip)
       # find_or_create_by(:name => item.strip)
@@ -51,11 +52,13 @@ class Topic
 
         end
       end
+      new_topics << topic.name
     end
+    new_topics
   end
 
   def self.find_by_name(name)
-    find(:first,:conditions => {:name => /^#{name}$/i})
+    find(:first,:conditions => {:name => /^#{name.downcase}$/i})
   end
 
   def self.search_name(name, options = {})

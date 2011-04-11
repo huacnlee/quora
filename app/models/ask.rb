@@ -132,9 +132,9 @@ class Ask
     action = nil
 
     if add
-      self.topics += topics
       # 保存为独立的话题
-      Topic.save_topics(topics, current_user_id)
+      new_topics = Topic.save_topics(topics, current_user_id)
+      self.topics += new_topics
       action = "ADD_TOPIC"
     else
       self.topics -= topics
