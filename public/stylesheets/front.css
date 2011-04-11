@@ -202,9 +202,9 @@ a.user img.normal { width:100px; height:100px; }
 
 .comments { margin-top:10px; }
 .comments h2 { font-size:1em; color:#333; }
-.comments .comment { padding-left:15px; margin-top:8px; background:url(/images/comment_bg.gif) left top no-repeat; }
-.comments .comment .md_body { font-size:80%; }
-.comments .comment .info {font-size: .9em;}
+.comments .comment { font-size:.9em; *font-size:12px; padding-left:15px; margin-top:8px; background:url(/images/comment_bg.gif) left top no-repeat; }
+.comments .comment .md_body { }
+.comments .comment .info { }
 .comments .form { height: 50px; }
 .comments .form textarea { float:left; height: 30px; width:300px; margin-right:6px;  }
 
