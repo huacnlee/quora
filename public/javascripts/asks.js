@@ -146,6 +146,10 @@ var Asks = {
     });
   },
 
+  beforeSubmitComment : function(el){
+    App.loading();
+  },
+
   version : function(){
   }
 

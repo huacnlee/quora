@@ -8,7 +8,7 @@
     <% end %>
   <% end %>
   <div class="comment form">
-    <%= form_for(@comment, :remote => true) do |f| %>
+  <%= form_for(@comment, :remote => true, :html => { :onsubmit => "return Asks.beforeSubmitComment(this);"} ) do |f| %>
       <%= f.hidden_field :commentable_type %>
       <%= f.hidden_field :commentable_id %>
       <%= f.text_area :body, :class => "body" %>
