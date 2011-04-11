@@ -93,22 +93,6 @@
       answer.fadeOut(100).fadeIn(200);
     }
 
-    function spamAsk(el,id){
-      if(!confirm("<%= Setting.ask_spam_max %>人评价为烂问题后，此问题将会被屏蔽，而且无法撤销！\n你确定要这么评价吗？")){
-        return false;
-      }
-
-      App.loading();
-      $(el).addClass("spamed");
-      $.get("/asks/"+id+"/spam",function(count){
-        if(!App.requireUser(count,"text")){
-          return false;
-        }
-        $("#ask_spam_count").val(count);
-        App.loading(false);
-      });
-      return false;
-    }
 
     function spamAnswer(el,id){
       App.loading();
@@ -143,50 +127,6 @@
 	    });
       return false;
     }
-
-    function toggleEditTopics(isShow){
-      if(isShow){
-        $(".ask .edit_topics").show();
-        $(".ask .item_list").hide();
-      }
-      else{
-        $(".ask .item_list").show();
-        $(".ask .edit_topics").hide();
-      }
-    }
-
-    function beforeAddTopic(el){
-      App.loading();
-    }
-
-    function addTopic(name){
-      App.loading(false);
-      if(name.trim() == ""){
-        return false;
-      }
-      $(".ask .topics .item_list .in_place_edit").before("<a href='/topics/"+name+"' class='topic'>"+name+"</a>");
-      $(".ask .topics .item_list .no_result").remove();
-      exit_topic_count = $(".ask .edit_topics .items .topic").length;
-      $(".ask .edit_topics .items").append('<div class="topic"> \
-            <a href="#" onclick="removeTopic(this,'+(exit_topic_count+1)+',\''+name+'\');" class="remove"></a>\
-            <span>'+name+'</span>\
-          </div>');
-    }
-
-    function removeTopic(el,idx,name){
-      App.loading();
-      $.get("<%= update_topic_ask_path(@ask.id) %>", { name : name }, function(res){
-        $(el).parent().remove();
-        $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
-        App.loading(false);
-      });
-      return false;
-    }
-
-    function beforeAnswer(el){
-      $("button.submit",el).attr("disabled","disabled");
-      App.loading();
-    }
   </script>
 <% end %>
 <%= render 'base' %>
@@ -212,7 +152,7 @@
         <% end %>
       <% end %>
       <% if current_user %>
-        <a href="#" onclick="return toggleEditTopics(true);" class="in_place_edit">修改</a>
+        <a href="#" onclick="return Asks.toggleEditTopics(true);" class="in_place_edit">修改</a>
       <% end %>
     </div>
     <div class="edit_topics" style="display:none">
@@ -220,18 +160,18 @@
         <% if !@ask.topics.blank? %>
           <% @ask.topics.each_with_index do |item,i| %>
           <div class="topic">
-            <a href="#" onclick="removeTopic(this,<%= i %>,'<%= item %>');" class="remove"></a>
+            <a href="#" onclick="Asks.removeTopic(this,<%= i %>,'<%= item %>');" class="remove"></a>
             <span><%= item %></span>
           </div>
           <% end %>
         <% end %>
       </div>
-      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" onsubmit="return beforeAddTopic(this);" method="post">
+      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" onsubmit="return Asks.beforeAddTopic(this);" method="post">
         <%= auth_token  %>
         <input type="text" class="name" id="searchTopic" style="width:100px;" name="name" value="" placeholder="搜索话题" /> 
         <input type="hidden" name="add" value="1" /> 
         <button type="submit" class="small">添加</button> 
-        <a href="#" onclick="return toggleEditTopics(false);">完成</a>
+        <a href="#" onclick="return Asks.toggleEditTopics(false);">完成</a>
       </form>
       <script type="text/javascript">Asks.completeTopic($("#searchTopic"));</script>
     </div>
@@ -254,7 +194,7 @@
     <% else %>
       <a href="#" onclick="return toggleComments('ask','<%= @ask.id %>');"><%= @ask.comments_count %> 条评论</a>
     <% end %>
-    • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友评价为烂问题后,问题将会自动删除" href="#">烂问题</a>
+    • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return Asks.spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友评价为烂问题后,问题将会自动删除" href="#">烂问题</a>
     <% if !@ask.spams_count.blank? %>(<span id="spams_count"><%= @ask.spams_count %></span>人认为)<% end %>
     • <a href="#new_answer" onclick="return $('#new_answer .qeditor_preview').focus();">添加答案</a>
     • <span class="date"><%= l @ask.created_at.getlocal, :format => :short %></span>
@@ -290,7 +230,7 @@
         <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
       </div>
       <% end %>
-      <%= form_for(@answer, :remote => true, :html => { :onsubmit => "return beforeAnswer(this);" },
+      <%= form_for(@answer, :remote => true, :html => { :onsubmit => "return Asks.beforeAnswer(this);" },
                    :url => answer_ask_path(@ask.id)) do |f| %>
         <div class="row">
           <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>

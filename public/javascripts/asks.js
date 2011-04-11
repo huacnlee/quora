@@ -161,6 +161,67 @@ var Asks = {
     return false;
   },
 
+  spamAsk : function(el, id){
+    if(!confirm("<%= Setting.ask_spam_max %>人评价为烂问题后，此问题将会被屏蔽，而且无法撤销！\n你确定要这么评价吗？")){
+      return false;
+    }
+
+    App.loading();
+    $(el).addClass("spamed");
+    $.get("/asks/"+id+"/spam",function(count){
+      if(!App.requireUser(count,"text")){
+        return false;
+      }
+      $("#ask_spam_count").val(count);
+      App.loading(false);
+    });
+    return false;
+  },
+
+  beforeAnswer : function(el){
+    $("button.submit",el).attr("disabled","disabled");
+    App.loading();
+  },
+
+  toggleEditTopics : function(isShow){
+    if(isShow){
+      $(".ask .edit_topics").show();
+      $(".ask .item_list").hide();
+    }
+    else{
+      $(".ask .item_list").show();
+      $(".ask .edit_topics").hide();
+    }
+  },
+
+  beforeAddTopic : function(el){
+    App.loading();
+  },
+
+  addTopic : function(name){
+    App.loading(false);
+    if(name.trim() == ""){
+      return false;
+    }
+    $(".ask .topics .item_list .in_place_edit").before("<a href='/topics/"+name+"' class='topic'>"+name+"</a>");
+    $(".ask .topics .item_list .no_result").remove();
+    exit_topic_count = $(".ask .edit_topics .items .topic").length;
+    $(".ask .edit_topics .items").append('<div class="topic"> \
+          <a href="#" onclick="Asks.removeTopic(this,'+(exit_topic_count+1)+',\''+name+'\');" class="remove"></a>\
+          <span>'+name+'</span>\
+        </div>');
+  },
+
+  removeTopic : function(el, idx, name){
+    App.loading();
+    $.get("/asks/"+ask_id+"/update_topic", { name : name }, function(res){
+      $(el).parent().remove();
+      $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
+      App.loading(false);
+    });
+    return false;
+  },
+
   version : function(){
   }
 
