@@ -59,7 +59,8 @@ Quora::Application.routes.draw do
     end
   end
   resources :comments 
-  resources :topics do
+
+  resources :topics, :constraints => { :id => /[a-zA-Z\w\s\.%\-_]+/ } do
     member do
       get "follow"
       get "unfollow"
