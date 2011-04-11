@@ -13,7 +13,7 @@ class TopicsController < ApplicationController
     @asks = Ask.all_in(:topics => [/#{name}/i]).normal.recent.paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta(@topic.name,:description => @topic.summary)
 
-    if params[:format] == "js"
+    if !params[:page].blank?
       render "/asks/index.js"
     end
   end
