@@ -11,7 +11,12 @@ class HomeController < ApplicationController
       @notifications.each do |notify|
         @notifies[notify.target_id] ||= {}
         @notifies[notify.target_id][:items] ||= []
-        @notifies[notify.target_id][:type] = (notify.action == "FOLLOW" ? "USER" : "ASK")
+        
+        case notify.action
+        when "FOLLOW" then @notifies[notify.target_id][:type] = "USER"
+        else  
+          @notifies[notify.target_id][:type] = "ASK"
+        end
         @notifies[notify.target_id][:items] << notify
       end
       @logs = Log.any_of({:user_id.in => current_user.following_ids},

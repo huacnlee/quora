@@ -193,6 +193,8 @@ a.user img.normal { width:100px; height:100px; }
 
 .answer a.spamed,
 .answer a.spamed:hover,
+.answer a.thanked,
+.answer a.thanked:hover,
 .ask a.spamed,
 .ask a.spamed:hover { cursor:default; text-decoration:none; color:#999; }
 

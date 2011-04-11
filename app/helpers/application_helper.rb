@@ -6,7 +6,7 @@ module ApplicationHelper
     ask = Ask.find(ask_id)
     return "" if ask.nil? or log.user.nil?
     # ask_tag = "<a href=\"#{ask_path(ask)}\">#{ask.title}</a>"
-    user_tag = "<a href=\"/users/#{log.user.slug}\">#{log.user.name}</a>"
+    user_tag = "<a href=\"/users/#{log.user.slug}\">#{log.user.name}</a> "
     
     case a
     when "AGREE_ANSWER", "NEW_ANSWER_COMMENT"
@@ -17,6 +17,14 @@ module ApplicationHelper
       tag += user_tag + " #{a == "NEW_ANSWER" ? "回答" : "评论"}了"
       ask_tag = "<a href=\"#{ask_path(ask)}#{a == "NEW_ASK_COMMENT" ? "?easc=yes&asid=" + log.target_parent_id.to_s : ""}#answer_#{log.target_id.to_s}\">#{show_ask ? ask.title : "该问题。"}</a>"
       tag += (show_ask ? "问题 " : "") + ask_tag
+    when "THANK_ANSWER"
+      tag += user_tag + "感谢了你"
+      if show_ask
+        ask_tag = "在 <a href=\"#{ask_path(ask)}?nr=1#answer_#{log.target_id.to_s}\">#{ask.title}</a> 的回答。"
+      else
+        ask_tag = "的回答。"
+      end
+      tag += ask_tag
     end
     return tag
   end

@@ -33,5 +33,11 @@ class AnswersController < ApplicationController
     count = @answer.spam(current_user.id)
     render :text => count
   end
+
+  def thank
+    @answer = Answer.find(params[:id])
+    current_user.thank_answer(@answer)
+    render :text => "1"
+  end
   
 end

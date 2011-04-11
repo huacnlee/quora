@@ -28,6 +28,7 @@ class User
   # Email 提醒的状态
   field :mail_be_followed, :type => Boolean, :default => true
   field :mail_new_answer, :type => Boolean, :default => true
+  field :thanked_answer_ids, :type => Array, :default => []
 
   # 邀请字段
   field :invitation_token
@@ -218,6 +219,16 @@ class User
     insert_follow_log("UNFOLLOW_USER", user)
   end
 
+  # 感谢回答
+  def thank_answer(answer)
+    self.thanked_answer_ids ||= []
+    return true if self.thanked_answer_ids.index(answer.id)
+    self.thanked_answer_ids << answer.id
+    self.save
+
+    insert_follow_log("THANK_ANSWER", answer.user, answer.ask)
+  end
+
   # 软删除
   # 只是把用户信息修改了
   def soft_delete
@@ -232,15 +243,20 @@ class User
 
   protected
   
-    def insert_follow_log(action, item)
+    def insert_follow_log(action, item, parent_item = nil)
       begin
         log = UserLog.new
         log.user_id = self.id
         log.title = self.name
         log.target_id = item.id
         log.action = action
-        log.target_parent_id = item.id
-        log.target_parent_title = item.is_a?(Ask) ? item.title : item.name
+        if parent_item.blank?
+          log.target_parent_id = item.id
+          log.target_parent_title = item.is_a?(Ask) ? item.title : item.name
+        else
+          log.target_parent_id = parent_item.id
+          log.target_parent_title = parent_item.title
+        end
         log.diff = ""
         log.save
       rescue Exception => e

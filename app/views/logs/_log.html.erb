@@ -66,13 +66,13 @@ when "AskLog"
 when "UserLog"
 	answer = item = nil
 	if ["FOLLOW", "UNFOLLOW"].include?(action)
-		item = Ask.find(log.target_id)
+    item = Ask.first(:conditions => {:id => log.target_id})
 	elsif ["FOLLOW_TOPIC", "UNFOLLOW_TOPIC"].include?(action)
 		item = Topic.first(:conditions => { :id => log.target_id })
-	elsif ["FOLLOW_USER", "UNFOLLOW_USER"].include?(action)
-		item = User.find(log.target_id)
+	elsif ["FOLLOW_USER", "UNFOLLOW_USER", "THANK_ANSWER"].include?(action)
+    item = User.first(:conditions => { :id => log.target_id})
 	elsif ["AGREE"].include?(action)
-		answer = Answer.find(log.target_id)
+    answer = Answer.first(:conditions => {:id => log.target_id})
 		item = answer.ask
 	end
 	if !item.nil?
@@ -82,6 +82,8 @@ when "UserLog"
 	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_TOPIC" ? "关注" : "取消关注" %>了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
 		<% elsif ["FOLLOW_USER", "UNFOLLOW_USER"].include?(action) %>
 	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_USER" ? "关注" : "取消关注" %>了 <%= user_name_tag(item) %></div>
+    <% elsif action == "THANK_ANSWER"  %>
+      <div class="title small_title"><%= user_name_tag(log.user) %> 感谢了 <%= user_name_tag(item) %> 在 <a href="/asks/<%= log.target_parent_id %>"><%= log.target_parent_title %></a> 中的回答。 </div>
 		<% else %>
 			<div class="savatar">
 	      <%= user_avatar_tag(log.user,:small) %>

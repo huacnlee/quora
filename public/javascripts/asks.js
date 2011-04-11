@@ -150,6 +150,17 @@ var Asks = {
     App.loading();
   },
 
+  thankAnswer : function(el,id){
+    klasses = $(el).attr("class").split(" ");
+    if(klasses.indexOf("thanked") > 0){
+      return false;
+    }
+    $(el).addClass("thanked");
+    $(el).click(function(){ return false });
+    $.get("/answers/"+id+"/thank");
+    return false;
+  },
+
   version : function(){
   }
 

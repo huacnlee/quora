@@ -49,6 +49,11 @@ class UserLog < Log
                           log_id: self.id, 
                           target_id: self.target_parent_id, 
                           action: "AGREE_ANSWER") if answer
+    when "THANK_ANSWER"
+      Notification.create(user_id: self.target_id, 
+                          log_id: self.id, 
+                          target_id: self.target_parent_id,
+                          action: "THANK_ANSWER")
     end
   end
 end
