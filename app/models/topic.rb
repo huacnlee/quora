@@ -42,6 +42,7 @@ class Topic
 
   before_update :update_log
   def update_log
+    return false if self.current_user_id.blank?
     insert_action_log("EDIT") if self.cover_changed or self.summary_changed?
   end
 
