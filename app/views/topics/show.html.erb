@@ -5,7 +5,7 @@
     var topic_id = "<%= @topic.id %>";
     function loadAsks(){
       App.loading();
-      $.get("<%= topic_path(params[:name],:format => :js) %>?page="+current_page,function(){
+      $.get("<%= topic_path(params[:name]) %>?page="+current_page,function(){
           App.loading(false);
       });
       return false;
