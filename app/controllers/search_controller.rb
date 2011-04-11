@@ -13,9 +13,15 @@ class SearchController < ApplicationController
   end
 
   def topics
+    result = Search.query(params[:q],:type => "Topic",:limit => 10)
     if params[:format] == "json"
-      @topics = Topic.search_name(params[:w],:limit => 10)
-      render :json => @topics.to_json(:only => [:id,:name])
+      render :json => result.to_json
+    else
+      lines = []
+      result.each do |item|
+        lines << item['title']
+      end
+      render :text => lines.join("\n") 
     end
   end
 

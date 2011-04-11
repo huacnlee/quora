@@ -66,14 +66,16 @@ when "AskLog"
 when "UserLog"
 	answer = item = nil
 	if ["FOLLOW", "UNFOLLOW"].include?(action)
-		item = Ask.find(log.target_id)
+    item = Ask.first(:conditions => {:id => log.target_id})
 	elsif ["FOLLOW_TOPIC", "UNFOLLOW_TOPIC"].include?(action)
-		item = Topic.find(log.target_id)
+		item = Topic.first(:conditions => { :id => log.target_id })
 	elsif ["FOLLOW_USER", "UNFOLLOW_USER"].include?(action)
-		item = User.find(log.target_id)
+    item = User.first(:conditions => { :id => log.target_id})
 	elsif ["AGREE"].include?(action)
-		answer = Answer.find(log.target_id)
+    answer = Answer.first(:conditions => {:id => log.target_id})
 		item = answer.ask
+  elsif ["THANK_ANSWER"].include?(action)
+    item = Answer.first(:conditions => {:id => log.target_id})
 	end
 	if !item.nil?
 %>	
@@ -82,6 +84,9 @@ when "UserLog"
 	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_TOPIC" ? "关注" : "取消关注" %>了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
 		<% elsif ["FOLLOW_USER", "UNFOLLOW_USER"].include?(action) %>
 	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_USER" ? "关注" : "取消关注" %>了 <%= user_name_tag(item) %></div>
+    <% elsif action == "THANK_ANSWER"  %>
+      <div class="title small_title"><%= user_name_tag(log.user) %> 感谢了 <%= user_name_tag(item.user) %> 
+        在 <a href="/asks/<%= log.target_parent_id %>?nr=1#answer_<%= log.target_id %>"><%= log.target_parent_title %></a> 中的回答。 </div>
 		<% else %>
 			<div class="savatar">
 	      <%= user_avatar_tag(log.user,:small) %>
@@ -118,7 +123,8 @@ when "UserLog"
 					<%= md_body(answer.chomp_body) %>
 					<% else %>
 					<div class="full-body" id="awb_<%= log.id %>_<%= answer.id %>"><%= md_body(answer.chomp_body) %></div>
-					<div id="aws_<%= log.id %>_<%= answer.id %>"><%= truncate(answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> <a href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= answer.id %>')">显示全部</a></div>
+          <div id="aws_<%= log.id %>_<%= answer.id %>"><%= raw truncate(answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> 
+          <a class="smore" href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= answer.id %>')">(更多)</a></div>
 					<% end %>
 				</div>
 			</div>
@@ -169,7 +175,8 @@ when "AnswerLog"
 						<%= md_body(log.answer.chomp_body) %>
 						<% else %>
 						<div class="full-body" id="awb_<%= log.id %>_<%= log.answer.id %>"><%= md_body(log.answer.chomp_body) %></div>
-						<div id="aws_<%= log.id %>_<%= log.answer.id %>"><%= truncate(log.answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> <a href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= log.answer.id %>')">显示全部</a></div>
+            <div id="aws_<%= log.id %>_<%= log.answer.id %>"><%= raw truncate(log.answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> 
+              <a href="#" class="smore" onclick="return show_all_answer_body('<%= log.id %>', '<%= log.answer.id %>')">(更多)</a></div>
 						<% end %>
 					</div>
 				</div>
@@ -183,9 +190,17 @@ when "TopicLog"
 	item = log.topic
 	if !item.nil?
 %>
-	<div class="ask" ask-id="<%= log.id %>">
-	  <div class="title small_title"><%= user_name_tag(log.user) %> 创建了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
-	</div>
+  <div class="ask" ask-id="<%= log.id %>">
+    <div class="title small_title">
+    <% if log.action == "EDIT" %>
+      <%= user_name_tag(log.user) %> 为话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a> 
+      的<%= log.target_attr == "COVER" ?  "上传了封面图片。" : "提交了介绍。" %>
+    <% else %>
+      <%= user_name_tag(log.user) %> 创建了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a>
+    <% end %>
+      
+    </div>
+  </div>
 <%
 	end
 when "CommentLog"

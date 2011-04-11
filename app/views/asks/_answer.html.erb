@@ -2,8 +2,8 @@
     class="answer<%= ' spam_answer' if spam_answer?(item) %>">
   <div class="vote_buttons">
     <% if not owner?(item) %>
-      <a class="vote_up<%= ' voted' if voted?(item, :up) %>" onclick="return vote('<%= item.id %>',1);" href="#"></a>
-      <a class="vote_down<%= ' voted' if voted?(item, :down) %>" onclick="return vote('<%= item.id %>',0);" href="#"></a>
+      <a class="vote_up<%= ' voted' if voted?(item, :up) %>" onclick="return Asks.vote('<%= item.id %>',1);" href="#"></a>
+      <a class="vote_down<%= ' voted' if voted?(item, :down) %>" onclick="return Asks.vote('<%= item.id %>',0);" href="#"></a>
     <% end %>
   </div>
   <div class="avatar_border">
@@ -26,11 +26,14 @@
     </div>
     <div class="action">
       <% if item.comments_count == 0 %>
-        <a href="#" onclick="return toggleComments('answer','<%= item.id %>');">添加评论</a>
+        <a href="#" onclick="return Asks.toggleComments('answer','<%= item.id %>');">添加评论</a>
       <% else %>
-        <a href="#" onclick="return toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> 条评论</a>
+        <a href="#" onclick="return Asks.toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> 条评论</a>
       <% end %>
-      • <a class="notusefull<%= ' spamed' if spam_answered?(item) %>" onclick="return spamAnswer(this,'<%= item.id %>');" href="#">没有帮助</a>
+      <% if not owner? item %>
+        • <a class="thank<%= ' thanked' if thank_answered?(item) %>" href="#" onclick="return Asks.thankAnswer(this,'<%= item.id %>')">感谢</a>
+      <% end %>
+      • <a class="notusefull<%= ' spamed' if spam_answered?(item) %>" onclick="return Asks.spamAnswer(this,'<%= item.id %>');" href="#">没有帮助</a>
       • <%= l item.created_at.getlocal, :format => :short %>
     </div>
   </div>

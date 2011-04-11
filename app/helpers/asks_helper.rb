@@ -59,6 +59,13 @@ module AsksHelper
     return
   end
 
+  def thank_answered?(answer)
+    return false if current_user.blank?
+    return false if current_user.thanked_answer_ids.blank?
+    return current_user.thanked_answer_ids.count(answer.id) > 0
+    return
+  end
+
   private
   def inner_truncate_lines(body_lines, lines, summary, max_chars)
     if summary.length > max_chars

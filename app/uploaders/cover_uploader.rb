@@ -8,7 +8,7 @@ class CoverUploader < BaseUploader
   end
   
   version :normal do
-    process :resize_to_limit => [100, nil]
+    process :resize_to_fill => [100, 100]
   end
   
 end

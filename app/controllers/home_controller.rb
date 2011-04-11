@@ -11,7 +11,13 @@ class HomeController < ApplicationController
       @notifications.each do |notify|
         @notifies[notify.target_id] ||= {}
         @notifies[notify.target_id][:items] ||= []
-        @notifies[notify.target_id][:type] = (notify.action == "FOLLOW" ? "USER" : "ASK")
+        
+        case notify.action
+        when "FOLLOW" then @notifies[notify.target_id][:type] = "USER"
+        when "THANK_ANSWER" then @notifies[notify.target_id][:type] = "THANK_ANSWER"
+        else  
+          @notifies[notify.target_id][:type] = "ASK"
+        end
         @notifies[notify.target_id][:items] << notify
       end
       @logs = Log.any_of({:user_id.in => current_user.following_ids},
@@ -19,7 +25,7 @@ class HomeController < ApplicationController
                         .and(:action.in => ["NEW", "AGREE", "EDIT"], :_type.in => ["AskLog", "AnswerLog", "CommentLog", "UserLog"])
                         .excludes(:user_id => current_user.id).desc("$natural")
                         .paginate(:page => params[:page], :per_page => @per_page)
-      redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
+      # redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
 
       if params[:format] == "js"
         render "/logs/index.js"
@@ -78,7 +84,7 @@ class HomeController < ApplicationController
   
   def recommended
     @per_page = 20
-    @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}).not_in(:follower_ids => [current_user.id]).and(:answers_count.lte => 2) : Ask.normal
+    @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}).not_in(:follower_ids => [current_user.id]).and(:answers_count.lt => 1) : Ask.normal
     @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
                   .exclude_ids(current_user.muted_ask_ids)
                   .desc(:answers_count,:answered_at)
@@ -117,10 +123,11 @@ class HomeController < ApplicationController
     end
 
     object = klass.camelize.constantize.find(id)
-    if ["ask"].include?(klass) and current_user
-      object.update_attributes(:current_user_id => current_user.id)
+    update_hash = {field => params[:value]}
+    if ["ask","topic"].include?(klass) and current_user
+      update_hash[:current_user_id] = current_user.id
     end
-    if object.update_attributes(field => params[:value])
+    if object.update_attributes(update_hash)
       render :text => object.send(field).to_s
     else
       Rails.logger.info "object.errors.full_messages: #{object.errors.full_messages}"

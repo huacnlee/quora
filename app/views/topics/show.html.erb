@@ -1,35 +1,34 @@
 <%= content_for :scripts do %>
+  <%= javascript_include_tag("topics", :cache => "cached_topics") %>
   <script type="text/javascript">
     var current_page = 2;
+    var topic_id = "<%= @topic.id %>";
     function loadAsks(){
       App.loading();
-      $.get("<%= topic_path(params[:name],:format => :js) %>?page="+current_page,function(){
+      $.get("<%= topic_path(params[:name]) %>?page="+current_page,function(){
           App.loading(false);
       });
       return false;
     }
 
-		function follow(el, id){
-			$(el).attr("onclick", "return false;");
-			$.get("/topics/"+id+"/follow",{}, function(res){
-					$(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @topic.id %>\');">取消关注</a>');
-	    });
-      return false;
-    }
-		
-		function unfollow(el, id){
-			$(el).attr("onclick", "return false;");
-			$.get("/topics/"+id+"/unfollow",{}, function(res){
-	        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @topic.id %>\');">关注此话题</a>');
-	    });
-      return false;
-    }
   </script>
 <% end %>
 <div id="topic" class="clearfix">
-  <div class="cover">
+  <div class="cover topic_cover">
     <%= image_tag(@topic.cover.normal.url) %>
+    <div class="edit"><a href="#">修改图片</a></div>
   </div>
+  <div id="edit_topic_cover" style="display:none">
+    <h2>修改话题图片</h2>
+    <%= simple_form_for(@topic,:class => "form",:html => { :multipart =>  true, :onsubmit => "App.loading();" }) do |f| %>
+      <%= f.input :cover, :label => "本地上传",:hint => "支持 jpg, gif, png 格式的图片，不要超过 2MB。建议图片尺寸大于 100×100。" %>
+      <div class="actions">
+        <button type="submit">上传图片</button>
+        <a href="#" onclick="$.facebox.close(); return false;">关闭</a>
+      </div>
+    <% end %>
+  </div>
+  <script type='text/javascript'>Topics.editCover($("#topic .cover"));</script>
   <div class="info">
     <h1><%= @topic.name %></h1>
     <div class="summary">
@@ -57,9 +56,9 @@
     <div class="box">
       <div class="inner">
 				<% if current_user.topic_followed?(@topic) %>
-				<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, '<%= @topic.name %>');">取消关注</a>
+				<a href="#" style="width:80px;" class="gray_button" onclick="return Topics.unfollow(this, '<%= @topic.name %>');">取消关注</a>
 				<% else %>
-        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, '<%= @topic.name %>');">关注此话题</a>
+        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return Topics.follow(this, '<%= @topic.name %>');">关注此话题</a>
 				<% end %>
       </div>
 		</div>
