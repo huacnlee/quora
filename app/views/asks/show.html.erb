@@ -148,7 +148,6 @@
       if(isShow){
         $(".ask .edit_topics").show();
         $(".ask .item_list").hide();
-
       }
       else{
         $(".ask .item_list").show();
@@ -229,11 +228,12 @@
       </div>
       <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" onsubmit="return beforeAddTopic(this);" method="post">
         <%= auth_token  %>
-        <input type="text" class="name" style="width:100px;" name="name" value="" placeholder="搜索话题" /> 
+        <input type="text" class="name" id="searchTopic" style="width:100px;" name="name" value="" placeholder="搜索话题" /> 
         <input type="hidden" name="add" value="1" /> 
         <button type="submit" class="small">添加</button> 
         <a href="#" onclick="return toggleEditTopics(false);">完成</a>
       </form>
+      <script type="text/javascript">Asks.completeTopic($("#searchTopic"));</script>
     </div>
   </div>
   <div class="title">
