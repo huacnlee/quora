@@ -42,7 +42,7 @@
 		<%
     if children[:type] == "USER"
 		%>
-      <%= raw children[:items].map {|n| (n.log and n.log.user) ? user_name_tag(user.find(n.log.user_id)) : "" }.uniq.join("、") %> 关注了你。
+      <%= raw children[:items].map {|n| (n.log and n.log.user) ? user_name_tag(User.find(n.log.user_id)) : "" }.uniq.join("、") %> 关注了你。
 		<%
     else
       if children[:type] == "THANK_ANSWER"

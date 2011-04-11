@@ -163,7 +163,7 @@ var Asks = {
   },
 
   spamAsk : function(el, id){
-    if(!confirm("<%= Setting.ask_spam_max %>人评价为烂问题后，此问题将会被屏蔽，而且无法撤销！\n你确定要这么评价吗？")){
+    if(!confirm("多人评价为烂问题后，此问题将会被屏蔽，而且无法撤销！\n你确定要这么评价吗？")){
       return false;
     }
 
