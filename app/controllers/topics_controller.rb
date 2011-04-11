@@ -1,3 +1,4 @@
+# coding: utf-8
 class TopicsController < ApplicationController
   def index
   end
@@ -35,5 +36,22 @@ class TopicsController < ApplicationController
     end
     current_user.unfollow_topic(@topic)
     render :text => "1"
+  end
+
+  def edit
+    @topic = Topic.find(params[:id])
+    render :layout => false
+  end
+
+  def update
+    @topic = Topic.find(params[:id])
+    @topic.current_user_id = current_user.id
+    @topic.cover = params[:topic][:cover]
+    if @topic.save
+      flash[:notice] = "话题封面上传成功。"
+    else
+      flash[:alert] = "话题封面上传失败，请检查你上传的图片适合符合格式要求。"
+    end
+    redirect_to topic_path(@topic.name)
   end
 end

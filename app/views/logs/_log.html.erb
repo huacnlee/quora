@@ -183,9 +183,17 @@ when "TopicLog"
 	item = log.topic
 	if !item.nil?
 %>
-	<div class="ask" ask-id="<%= log.id %>">
-	  <div class="title small_title"><%= user_name_tag(log.user) %> 创建了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
-	</div>
+  <div class="ask" ask-id="<%= log.id %>">
+    <div class="title small_title">
+    <% if log.action == "EDIT" %>
+      <%= user_name_tag(log.user) %> 为话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a> 
+      的<%= log.target_attr == "COVER" ?  "上传了封面图片。" : "提交了介绍。" %>
+    <% else %>
+      <%= user_name_tag(log.user) %> 创建了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a>
+    <% end %>
+      
+    </div>
+  </div>
 <%
 	end
 when "CommentLog"

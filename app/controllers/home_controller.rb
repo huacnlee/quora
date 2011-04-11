@@ -117,10 +117,11 @@ class HomeController < ApplicationController
     end
 
     object = klass.camelize.constantize.find(id)
-    if ["ask"].include?(klass) and current_user
-      object.update_attributes(:current_user_id => current_user.id)
+    update_hash = {field => params[:value]}
+    if ["ask","topic"].include?(klass) and current_user
+      update_hash[:current_user_id] = current_user.id
     end
-    if object.update_attributes(field => params[:value])
+    if object.update_attributes(update_hash)
       render :text => object.send(field).to_s
     else
       Rails.logger.info "object.errors.full_messages: #{object.errors.full_messages}"
