@@ -151,7 +151,7 @@ var Asks = {
     input = $("#ask_to_answer");
     input.autocomplete("/search/users", {
       mincChars: 1,
-      width: 200,
+      width: 206,
       scroll : false,
       formatItem : function(data, i, total){
         return Asks.completeLineUser(data,false);
