@@ -1,6 +1,5 @@
 <div style="margin:10px 0;">
-  <%= @invitor.name %>
-  邀请你回答这个问题。
+  <b><%= @invitors.collect { |u| u.name }.join(", ") %></b> 邀请你回答这个问题。
 </div>
 <div style="font-weight:bold;">你可以点击下面的链接进入这个问题的页面：</div>
 <div><a href="<%= ask_url(@ask.id) %>"><%= ask_url(@ask.id) %></a></div>

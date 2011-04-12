@@ -170,7 +170,9 @@
         <input type="text" id="ask_to_answer" style="width:200px;" placeholder="搜索人" />
 				<div id="ask_invited_users" class="clearfix">
 					<% for item in @invites %>
-            <%= render "invited_user", :item => item %>
+            <% if item.count > 0 %>
+              <%= render "invited_user", :item => item %>
+            <% end %>
 					<% end %>
 				</div>
         <script type="text/javascript">

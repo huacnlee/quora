@@ -8,8 +8,10 @@ class AskInvite
   field :count, :type => Integer, :default => 0
   # 邀请者
   field :invitor_ids, :type => Array, :default => []
-
+  field :mail_sent, :type => Integer, :default => 0
   index :ask_id
+
+  scope :unsend, where(:mail_sent => 0, :count.gt => 0)
 
   def self.invite(ask_id,user_id,invitor_id)
     item = find_or_create_by(:ask_id => ask_id,:user_id => user_id)
@@ -19,7 +21,6 @@ class AskInvite
     item.invitor_ids << invitor_id
     item.count += 1
     item.save
-    UserMailer.invite_to_answer(ask_id, user_id, invitor_id).deliver
     item
   end
 
@@ -28,11 +29,16 @@ class AskInvite
     return 0 if item.blank?
     item.invitor_ids.delete(invitor_id)
     item.count -= 1
-    if item.invitor_ids.blank?
-      item.destroy
-    else
+    item.save
+    return 1
+  end
+
+  def self.check_to_send
+    unsend.each do |item|
+      UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
+      puts "AskInvite: #{item.id} job added."
+      item.mail_sent = true
       item.save
     end
-    return 1
   end
 end

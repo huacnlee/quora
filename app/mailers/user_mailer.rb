@@ -41,11 +41,15 @@ class UserMailer < BaseMailer
     mail(:to => email, :subject => @title, :from => Setting.email_sender)
   end
 
-  def invite_to_answer(ask_id, user_id, invitor_id)
+  def invite_to_answer(ask_id, user_id, invitor_ids)
     @user = User.find(user_id)
-    @invitor = User.find(invitor_id)
+    @invitors = User.find(invitor_ids)
     @ask = Ask.find(ask_id)
-    @title = "#{@invitor.name}邀请你回答《#{@ask.title}》"
+    if(@invitors.length > 1)
+      @title = "#{@invitors[0].name}等人邀请你回答《#{@ask.title}》"
+    else
+      @title = "#{@invitors[0].name}邀请你回答《#{@ask.title}》"
+    end
     mail(:to => @user.email, :subject => @title, :from => Setting.email_sender)
   end
 
