@@ -19,6 +19,7 @@ class AskInvite
     item.invitor_ids << invitor_id
     item.count += 1
     item.save
+    UserMailer.invite_to_answer(ask_id, user_id, invitor_id).deliver
     item
   end
 

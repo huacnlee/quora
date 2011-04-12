@@ -1,16 +1,6 @@
-<div style="font-size:14px;">
-  问题内容:<br />
-  <%= md_body(@ask.body) %>
-</div>
-<div style="margin-top:20px;">
-  邀请人： <br />
-  <a href="<%= user_url(@invitor.slug) %>">
-    <% if !@invitor.avatar.blank? %>
-      <%= image_tag(@invitor.avatar.small.url) %>
-    <% else %>
-      <%= image_tag("http://zheye.org/images/avatar/small.jpg") %>
-    <% end %>
-  </a>
+<div style="margin:10px 0;">
   <%= @invitor.name %>
-  <br /> 邀请你回答这个问题。
+  邀请你回答这个问题。
 </div>
+<div style="font-weight:bold;">你可以点击下面的链接进入这个问题的页面：</div>
+<div><a href="<%= ask_url(@ask.id) %>"><%= ask_url(@ask.id) %></a></div>
