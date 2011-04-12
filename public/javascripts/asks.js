@@ -146,6 +146,45 @@ var Asks = {
     });
   },
 
+  /* 邀请人回答问题 */
+  completeInviteToAnswer : function(){
+    input = $("#ask_to_answer");
+    input.autocomplete("/search/users", {
+      mincChars: 1,
+      width: 200,
+      scroll : false,
+    });
+    input.result(function(e,data,formatted){
+      if(data){
+        user_id = data[1];
+        name = data[0];
+        Asks.inviteToAnswer(data[1]);
+      }
+    });
+  },
+
+  /* 取消邀请 */
+  cancelInviteToAnswer : function(el, id){
+    var countp = $(el).parent().find(".count");
+    count = parseInt(countp.text());
+    if(count > 1){
+      count -= 1
+      countp.text(count);
+    }
+    else{
+      $(el).parent().parent().fadeOut().remove();
+    }
+    $(el).before('<span class="n"></span>');
+    $(el).remove();
+    $.get("/asks/"+ask_id+"/invite_to_answer",{ i_id : id, drop : 1 });
+    return false;
+  },
+  
+  inviteToAnswer : function(user_id, is_drop){
+    App.loading();
+    $.get("/asks/"+ask_id+"/invite_to_answer.js",{ user_id : user_id, drop : is_drop });
+  },
+
   beforeSubmitComment : function(el){
     App.loading();
   },

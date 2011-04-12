@@ -1,0 +1,8 @@
+i = $("#ask_invite_<%= @invite.id %>");
+if(i.length == 0){
+  $("#ask_invited_users").append('<%= escape_javascript(render("invited_user", :item => @invite)) %>');
+}
+else{
+  $(".count",i).text('<%= @invite.count %>');
+}
+App.loading(false);

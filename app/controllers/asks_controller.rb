@@ -2,7 +2,7 @@
 class AsksController < ApplicationController
   before_filter :require_user, :except => [:index,:answer,:update_topic,:show]
   before_filter :require_user_js, :only => [:answer]
-  before_filter :require_user_text, :only => [:update_topic,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
+  before_filter :require_user_text, :only => [:update_topic,:invite_to_answer,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
   
   def index
     @per_page = 20
@@ -52,6 +52,8 @@ class AsksController < ApplicationController
     @answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc,:"created_at".asc)
     @answer = Answer.new
     @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
+    # 被邀请回答的用户
+    @invites = @ask.ask_invites.includes(:user)
     set_seo_meta(@ask.title)
 
     respond_to do |format|
@@ -209,6 +211,16 @@ class AsksController < ApplicationController
     end
     current_user.unfollow_ask(@ask)
     render :text => "1"
+  end
+
+  def invite_to_answer
+    drop = params[:drop] == "1" ? true : false
+    if drop
+      result = AskInvite.cancel(params[:i_id], current_user.id)
+      render :text => "1"
+    else
+      @invite = AskInvite.invite(params[:id], params[:user_id], current_user.id)
+    end
   end
   
 end

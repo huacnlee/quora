@@ -37,4 +37,17 @@ class SearchController < ApplicationController
       render :text => lines.join("\n") 
     end
   end
+
+  def users 
+    result = Search.query(params[:q],:type => "User",:limit => 10)
+    if params[:format] == "json"
+      render :json => result.to_json
+    else
+      lines = []
+      result.each do |item|
+        lines << "#{item['title']}#!##{item['id']}"
+      end
+      render :text => lines.join("\n") 
+    end
+  end
 end

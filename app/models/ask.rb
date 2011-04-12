@@ -39,6 +39,8 @@ class Ask
   # Comments
   has_many :comments, :conditions => {:commentable_type => "Ask"}, :foreign_key => "commentable_id", :class_name => "Comment"
 
+  has_many :ask_invites
+
   attr_protected :user_id
   attr_accessor :current_user_id
   validates_presence_of :user_id, :title

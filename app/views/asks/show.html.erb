@@ -152,6 +152,7 @@
       </div>
     </div>
 
+
 		<div class="box standard">
 			<h2>相关问题</h2>
 			<div class="inner">
@@ -163,16 +164,29 @@
 			</div>
     </div>
 
+    <div class="box standard">
+      <h2>邀请他人回答此问题</h2>
+      <div class="inner">
+        <input type="text" id="ask_to_answer" style="width:200px;" placeholder="搜索人" />
+				<div id="ask_invited_users" class="clearfix">
+					<% for item in @invites %>
+            <%= render "invited_user", :item => item %>
+					<% end %>
+				</div>
+        <script type="text/javascript">
+          Asks.completeInviteToAnswer();
+        </script>
+      </div>
+    </div>
+
 		<div class="box standard gray">
 			<h2>问题状态</h2>
 			<div class="inner">
 				<p>最近活动：<%= l @ask.last_updated_at ? @ask.last_updated_at.getlocal : (@ask.answered_at ? @ask.answered_at.getlocal : @ask.updated_at.getlocal), :format => :min %></p>
 				<p>被浏览 <%= @ask.views_count %> 次，<%= @ask.followers.count %> 人关注了该问题</p>
 				<div class="followers">
-					<% for follower in @ask.followers %>
-					<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
-						<%= user_avatar_tag(follower, :small) %>
-					</a>
+					<% for item in @ask.followers %>
+            <%= user_avatar_tag(item,:small) %>
 					<% end %>
 				</div>
 			</div>
