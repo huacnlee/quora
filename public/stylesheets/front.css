@@ -433,3 +433,5 @@ a.user img.normal { width:100px; height:100px; }
 .ask .topic a.remove:hover,
 #ask_invited_users a.remove:hover { background-color:#369; background-position:-2px -18px; }
 #ask_invited_users .count { margin:0; font-size:0.8em;  line-height: 1em; color: #999; height:11px; display:block;}
+
+.ask .topic a.remove { float:right; margin-left:3px; margin-top:2px; }
