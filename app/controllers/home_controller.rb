@@ -20,12 +20,13 @@ class HomeController < ApplicationController
         end
         @notifies[notify.target_id][:items] << notify
       end
+      # TODO: 这里需要过滤掉烂问题
       @logs = Log.any_of({:user_id.in => current_user.following_ids},
                          {:target_id.in => current_user.followed_ask_ids})
                         .and(:action.in => ["NEW", "AGREE", "EDIT"], :_type.in => ["AskLog", "AnswerLog", "CommentLog", "UserLog"])
                         .excludes(:user_id => current_user.id).desc("$natural")
                         .paginate(:page => params[:page], :per_page => @per_page)
-      # redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
+      redirect_to newbie_path and return if (current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0) or @logs.count < 1
 
       if params[:format] == "js"
         render "/logs/index.js"
@@ -33,7 +34,8 @@ class HomeController < ApplicationController
         render "/logs/index"
       end
     else
-      @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
+      @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics)
+                  .paginate(:page => params[:page], :per_page => @per_page)
       if params[:format] == "js"
         render "/asks/index.js"
       end

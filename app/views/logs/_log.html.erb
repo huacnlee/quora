@@ -4,7 +4,7 @@ action = log.action.gsub("ADDTOPIC", "ADD_TOPIC").gsub("DELTOPIC", "DEL_TOPIC")
 case log._type
 when "AskLog"
 	item = log.ask
-	if !item.nil?
+	if !item.blank?
 %>
 	<div class="ask" ask-id="<%= log.id %>">
 		<div class="savatar">
