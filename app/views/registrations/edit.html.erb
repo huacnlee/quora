@@ -24,7 +24,7 @@
     <% end %>
   </div>
   <div class="box">
-    <h2>邮件提醒设置</h2>
+    <h2 id="mail_notify_settings">邮件提醒设置</h2>
     <div class="content">
       <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
         <%= f.input :mail_be_followed, :as => :boolean, :label => "被人关注" %>

@@ -45,12 +45,12 @@ class Answer
   end
 
   # 没有帮助
-  def spam(voter_id)
+  def spam(voter_id,size = 1)
     self.spams_count ||= 0
     self.spam_voter_ids ||= []
     # 限制 spam ,一人一次
     return self.spams_count if self.spam_voter_ids.index(voter_id)
-    self.spams_count += 1
+    self.spams_count += size
     self.spam_voter_ids << voter_id
     self.save()
     return self.spams_count

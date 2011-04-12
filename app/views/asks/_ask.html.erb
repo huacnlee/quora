@@ -16,21 +16,21 @@
 				<% end %>
 			<% end %>
     </div> 
-  <% if item.last_answer %>
-    <div class="last_answer answer">
-      <div class="attr">
-        <span class="votes"><%= item.last_answer.votes_count %></span>
+    <% if item.last_answer and (not(params[:controller] == "asks" and params[:action] == "index")) %>
+      <div class="last_answer answer">
+        <div class="attr">
+          <span class="votes"><%= item.last_answer.votes_count %></span>
+        </div>
+        <div class="data">
+          <div class="author">
+            <% if item.last_answer_user %><%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user,:prefix => ",") %> <% else %>匿名用户<% end %>
+          </div>
+          <div class="md_body"><%= md_body(item.last_answer.chomp_body) %></div>
+        </div>
       </div>
-      <div class="data">
-				<div class="author">
-					<% if item.last_answer_user %><%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user,:prefix => ",") %> <% else %>匿名用户<% end %>
-				</div>
-      	<div class="md_body"><%= md_body(item.last_answer.chomp_body) %></div>
+    <% else %>
+      <div class="md_body">
+        <%= md_body(item.chomp_body) %>
       </div>
-    </div>
-  <% else %>
-    <div class="md_body">
-      <%= md_body(item.body) %>
-    </div>
-  <% end %>
+    <% end %>
 </div>
