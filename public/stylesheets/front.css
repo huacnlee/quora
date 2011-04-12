@@ -120,6 +120,7 @@ address, blockquote {
   font-weight:bold; width:20px; text-align:center; padding: 1px 3px; }
 .ask .last_answer .md_body { margin-left:30px; }
 .ask .savatar { float:right }
+.ask a.smore { background:none; font-size:12px; }
 
 .md_body { font-size:1.2em; color: #333; line-height:21px; margin: 8px 0; }
 .md_body blockquote { padding-left:28px; padding-top:8px; background:#FAEBBC url(/images/lquote.gif) left top no-repeat; }
@@ -166,19 +167,9 @@ a.user img.normal { width:100px; height:100px; }
 .answer .author a.user { font-weight:bold; margin-right:2px; }
 .answer .votes { color:#999; margin-bottom:4px; }
 .answer .votes a { color:#999; }
-.answer .attr {
-	float: left;
-	margin-top: 2px;
-}
-
-.answer .data {
-	margin-left: 10px;
-}
-
-.answer .data .md_body, .answer .data .author {
-	margin-left: 25px;
-}
-
+.answer .attr { float: left; margin-top: 2px; } 
+.answer .data { margin-left: 10px; } 
+.answer .data .md_body, .answer .data .author { margin-left: 25px; } 
 .answers .spam_answer .md_body { color:#999; font-size:12px; text-decoration :line-through; }
 .answers .spam_answer .action { display:none; }
 
@@ -193,6 +184,8 @@ a.user img.normal { width:100px; height:100px; }
 
 .answer a.spamed,
 .answer a.spamed:hover,
+.answer a.thanked,
+.answer a.thanked:hover,
 .ask a.spamed,
 .ask a.spamed:hover { cursor:default; text-decoration:none; color:#999; }
 

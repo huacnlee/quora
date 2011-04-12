@@ -150,6 +150,203 @@ var Asks = {
     App.loading();
   },
 
+  thankAnswer : function(el,id){
+    klasses = $(el).attr("class").split(" ");
+    if(klasses.indexOf("thanked") > 0){
+      return false;
+    }
+    $(el).addClass("thanked");
+    $(el).text("已感谢");
+    $(el).click(function(){ return false });
+    $.get("/answers/"+id+"/thank");
+    return false;
+  },
+
+  spamAsk : function(el, id){
+    if(!confirm("多人评价为烂问题后，此问题将会被屏蔽，而且无法撤销！\n你确定要这么评价吗？")){
+      return false;
+    }
+
+    App.loading();
+    $(el).addClass("spamed");
+    $.get("/asks/"+id+"/spam",function(count){
+      if(!App.requireUser(count,"text")){
+        return false;
+      }
+      $("#ask_spam_count").val(count);
+      App.loading(false);
+    });
+    return false;
+  },
+
+  beforeAnswer : function(el){
+    $("button.submit",el).attr("disabled","disabled");
+    App.loading();
+  },
+
+  spamAnswer : function(el, id){
+    App.loading();
+    $(el).addClass("spamed");
+    $(el).text("已提交");
+    $.get("/answers/"+id+"/spam",function(count){
+      if(!App.requireUser(count,"text")){
+        return false;
+      }
+      App.loading(false);
+    });
+    return false;
+  },
+
+  toggleEditTopics : function(isShow){
+    if(isShow){
+      $(".ask .edit_topics").show();
+      $(".ask .item_list").hide();
+    }
+    else{
+      $(".ask .item_list").show();
+      $(".ask .edit_topics").hide();
+    }
+  },
+
+  beforeAddTopic : function(el){
+    App.loading();
+  },
+
+  addTopic : function(name){
+    App.loading(false);
+    if(name.trim() == ""){
+      return false;
+    }
+    $(".ask .topics .item_list .in_place_edit").before("<a href='/topics/"+name+"' class='topic'>"+name+"</a>");
+    $(".ask .topics .item_list .no_result").remove();
+    exit_topic_count = $(".ask .edit_topics .items .topic").length;
+    $(".ask .edit_topics .items").append('<div class="topic"> \
+          <a href="#" onclick="Asks.removeTopic(this,'+(exit_topic_count+1)+',\''+name+'\');" class="remove"></a>\
+          <span>'+name+'</span>\
+        </div>');
+  },
+
+  removeTopic : function(el, idx, name){
+    App.loading();
+    $.get("/asks/"+ask_id+"/update_topic", { name : name }, function(res){
+      $(el).parent().remove();
+      $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
+      App.loading(false);
+    });
+    return false;
+  },
+
+  follow : function(el){
+    App.loading();
+    $(el).attr("onclick", "return false;");
+    $.get("/asks/"+ask_id+"/follow",{}, function(res){
+      App.loading(false);
+      $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return Asks.unfollow(this);">取消关注</a>');
+    });
+    return false;
+  },
+
+  unfollow : function(el){
+    App.loading();
+    $(el).attr("onclick", "return false;");
+    $.get("/asks/"+ask_id+"/unfollow",{}, function(res){
+      App.loading(false);
+      $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return Asks.follow(this);">关注此问题</a>');
+    });
+    return false;
+  },
+
+  toggleComments : function(type, id){
+    var el = $("#"+type+"_"+id);
+    var comments = $(".comments",el);
+    if(comments.length > 0){
+      comments.toggle();
+    }
+    else{
+      App.loading();
+      $.get("/comments",{ type : type, id : id }, function(html){
+        $(".action",el).after(html);
+        App.loading(false);
+      });
+    }
+    return false;
+  },
+
+  vote : function(id, type){
+    var answer = $("#answer_"+id);
+    vtype = "down";
+    if(type == 1) { vtype = "up"; }
+    $(".vote_buttons a",answer).removeClass("voted");
+    $(".vote_buttons a.vote_"+vtype,answer).addClass("voted");
+    $(".action a",answer).removeClass("voted");
+    $(".action a.vote_"+vtype,answer).addClass("voted");
+    App.loading();
+    $.get("/answers/"+id+"/vote",{ inc : type },function(res){
+      if(!App.requireUser(res,"text")){
+        return false;
+      }
+      res_a = res.split("|");
+      Asks.vote_callback(id, vtype, res_a[0], res_a[1]);
+      App.loading(false);
+    });
+    return false;
+  },
+
+  vote_callback : function(id, vtype, new_up_count, new_down_count){
+    var answer = $("#answer_"+id);
+    var answer_votes = $(".votes",answer);
+    answer.attr("data-uc", new_up_count);
+    answer.attr("data-dc", new_down_count);
+    
+    /* Change value for visable label */
+    if(answer_votes.length > 0){
+      if(new_up_count <= 0){
+        /* remove up vote count label if up_votes_count is zero */
+        $(answer_votes).remove();
+      }
+      else{
+        $(".num",answer_votes).text(new_up_count);
+      }
+    }
+    else {
+      if(vtype == "up"){
+        $(".author",answer).after("<div class=\"votes\"><span class=\"num\">"+new_up_count+"</span> 票</div>");
+      }
+    }
+
+    var answers = $(".answer");
+    var position_changed = false;
+
+    for(var i =0;i<answers.length;i++){
+      a = answers[i];
+      /* Skip current voted Answer self */
+      if($(a).attr("id") == answer.attr("id")){
+        continue;
+      }
+      /* Get next Answer uc and dc */
+      u_count = parseInt($(a).attr("data-uc"));
+      d_count = parseInt($(a).attr("data-dc"));
+
+      /* Change the Ask position */
+      if(vtype == "up"){
+        if(new_up_count > u_count){
+          $(a).before(answer);
+          position_changed = true;
+          break;
+        }
+      }
+      else{
+        /* down vote */
+        if(new_up_count <= u_count && new_down_count < d_count){
+          $(a).after(answer);
+          position_changed = true;
+          break;
+        }
+      }
+    }
+    answer.fadeOut(100).fadeIn(200);
+  },
+
   version : function(){
   }
 

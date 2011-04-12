@@ -2,191 +2,6 @@
   <script type="text/javascript">
     var ask_id = '<%= @ask.id %>';
     var ask_redirected = false;
-    function toggleComments(type,id){
-      var el = $("#"+type+"_"+id);
-      var comments = $(".comments",el);
-      if(comments.length > 0){
-        comments.toggle();
-      }
-      else{
-        App.loading();
-        $.get("/comments",{ type : type, id : id }, function(html){
-          $(".action",el).after(html);
-          App.loading(false);
-        });
-      }
-      return false;
-    }
-
-    function vote(id,type){
-      var answer = $("#answer_"+id);
-      vtype = "down";
-      if(type == 1) { vtype = "up"; }
-      $(".vote_buttons a",answer).removeClass("voted");
-      $(".vote_buttons a.vote_"+vtype,answer).addClass("voted");
-      $(".action a",answer).removeClass("voted");
-      $(".action a.vote_"+vtype,answer).addClass("voted");
-      App.loading();
-      $.get("/answers/"+id+"/vote",{ inc : type },function(res){
-        if(!App.requireUser(res,"text")){
-          return false;
-        }
-        res_a = res.split("|");
-        vote_callback(id, vtype, res_a[0], res_a[1]);
-        App.loading(false);
-      });
-      return false;
-    }
-
-    function vote_callback(id, vtype,new_up_count, new_down_count){
-      var answer = $("#answer_"+id);
-      var answer_votes = $(".votes",answer);
-      answer.attr("data-uc", new_up_count);
-      answer.attr("data-dc", new_down_count);
-      
-      /* Change value for visable label */
-      if(answer_votes.length > 0){
-        if(new_up_count <= 0){
-          /* remove up vote count label if up_votes_count is zero */
-          $(answer_votes).remove();
-        }
-        else{
-          $(".num",answer_votes).text(new_up_count);
-        }
-      }
-      else {
-        if(vtype == "up"){
-          $(".author",answer).after("<div class=\"votes\"><span class=\"num\">"+new_up_count+"</span> 票</div>");
-        }
-      }
-
-      var answers = $(".answer");
-      var position_changed = false;
-
-      for(var i =0;i<answers.length;i++){
-        a = answers[i];
-        /* Skip current voted Answer self */
-        if($(a).attr("id") == answer.attr("id")){
-          continue;
-        }
-        /* Get next Answer uc and dc */
-        u_count = parseInt($(a).attr("data-uc"));
-        d_count = parseInt($(a).attr("data-dc"));
-
-        /* Change the Ask position */
-        if(vtype == "up"){
-          if(new_up_count > u_count){
-            $(a).before(answer);
-            position_changed = true;
-            break;
-          }
-        }
-        else{
-          /* down vote */
-          if(new_up_count <= u_count && new_down_count < d_count){
-            $(a).after(answer);
-            position_changed = true;
-            break;
-          }
-        }
-      }
-      answer.fadeOut(100).fadeIn(200);
-    }
-
-    function spamAsk(el,id){
-      if(!confirm("<%= Setting.ask_spam_max %>人评价为烂问题后，此问题将会被屏蔽，而且无法撤销！\n你确定要这么评价吗？")){
-        return false;
-      }
-
-      App.loading();
-      $(el).addClass("spamed");
-      $.get("/asks/"+id+"/spam",function(count){
-        if(!App.requireUser(count,"text")){
-          return false;
-        }
-        $("#ask_spam_count").val(count);
-        App.loading(false);
-      });
-      return false;
-    }
-
-    function spamAnswer(el,id){
-      App.loading();
-      $(el).addClass("spamed");
-      $(el).text("已提交");
-      $.get("/answers/"+id+"/spam",function(count){
-        if(!App.requireUser(count,"text")){
-          return false;
-        }
-        App.loading(false);
-      });
-      return false;
-    }
-
-
-    function follow(el, id){
-      App.loading();
-			$(el).attr("onclick", "return false;");
-			$.get("/asks/"+id+"/follow",{}, function(res){
-        App.loading(false);
-        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @ask.id %>\');">取消关注</a>');
-	    });
-      return false;
-    }
-		
-		function unfollow(el, id){
-      App.loading();
-			$(el).attr("onclick", "return false;");
-			$.get("/asks/"+id+"/unfollow",{}, function(res){
-        App.loading(false);
-        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @ask.id %>\');">关注此问题</a>');
-	    });
-      return false;
-    }
-
-    function toggleEditTopics(isShow){
-      if(isShow){
-        $(".ask .edit_topics").show();
-        $(".ask .item_list").hide();
-      }
-      else{
-        $(".ask .item_list").show();
-        $(".ask .edit_topics").hide();
-      }
-    }
-
-    function beforeAddTopic(el){
-      App.loading();
-    }
-
-    function addTopic(name){
-      App.loading(false);
-      if(name.trim() == ""){
-        return false;
-      }
-      $(".ask .topics .item_list .in_place_edit").before("<a href='/topics/"+name+"' class='topic'>"+name+"</a>");
-      $(".ask .topics .item_list .no_result").remove();
-      exit_topic_count = $(".ask .edit_topics .items .topic").length;
-      $(".ask .edit_topics .items").append('<div class="topic"> \
-            <a href="#" onclick="removeTopic(this,'+(exit_topic_count+1)+',\''+name+'\');" class="remove"></a>\
-            <span>'+name+'</span>\
-          </div>');
-    }
-
-    function removeTopic(el,idx,name){
-      App.loading();
-      $.get("<%= update_topic_ask_path(@ask.id) %>", { name : name }, function(res){
-        $(el).parent().remove();
-        $(".ask .topics .item_list .topic:nth-of-type("+(idx+1)+")").remove();
-        App.loading(false);
-      });
-      return false;
-    }
-
-    function beforeAnswer(el){
-      $("button.submit",el).attr("disabled","disabled");
-      App.loading();
-    }
   </script>
 <% end %>
 <%= render 'base' %>
@@ -212,7 +27,7 @@
         <% end %>
       <% end %>
       <% if current_user %>
-        <a href="#" onclick="return toggleEditTopics(true);" class="in_place_edit">修改</a>
+        <a href="#" onclick="return Asks.toggleEditTopics(true);" class="in_place_edit">修改</a>
       <% end %>
     </div>
     <div class="edit_topics" style="display:none">
@@ -220,18 +35,18 @@
         <% if !@ask.topics.blank? %>
           <% @ask.topics.each_with_index do |item,i| %>
           <div class="topic">
-            <a href="#" onclick="removeTopic(this,<%= i %>,'<%= item %>');" class="remove"></a>
+            <a href="#" onclick="Asks.removeTopic(this,<%= i %>,'<%= item %>');" class="remove"></a>
             <span><%= item %></span>
           </div>
           <% end %>
         <% end %>
       </div>
-      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" onsubmit="return beforeAddTopic(this);" method="post">
+      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" onsubmit="return Asks.beforeAddTopic(this);" method="post">
         <%= auth_token  %>
         <input type="text" class="name" id="searchTopic" style="width:100px;" name="name" value="" placeholder="搜索话题" /> 
         <input type="hidden" name="add" value="1" /> 
         <button type="submit" class="small">添加</button> 
-        <a href="#" onclick="return toggleEditTopics(false);">完成</a>
+        <a href="#" onclick="return Asks.toggleEditTopics(false);">完成</a>
       </form>
       <script type="text/javascript">Asks.completeTopic($("#searchTopic"));</script>
     </div>
@@ -250,11 +65,11 @@
   </div>
   <div class="action">
     <% if @ask.comments_count == 0 %>
-      <a href="#" onclick="return toggleComments('ask','<%= @ask.id %>');">添加评论</a>
+      <a href="#" onclick="return Asks.toggleComments('ask','<%= @ask.id %>');">添加评论</a>
     <% else %>
-      <a href="#" onclick="return toggleComments('ask','<%= @ask.id %>');"><%= @ask.comments_count %> 条评论</a>
+      <a href="#" onclick="return Asks.toggleComments('ask','<%= @ask.id %>');"><%= @ask.comments_count %> 条评论</a>
     <% end %>
-    • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友评价为烂问题后,问题将会自动删除" href="#">烂问题</a>
+    • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return Asks.spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友评价为烂问题后,问题将会自动删除" href="#">烂问题</a>
     <% if !@ask.spams_count.blank? %>(<span id="spams_count"><%= @ask.spams_count %></span>人认为)<% end %>
     • <a href="#new_answer" onclick="return $('#new_answer .qeditor_preview').focus();">添加答案</a>
     • <span class="date"><%= l @ask.created_at.getlocal, :format => :short %></span>
@@ -290,7 +105,7 @@
         <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
       </div>
       <% end %>
-      <%= form_for(@answer, :remote => true, :html => { :onsubmit => "return beforeAnswer(this);" },
+      <%= form_for(@answer, :remote => true, :html => { :onsubmit => "return Asks.beforeAnswer(this);" },
                    :url => answer_ask_path(@ask.id)) do |f| %>
         <div class="row">
           <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
@@ -310,9 +125,9 @@
       <div class="box">
         <div class="inner">
           <% if current_user.ask_followed?(@ask) %>
-          <a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, '<%= @ask.id %>');">取消关注</a>
+          <a href="#" style="width:80px;" class="gray_button" onclick="return Asks.unfollow(this);">取消关注</a>
           <% else %>
-          <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, '<%= @ask.id %>');">关注此问题</a>
+          <a href="#" style="width:80px;" class="gray_button green_button" onclick="return Asks.follow(this);">关注此问题</a>
           <% end %>
           <a href="#" class="dropdown" onclick="return Asks.dropdown_menu(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a>
         </div>
@@ -367,7 +182,7 @@
 	<% content_for :scripts do %>
 	  <script type="text/javascript">
 			$(document).ready(function() {
-				toggleComments('<%= params[:eawc] == "yes" ? "answer" : "ask" %>','<%= params[:eawc] == "yes" ? params[:awid] : params[:asid] %>');
+				Asks.toggleComments('<%= params[:eawc] == "yes" ? "answer" : "ask" %>','<%= params[:eawc] == "yes" ? params[:awid] : params[:asid] %>');
 			});
 		</script>
 	<% end %>
