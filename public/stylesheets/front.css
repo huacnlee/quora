@@ -58,7 +58,7 @@ address, blockquote {
 #footer { clear:both; padding-top:25px; height:80px; color: gray;  }
 #footer .links {   margin-bottom:5px;  }
 
-#header:after, #main:after, .ask:after, .notification-title:after, .answer:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after {
+#header:after, #main:after, .ask:after, .notification-title:after, .answer:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after, .followed-item li .item:after {
     content:"";
     display:block;
     visibility:hidden;
@@ -268,12 +268,12 @@ a.user img.normal { width:100px; height:100px; }
 	border-top: 1px dotted #C8C8C8;
 } 
 
-.topic-listing li {
+.topic-listing li, .followers-listing li {
 	border-top: none;
 	border-bottom: 1px dotted #C8C8C8;
 }
 
-.topic-listing li.last {
+.topic-listing li.last, .followers-listing li.last {
 	border: none;
 }
 
@@ -283,6 +283,20 @@ a.user img.normal { width:100px; height:100px; }
 
 .followed-item li .action {
 	float: right;
+	font-size: 12px;
+}
+
+.followed-item li .item .left {
+	float: left;
+	margin-top: 2px;
+}
+
+.followed-item li .item .right {
+	margin-left: 42px;
+}
+
+.followed-item li .item .tagline {
+	color: gray;
 	font-size: 12px;
 }
 

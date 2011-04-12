@@ -1,5 +1,16 @@
 # coding: utf-8
 module ApplicationHelper
+  def use_yahei_font?(ua)
+    use = true
+    ["Windows NT 5.2", "Windows NT 5.1"].each do |w|
+      if ua.include?(w)
+        use = false
+        break
+      end
+    end
+    return use
+  end
+  
   def ask_notification_tag(ask_id, log, a, show_ask = true)
     return if ask_id.nil?
     tag = ""

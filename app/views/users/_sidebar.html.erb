@@ -45,13 +45,13 @@
 	<h2></h2>
 	<ul class="follow-stats">
 		<li>
-			<a href="<%= followers_user_path(@user.slug) %>" onclick="return false;"><strong>
+			<a href="<%= followers_user_path(@user.slug) %>"><strong>
 			<%= @user.follower_ids.size %></strong>
 			<span>关注<%= user_sex_title(@user) %>的人</span>
 			</a>
 		</li>
 		<li class="last">
-			<a href="<%= following_user_path(@user.slug) %>" onclick="return false;"><strong>
+			<a href="<%= following_user_path(@user.slug) %>"><strong>
 			<%= @user.following_ids.size %></strong>
 			<span><%= user_sex_title(@user) %>关注的人</span>
 			</a>
@@ -76,7 +76,7 @@
   <h2>最近关注<%= user_sex_title(@user) %>的人</h2>
 	<div class="inner">
 		<div class="followers">
-			<% for follower in @user.followers.desc("$natural").limit(40) %>
+			<% for follower in @user.followers.desc("$natural").limit(42) %>
 			<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
 				<%= user_avatar_tag(follower, :small) %>
 			</a>
@@ -91,7 +91,7 @@
   <h2><%= user_sex_title(@user) %>最近关注的人</h2>
 	<div class="inner">
 		<div class="followers">
-			<% for follower in @user.following.desc("$natural").limit(40) %>
+			<% for follower in @user.following.desc("$natural").limit(42) %>
 			<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
 				<%= user_avatar_tag(follower, :small) %>
 			</a>
