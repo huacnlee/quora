@@ -45,7 +45,7 @@ class SearchController < ApplicationController
     else
       lines = []
       result.each do |item|
-        lines << "#{item['title']}#!##{item['id']}"
+        lines << "#{item['title']}#!##{item['id']}#!##{item['tagline']}#!##{item['avatar_small']}#!##{item['slug']}"
       end
       render :text => lines.join("\n") 
     end

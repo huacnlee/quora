@@ -349,6 +349,20 @@ a.user img.normal { width:100px; height:100px; }
 .dialog_content .complete li .uinfo a { line-height:18px;}
 .dialog_content .complete li .tagline { color:#999; font-size:12px; }
 
+.ac_results { padding:0; margin:0; background:#FFF; }
+.ac_results li { list-style:none; padding:0px 8px; cursor:pointer;
+  overflow:hidden; line-height:24px; }
+.ac_results li:hover { background:#e1f0f7; }
+.ac_results li:hover a { color:#256098; }
+.ac_results li .cate { color:#333; margin:0 5px; float:right; }
+.ac_results li a .light { font-weight:bold;  }
+.ac_results li.more { font-weight:bold; color:#000; }
+.ac_results li .type { margin-left:8px; }
+.ac_results li .avatar { width:25px; height:25px; margin:8px 0;margin-right:8px; float:left; }
+.ac_results li .uinfo { margin:2px 0; line-height:150%; }
+.ac_results li .uinfo a { line-height:18px;}
+.ac_results li .tagline { color:#999; font-size:12px; }
+
 .dropdown_menu { background:#ddd; }
 .dropdown_menu .contextual_dialog_content { border:1px solid #aaa; padding:0; background:#FFF; }
 .dialog_content .menu { margin:0; padding:0; }

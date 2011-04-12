@@ -153,6 +153,9 @@ var Asks = {
       mincChars: 1,
       width: 200,
       scroll : false,
+      formatItem : function(data, i, total){
+        return Asks.completeLineUser(data,false);
+      }
     });
     input.result(function(e,data,formatted){
       if(data){
@@ -183,6 +186,26 @@ var Asks = {
   inviteToAnswer : function(user_id, is_drop){
     App.loading();
     $.get("/asks/"+ask_id+"/invite_to_answer.js",{ user_id : user_id, drop : is_drop });
+  },
+
+  completeLineUser : function(data,allow_link){
+    html = "";
+    avatar = data[3];
+    if(/http:\/\//.test(avatar) == false){
+      avatar = "/images/" + avatar;
+    }
+    tagline = data[2];
+    html += '<img class="avatar" src="'+ avatar +'" />';
+    html += '<div class="uinfo"><p>';
+    if(allow_link == true){
+      html += '<a href="/users/'+data[5]+'">'+data[0]+'</a>';
+    }
+    else{
+      html += '<span class="name">'+data[0]+'</span>';
+    }
+    html += '</p>';
+    html += '<p class="tagline">'+tagline+'</p></div>';
+    return html;
   },
 
   beforeSubmitComment : function(el){
