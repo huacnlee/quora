@@ -171,6 +171,9 @@ a.user img.normal { width:100px; height:100px; }
 .answer .data { margin-left: 10px; } 
 .answer .data .md_body, .answer .data .author { margin-left: 25px; } 
 .answers .spam_answer .md_body { color:#999; font-size:12px; text-decoration :line-through; }
+.answers .spam_answer .author a { color:#666;  }
+.answers .spam_answer .vote_buttons,
+.answers .spam_answer .votes,
 .answers .spam_answer .action { display:none; }
 
 .disabled_answer { background:#ddd; padding:8px; text-align:center; }

@@ -48,7 +48,7 @@ module AsksHelper
   # 判断是否是 spam 的回答
   def spam_answer?(answer)
     point = answer.spams_count || 0
-    return point > 5
+    return point >= Setting.answer_spam_max
   end
 
   # 判断是否是 spam 过这个回答
