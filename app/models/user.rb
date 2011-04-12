@@ -226,7 +226,7 @@ class User
     self.thanked_answer_ids << answer.id
     self.save
 
-    insert_follow_log("THANK_ANSWER", answer.user, answer.ask)
+    insert_follow_log("THANK_ANSWER", answer, answer.ask)
   end
 
   # 软删除

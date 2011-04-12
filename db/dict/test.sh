@@ -1,1 +1,1 @@
-mmseg -d . t1.txt
+mmseg -d .  t1.txt

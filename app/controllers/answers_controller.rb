@@ -30,7 +30,11 @@ class AnswersController < ApplicationController
 
   def spam
     @answer = Answer.find(params[:id])
-    count = @answer.spam(current_user.id)
+    size = 1
+    if(Setting.admin_emails.include?(current_user.email))
+      size = Setting.answer_spam_max
+    end
+    count = @answer.spam(current_user.id,size)
     render :text => count
   end
 

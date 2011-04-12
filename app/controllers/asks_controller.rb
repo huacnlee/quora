@@ -6,7 +6,8 @@ class AsksController < ApplicationController
   
   def index
     @per_page = 20
-    @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
+    @asks = Ask.normal.recent.includes(:user,:topics)
+                .paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("所有问题")
   end
 
@@ -85,7 +86,11 @@ class AsksController < ApplicationController
 
   def spam 
     @ask = Ask.find(params[:id])
-    count = @ask.spam(current_user.id)
+    size = 1
+    if(Setting.admin_emails.include?(current_user.email))
+      size = Setting.ask_spam_max
+    end
+    count = @ask.spam(current_user.id,size)
     render :text => count
   end
 

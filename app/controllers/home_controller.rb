@@ -14,11 +14,13 @@ class HomeController < ApplicationController
         
         case notify.action
         when "FOLLOW" then @notifies[notify.target_id][:type] = "USER"
+        when "THANK_ANSWER" then @notifies[notify.target_id][:type] = "THANK_ANSWER"
         else  
           @notifies[notify.target_id][:type] = "ASK"
         end
         @notifies[notify.target_id][:items] << notify
       end
+      # TODO: 这里需要过滤掉烂问题
       @logs = Log.any_of({:user_id.in => current_user.following_ids},
                          {:target_id.in => current_user.followed_ask_ids})
                         .and(:action.in => ["NEW", "AGREE", "EDIT"], :_type.in => ["AskLog", "AnswerLog", "CommentLog", "UserLog"])
@@ -32,7 +34,8 @@ class HomeController < ApplicationController
         render "/logs/index"
       end
     else
-      @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
+      @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics)
+                  .paginate(:page => params[:page], :per_page => @per_page)
       if params[:format] == "js"
         render "/asks/index.js"
       end

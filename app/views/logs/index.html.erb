@@ -40,55 +40,68 @@
 	%>
 	<div class="notification">
 		<%
-		case children[:type]
-		when "USER"
+    if children[:type] == "USER"
 		%>
       <%= raw children[:items].map {|n| (n.log and n.log.user) ? user_name_tag(User.find(n.log.user_id)) : "" }.uniq.join("、") %> 关注了你。
 		<%
-		when "ASK"
-      ask = Ask.first(:conditions => {:id => k})
+    else
+      if children[:type] == "THANK_ANSWER"
+        answer = Answer.first(:conditions => {:id => k})
+        next if answer.blank?
+        ask = answer.ask
+        next if ask.blank?
+      else
+        ask = Ask.first(:conditions => {:id => k})
+      end
 			if ask
 		%>
-      <%
-      if children[:items].size > 1
-        items = []; comments = []
-        children[:items].each do |item|
-          if item.action == "NEW_COMMENT" and !comments.include?("#{item.targer_id},#{item.user_id}")
-            items << item
-            comments << "#{item.targer_id},#{item.user_id}"
-          elsif item.action != "NEW_COMMENT"
-            items << item
-          end
-        end
-      %>
-        <div class="notification-title" id="NASK_<%= ask.id %>_title">
-          <div class="title">
-            <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %>项</a> 关于问题 <a href="<%= ask_path(ask) %>"><%= ask.title %></a>
-          </div>
-        </div>
-        <ul class="notification-items" id="NASK_<%= ask.id %>_items">
-          <%
-          items.each do |item|
-            if item.log
-          %>
-          <li><%= raw ask_notification_tag(item.target_id, item.log, item.action, false) %><span class="time"><%= l item.log.created_at, :format => :short %></span></li>
-          <%
+        <%
+        if children[:items].size > 1
+          items = []; comments = []
+          children[:items].each do |item|
+            if item.action == "NEW_COMMENT" and !comments.include?("#{item.targer_id},#{item.user_id}")
+              items << item
+              comments << "#{item.targer_id},#{item.user_id}"
+            elsif item.action != "NEW_COMMENT"
+              items << item
             end
           end
-          %>
-        </ul>
-      <%
-      else
-        notify = children[:items].first
-        if notify and notify.log
-      %>
-      <%= raw ask_notification_tag(notify.target_id, notify.log, notify.action, true) %>
-      <span class="time"><%= l notify.log.created_at, :format => :short %></span>
-      <%
+        %>
+          <div class="notification-title" id="NASK_<%= ask.id %>_title">
+            <div class="title">
+              <% if children[:type] == "THANK_ANSWER" %>
+                <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %>项</a> 关于问题 <a href="<%= ask_path(ask) %>?nr=1#answer_<%= k %>"><%= ask.title %></a>
+              <% else %>
+                <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %>项</a> 关于问题 <a href="<%= ask_path(ask) %>"><%= ask.title %></a>
+              <% end %>
+            </div>
+          </div>
+          <ul class="notification-items" id="NASK_<%= ask.id %>_items">
+            <%
+            items.each do |item|
+              if item.log
+                target_id = item.action == "THANK_ANSWER" ? item.log.target_parent_id : item.target_id
+            %>
+            <li>
+              <%= raw ask_notification_tag(target_id, item.log, item.action, false) %>
+              <span class="time"><%= l item.log.created_at, :format => :short %></span>
+            </li>
+              <%
+              end
+            end
+            %>
+          </ul>
+        <%
+        else
+          item = children[:items].first
+          if item and item.log
+            target_id = item.action == "THANK_ANSWER" ? item.log.target_parent_id : item.target_id
+            %>
+            <%= raw ask_notification_tag(target_id, item.log, item.action, true) %>
+            <span class="time"><%= l item.log.created_at, :format => :short %></span>
+            <%
+          end
         end
-      end
-      %>
-		<%
 			end
 		end
 		%>
