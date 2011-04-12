@@ -22,3 +22,7 @@ set :output, "/home/jason/wwwroot/quora/log/cronjobs.log"
 every 1.day, :at => "2:00 am" do
 	command "cd /home/jason/wwwroot/quora/ && sh backup_mongodb"
 end
+
+every 1.hours do
+	rake "mailer:ask_invite"
+end
