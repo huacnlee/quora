@@ -1,4 +1,4 @@
-<div class="invite" id="ask_invite_<%= item.id %>">
+<div class="invite" title="<%= item.user.name %>" id="ask_invite_<%= item.id %>">
   <%= user_avatar_tag(item.user,:small) %>
   <p>
   <% if current_user and item.invitor_ids.index(current_user.id) %>

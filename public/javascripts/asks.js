@@ -146,6 +146,16 @@ var Asks = {
     });
   },
 
+  toggleInviteToAsk : function(el){
+    if($(el).attr("class").split(" ").indexOf("active")){
+      $(el).removeClass("active");
+    }
+    else{
+      $(el).addClass("active");
+    }
+    $(el).parent().next().toggle();
+  },
+
   /* 邀请人回答问题 */
   completeInviteToAnswer : function(){
     input = $("#ask_to_answer");
