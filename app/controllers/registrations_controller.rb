@@ -23,7 +23,7 @@ class RegistrationsController < ApplicationController
     if resource.save
       if resource.active?
         set_flash_message :notice, :signed_up
-        UserMailer.welcome(resource.id).deliver
+        UserMailer.welcome(resource.id.to_s).deliver
         sign_in_and_redirect(resource_name, resource)
       else
         set_flash_message :notice, :inactive_signed_up, :reason => resource.inactive_message.to_s
