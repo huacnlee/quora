@@ -1,8 +1,8 @@
 # coding: UTF-8
 class AsksController < ApplicationController
-  before_filter :require_user, :except => [:index,:answer,:update_topic,:show]
-  before_filter :require_user_js, :only => [:answer]
-  before_filter :require_user_text, :only => [:update_topic,:invite_to_answer,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
+  before_filter :require_user, :only => [:answer,:update_topic]
+  before_filter :require_user_js, :only => [:answer,:invite_to_answer]
+  before_filter :require_user_text, :only => [:update_topic,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
   
   def index
     @per_page = 20
