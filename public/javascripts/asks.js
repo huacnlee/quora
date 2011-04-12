@@ -370,9 +370,10 @@ var searchCache = new jCaches(40,false);
 var lastSearchText = null;
 var lastSearchCompleteHTML = null;
 var searchTimer = null;
+var currentSearchText = null;
 function showSearchComplete(el,type){
   clearTimeout(searchTimer);
-  html = "";
+  var html = "";
   if(type == "click"){
     if(lastSearchCompleteHTML != null){
       html = lastSearchCompleteHTML;
@@ -384,19 +385,19 @@ function showSearchComplete(el,type){
   }
   else{
     searchTimer = setTimeout(function(){
-      t = $(el).val().trim();
-      if(t == lastSearchText){
+      currentSearchText = $(el).val();
+      if(currentSearchText == lastSearchText){
         return false;
       }
-      lastSearchText = t;
-      cachedItems = searchCache.get(t);
+      lastSearchText = currentSearchText;
+      cachedItems = searchCache.get(currentSearchText);
       if(cachedItems == null){
         $.ajax({
           url : "/search.json",
-          data : { w : t },
+          data : { w : currentSearchText },
           dataType : "json",
           success : function(res){
-            searchCache.add(t,res);
+            searchCache.add(currentSearchText,res);
             searchAjaxCallback(el,res);
           }
         });
@@ -447,11 +448,11 @@ function searchAjaxCallback(el,res){
       }
       html += '</li>';
     }
-    html += '<li class="more" onclick="location.href=\'/search?w='+t+'\';">关于“'+t+'”更多搜索结果...</li>';
+    html += '<li class="more" onclick="location.href=\'/search?w='+currentSearchText+'\';">关于“'+currentSearchText+'”更多搜索结果...</li>';
     html += "</ul>";
   }
   else{
-    html = '<div class="tip">没有找到关于“'+t+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></div>';
+    html = '<div class="tip">没有找到关于“'+currentSearchText+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></div>';
   }
   searchCallback(el,html);
 }
