@@ -6,7 +6,11 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title><%= raw @page_title %><%= Setting.app_name %></title>
-  <%= stylesheet_link_tag "application","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front" %>
+	<% if use_yahei_font?(request.env["HTTP_USER_AGENT"]) %>
+  <%= stylesheet_link_tag "font","application","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front" %>
+	<% else %>
+	<%= stylesheet_link_tag "font_no_cleartype","application","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front_for_xp" %>
+	<% end %>
 	<%= yield :styles %>
   <meta name="keywords" content="<%= @meta_keywords %>" />
   <meta name="description" content="<%= @meta_description %>" />

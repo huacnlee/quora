@@ -1,0 +1,13 @@
+<div class="user_profile">
+  <%= render "head", :user => @user %>
+</div>
+<ul class="followed-item followers-listing">
+  <% @followers.each do |item| %>
+    <%= render "follower", :follower => item %>
+  <% end %>
+	<% if @followers.length == @per_page %>
+	<li class="pagination last"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></li>
+	<% end %>
+</ul>
+<%= render "sidebar", :user => @user %>
+
