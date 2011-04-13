@@ -21,6 +21,18 @@ end
 
 class AskLog < Log
   belongs_to :ask, :inverse_of => :logs, :foreign_key => :target_id
+
+  after_save :send_notification
+  
+  def send_notification
+    case self.action
+    when "INVITE_TO_ANSWER"
+      Notification.create(user_id: self.target_id, 
+                          log_id: self.id, 
+                          target_id: self.target_parent_id, 
+                          action: "INVITE_TO_ANSWER")
+    end
+  end
 end
 
 class TopicLog < Log

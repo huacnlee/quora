@@ -45,7 +45,7 @@
       <%= raw children[:items].map {|n| (n.log and n.log.user) ? user_name_tag(User.find(n.log.user_id)) : "" }.uniq.join("、") %> 关注了你。
 		<%
     else
-      if children[:type] == "THANK_ANSWER"
+      if ["THANK_ANSWER"].include?children[:type]
         answer = Answer.first(:conditions => {:id => k})
         next if answer.blank?
         ask = answer.ask
@@ -80,7 +80,7 @@
             <%
             items.each do |item|
               if item.log
-                target_id = item.action == "THANK_ANSWER" ? item.log.target_parent_id : item.target_id
+                target_id = ["THANK_ANSWER","INVITE_TO_ANSWER"].include?(item.action) ? item.log.target_parent_id : item.target_id
             %>
             <li>
               <%= raw ask_notification_tag(target_id, item.log, item.action, false) %>
@@ -95,7 +95,7 @@
         else
           item = children[:items].first
           if item and item.log
-            target_id = item.action == "THANK_ANSWER" ? item.log.target_parent_id : item.target_id
+            target_id = ["THANK_ANSWER","INVITE_TO_ANSWER"].include?(item.action) ? item.log.target_parent_id : item.target_id
             %>
             <%= raw ask_notification_tag(target_id, item.log, item.action, true) %>
             <span class="time"><%= l item.log.created_at.getlocal, :format => :short %></span>
@@ -115,7 +115,7 @@
 
 <div class="listing">
 <% for log in @logs %>
-<%= render "logs/log", :log => log %>
+  <%= render "logs/log", :log => log %>
 <% end %>
 </div>
 

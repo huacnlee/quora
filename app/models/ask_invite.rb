@@ -13,6 +13,21 @@ class AskInvite
 
   scope :unsend, where(:mail_sent => 0, :count.gt => 0)
 
+  def self.insert_log(ask_id, user_id, invitor_id)
+    begin
+      log = AskLog.new
+      log.user_id = invitor_id
+      log.target_id = user_id
+      log.target_parent_id = ask_id
+      log.action = "INVITE_TO_ANSWER"
+      if not log.save
+        Rails.logger.warn { "*** AskInvite log save failed, because #{log.errors}" }
+      end
+    rescue Exception => e
+      Rails.logger.warn { "#{e}" }
+    end
+  end
+
   def self.invite(ask_id,user_id,invitor_id)
     item = find_or_create_by(:ask_id => ask_id,:user_id => user_id)
     item.invitor_ids ||= []
@@ -20,7 +35,17 @@ class AskInvite
     return item if item.invitor_ids.include?(invitor_id)
     item.invitor_ids << invitor_id
     item.count += 1
+
+    # 发送邮件
+    if(item.mail_sent <= 1)
+      UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
+      item.mail_sent += 1
+    end
+
     item.save
+
+    # 插入 Log 和 Notification
+    insert_log(ask_id, user_id, invitor_id)
     item
   end
 
@@ -31,14 +56,5 @@ class AskInvite
     item.count -= 1
     item.save
     return 1
-  end
-
-  def self.check_to_send
-    unsend.each do |item|
-      UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
-      puts "AskInvite: #{item.id} job added."
-      item.mail_sent = true
-      item.save
-    end
   end
 end

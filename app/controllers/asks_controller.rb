@@ -219,7 +219,12 @@ class AsksController < ApplicationController
       result = AskInvite.cancel(params[:i_id], current_user.id)
       render :text => "1"
     else
-      @invite = AskInvite.invite(params[:id], params[:user_id], current_user.id)
+      if (current_user.id.to_s != params[:user_id].to_s)
+        @invite = AskInvite.invite(params[:id], params[:user_id], current_user.id)
+        @success = true
+      else
+        @success = false
+      end
     end
   end
   

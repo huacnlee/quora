@@ -25,7 +25,7 @@ var Asks = {
     return false;
   },
 
-	follow : function(el,id){
+	simple_follow : function(el,id){
     App.loading();
     $.get("/asks/"+id+"/follow",{}, function(res){
         App.loading(false);
@@ -38,7 +38,7 @@ var Asks = {
     return false;
   },
 
-	unfollow : function(el,id){
+	simple_unfollow : function(el,id){
     App.loading();
     $.get("/asks/"+id+"/unfollow",{}, function(res){
         App.loading(false);

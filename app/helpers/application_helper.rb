@@ -36,6 +36,11 @@ module ApplicationHelper
         ask_tag = "的回答。"
       end
       tag += ask_tag
+    when "INVITE_TO_ANSWER"
+      tag += user_tag + "邀请你回答 "
+      if show_ask
+        tag += "<a href=\"#{ask_path(ask)}?nr=1\">#{ask.title}</a>"
+      end
     end
     return tag
   end
