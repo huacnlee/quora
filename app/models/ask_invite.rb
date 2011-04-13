@@ -35,8 +35,16 @@ class AskInvite
     return item if item.invitor_ids.include?(invitor_id)
     item.invitor_ids << invitor_id
     item.count += 1
+
+    # 发送邮件
+    if(item.mail_sent <= 1)
+      UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
+      item.mail_sent += 1
+    end
+
     item.save
-    UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
+
+    # 插入 Log 和 Notification
     insert_log(ask_id, user_id, invitor_id)
     item
   end
