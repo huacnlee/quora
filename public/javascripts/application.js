@@ -60,7 +60,7 @@ var App = {
     return true;
   },
 
-  inPlaceEdit : function(el){
+  inPlaceEdit : function(el, editor_options){
     var link = $(el);
     var linkId = link.attr("id");
     var textId = link.attr("data-text-id");
@@ -101,14 +101,18 @@ var App = {
     link.parent().after(editPanel);
 
     if(editType == "textarea"){
-      $("textarea",editPanel).val(textPanel.html());
+			var _html = textPanel.html();
+			if (editor_options["is_mobile_device"]) {
+				_html = _html.replace(/<br>/ig, "\n").replace(/<\/p>/ig, "\n").replace(/<div>/ig, "\n").replace(/<[^>]+>/ig, "");
+			}
+      $("textarea",editPanel).val(_html);
     }
     else{
       $("input.main_edit",editPanel).val(textPanel.text());
     }
     
     if(editRich == "true"){
-      $("textarea",editPanel).qeditor();
+      $("textarea",editPanel).qeditor(editor_options);
     }
 
     $("a.cancel",editPanel).click(function(){

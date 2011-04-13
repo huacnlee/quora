@@ -140,6 +140,8 @@ class HomeController < ApplicationController
     case klass
     when "user" then return if current_user.id.to_s != id
     end
+    
+    params[:value] = simple_format(params[:value].to_s.strip) if params[:did_editor_content_formatted] == "no"
 
     object = klass.camelize.constantize.find(id)
     update_hash = {field => params[:value]}
