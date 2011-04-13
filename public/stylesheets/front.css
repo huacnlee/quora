@@ -140,6 +140,7 @@ a.in_place_edit:hover {color: #405A04; background-color:#c3dd82; text-decoration
 .in_place_editing { }
 .in_place_editing a.cancel { margin-left:10px; }
 .in_place_editing a { background:none; padding:0; }
+.in_place_editing textarea {width: 95%; height:100px;}
 
 a.user img.small { width:25px; height:25px; }
 a.user img.normal { width:100px; height:100px; }

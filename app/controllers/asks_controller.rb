@@ -78,6 +78,8 @@ class AsksController < ApplicationController
     @answer.ask_id = params[:id]
     @answer.user_id = current_user.id
     
+    @answer.body = simple_format(@answer.body.strip) if params[:did_editor_content_formatted] == "no"
+    
     if @answer.save
       @success = true
     else
