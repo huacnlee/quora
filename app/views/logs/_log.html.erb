@@ -1,4 +1,5 @@
 <%
+log.action = "" if log.action.blank?
 action = log.action.gsub("ADDTOPIC", "ADD_TOPIC").gsub("DELTOPIC", "DEL_TOPIC")
 
 case log._type

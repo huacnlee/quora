@@ -15,6 +15,7 @@ class HomeController < ApplicationController
         case notify.action
         when "FOLLOW" then @notifies[notify.target_id][:type] = "USER"
         when "THANK_ANSWER" then @notifies[notify.target_id][:type] = "THANK_ANSWER"
+        when "INVITE_TO_ANSWER" then @notifies[notify.target_id][:type] = "INVITE_TO_ANSWER"
         else  
           @notifies[notify.target_id][:type] = "ASK"
         end
