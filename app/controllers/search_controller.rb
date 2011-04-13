@@ -2,11 +2,12 @@
 class SearchController < ApplicationController
 
   def index
+    @per_page = 10
     if params[:format] == "json"
       result = Search.query(params["w"].to_s.strip,:limit => 10)
       render :json => result.to_json
     else
-      @asks = Ask.search_title(params["w"].to_s.strip,:limit => 20)
+      @asks = Ask.search(params["w"].to_s.strip,:page => params[:page], :per_page => @per_page)
       set_seo_meta("关于“#{params[:w]}”的搜索结果")
       render "/asks/index"
     end

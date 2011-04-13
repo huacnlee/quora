@@ -7,8 +7,8 @@ gem "bson", "1.2.4"
 gem "bson_ext", "1.2.4"
 gem 'mongo-rails-instrumentation'
 gem "mongoid-eager-loading"
-gem "mongoid-sphinx-huacnlee", :git => "git://github.com/huacnlee/mongoid-sphinx.git", 
-                      :require => "mongoid_sphinx"
+gem "mongoid-sphinx-huacnlee", :path => "/home/jason/work/mongoid-sphinx", :require => "mongoid_sphinx"
+# gem "mongoid-sphinx-huacnlee", :require => "mongoid_sphinx"
 gem "mongoid_rails_migrations"
 
 gem "redis"

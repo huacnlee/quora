@@ -15,7 +15,6 @@ module BaseModel
         return false
       end
     end
-
   end
 
   module ClassMethods
