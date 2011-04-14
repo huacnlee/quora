@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     if @user.blank?
       render_404
     end
+    @ask_to_user = Ask.new
   end
 
   def answered

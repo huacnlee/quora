@@ -25,6 +25,8 @@ class Ask
 
   # 提问人
   belongs_to :user, :inverse_of => :asks
+  # 对指定人的提问
+  belongs_to :to_user, :class_name => "User"
 
   # 回答
   has_many :answers
@@ -55,19 +57,28 @@ class Ask
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 
 
   # FullText indexes
-  search_index(:fields => [:title,:body],
-               :attributes => [:title, :topics],
+  search_index(:fields => [:title,:body, :topics],
+               :attributes => [],
                :options => {} )
 
   redis_search_index(:title_field => :title,:ext_fields => [:topics])
 
   before_save :fill_default_values
-  after_create :create_log, :inc_counter_cache
+  after_create :create_log, :inc_counter_cache, :send_mails
   after_destroy :dec_counter_cache
   before_update :update_log
 
   def view!
     self.inc(:views_count, 1)
+  end
+
+  def send_mails
+    # 向某人提问
+    if !self.to_user.blank?
+      if self.to_user.mail_ask_me
+        UserMailer.ask_user(self.id).deliver
+      end
+    end
   end
 
   def inc_counter_cache
@@ -128,7 +139,8 @@ class Ask
   # 参数 add  true 增加, false 去掉
   def update_topics(topics, add = true, current_user_id = nil)
     self.topics = [] if self.topics.blank?
-    topics = [topics] if topics.class != [].class
+    # 分割逗号
+    topics = topics.split(/，|,/) if topics.class != [].class
     # 去两边空格
     topics = topics.collect { |t| t.strip if !t.blank? }.compact
     action = nil
@@ -174,8 +186,7 @@ class Ask
 
   def self.search_title(text,options = {})
     limit = options[:limit] || 10
-    words = mmseg_text(text)
-    Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
+    Ask.search(text,:limit => limit)
   end
 
   def self.find_by_title(title)
@@ -227,6 +238,10 @@ class Ask
         log.ask = self
         log.target_id = self.id
         log.target_attr = (self.title_changed? ? "TITLE" : (self.body_changed? ? "BODY" : "")) if action == "EDIT"
+        if(action == "NEW" and !self.to_user_id.blank?)
+          action = "NEW_TO_USER"
+          log.target_parent_id = self.to_user_id
+        end
         log.action = action
         log.diff = ""
         log.save

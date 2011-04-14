@@ -1,0 +1,22 @@
+<%= content_for :sitemap do %>
+<span class="current">列表</span>
+<% end %>
+<%= render 'base' %>
+
+<div id="cpanel_report_spams">
+  <%= grid(@report_spams, :show_filters => :no) do |g|
+    g.column :column_name => '地址', :attribute_name => 'url' do |c|
+      link_to "打开", c.url if !c.url.blank?
+    end
+    g.column :column_name => '说明', :attribute_name => 'descriptions', :td_html_attrs => { :style => "width:605px;" } do |c|
+      simple_format c.descriptions.last if !c.descriptions.blank?
+    end
+    g.column :column_name => '创建时间', :attribute_name => 'created_at', :td_html_attrs => { :style => "width:220px;" }
+    g.column :td_html_attrs => { :style => "width:50px; text-align:right;" } do |c|
+      raw "#{link_to '详细', cpanel_report_spam_path(c.id)}
+      #{link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_report_spam_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
+    end
+  end %>
+</div>
+
+

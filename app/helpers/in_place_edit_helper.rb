@@ -15,7 +15,7 @@ module InPlaceEditHelper
                      :'data-type' => options[:type],
                      :'data-text-id' => options[:text_id],
                      :'data-rich' => options[:rich],
-                     :onclick => "return App.inPlaceEdit(this);",
+                     :onclick => "return App.inPlaceEdit(this, {'is_mobile_device': #{is_mobile_device? ? 'true' : 'false'}});",
                      :'data-url' => update_url}
     if !options[:width].blank?
       html_options[:"data-width"] = options[:width]

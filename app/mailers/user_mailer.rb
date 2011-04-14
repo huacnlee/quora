@@ -53,5 +53,13 @@ class UserMailer < BaseMailer
     mail(:to => @user.email, :subject => @title, :from => Setting.email_sender)
   end
 
+  # 向用户提问
+  def ask_user(ask_id)
+    @ask = Ask.find(ask_id)
+    @user = @ask.to_user
+    @title = "#{@ask.user.name}对向你询问《#{@ask.title}》"
+    mail(:to => @user.email, :subject => @title, :from => Setting.email_sender)
+  end
+
 
 end

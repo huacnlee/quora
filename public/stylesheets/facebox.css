@@ -9,21 +9,21 @@
 
 #facebox .popup{
   position:relative;
-  padding:13px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius:10px;
+  padding:10px;
   background:url(/images/shadow.png);
-  -webkit-border-radius:13px;
-  -moz-border-radius:13px;
-  border-radius:13px;
 }
 
 #facebox .content {
   display:table;
   width: 370px;
-  padding: 10px;
-  background: #fff;
-  -webkit-border-radius:4px;
-  -moz-border-radius:4px;
-  border-radius:4px;
+  padding: 7px 10px 10px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius:3px;
+  background: #D0D2D3;
 }
 
 #facebox .content > p:first-child{
@@ -77,4 +77,11 @@
 .facebox_overlayBG {
   background-color: #000;
   z-index: 99;
+}
+
+#facebox h2 { 
+  color: #111;
+  font-size: 1.2em;
+  text-shadow: 0 1px #E0E0E0;
+  margin: 0 0 5px;
 }

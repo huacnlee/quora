@@ -17,7 +17,7 @@
       <%= f.input :website, :input_html => { :placeholder => "http://", :class => "long" }, :label => "个人站点" %>
       <%= f.input :tagline, :input_html => { :class => "long" }, :label => "最能概括你的标志性语言" %>
       <%= f.input :bio, :as => :text, :input_html => { :class => "long", :style => "height:120px;"}, :label => "个人经历" %>
-      <script type="text/javascript">$("#user_bio").qeditor();</script>
+      <script type="text/javascript">$("#user_bio").qeditor({'is_mobile_device': <%= is_mobile_device? ? 'true' : 'false' %>});</script>
       <div class="actions">
         <button type="submit">保存</button>
       </div>
@@ -29,6 +29,8 @@
       <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
         <%= f.input :mail_be_followed, :as => :boolean, :label => "被人关注" %>
         <%= f.input :mail_new_answer, :as => :boolean, :label => "关注的问题有新回答" %>
+        <%= f.input :mail_invite_to_ask, :as => :boolean, :label => "有人邀请我回答问题" %>
+        <%= f.input :mail_ask_me, :as => :boolean, :label => "有人向我提问" %>
         <div class="actions">
           <button type="submit">保存</button>
         </div>

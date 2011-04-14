@@ -41,6 +41,11 @@ module ApplicationHelper
       if show_ask
         tag += "<a href=\"#{ask_path(ask)}?nr=1\">#{ask.title}</a>"
       end
+    when "ASK_USER"
+      tag += user_tag + "向你询问 "
+      if show_ask
+        tag += "<a href=\"#{ask_path(ask)}?nr=1\">#{ask.title}</a>"
+      end
     end
     return tag
   end

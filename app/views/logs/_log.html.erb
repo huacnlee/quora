@@ -15,9 +15,9 @@ when "AskLog"
       case action
     %>
     <% when "ADD_TOPIC", "DEL_TOPIC","EDIT" %>
-      <div class="title small_title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+      <div class="title small_title"><%= ask_title_tag(item) %></div>
     <% else %>
-      <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+      <div class="title"><%= ask_title_tag(item) %></div>
     <% end %>
     <div class="info">
       <%
@@ -25,6 +25,8 @@ when "AskLog"
         when "NEW"
       %>
       <%= user_name_tag(log.user) %> 添加了该问题
+      <% when "NEW_TO_USER" %>
+        <%= user_name_tag(log.user) %> 向 <%= user_name_tag(item.to_user) %> 提出了问题
       <% when "EDIT" %>
       <%= user_name_tag(log.user) %> <%= log.target_attr == "TITLE" ? "修改了该问题" : "修改了该问题的补充说明" %>
       <% when "ADD_TOPIC" %>
@@ -49,9 +51,9 @@ when "AskLog"
         • <%= item.answers_count %> 个答案 
         <% if current_user %>
           <% if current_user.ask_followed?(item) %>
-          • <a href="#" onclick="return Asks.unfollow(this,'<%= item.id %>')">取消关注</a> 
+          • <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
           <% else %>
-          • <a href="#" onclick="return Asks.follow(this,'<%= item.id %>')">关注</a> 
+          • <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
           <% end %>
           <% if current_user.ask_muted?(item.id) %>
           • <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
@@ -92,15 +94,15 @@ when "UserLog"
 			<div class="savatar">
 	      <%= user_avatar_tag(log.user,:small) %>
 	    </div>
-      <div class="title<% if ["FOLLOW", "UNFOLLOW"].include?(action) %> small_title<% end %>"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+    <div class="title<% if ["FOLLOW", "UNFOLLOW"].include?(action) %> small_title<% end %>"><%= ask_title_tag(item) %></div>
       <div class="info">
         <%= user_name_tag(log.user) %> <%= action == "FOLLOW" ? "关注了该问题" : (action == "UNFOLLOW" ? "取消关注了该问题" : "赞同该回答") %>
         • <%= item.answers_count %> 个答案 
         <% if current_user %>
           <% if current_user.ask_followed?(item) %>
-          • <a href="#" onclick="return Asks.unfollow(this,'<%= item.id %>')">取消关注</a> 
+          • <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
           <% else %>
-          • <a href="#" onclick="return Asks.follow(this,'<%= item.id %>')">关注</a> 
+          • <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
           <% end %>
           <% if current_user.ask_muted?(item.id) %>
           • <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
@@ -143,15 +145,15 @@ when "AnswerLog"
 		<div class="savatar">
       <%= user_avatar_tag(log.user,:small) %>
     </div>
-	  <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+    <div class="title"><%= ask_title_tag(item) %></div>
 	    <div class="info">
 	      <%= user_name_tag(log.user) %> <%= action == "NEW" ? "回答了该问题" : "修改了自己的回答" %>
 	      • <%= item.answers_count %> 个答案 
 				<% if current_user %>
 					<% if current_user.ask_followed?(item) %>
-	      	• <a href="#" onclick="return Asks.unfollow(this,'<%= item.id %>')">取消关注</a> 
+	      	• <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
 					<% else %>
-					• <a href="#" onclick="return Asks.follow(this,'<%= item.id %>')">关注</a> 
+					• <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
 					<% end %>
 					<% if current_user.ask_muted?(item.id) %>
 					• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 

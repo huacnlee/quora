@@ -1,4 +1,4 @@
-.container { width:960px; margin:0 auto; text-align:left; }
+.container { width:960px; margin:0 auto; text-align:left; font-size:12px; }
 
 address, blockquote {
   font-style: normal;
@@ -47,7 +47,7 @@ input.button,
 input.radio { width:auto; }
 label.collection_radio { display:inline-block; margin-right:8px;}
 
-table.wice_grid { margin:10px 0;}
+table.wice_grid { margin:10px 0; width:100%;}
 table.wice_grid input { width:auto;}
 
 pre {

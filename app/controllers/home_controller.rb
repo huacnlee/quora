@@ -16,6 +16,7 @@ class HomeController < ApplicationController
         when "FOLLOW" then @notifies[notify.target_id][:type] = "USER"
         when "THANK_ANSWER" then @notifies[notify.target_id][:type] = "THANK_ANSWER"
         when "INVITE_TO_ANSWER" then @notifies[notify.target_id][:type] = "INVITE_TO_ANSWER"
+        when "NEW_TO_USER" then @notifies[notify.target_id][:type] = "ASK_USER"
         else  
           @notifies[notify.target_id][:type] = "ASK"
         end
@@ -62,7 +63,7 @@ class HomeController < ApplicationController
   def newbie
     ask_logs = Log.any_of({:_type => "AskLog"}, {:_type => "UserLog", :action.in => ["FOLLOW_ASK", "UNFOLLOW_ASK"]}).where(:created_at.gte => (Time.now - 12.hours))
     answer_logs = Log.any_of({:_type => "AnswerLog"}, {:_type => "UserLog", :action => "AGREE"}).where(:created_at.gte => (Time.now - 12.hours))
-    @asks = Ask.any_of({:_id.in => ask_logs.map {|l| l.target_id}.uniq}, {:_id.in => answer_logs.map {|l| l.target_parent_id}.uniq}).order_by(:answers_count.asc, :views_count.asc)
+    @asks = Ask.normal.any_of({:_id.in => ask_logs.map {|l| l.target_id}.uniq}, {:_id.in => answer_logs.map {|l| l.target_parent_id}.uniq}).order_by(:answers_count.asc, :views_count.asc)
     h = {} 
     # 将回答次数*topic，以加入回答次数
     @hot_topics = @asks.inject([]) { |memo, ask|
@@ -140,6 +141,8 @@ class HomeController < ApplicationController
     case klass
     when "user" then return if current_user.id.to_s != id
     end
+    
+    params[:value] = simple_format(params[:value].to_s.strip) if params[:did_editor_content_formatted] == "no"
 
     object = klass.camelize.constantize.find(id)
     update_hash = {field => params[:value]}
@@ -170,6 +173,16 @@ class HomeController < ApplicationController
       end
       render :text => "1"
     end
+  end
+
+  def report
+    name = "访客"
+    if current_user
+      name = current_user.name
+    end
+    ReportSpam.add(params[:url],params[:desc],name)
+    flash[:notice] = "举报信息已经提交，谢谢你。"
+    redirect_to params[:url]
   end
 
 end

@@ -30,6 +30,8 @@ class AskInvite
 
   def self.invite(ask_id,user_id,invitor_id)
     item = find_or_create_by(:ask_id => ask_id,:user_id => user_id)
+    user = item.user
+    return -1 if user.blank?
     item.invitor_ids ||= []
     item.count ||= 0
     return item if item.invitor_ids.include?(invitor_id)
@@ -38,7 +40,9 @@ class AskInvite
 
     # 发送邮件
     if(item.mail_sent <= 1)
-      UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
+      if item.user.mail_invite_to_ask
+        UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
+      end
       item.mail_sent += 1
     end
 

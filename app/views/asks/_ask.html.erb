@@ -1,13 +1,13 @@
 <div class="ask" ask-id="<%= item.id %>">
-  <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+  <div class="title"><%= ask_title_tag(item) %></div>
     <div class="info">
       <%= user_name_tag(item.user) %> 提出的问题
       • <%= item.answers_count %> 个答案 
 			<% if current_user %>
 				<% if current_user.ask_followed?(item) %>
-      	• <a href="#" onclick="return Asks.unfollow(this,'<%= item.id %>')">取消关注</a> 
+      	• <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
 				<% else %>
-				• <a href="#" onclick="return Asks.follow(this,'<%= item.id %>')">关注</a> 
+				• <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
 				<% end %>
 				<% if current_user.ask_muted?(item.id) %>
 				• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 

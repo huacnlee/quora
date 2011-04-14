@@ -1,0 +1,14 @@
+<div id="cpanel_report_spam" class="form">
+<%= simple_form_for(@report_spam, 
+  :url => (@report_spam.id.blank? ? cpanel_report_spams_path : cpanel_report_spam_path(@report_spam.id)) ) do |f| %>
+
+  <div class="inputs">
+  <%= f.input :url %>
+  <%= f.input :description %>
+  </div>
+  <div class="actions">
+    <button type="submit">提交</button>
+     或者 <%= link_to '返回', cpanel_report_spams_path %>
+  </div>
+<% end %>
+</div>

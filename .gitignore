@@ -9,6 +9,7 @@ public/javascripts/cached_*
 public/stylesheets/cached_*
 public/about.html
 db/sphinx
+db/dict/*.lib
 
 #以bundle install --path vendor/bundle方式安装，不影响开发者现有gems环境
 vendor/bundle

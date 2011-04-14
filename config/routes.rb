@@ -8,6 +8,7 @@ Quora::Application.routes.draw do
   match "/followed" => "home#followed"
   match "/recommended" => "home#recommended"
   match "/mark_notifies_as_read" => "home#mark_notifies_as_read"
+  match "/report" => "home#report"
   match "/about" => "home#about"
   match "/doing" => "logs#index"
 
@@ -78,5 +79,6 @@ Quora::Application.routes.draw do
     resources :answers
     resources :topics
     resources :comments
+    resources :report_spams
   end
 end

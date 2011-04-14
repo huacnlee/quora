@@ -68,19 +68,24 @@ var QEditor = {
       return this.each(function() {
         var obj = $(this);
         obj.addClass("qeditor");
-        preview_editor = $('<div class="qeditor_preview" contentEditable="true"></div>');
-        preview_editor.html(obj.val());
-        obj.after(preview_editor);
-        preview_editor.change(function(){
-          pobj = $(this);
-          t = pobj.parent().find('.qeditor');
-          t.val($(this).html());
-        });
-        preview_editor.keyup(function(){ $(this).change(); });
-        obj.hide();
-        obj.wrap('<div class="qeditor_border"></div>');
-        obj.after(preview_editor);
-        QEditor.renderToolbar(preview_editor);
+				if (options && options["is_mobile_device"]) {
+					var hidden_flag = $('<input type="hidden" name="did_editor_content_formatted" value="no">');
+					obj.after(hidden_flag);
+				} else {
+					var preview_editor = $('<div class="qeditor_preview" contentEditable="true"></div>');
+	        preview_editor.html(obj.val());
+	        obj.after(preview_editor);
+	        preview_editor.change(function(){
+	          pobj = $(this);
+	          t = pobj.parent().find('.qeditor');
+	          t.val(pobj.html());
+	        });
+	        preview_editor.keyup(function(){ $(this).change(); });
+	        obj.hide();
+	        obj.wrap('<div class="qeditor_border"></div>');
+	        obj.after(preview_editor);
+	        QEditor.renderToolbar(preview_editor);
+				}
       });
     }
   };

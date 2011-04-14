@@ -1,0 +1,18 @@
+<%= content_for :sitemap do %>
+<span class="current">查看</span>
+<% end %>
+<%= render 'base' %>
+<div id="cpanel_report_spam">
+  <div style="margin-bottom:20px;">
+    <%= link_to @report_spam.url, @report_spam.url %>
+  </div>
+  <div>
+    <b>Description:</b>
+    <% @report_spam.descriptions.each do |d| %>
+    <div style="margin-top:8px;">
+      <%= simple_format(d) %>
+    </div>
+    <hr />
+    <% end %>
+  </div>
+</div>

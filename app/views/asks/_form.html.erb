@@ -4,7 +4,7 @@
     <%= f.input :title, :label => "标题", :input_html => {:class => "long"}%>
     <%= f.input :body, :label => "正文", :as => :text, :input_html => {:class => "long"} %>
       <script type="text/javascript">
-        $("#ask_body").qeditor();
+        $("#ask_body").qeditor({'is_mobile_device': <%= is_mobile_device? ? 'true' : 'false' %>});
       </script>
   </div>
   <div class="actions">
