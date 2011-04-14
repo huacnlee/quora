@@ -145,6 +145,12 @@ var App = {
     });
   },
 
+  hideNotice : function(id){
+    $("#sys_notice").remove();
+    $.cookie("hide_notice",id);
+    return false;
+  },
+
   varsion : function(){
     return "1.0";
   }

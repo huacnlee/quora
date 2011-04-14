@@ -16,7 +16,7 @@
   <meta name="description" content="<%= @meta_description %>" />
   <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
   <%= csrf_meta_tag %>
-  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
+  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
   <%= yield :scripts %>
   <script type="text/javascript">
     <% if current_user %>
@@ -57,6 +57,17 @@
   <div id="main">
     <div class="container">
       <div class="left_wrapper">
+        <% if !@notice.blank? %>
+          <% if cookies[:hide_notice] != @notice.id.to_s %>
+            <div id="sys_notice">
+              <%= raw @notice.body %>
+              <div class="info">
+                <span class="date"><%= l @notice.updated_at.getlocal, :format => :long %></span>
+                <a href="#" class="gray_button small" onclick="return App.hideNotice('<%= @notice.id %>');">我知道了</a>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
         <% if !notice.blank? %>
           <div class="notice_message"><%= notice %></div>
           <script type="text/javascript">
