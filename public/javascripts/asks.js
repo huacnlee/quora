@@ -144,6 +144,9 @@ var Asks = {
       minChars: 1,
       width: 200,
       scroll : false,
+      formatItem : function(data, i, total){
+        return Asks.completeLineTopic(data,false);
+      }
     });
   },
 
@@ -197,6 +200,26 @@ var Asks = {
   inviteToAnswer : function(user_id, is_drop){
     App.loading();
     $.get("/asks/"+ask_id+"/invite_to_answer.js",{ user_id : user_id, drop : is_drop });
+  },
+
+  completeLineTopic : function(data,allow_link){
+    html = "";
+    cover = data[2];
+    if(/http:\/\//.test(cover) == false){
+      avatar = "/images/" + cover;
+    }
+    count = data[1];
+    html += '<img class="avatar" src="'+ cover +'" />';
+    html += '<div class="uinfo"><p>';
+    if(allow_link == true){
+      html += '<a href="/topics/'+data[0]+'">'+data[0]+'</a>';
+    }
+    else{
+      html += '<span class="name">'+data[0]+'</span>';
+    }
+    html += '</p>';
+    html += '<p class="count">'+count+' 个关注者</p></div>';
+    return html;
   },
 
   completeLineUser : function(data,allow_link){

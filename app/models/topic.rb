@@ -1,6 +1,7 @@
 # coding: utf-8
 class Topic
   include Mongoid::Document
+  include Mongoid::Sphinx
   include BaseModel
   
   attr_accessor :current_user_id, :cover_changed
@@ -19,6 +20,21 @@ class Topic
 
   validates_presence_of :name
   validates_uniqueness_of :name, :case_insensitive => true
+
+  # 以下两个方法是给 redis search index 用
+  def followers_count
+    self.follower_ids.count
+  end
+
+  def cover_small
+    self.cover.small.url
+  end
+
+  # FullText indexes
+  search_index(:fields => [:name],
+               :attributes => [:name,:cover_small, :followers_count],
+               :attribute_types => {:cover_small => String, :followers_count => Integer},
+               :options => {} )
 
   redis_search_index(:title_field => :name)
 

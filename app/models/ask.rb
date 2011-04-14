@@ -57,8 +57,8 @@ class Ask
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 
 
   # FullText indexes
-  search_index(:fields => [:title,:body, :topics],
-               :attributes => [],
+  search_index(:fields => [:title,:topics],
+               :attributes => [:title,:topics],
                :options => {} )
 
   redis_search_index(:title_field => :title,:ext_fields => [:topics])

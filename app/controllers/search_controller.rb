@@ -14,13 +14,13 @@ class SearchController < ApplicationController
   end
 
   def topics
-    result = Search.query(params[:q],:type => "Topic",:limit => 10)
+    result = Topic.search(params[:q], :limit => 10).items
     if params[:format] == "json"
       render :json => result.to_json
     else
       lines = []
       result.each do |item|
-        lines << item['title']
+        lines << "#{item[:title]}#!##{item[:followers_count]}#!##{item[:cover_small]}"
       end
       render :text => lines.join("\n") 
     end
@@ -40,13 +40,13 @@ class SearchController < ApplicationController
   end
 
   def users 
-    result = Search.query(params[:q],:type => "User",:limit => 10)
+    result = User.search(params[:q],:limit => 10).items
     if params[:format] == "json"
       render :json => result.to_json
     else
       lines = []
       result.each do |item|
-        lines << "#{item['title']}#!##{item['id']}#!##{item['tagline']}#!##{item['avatar_small']}#!##{item['slug']}"
+        lines << "#{item[:name]}#!##{item[:id]}#!##{item[:tagline]}#!##{item[:avatar_small]}#!##{item[:slug]}"
       end
       render :text => lines.join("\n") 
     end
