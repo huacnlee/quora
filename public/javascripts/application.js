@@ -146,7 +146,7 @@ var App = {
   },
 
   hideNotice : function(id){
-    $("#sys_notice").remove();
+    $("#sys_notice").fadeOut('fast');
     $.cookie("hide_notice",id);
     return false;
   },
