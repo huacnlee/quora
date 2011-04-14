@@ -128,7 +128,8 @@ class Ask
   # 参数 add  true 增加, false 去掉
   def update_topics(topics, add = true, current_user_id = nil)
     self.topics = [] if self.topics.blank?
-    topics = [topics] if topics.class != [].class
+    # 分割逗号
+    topics = topics.split(/，|,/) if topics.class != [].class
     # 去两边空格
     topics = topics.collect { |t| t.strip if !t.blank? }.compact
     action = nil
