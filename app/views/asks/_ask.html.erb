@@ -1,5 +1,5 @@
 <div class="ask" ask-id="<%= item.id %>">
-  <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+  <div class="title"><%= ask_title_tag(item) %></div>
     <div class="info">
       <%= user_name_tag(item.user) %> 提出的问题
       • <%= item.answers_count %> 个答案 

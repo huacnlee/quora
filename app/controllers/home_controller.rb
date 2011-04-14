@@ -16,6 +16,7 @@ class HomeController < ApplicationController
         when "FOLLOW" then @notifies[notify.target_id][:type] = "USER"
         when "THANK_ANSWER" then @notifies[notify.target_id][:type] = "THANK_ANSWER"
         when "INVITE_TO_ANSWER" then @notifies[notify.target_id][:type] = "INVITE_TO_ANSWER"
+        when "NEW_TO_USER" then @notifies[notify.target_id][:type] = "ASK_USER"
         else  
           @notifies[notify.target_id][:type] = "ASK"
         end

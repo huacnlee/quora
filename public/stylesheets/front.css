@@ -476,3 +476,10 @@ a.user img.normal { width:100px; height:100px; }
 #ask_invited_users .count { margin:0; font-size:0.8em;  line-height: 1em; color: #999; height:11px; display:block;}
 
 .ask .topic a.remove { float:right; margin-left:3px; margin-top:2px; }
+
+#ask_to_user { margin-bottom:10px; }
+#ask_to_user h3 {  font-size:13px; color:#333; margin-bottom:5px;  }
+#ask_to_user form {  background:#F0F0F0; padding:5px 5px;  }
+#ask_to_user form textarea { width:586px; }
+#ask_to_user.simple_form .actions { margin-bottom:0px; }
+#ask_to_user.simple_form .row { margin:0px; }

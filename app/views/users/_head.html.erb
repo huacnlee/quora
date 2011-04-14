@@ -44,3 +44,26 @@
 		<a<%= ' class=actived' if params[:action] == "followers" %> href="<%= followers_user_path(user.slug) %>">被关注(<%= user.follower_ids.count %>)</a> -->
 	<a<%= ' class=actived' if params[:action] == "following_topics" %> href="<%= following_topics_user_path(user.slug) %>">关注的话题(<%= user.followed_topic_ids.count %>)</a>
 </div>
+
+<% if not owner? user %>
+<div id="ask_to_user" class="simple_form">
+  <h3>对<%= user.name %>提问:</h3>
+  <form action="/asks" method="post">
+    <div class="row">
+      <%= auth_token %>
+      <input type="hidden" name="ask[to_user_id]" value="<%= user.id %>" />
+      <textarea type="text" class="text" onfocus="$(this).parent().next().show();" name="ask[title]"></textarea>
+    </div>
+    <div style="display:none">
+      <div><a href="#" onclick="$(this).parent().next().show(); $(this).hide(); return false;">添加问题描述</a></div>
+      <div class="row" style="display:none">
+        <label>问题描述(可选):</label>
+        <textarea type="text" class="text" name="ask[body]"></textarea>
+      </div>
+      <div class="actions">
+        <button type="submit">提交问题</button>
+      </div>
+    </div>
+  </form>
+</div>
+<% end %>

@@ -29,6 +29,7 @@ class User
   field :mail_be_followed, :type => Boolean, :default => true
   field :mail_new_answer, :type => Boolean, :default => true
   field :mail_invite_to_ask, :type => Boolean, :default => true
+  field :mail_ask_me, :type => Boolean, :default => true
   field :thanked_answer_ids, :type => Array, :default => []
 
   # 邀请字段
@@ -53,7 +54,7 @@ class User
 
   attr_accessor  :password_confirmation
   attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website, :girl, 
-                  :mail_new_answer, :mail_be_followed, :mail_invite_to_ask
+                  :mail_new_answer, :mail_be_followed, :mail_invite_to_ask, :mail_ask_me
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug

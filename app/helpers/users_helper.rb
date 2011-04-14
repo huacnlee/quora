@@ -1,12 +1,16 @@
 # coding: utf-8
 module UsersHelper
-  def user_name_tag(user)
+  def user_name_tag(user, options = {})
+    options[:url] ||= false
     return "" if user.blank?
-    raw "<a href=\"#{user_path(user.slug)}\" class=\"user\" title=\"#{user.name}\">#{user.name}</a>"
+    return user.name if user.slug.blank?
+    url = options[:url] == true ? user_url(user.slug) : user_path(user.slug)
+    raw "<a href=\"#{url}\" class=\"user\" title=\"#{user.name}\">#{user.name}</a>"
   end
   
   def user_avatar_tag(user,size)
     return "" if user.blank?
+    return "" if user.slug.blank?
     url = eval("user.avatar.#{size}.url")
     if url.blank?
       url = ""
