@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   end
   
   def following_topics
-    @per_page = 10
+    @per_page = 20
     @topics = @user.followed_topics.desc("$natural")
                   .paginate(:page => params[:page], :per_page => @per_page)
     
