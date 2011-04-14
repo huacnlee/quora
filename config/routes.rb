@@ -79,5 +79,6 @@ Quora::Application.routes.draw do
     resources :answers
     resources :topics
     resources :comments
+    resources :report_spams
   end
 end
