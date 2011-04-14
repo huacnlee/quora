@@ -154,6 +154,7 @@ var Asks = {
       $(el).addClass("active");
     }
     $(el).parent().next().toggle();
+		return false;
   },
 
   /* 邀请人回答问题 */
