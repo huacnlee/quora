@@ -76,14 +76,29 @@ a.green_button {
   background:#dff0b1 url(/images/green_button_bg.gif) bottom left repeat-x;
   border:1px solid #8CB332;
   border-bottom: 1px solid #648517;
+  display:inline-block;
+  line-height:24px;
+  padding:2px 10px 1px 10px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  text-decoration:none;
   color: #406A24;
+  text-align:center;
   text-shadow: 0 1px #D4ED95;
   font-weight:bold;
 }
 a.green_button:active {
-  background:#c3dd82;
+  background:#8CB332;
   border:1px solid #648517;
 }
+
+a.green_button.small,
+button.green_button.small,
+a.flat_button.small,
+button.green_button.small,
+a.gray_button.small,
+button.gray_button.small
+{ padding:2px 10px; line-height:16px; }
 
 
 

@@ -56,9 +56,9 @@
     <div class="box">
       <div class="inner">
 				<% if current_user.topic_followed?(@topic) %>
-				<a href="#" style="width:80px;" class="gray_button" onclick="return Topics.unfollow(this, '<%= @topic.name %>');">取消关注</a>
+				<a href="#" class="gray_button" onclick="return Topics.unfollow(this, '<%= @topic.name %>','');">取消关注</a>
 				<% else %>
-        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return Topics.follow(this, '<%= @topic.name %>');">关注此话题</a>
+        <a href="#" class="gray_button green_button" onclick="return Topics.follow(this, '<%= @topic.name %>','');">关注</a>
 				<% end %>
       </div>
 		</div>

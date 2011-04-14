@@ -5,9 +5,9 @@
 	<% if current_user %>
 	<div class="action">
 		<% if current_user.topic_followed?(topic) %>
-		<a href="#" onclick="return unfollow_topic(this, '<%= topic.name %>');">取消关注</a>
+		<a class="flat_button small" href="#" onclick="return Topics.unfollow(this, '<%= topic.name %>','small');">取消关注</a>
 		<% else %>
-		<a href="#" onclick="return follow_topic(this, '<%= topic.name %>');">关注</a>
+		<a class="green_button small" href="#" onclick="return Topics.follow(this, '<%= topic.name %>','small');">关注</a>
 		<% end %>
 	</div>
 	<% end %>

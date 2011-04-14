@@ -65,7 +65,7 @@ class UsersController < ApplicationController
   end
   
   def followers
-    @per_page = 10
+    @per_page = 20
     @followers = @user.followers.desc("$natural")
                   .paginate(:page => params[:page], :per_page => @per_page)
     
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   end
   
   def following
-    @per_page = 10
+    @per_page = 20
     @followers = @user.following.desc("$natural")
                   .paginate(:page => params[:page], :per_page => @per_page)
     
