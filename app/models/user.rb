@@ -28,6 +28,8 @@ class User
   # Email 提醒的状态
   field :mail_be_followed, :type => Boolean, :default => true
   field :mail_new_answer, :type => Boolean, :default => true
+  field :mail_invite_to_ask, :type => Boolean, :default => true
+  field :mail_ask_me, :type => Boolean, :default => true
   field :thanked_answer_ids, :type => Array, :default => []
 
   # 邀请字段
@@ -51,7 +53,8 @@ class User
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
 
   attr_accessor  :password_confirmation
-  attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website, :girl, :mail_new_answer, :mail_be_followed
+  attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website, :girl, 
+                  :mail_new_answer, :mail_be_followed, :mail_invite_to_ask, :mail_ask_me
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug

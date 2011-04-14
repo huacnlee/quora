@@ -1,3 +1,4 @@
+# coding: utf-8
 module AsksHelper
   def topics_name_tag(topics,limit = 20)
     html = []
@@ -9,6 +10,15 @@ module AsksHelper
       html << "<a class=\"topic\" href=\"/topics/#{topic}\">#{topic}</a>"
     end
     return raw html.join("")
+  end
+
+  def ask_title_tag(ask, options = {})
+    class_name = options[:class] || ""
+    prefix = ""
+    if !ask.to_user.blank?
+      prefix = "#{ask.to_user.name}："
+    end
+    raw "<a href=\"/asks/#{ask.id}\" class=\"#{class_name}\">#{prefix}#{ask.title}</a>"
   end
 
   def md_body(str)

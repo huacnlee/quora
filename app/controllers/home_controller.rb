@@ -16,6 +16,7 @@ class HomeController < ApplicationController
         when "FOLLOW" then @notifies[notify.target_id][:type] = "USER"
         when "THANK_ANSWER" then @notifies[notify.target_id][:type] = "THANK_ANSWER"
         when "INVITE_TO_ANSWER" then @notifies[notify.target_id][:type] = "INVITE_TO_ANSWER"
+        when "NEW_TO_USER" then @notifies[notify.target_id][:type] = "ASK_USER"
         else  
           @notifies[notify.target_id][:type] = "ASK"
         end
@@ -172,6 +173,16 @@ class HomeController < ApplicationController
       end
       render :text => "1"
     end
+  end
+
+  def report
+    name = "访客"
+    if current_user
+      name = current_user.name
+    end
+    ReportSpam.add(params[:url],params[:desc],name)
+    flash[:notice] = "举报信息已经提交，谢谢你。"
+    redirect_to params[:url]
   end
 
 end
