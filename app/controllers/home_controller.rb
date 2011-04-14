@@ -174,4 +174,14 @@ class HomeController < ApplicationController
     end
   end
 
+  def report
+    name = "访客"
+    if current_user
+      name = current_user.name
+    end
+    ReportSpam.add(params[:url],params[:desc],name)
+    flash[:notice] = "举报信息已经提交，谢谢你。"
+    redirect_to params[:url]
+  end
+
 end

@@ -1,6 +1,8 @@
 .ac_results {
 	padding: 0px;
-	border: 1px solid #aaa;
+  border-color: #999999 #999999 #666666;
+  border-style: solid;
+  border-width: 1px;
 	background-color: white;
 	overflow: hidden;
 	z-index: 99999;
@@ -17,7 +19,7 @@
 
 .ac_results li {
 	margin: 0px;
-	padding: 2px 5px;
+	padding: 5px 7px;
 	cursor: default;
 	display: block;
 	/* 
@@ -41,7 +43,6 @@
 }
 
 .ac_odd {
-	background-color: #F0F0F0;
 }
 
 .ac_over {

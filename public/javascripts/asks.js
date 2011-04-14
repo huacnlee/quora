@@ -59,11 +59,12 @@ var Asks = {
     else{
       html += '<li><a onclick="return Asks.redirect_ask(this);" href="#">问题重定向</a></li>';
     }
+    html += '<li><a onclick="return Asks.report(this);" href="#">举报</a></li>';
     $(el).jDialog({
       title_visiable : false,
       width : 160,
       class_name : "dropdown_menu",
-      top_offset : -1,
+      top_offset : -2,
       content : html
     });
     $(el).attr("droped",1);
@@ -79,7 +80,7 @@ var Asks = {
     $.facebox({ div : "#redirect_ask", overlay : false });
     $("#redirect_ask_panel input.search").autocomplete("/search/asks",{
       minChars: 1,
-      width: 455,
+      width: 456,
       scroll : false,
     });
     $("#redirect_ask_panel input.search").result(function(e,data,formatted){
@@ -313,7 +314,7 @@ var Asks = {
     $(el).attr("onclick", "return false;");
     $.get("/asks/"+ask_id+"/follow",{}, function(res){
       App.loading(false);
-      $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return Asks.unfollow(this);">取消关注</a>');
+      $(el).replaceWith('<a href="#" style="width:80px;" class="flat_button" onclick="return Asks.unfollow(this);">取消关注</a>');
     });
     return false;
   },
@@ -417,6 +418,12 @@ var Asks = {
       }
     }
     answer.fadeOut(100).fadeIn(200);
+  },
+
+  report : function(){
+    $.facebox({ div : "#report_page", overlay : false });
+    jDialog.close();
+    return false;
   },
 
   version : function(){

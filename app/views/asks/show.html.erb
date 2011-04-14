@@ -72,6 +72,7 @@
     • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return Asks.spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友评价为烂问题后,问题将会自动删除" href="#">烂问题</a>
     <% if !@ask.spams_count.blank? %>(<span id="spams_count"><%= @ask.spams_count %></span>人认为)<% end %>
     • <a href="#new_answer" onclick="return $('#new_answer .qeditor_preview').focus();">添加答案</a>
+    • <a href="#" onclick="return Asks.report(this);">举报</a>
     • <span class="date"><%= l @ask.created_at.getlocal, :format => :short %></span>
   </div>
 </div>
@@ -125,7 +126,7 @@
       <div class="box">
         <div class="inner">
           <% if current_user.ask_followed?(@ask) %>
-          <a href="#" style="width:80px;" class="gray_button" onclick="return Asks.unfollow(this);">取消关注</a>
+          <a href="#" style="width:80px;" class="flat_button" onclick="return Asks.unfollow(this);">取消关注</a>
           <% else %>
           <a href="#" style="width:80px;" class="gray_button green_button" onclick="return Asks.follow(this);">关注此问题</a>
           <% end %>
@@ -136,8 +137,8 @@
 
     <div style="display:none" id="redirect_ask">
       <div id="redirect_ask_panel" class="facebox_window simple_form">
+        <h2>指向另外个已经存在的问题</h2>
         <form action="" onsubmit="return Asks.redirect_ask_save(this);">
-          <h3>指向另外个已经存在的问题</h3>
           <div class="field">
             <label>把问题“<%= @ask.title %>”指向:</label>
             <input type="text" class="search" style="width:450px;" placeholder="搜索标题" />

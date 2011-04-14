@@ -78,7 +78,7 @@ var QEditor = {
 	        preview_editor.change(function(){
 	          pobj = $(this);
 	          t = pobj.parent().find('.qeditor');
-	          t.val($(this).html());
+	          t.val(pobj.html());
 	        });
 	        preview_editor.keyup(function(){ $(this).change(); });
 	        obj.hide();

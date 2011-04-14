@@ -95,6 +95,7 @@
   </div>
   <%= yield :bottom %>
   <div style="display: none;" id="hidden_new_ask">
+    <h2>创建新问题</h2>
     <form action="/asks" method="post" id="inner_new_ask">
       <%= auth_token %>
       <textarea type="text" name="ask[title]" class="title" placeholder="在这里输入问题"></textarea>
@@ -109,6 +110,20 @@
   </div> 
   <div style="width:0px;height;0px;overflow:hidden;">
     <%= image_tag("loading.gif") %>
+    <div id="report_page">
+      <h2>举报内容</h2>
+      <form id="report_page_form" action="/report.js" onsubmit="App.loading();" method="post" class="simple_form">
+        <%= auth_token %>
+        <div class="row">
+          <input type="hidden" name="url" value="<%= request.url %>" />
+          <label class="string">请填写举报原因:</label>
+          <textarea name="desc" style="width:400px;height:80px;"></textarea>
+        </div>
+        <div class="acitons">
+          <button type="submit">提交</button> <a href="#" style="margin-left:5px;" onclick="$.facebox.close(); return false;">关闭</a>
+        </div>
+      </form>
+    </div>
   </div>
   <script type="text/javascript">
     var _gaq = _gaq || [];
