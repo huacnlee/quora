@@ -56,7 +56,7 @@ class Ask
 
   # FullText indexes
   search_index(:fields => [:title,:body, :topics],
-               :attributes => [:title, :body, :created_at],
+               :attributes => [],
                :options => {} )
 
   redis_search_index(:title_field => :title,:ext_fields => [:topics])
@@ -174,8 +174,7 @@ class Ask
 
   def self.search_title(text,options = {})
     limit = options[:limit] || 10
-    words = mmseg_text(text)
-    Ask.all_in(:title => words.collect { |w| /#{w}/i }).recent.normal.limit(limit)
+    Ask.search(text,:limit => limit)
   end
 
   def self.find_by_title(title)
