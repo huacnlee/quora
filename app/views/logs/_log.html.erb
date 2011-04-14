@@ -76,7 +76,9 @@ when "UserLog"
     item = User.first(:conditions => { :id => log.target_id})
 	elsif ["AGREE"].include?(action)
     answer = Answer.first(:conditions => {:id => log.target_id})
-		item = answer.ask
+    if !answer.blank?
+      item = answer.ask
+    end
   elsif ["THANK_ANSWER"].include?(action)
     item = Answer.first(:conditions => {:id => log.target_id})
 	end

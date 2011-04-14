@@ -347,8 +347,8 @@ a.user img.normal { width:100px; height:100px; }
 #omniauth_links li.github a { background-position:0 -113px; }
 #omniauth_links li span { color:#999; margin-left:3px; }
 
-.search_result_dropdown { background:#ddd; }
-.search_result_dropdown .contextual_dialog_content { padding:0; background:#ddd; }
+.search_result_dropdown { background:#ddd;  }
+.search_result_dropdown .contextual_dialog_content { padding:0; background:#ddd; border:1px solid #999; border-color: #999999 #999999 #666666; }
 .dialog_content .tip { padding:8px 8px; background:#ddd; }
 .dialog_content .complete { padding:0; margin:0; background:#FFF; }
 .dialog_content .complete li { list-style:none; padding:0px 8px; cursor:pointer;
