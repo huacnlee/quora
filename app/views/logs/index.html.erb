@@ -83,7 +83,7 @@
                 target_id = ["THANK_ANSWER","INVITE_TO_ANSWER"].include?(item.action) ? item.log.target_parent_id : item.target_id
             %>
             <li>
-              <%= raw ask_notification_tag(target_id, item.log, item.action, false) %>
+              <%= raw ask_notification_tag(target_id, item, false) %>
               <span class="time"><%= l item.log.created_at.getlocal, :format => :short %></span>
             </li>
               <%
@@ -97,7 +97,7 @@
           if item and item.log
             target_id = ["THANK_ANSWER","INVITE_TO_ANSWER"].include?(item.action) ? item.log.target_parent_id : item.target_id
             %>
-            <%= raw ask_notification_tag(target_id, item.log, item.action, true) %>
+            <%= raw ask_notification_tag(target_id, item, true) %>
             <span class="time"><%= l item.log.created_at.getlocal, :format => :short %></span>
             <%
           end

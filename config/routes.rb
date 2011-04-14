@@ -22,6 +22,7 @@ Quora::Application.routes.draw do
     member do
       get "answered"
       get "asked"
+      get "asked_to"
       get "follow"
       get "unfollow"
       get "followers"
