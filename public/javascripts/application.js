@@ -147,7 +147,7 @@ var App = {
 
   hideNotice : function(id){
     $("#sys_notice").fadeOut('fast');
-    $.cookie("hide_notice",id);
+    $.cookie("hide_notice",id, { expires : 300 });
     return false;
   },
 
