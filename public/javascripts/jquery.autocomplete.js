@@ -169,9 +169,7 @@ $.Autocompleter = function(input, options) {
 		// but if clickFire is true, don't require field
 		// to be focused to begin with; just show select
 		if( options.clickFire ) {
-		  if ( !select.visible() ) {
-  			onChange(0, true);
-  		}
+      onChange(0, true);
 		} else {
 		  if ( hasFocus++ > 1 && !select.visible() ) {
   			onChange(0, true);
@@ -247,10 +245,10 @@ $.Autocompleter = function(input, options) {
 	}
 	
 	function onChange(crap, skipPrevCheck) {
-		if( lastKeyPressCode == KEY.DEL ) {
-			select.hide();
-			return;
-		}
+		/*if( lastKeyPressCode == KEY.DEL ) {*/
+			/*// select.hide();*/
+			/*return;*/
+		/*}*/
 		
 		var currentValue = $input.val();
 		
@@ -264,10 +262,10 @@ $.Autocompleter = function(input, options) {
 			$input.addClass(options.loadingClass);
 			if (!options.matchCase)
 				currentValue = currentValue.toLowerCase();
-			request(currentValue, receiveData, hideResultsNow);
+			request(currentValue, receiveData, function(){});
 		} else {
 			stopLoading();
-			select.hide();
+			// select.hide();
 		}
 	};
 	
@@ -320,6 +318,7 @@ $.Autocompleter = function(input, options) {
 		select.hide();
 		clearTimeout(timeout);
 		stopLoading();
+    return false;
 		if (options.mustMatch) {
 			// call search and run callback
 			$input.search(
@@ -347,7 +346,9 @@ $.Autocompleter = function(input, options) {
 			autoFill(q, data[0].value);
 			select.show();
 		} else {
-			hideResultsNow();
+      // 没有搜索到内容
+      select.display({},q);
+			// hideResultsNow();
 		}
 	};
 
@@ -437,6 +438,7 @@ $.Autocompleter.defaults = {
 	multipleSeparator: " ",
 	inputFocus: true,
 	clickFire: false,
+  noResultHTML : "Can not match anything.",
 	highlight: function(value, term) {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 	},
@@ -611,7 +613,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		    input.focus();
 		  }
 		  config.mouseDownOnSelect = false;
-			console.debug(config.mouseDownOnSelect);
+			//console.debug(config.mouseDownOnSelect);
 		});
 	
 		list = $("<ul/>").appendTo(element).mouseover( function(event) {
@@ -678,27 +680,35 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			? options.max
 			: available;
 	}
-	
+
+  /* 填充下拉列表 */
 	function fillList() {
 		list.empty();
-		var max = limitNumberOfItems(data.length);
-		for (var i=0; i < max; i++) {
-			if (!data[i])
-				continue;
-			var formatted = options.formatItem(data[i].data, i+1, max, data[i].value, term);
-			if ( formatted === false )
-				continue;
-			var li = $("<li/>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
-			$.data(li, "ac_data", data[i]);
-		}
-		listItems = list.find("li");
-		if ( options.selectFirst ) {
-			listItems.slice(0, 1).addClass(CLASSES.ACTIVE);
-			active = 0;
-		}
-		// apply bgiframe if available
-		if ( $.fn.bgiframe )
-			list.bgiframe();
+    if(data.length == 0){
+			var li = $("<li/>").html( options.noResultHTML ).addClass("ac_no_result").appendTo(list)[0];
+      // TODO: 没有内容的时候需要暂时没内容的提示。
+			$.data(li,"ac_data", null);
+    }
+    else{
+      var max = limitNumberOfItems(data.length);
+      for (var i=0; i < max; i++) {
+        if (!data[i])
+          continue;
+        var formatted = options.formatItem(data[i].data, i+1, max, data[i].value, term);
+        if ( formatted === false )
+          continue;
+        var li = $("<li/>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
+        $.data(li, "ac_data", data[i]);
+      }
+      listItems = list.find("li");
+      if ( options.selectFirst ) {
+        listItems.slice(0, 1).addClass(CLASSES.ACTIVE);
+        active = 0;
+      }
+    }
+    // apply bgiframe if available
+    if ( $.fn.bgiframe )
+      list.bgiframe();
 	}
 	
 	return {

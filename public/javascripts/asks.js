@@ -147,7 +147,7 @@ var Asks = {
       width: 580,
       scroll : false,
       selectFirst : false,
-      selectFirst : true,
+      clickFire : true,
       formatItem : function(data, i, total){
         klass = data[data.length - 1];
         switch(klass){
