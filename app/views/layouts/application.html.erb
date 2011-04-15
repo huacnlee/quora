@@ -18,10 +18,16 @@
   <%= csrf_meta_tag %>
   <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
   <%= yield :scripts %>
-	<script type="text/javascript" src="http://<%= @zomet_config["server"] %>/faye.js">
   <script type="text/javascript">
     <% if current_user %>
     var logined = true;
+    <% else %>
+    var logined = false;
+    <% end %>
+  </script>
+  <% if current_user %>
+	<script type="text/javascript" src="http://<%= @zomet_config["server"] %>/faye.js"></script>
+  <script type="text/javascript">
 		$(function() {
 			var client = new Faye.Client('http://<%= @zomet_config["server"] %>/faye');
 			var sub_notifies = client.subscribe('/notifications/<%= current_user.slug %>', function(message) {
@@ -29,10 +35,8 @@
 				$(document).attr("title", "(新) " + $(document).attr("title"));
 			});
 		});
-    <% else %>
-    var logined = false;
-    <% end %>
   </script>
+  <% end %>
 </head>
 <body>
   <div id="header">
