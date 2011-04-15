@@ -1,5 +1,5 @@
 default: &defaults
-  zomet_server: localhost:8080
+  server: 'localhost:7777'
 
 development:
   <<: *defaults
