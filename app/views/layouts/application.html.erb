@@ -26,6 +26,7 @@
 			var client = new Faye.Client('http://<%= @zomet_config["server"] %>/faye');
 			var sub_notifies = client.subscribe('/notifications/<%= current_user.slug %>', function(message) {
 				$('#notify_badge').removeClass("force-hide");
+				$(document).attr("title", "(新) " + $(document).attr("title"));
 			});
 		});
     <% else %>
