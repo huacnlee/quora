@@ -1,25 +1,3 @@
-<%= content_for :scripts do %>
-  <script type="text/javascript">
-    function follow_topic(el, id){
-      App.loading();
-			$.get("/topics/"+id+"/follow",{}, function(res){
-        App.loading(false);
-        $(el).replaceWith('<a href="#" onclick="return unfollow_topic(this, \''+id+'\');">取消关注</a>');
-	    });
-      return false;
-    }
-		
-		function unfollow_topic(el, id){
-      App.loading();
-			$.get("/topics/"+id+"/unfollow",{}, function(res){
-        App.loading(false);
-        $(el).replaceWith('<a href="#" onclick="return follow_topic(this, \''+id+'\');">关注此话题</a>');
-	    });
-      return false;
-    }
-  </script>
-<% end %>
-
 <% content_for :sidebar do %>
 <div class="box">
   <div class="inner">
@@ -27,9 +5,9 @@
 	    <div class="box">
 	      <div class="inner">
 	        <% if current_user.followed?(@user) %>
-					<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, '<%= @user.slug %>');">取消关注</a>
+					<a href="#" class="flat_button" onclick="return Users.unfollow(this, '<%= @user.slug %>','');">取消关注</a>
 					<% else %>
-	        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, '<%= @user.slug %>');">关注</a>
+	        <a href="#" class="green_button" onclick="return Users.follow(this, '<%= @user.slug %>','');">关注</a>
 	        <!-- <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a> -->
 					<% end %>
 	      </div>

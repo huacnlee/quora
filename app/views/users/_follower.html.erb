@@ -13,9 +13,9 @@
 	<% if current_user %>
 	<div class="action">
 		<% if current_user.followed?(follower) %>
-		<a href="#" onclick="return unfollow_user(this, '<%= follower.name %>');">取消关注</a>
+		<a class="flat_button small" href="#" onclick="return Users.unfollow(this, '<%= follower.slug %>','small');">取消关注</a>
 		<% else %>
-		<a href="#" onclick="return follow_user(this, '<%= follower.name %>');">关注</a>
+		<a class="green_button small" href="#" onclick="return Users.follow(this, '<%= follower.slug %>','small');">关注</a>
 		<% end %>
 	</div>
 	<% end %>
