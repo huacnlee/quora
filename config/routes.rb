@@ -22,6 +22,7 @@ Quora::Application.routes.draw do
     member do
       get "answered"
       get "asked"
+      get "asked_to"
       get "follow"
       get "unfollow"
       get "followers"
@@ -80,5 +81,6 @@ Quora::Application.routes.draw do
     resources :topics
     resources :comments
     resources :report_spams
+    resources :notices
   end
 end

@@ -71,7 +71,7 @@
     <% end %>
     • <a href="#new_answer" onclick="return $('#new_answer .qeditor_preview').focus();">添加答案</a>
     • <a href="#" onclick="return Asks.report(this);">举报</a>
-    • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return Asks.spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友不感兴趣后,问题将会隐藏。" href="#">不感兴趣</a>
+    • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return Asks.spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友认为是烂问题以后,问题将会隐藏。" href="#">烂问题</a>
     <% if !@ask.spams_count.blank? %>(<span id="spams_count"><%= @ask.spams_count %></span>人认为)<% end %>
     • <span class="date"><%= l @ask.created_at.getlocal, :format => :short %></span>
   </div>

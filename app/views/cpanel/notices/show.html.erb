@@ -1,0 +1,18 @@
+<%= content_for :sitemap do %>
+<span class="current">查看</span>
+<% end %>
+<%= render 'base' %>
+<div class="tools">
+  <%= link_to '修改', edit_cpanel_notice_path(@notice) %> |
+  <%= link_to '返回', cpanel_notices_path %>
+</div>
+<div id="cpanel_notice">
+    <p>
+    <b>Body:</b>
+    <%= @notice.body %>
+  </p>
+    <p>
+    <b>End at:</b>
+    <%= @notice.end_at %>
+  </p>
+  </div>

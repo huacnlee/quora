@@ -20,6 +20,18 @@ class UsersController < ApplicationController
       render "/users/answered_asks.js"
     end
   end
+  
+  def asked_to
+    @per_page = 10
+    @asks = Ask.normal.recent.asked_to(@user.id)
+                  .paginate(:page => params[:page], :per_page => @per_page)
+    set_seo_meta("问#{@user.name}的问题")
+    if params[:format] == "js"
+      render "/asks/index.js"
+    else
+      render "asked"
+    end
+  end
 
   def show
     @per_page = 10
@@ -42,7 +54,7 @@ class UsersController < ApplicationController
   end
   
   def following_topics
-    @per_page = 10
+    @per_page = 20
     @topics = @user.followed_topics.desc("$natural")
                   .paginate(:page => params[:page], :per_page => @per_page)
     
@@ -53,7 +65,7 @@ class UsersController < ApplicationController
   end
   
   def followers
-    @per_page = 10
+    @per_page = 20
     @followers = @user.followers.desc("$natural")
                   .paginate(:page => params[:page], :per_page => @per_page)
     
@@ -64,7 +76,7 @@ class UsersController < ApplicationController
   end
   
   def following
-    @per_page = 10
+    @per_page = 20
     @followers = @user.following.desc("$natural")
                   .paginate(:page => params[:page], :per_page => @per_page)
     

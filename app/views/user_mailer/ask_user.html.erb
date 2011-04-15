@@ -1,5 +1,5 @@
 <div style="margin:10px 0;">
-  <b><%= user_name_tag(@ask.to_user, :url => true) %></b> 向你询问。
+  <b><%= user_name_tag(@ask.user, :url => true) %></b> 向你询问。
 </div>
 <div style="font-weight:bold;">你可以点击下面的链接进入这个问题的页面：</div>
 <div><a href="<%= ask_url(@ask.id) %>"><%= ask_url(@ask.id) %></a></div>

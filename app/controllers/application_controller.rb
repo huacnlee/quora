@@ -2,6 +2,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :all
+  before_filter :load_notice
+
+  def load_notice
+    @notice = Notice.last
+    if !@notice.blank? and !@notice.end_at.blank?
+      if @notice.end_at < Time.now
+        @notice = nil
+      end
+    end
+  end
   
   # 暂时不使用mobile-fu的功能，仅仅使用其is_mobile_device?方法
   include ActionController::MobileFu::InstanceMethods
