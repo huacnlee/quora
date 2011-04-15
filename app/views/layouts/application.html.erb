@@ -17,10 +17,17 @@
   <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
   <%= csrf_meta_tag %>
   <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
+	<script type="text/javascript" src="http://<%= @zomet_config["server"] %>/faye.js">
   <%= yield :scripts %>
   <script type="text/javascript">
     <% if current_user %>
     var logined = true;
+		$(function() {
+			var client = new Faye.Client('http://<%= @zomet_config["server"] %>/faye');
+			var sub_notifies = client.subscribe('/notifications/<%= current_user.slug %>', function(message) {
+				$('#notify_badge').removeClass("force-hide");
+			});
+		});
     <% else %>
     var logined = false;
     <% end %>
@@ -45,7 +52,7 @@
             <a href="/login">登录</a>
             <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
           <% else %>
-            <a href="/">首页</a>
+            <a class="home" href="/">首页<span id="notify_badge" class="badge<% if current_user.notifications.unread.count < 1 %> force-hide<% end %>">新</span></a>
             <%= user_name_tag(current_user) %>
             <%= link_to('设置', edit_user_registration_path) %>
             <a href="/logout">退出</a>

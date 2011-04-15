@@ -6,22 +6,7 @@ class HomeController < ApplicationController
   def index
     @per_page = 20
     if current_user
-      @notifies = {}
-      @notifications = current_user.notifications.unread.includes(:log)
-      @notifications.each do |notify|
-        @notifies[notify.target_id] ||= {}
-        @notifies[notify.target_id][:items] ||= []
-        
-        case notify.action
-        when "FOLLOW" then @notifies[notify.target_id][:type] = "USER"
-        when "THANK_ANSWER" then @notifies[notify.target_id][:type] = "THANK_ANSWER"
-        when "INVITE_TO_ANSWER" then @notifies[notify.target_id][:type] = "INVITE_TO_ANSWER"
-        when "NEW_TO_USER" then @notifies[notify.target_id][:type] = "ASK_USER"
-        else  
-          @notifies[notify.target_id][:type] = "ASK"
-        end
-        @notifies[notify.target_id][:items] << notify
-      end
+      @notifies, @notifications = current_user.unread_notifies
       
       if current_user.following_ids.size == 0 and current_user.followed_ask_ids.size == 0 and current_user.followed_topic_ids.size == 0
         redirect_to newbie_path and return
@@ -61,6 +46,7 @@ class HomeController < ApplicationController
   end
   
   def newbie
+    @notifies, @notifications = current_user.unread_notifies
     ask_logs = Log.any_of({:_type => "AskLog"}, {:_type => "UserLog", :action.in => ["FOLLOW_ASK", "UNFOLLOW_ASK"]}).where(:created_at.gte => (Time.now - 12.hours))
     answer_logs = Log.any_of({:_type => "AnswerLog"}, {:_type => "UserLog", :action => "AGREE"}).where(:created_at.gte => (Time.now - 12.hours))
     @asks = Ask.normal.any_of({:_id.in => ask_logs.map {|l| l.target_id}.uniq}, {:_id.in => answer_logs.map {|l| l.target_parent_id}.uniq}).order_by(:answers_count.asc, :views_count.asc)

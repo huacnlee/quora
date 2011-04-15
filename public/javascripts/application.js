@@ -161,3 +161,24 @@ function show_all_answer_body(log_id, answer_id) {
 	$('#awb_' + log_id + '_' + answer_id).addClass("force-show");
 	return false;
 }
+
+function mark_notifies_as_read(el, ids) {
+	App.loading();
+	$.get("/mark_notifies_as_read?ids="+ids,function(){
+		App.loading(false);
+		$(el).parent().parent().fadeOut();
+	});
+	$("#notify_badge").addClass("force-hide");
+	return false;
+}
+
+function expand_notification(el, type, id) {
+	var items = $("#N" + type + "_" + id + "_items");
+	
+	if (items.hasClass("force-show")) {
+		items.removeClass("force-show");
+	} else {
+		items.addClass("force-show");
+	}
+	return false;
+}

@@ -451,7 +451,7 @@ a.user img.normal { width:100px; height:100px; }
 	display: none;
 }
 
-#main .force-hide {
+#main .force-hide, #header .force-hide {
 	display: none;
 }
 
@@ -489,3 +489,24 @@ a.user img.normal { width:100px; height:100px; }
 #ask_to_user form textarea { width:586px; }
 #ask_to_user.simple_form .actions { margin-bottom:0px; }
 #ask_to_user.simple_form .row { margin:0px; }
+
+#header .home {
+	position: relative;
+}
+
+.badge {
+	background: none repeat scroll 0 0 #C3412F;
+	color: white;
+	display: block;
+	font-size: 11px;
+	line-height: 13px;
+	padding: 1px 5px;
+	position: absolute;
+	right: -8px;
+	text-decoration: none;
+	top: -7px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-o-border-radius: 30px;
+	border-radius: 30px;
+}

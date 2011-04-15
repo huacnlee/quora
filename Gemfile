@@ -66,4 +66,3 @@ gem "aws-ses", "0.4.2", :require => 'aws/ses'
 # Background Jobs
 gem "resque"
 gem "resque_mailer"
-
