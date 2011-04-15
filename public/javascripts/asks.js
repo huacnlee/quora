@@ -143,8 +143,11 @@ var Asks = {
     input = $(el);
     input.autocomplete("/search/all",{
       mincChars: 1,
+      delay: 50,
       width: 580,
       scroll : false,
+      selectFirst : false,
+      selectFirst : true,
       formatItem : function(data, i, total){
         klass = data[data.length - 1];
         switch(klass){
@@ -162,22 +165,23 @@ var Asks = {
             break;
         }
       }
-    }).result(function(e,data,formatted){
-      url = "/";
-      klass = data[data.length - 1];
-      switch(klass){
-        case "Ask":
-          url = "/asks/" + data[1];
-          break;
-        case "Topic":
-          url = "/topics/" + data[0];
-          break;
-        case "User":
-          url = "/users/" + data[4];
-          break;
-      }
-      location.href = url;
-    });
+    }).result(function(e, data, formatted){
+        url = "/";
+        klass = data[data.length - 1];
+        switch(klass){
+          case "Ask":
+            url = "/asks/" + data[1];
+            break;
+          case "Topic":
+            url = "/topics/" + data[0];
+            break;
+          case "User":
+            url = "/users/" + data[4];
+            break;
+        }
+        location.href = url;
+        return false;
+      });
   },
 
   completeTopic : function(el){

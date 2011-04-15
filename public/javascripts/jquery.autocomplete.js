@@ -1,5 +1,5 @@
 /*
- * jQuery Autocomplete plugin 1.1
+ * jQuery Autocomplete plugin 1.2.1
  *
  * Copyright (c) 2009 Jörn Zaefferer
  *
@@ -7,7 +7,9 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * Revision: $Id: jquery.autocomplete.js 15 2009-08-22 10:30:27Z joern.zaefferer $
+ * With small modifications by Alfonso Gómez-Arzola.
+ * See changelog for details.
+ *
  */
 
 ;(function($) {
@@ -97,8 +99,8 @@ $.Autocompleter = function(input, options) {
 		switch(event.keyCode) {
 		
 			case KEY.UP:
-				event.preventDefault();
 				if ( select.visible() ) {
+					event.preventDefault();
 					select.prev();
 				} else {
 					onChange(0, true);
@@ -106,8 +108,8 @@ $.Autocompleter = function(input, options) {
 				break;
 				
 			case KEY.DOWN:
-				event.preventDefault();
 				if ( select.visible() ) {
+					event.preventDefault();
 					select.next();
 				} else {
 					onChange(0, true);
@@ -115,8 +117,8 @@ $.Autocompleter = function(input, options) {
 				break;
 				
 			case KEY.PAGEUP:
-				event.preventDefault();
 				if ( select.visible() ) {
+  				event.preventDefault();
 					select.pageUp();
 				} else {
 					onChange(0, true);
@@ -124,8 +126,8 @@ $.Autocompleter = function(input, options) {
 				break;
 				
 			case KEY.PAGEDOWN:
-				event.preventDefault();
 				if ( select.visible() ) {
+  				event.preventDefault();
 					select.pageDown();
 				} else {
 					onChange(0, true);
@@ -158,14 +160,22 @@ $.Autocompleter = function(input, options) {
 		// results if the field no longer has focus
 		hasFocus++;
 	}).blur(function() {
-		hasFocus = 0;
+	  hasFocus = 0;
 		if (!config.mouseDownOnSelect) {
 			hideResults();
 		}
 	}).click(function() {
 		// show select when clicking in a focused field
-		if ( hasFocus++ > 1 && !select.visible() ) {
-			onChange(0, true);
+		// but if clickFire is true, don't require field
+		// to be focused to begin with; just show select
+		if( options.clickFire ) {
+		  if ( !select.visible() ) {
+  			onChange(0, true);
+  		}
+		} else {
+		  if ( hasFocus++ > 1 && !select.visible() ) {
+  			onChange(0, true);
+  		}
 		}
 	}).bind("search", function() {
 		// TODO why not just specifying both arguments?
@@ -189,7 +199,7 @@ $.Autocompleter = function(input, options) {
 	}).bind("flushCache", function() {
 		cache.flush();
 	}).bind("setOptions", function() {
-		$.extend(options, arguments[1]);
+		$.extend(true, options, arguments[1]);
 		// if we've updated the data, repopulate
 		if ( "data" in arguments[1] )
 			cache.populate();
@@ -414,8 +424,8 @@ $.Autocompleter.defaults = {
 	matchCase: false,
 	matchSubset: true,
 	matchContains: false,
-	cacheLength: 10,
-	max: 100,
+	cacheLength: 100,
+	max: 1000,
 	mustMatch: false,
 	extraParams: {},
 	selectFirst: true,
@@ -424,7 +434,9 @@ $.Autocompleter.defaults = {
 	autoFill: false,
 	width: 0,
 	multiple: false,
-	multipleSeparator: ", ",
+	multipleSeparator: " ",
+	inputFocus: true,
+	clickFire: false,
 	highlight: function(value, term) {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 	},
@@ -592,7 +604,15 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		.hide()
 		.addClass(options.resultsClass)
 		.css("position", "absolute")
-		.appendTo(document.body);
+		.appendTo(document.body)
+		.hover(function(event) {
+		  // Browsers except FF do not fire mouseup event on scrollbars, resulting in mouseDownOnSelect remaining true, and results list not always hiding.
+		  if($(this).is(":visible")) {
+		    input.focus();
+		  }
+		  config.mouseDownOnSelect = false;
+			console.debug(config.mouseDownOnSelect);
+		});
 	
 		list = $("<ul/>").appendTo(element).mouseover( function(event) {
 			if(target(event).nodeName && target(event).nodeName.toUpperCase() == 'LI') {
@@ -602,8 +622,8 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		}).click(function(event) {
 			$(target(event)).addClass(CLASSES.ACTIVE);
 			select();
-			// TODO provide option to avoid setting focus again after selection? useful for cleanup-on-focus
-			input.focus();
+			if( options.inputFocus )
+			  input.focus();
 			return false;
 		}).mousedown(function() {
 			config.mouseDownOnSelect = true;
@@ -723,7 +743,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			var offset = $(input).offset();
 			element.css({
 				width: typeof options.width == "string" || options.width > 0 ? options.width : $(input).width(),
-				top: offset.top + input.offsetHeight - 1,
+				top: offset.top + input.offsetHeight,
 				left: offset.left
 			}).show();
             if(options.scroll) {
