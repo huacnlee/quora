@@ -138,6 +138,47 @@ var Asks = {
     }
   },
 
+  /* 问题，话题，人搜索自动完成 */
+  completeAll : function(el){
+    input = $(el);
+    input.autocomplete("/search/all",{
+      mincChars: 1,
+      width: 580,
+      scroll : false,
+      formatItem : function(data, i, total){
+        klass = data[data.length - 1];
+        switch(klass){
+          case "Ask":
+            return Asks.completeLineAsk(data, true);
+            break;
+          case "Topic":
+            return Asks.completeLineTopic(data, true);
+            break;
+          case "User":
+            return Asks.completeLineUser(data, true);
+            break;
+          default:
+            return "";
+            break;
+        }
+      }
+    }).result(function(e,data,formatted){
+      url = "/";
+      klass = data[data.length - 1];
+      switch(klass){
+        case "Ask":
+          url = "/asks/" + data[1];
+          break;
+        case "Topic":
+          url = "/topics/" + data[0];
+          break;
+        case "User":
+          url = "/users/" + data[4];
+          break;
+      }
+      location.href = url;
+    });
+  },
 
   completeTopic : function(el){
     $(el).autocomplete("/search/topics",{
@@ -207,10 +248,12 @@ var Asks = {
     html = "";
     cover = data[2];
     if(/http:\/\//.test(cover) == false){
-      avatar = "/images/" + cover;
+      cover = "";
     }
     count = data[1];
-    html += '<img class="avatar" src="'+ cover +'" />';
+    if(cover.length > 0){
+      html += '<img class="avatar" src="'+ cover +'" />';
+    }
     html += '<div class="uinfo"><p>';
     if(allow_link == true){
       html += '<a href="/topics/'+data[0]+'">'+data[0]+'</a>';
@@ -220,6 +263,22 @@ var Asks = {
     }
     html += '</p>';
     html += '<p class="count">'+count+' 个关注者</p></div>';
+    return html;
+  },
+
+  completeLineAsk : function(data, allow_link){
+    if(allow_link == false){
+      return data[0]
+    }
+    
+    html = "";
+    if(data[2] != null){
+      topics = data[2].split(",")
+      if(topics.length > 0){
+        html += '<span class="cate">'+topics[0]+'</span>';
+      }
+    }
+    html += '<a href="/asks/'+data[1]+'">'+data[0]+'</a>';
     return html;
   },
 
@@ -242,6 +301,8 @@ var Asks = {
     html += '<p class="tagline">'+tagline+'</p></div>';
     return html;
   },
+
+
 
   beforeSubmitComment : function(el){
     App.loading();
@@ -469,106 +530,3 @@ function addAsk(){
   return false;
 }
 
-var searchCache = new jCaches(40,false);
-var lastSearchText = null;
-var lastSearchCompleteHTML = null;
-var searchTimer = null;
-var currentSearchText = null;
-function showSearchComplete(el,type){
-  clearTimeout(searchTimer);
-  var html = "";
-  if(type == "click"){
-    if(lastSearchCompleteHTML != null){
-      html = lastSearchCompleteHTML;
-    }
-    else {
-      html = "<div class='tip'>"+ $(el).attr("placeholder") + "</div>";
-    }
-    searchCallback(el,html);
-  }
-  else{
-    searchTimer = setTimeout(function(){
-      currentSearchText = $(el).val();
-      if(currentSearchText == lastSearchText){
-        return false;
-      }
-      lastSearchText = currentSearchText;
-      cachedItems = searchCache.get(currentSearchText);
-      if(cachedItems == null){
-        $.ajax({
-          url : "/search.json",
-          data : { w : currentSearchText },
-          dataType : "json",
-          success : function(res){
-            searchCache.add(currentSearchText,res);
-            searchAjaxCallback(el,res);
-          }
-        });
-      }
-      else{
-        searchAjaxCallback(el,cachedItems);
-      }
-    },200);
-  }
-
-  return false;
-}
-
-function searchAjaxCallback(el,res){
-  App.loading(false);            
-  if(res.length > 0){
-    html = '<ul class="complete">';
-    for(var i=0;i<res.length;i++){
-      html += '<li onclick="location.href = $(\'a\',this).attr(\'href\');">';
-      item_title = res[i].title;
-      item_type = res[i].type;
-      if(item_type == "Topic"){
-        /* 话题 */
-        html += '<a href="/topics/'+res[i].title+'">'+item_title+'</a><span class="type">话题</span>';
-      }
-      else if(item_type == "User"){
-        /* 用户 */
-        avatar = res[i].avatar_small;
-        if(/http:\/\//.test(avatar) == false){
-          avatar = "/images/" + avatar;
-        }
-        tagline = "";
-        if(res[i].tagline != null){
-          tagline = res[i].tagline;
-        }
-        html += '<img class="avatar" src="'+ avatar +'" />';
-        html += '<div class="uinfo"><p><a href="/users/'+res[i].slug+'">'+item_title+'</a></p>';
-        html += '<p class="tagline">'+tagline+'</p></div>';
-      }
-      else{
-        /* 问题 */
-        if(res[i].topics != null){
-          if(res[i].topics.length > 0){
-            html += '<span class="cate">'+res[i].topics[0]+'</span>';
-          }
-        }
-        html += '<a href="/asks/'+res[i].id+'">'+item_title+'</a>';
-      }
-      html += '</li>';
-    }
-    html += '<li class="more" onclick="location.href=\'/search?w='+currentSearchText+'\';">关于“'+currentSearchText+'”更多搜索结果...</li>';
-    html += "</ul>";
-  }
-  else{
-    html = '<div class="tip">没有找到关于“'+currentSearchText+'”的结果: <a href="#" onclick="return addAsk();">添加这个问题</a></div>';
-  }
-  searchCallback(el,html);
-}
-
-function searchCallback(el, html){
-  lastSearchCompleteHTML = html;
-  el_width = $(el).width();
-  $(el).jDialog({
-    content : html,
-    class_name : "search_result_dropdown",
-    width : el_width + 250,
-    title_visiable : false,
-    top_offset : -1,
-    left_offset : -1
-  });
-}

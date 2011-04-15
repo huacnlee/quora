@@ -35,6 +35,7 @@ Quora::Application.routes.draw do
 
   resources :search do
     collection do
+      get "all"
       get "topics"
       get "asks"
       get "users"
