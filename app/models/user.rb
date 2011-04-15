@@ -242,6 +242,28 @@ class User
     self.slug = "#{self.id}"
     self.save
   end
+  
+  # 我的通知
+  def unread_notifies
+    notifies = {}
+    notifications = self.notifications.unread.includes(:log)
+    notifications.each do |notify|
+      notifies[notify.target_id] ||= {}
+      notifies[notify.target_id][:items] ||= []
+      
+      case notify.action
+      when "FOLLOW" then notifies[notify.target_id][:type] = "USER"
+      when "THANK_ANSWER" then notifies[notify.target_id][:type] = "THANK_ANSWER"
+      when "INVITE_TO_ANSWER" then notifies[notify.target_id][:type] = "INVITE_TO_ANSWER"
+      when "NEW_TO_USER" then notifies[notify.target_id][:type] = "ASK_USER"
+      else  
+        notifies[notify.target_id][:type] = "ASK"
+      end
+      notifies[notify.target_id][:items] << notify
+    end
+    
+    [notifies, notifications]
+  end
 
   protected
   

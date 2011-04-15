@@ -1,0 +1,52 @@
+!!! 5
+html(lang="en")
+  head
+    title= "Node/Faye/Jade Tech Demo"
+    link(href='http://cachedcommons.org/cache/blueprint/0.9.1/stylesheets/screen-min.css', type='text/css', rel='stylesheet')
+    script(type='text/javascript', src='http://cachedcommons.org/cache/jquery/1.4.2/javascripts/jquery-min.js')
+    script(type='text/javascript', src='http://zomet.zheye.info/faye.js')
+    script(type='text/javascript')
+      $(function() {
+      var client = new Faye.Client('http://zomet.zheye.info/faye');
+      var subscription = client.subscribe('/messages', function(message) {
+        //alert('recieved ' + message['text']);
+        message['text'] = message['text'].replace(/<.*?>/g,'');
+        $('<li>' + message['text'] + '</li>').appendTo('ul#messages');
+        $('html,body').animate({ scrollTop: document.height }, 'slow');
+      });
+      $('form#compose').submit(function() {
+        sendmessage();
+      });
+      function sendmessage() {
+        var compose = $('input[name$="compose"]').val();
+        client.publish('/messages', {text: compose});
+        $('input[name$="compose"]').val('');
+        $('input[name$="compose"]').focus();
+        //alert('sending ' + compose);
+      };
+      $('input[name$="compose"]').focus();
+      });
+  body
+    .container
+        h1 Node/Faye/Jade Tech Demo
+        p
+          | Uses
+          a(href='http://www.dotcloud.com') Dotcloud
+          |  for hosting,
+          a(href='http://nodejs.org') Node.js
+          |  as the server, 
+          a(href='http://faye.jcoglan.com/') Faye
+          |  for pub/sub and 
+          a(href='http://jade-lang.com/') Jade
+          |  for template rendering
+        p
+          | Source code is available in
+          a(href='https://gist.github.com/901738') git
+          | . We also have a shiney API (for free):
+        p
+          code curl http://zomet.zheye.info/faye -d 'message={"channel":"/messages", "data":{"text":"hello world"}}'
+        ul#messages
+          li messages will appear here
+        form#compose(action='javascript:return false;')
+          input(type='text', name='compose')
+          input(type='submit', name='send', value='send')

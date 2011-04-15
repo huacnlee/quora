@@ -16,6 +16,9 @@ class ApplicationController < ActionController::Base
   # 暂时不使用mobile-fu的功能，仅仅使用其is_mobile_device?方法
   include ActionController::MobileFu::InstanceMethods
   helper_method :is_mobile_device?
+  
+  # Comet Server
+  use_zomet
 
   # set page title, meta keywords, meta description
   def set_seo_meta(title, options = {})
