@@ -21,9 +21,7 @@ h2. Mac OSX(using Homebrew)
 pre. 
 git clone git://github.com/huacnlee/quora.git
 brew install mongodb
-mongod run --config /usr/local/Cellar/mongodb/1.8.1-x86_64/mongod.conf # This might be different in your environment.
 brew install redis-server
-redis-server /usr/local/etc/redis.conf # This might be different in your environment.
 cd quora
 bundle install --path vendor/bundle
 cp config/mongoid.yml.default config/mongoid.yml
