@@ -48,7 +48,7 @@ module BaseModel
         before_update :update_search_index
         def update_search_index
           index_fields_changed = false
-          #{ext_fields}.each do |f|
+          ext_fields.each do |f|
             if instance_eval(f.to_s + "_changed?")
               index_fields_changed = true
             end

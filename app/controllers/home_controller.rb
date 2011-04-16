@@ -12,18 +12,12 @@ class HomeController < ApplicationController
         redirect_to newbie_path and return
       else
         # TODO: 这里需要过滤掉烂问题
-        @logs = Log.any_of({:user_id.in => current_user.following_ids},
-                           {:target_id.in => current_user.followed_ask_ids})
-                          .and(:action.in => ["NEW", "AGREE", "EDIT"], :_type.in => ["AskLog", "AnswerLog", "CommentLog", "UserLog"])
-                          .excludes(:user_id => current_user.id).desc("$natural")
-                          .paginate(:page => params[:page], :per_page => @per_page)
+        @logs = Log.any_of({:user_id => current_user.following_ids},
+                           {:target_id => current_user.followed_ask_ids}).and(:action => ["NEW", "AGREE", "EDIT"], :_type => ["AskLog", "AnswerLog", "CommentLog", "UserLog"]).excludes(:user_id => current_user.id).desc("$natural").paginate(:page => params[:page], :per_page => @per_page)
         
         if @logs.count < 1
           @asks = Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}).not_in(:follower_ids => [current_user.id])
-          @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
-                        .exclude_ids(current_user.muted_ask_ids)
-                        .desc(:answers_count,:answered_at)
-                        .paginate(:page => params[:page], :per_page => @per_page)
+          @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics).exclude_ids(current_user.muted_ask_ids).desc(:answers_count,:answered_at).paginate(:page => params[:page], :per_page => @per_page)
                         
           if params[:format] == "js"
             render "/asks/index.js"
@@ -37,8 +31,7 @@ class HomeController < ApplicationController
         end
       end
     else
-      @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics)
-                  .paginate(:page => params[:page], :per_page => @per_page)
+      @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics).paginate(:page => params[:page], :per_page => @per_page)
       if params[:format] == "js"
         render "/asks/index.js"
       end
@@ -76,10 +69,7 @@ class HomeController < ApplicationController
   def followed
     @per_page = 20
     @asks = current_user ? current_user.followed_asks.normal : Ask.normal
-    @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
-                  .exclude_ids(current_user.muted_ask_ids)
-                  .desc(:answered_at,:id)
-                  .paginate(:page => params[:page], :per_page => @per_page)
+    @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics).exclude_ids(current_user.muted_ask_ids).desc(:answered_at,:id).paginate(:page => params[:page], :per_page => @per_page)
 
     if params[:format] == "js"
       render "/asks/index.js"
@@ -91,10 +81,7 @@ class HomeController < ApplicationController
   def recommended
     @per_page = 20
     @asks = current_user ? Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}).not_in(:follower_ids => [current_user.id]).and(:answers_count.lt => 1) : Ask.normal
-    @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics)
-                  .exclude_ids(current_user.muted_ask_ids)
-                  .desc(:answers_count,:answered_at)
-                  .paginate(:page => params[:page], :per_page => @per_page)
+    @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics).exclude_ids(current_user.muted_ask_ids).desc(:answers_count,:answered_at).paginate(:page => params[:page], :per_page => @per_page)
 
     if params[:format] == "js"
       render "/asks/recommended.js"
@@ -104,10 +91,7 @@ class HomeController < ApplicationController
   # 查看用户不感兴趣的问题
   def muted
     @per_page = 20
-    @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics)
-                  .only_ids(current_user.muted_ask_ids)
-                  .desc(:answered_at,:id)
-                  .paginate(:page => params[:page], :per_page => @per_page)
+    @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics).only_ids(current_user.muted_ask_ids).desc(:answered_at,:id).paginate(:page => params[:page], :per_page => @per_page)
 
     set_seo_meta("我屏蔽掉的问题")
 
