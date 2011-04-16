@@ -1,8 +1,8 @@
-Quora clone write in Ruby on Rails.
+Quora clone written in Ruby on Rails.
 
 h1. Installation
 
-base on ubuntu 10.04
+h2. Ubuntu 10.04
 
 pre. 
 git clone git://github.com/huacnlee/quora.git
@@ -13,7 +13,25 @@ bundle install --path vendor/bundle
 cp config/mongoid.yml.default config/mongoid.yml
 cp config/setting.yml.default config/setting.yml
 cp config/redis.yml.default config/redis.yml
+cp config/zomet.yml.default config/zomet.yml
 script/rails s -e development_mongohq
+
+h2. Mac OSX(using Homebrew)
+
+pre. 
+git clone git://github.com/huacnlee/quora.git
+brew install mongodb
+mongod run --config /usr/local/Cellar/mongodb/1.8.1-x86_64/mongod.conf # This might be different in your environment.
+brew install redis-server
+redis-server /usr/local/etc/redis.conf # This might be different in your environment.
+cd quora
+bundle install --path vendor/bundle
+cp config/mongoid.yml.default config/mongoid.yml
+cp config/setting.yml.default config/setting.yml
+cp config/redis.yml.default config/redis.yml
+cp config/zomet.yml.default config/zomet.yml
+script/rails s -e development_mongohq
+
 
 Then, open your browser, points to localhost:3000
 That is it, enjoy yourself.
