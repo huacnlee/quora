@@ -180,8 +180,8 @@
         </h2>
         <div class="inner">
           <div class="share">
-            <a href="<%= share_ask_path(@ask.id) %>?type=email"><span class="has_icon email">Email</span></a>
-            <a href="<%= share_ask_path(@ask.id) %>?type=url"><span class="has_icon url">转发地址</span></a>
+            <a rel="nofollow" href="<%= share_ask_path(@ask.id) %>?type=email"><span class="has_icon email">Email</span></a>
+            <a rel="nofollow" href="<%= share_ask_path(@ask.id) %>?type=url"><span class="has_icon url">转发地址</span></a>
           </div>
           <div class="invite" style="display:none">
             <input type="text" id="ask_to_answer" style="width:200px;" placeholder="搜索人" />

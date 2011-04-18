@@ -43,7 +43,7 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
 #relation_asks ul li.more a { font-weight:normal; color: #538DC2; font-size:12px; }
 
 .sidebar h2 samp { color:#999; font-weight:normal; font-size:13px; }
-.sidebar h2 a { font-size:13px; color:#538DC2; }
+.sidebar h2 a { font-size:13px; color:#538DC2; outline:none; }
 .sidebar h2 a.actived,
 .sidebar h2 a.actived:hover { cursor:text; color:#333; text-decoration:none; }
 
@@ -55,7 +55,6 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
 .sidebar .sections li a.active { background-color: #DFEAF4; text-decoration: none; }
 .sidebar .sections li a.active { background-color:#DDD; color:#333; cursor:default; }
 
-.sidebar #share_ask_box .share a:hover {text-decoration:underline;}
 
 #sys_notice { margin-left: 0; padding: 10px; overflow: hidden; border-radius: 5px;
   -moz-border-radius: 5px; -webkit-border-radius: 5px; background-color: #fff6c1;
@@ -472,5 +471,7 @@ a.user img.normal { width:100px; height:100px; }
 .dialog_tabs .actived,
 .dialog_tabs .actived:hover { background: #B9BBBC; color:#333; }
 .has_icon { display: inline-block; padding: 0 5px 1px 20px; margin-right: 5px; background-repeat: no-repeat; }
+.has_icon:hover { text-decoration:underline; }
 .has_icon.email { background-image: url(/images/email.gif); }
 .has_icon.url { background-image: url(/images/url.gif); }
+
