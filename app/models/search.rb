@@ -41,24 +41,31 @@ class Search
     type = options[:type] || nil
     word_match = words.collect(&:downcase).join("*")
     if type.blank?
-      word_match = "#{Search.key_prefix}#!#*#{word_match}*"
+      # 分三次查询，依次按 Topic, User, Ask 排列
+      reg = "#{Search.key_prefix}#!#*#{word_match}*#!#Topic"
+      keys = $redis.keys(reg)[0,limit]
+      if keys.length < limit
+        reg = "#{Search.key_prefix}#!#*#{word_match}*#!#User"
+        keys += $redis.keys(reg)[0,limit]
+        if keys.length < limit
+          reg = "#{Search.key_prefix}#!#*#{word_match}*#!#Ask"
+          keys += $redis.keys(reg)[0,limit]
+        end
+      end
     else
-      word_match = "#{Search.key_prefix}#!#*#{word_match}*#!##{type}"
+      reg = "#{Search.key_prefix}#!#*#{word_match}*#!##{type}"
+      keys = $redis.keys(reg)[0,limit]
     end
-    puts word_match
-    keys = $redis.keys(word_match)[0,limit]
+    keys = keys.uniq[0,limit]
     result = []
-    keys.each do |k|
-      # TODO: 这里需要改为 mult get
-      r = $redis.get(k)
+    $redis.mget(*keys).each do |r|
       begin
-        item = JSON.parse(r)
-        # item['title'] = Search.highlight(item['title'],words)
+        result << JSON.parse(r)
         result << item
       rescue => e
         Rails.logger.info { "Search.query failed: #{e}" }
       end
     end
-    result.sort { |b,a| a['type'] <=> b['type'] }
+    result
   end
 end
