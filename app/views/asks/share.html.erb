@@ -26,9 +26,10 @@
     </div>
     <div style="display:none" class="share_panel" id="share_panel_url">
       <div class="row">
-        <label>地址:</label>
-        <input type="text" name="url" style="width:400px;" value="<%= ask_url(@ask.id) %>" />
-        <p class="hint">你可以复制这个地址，并把它转发到你的微博或发送给你的QQ好友,他们点击这个链接就能看到此页面。</p>
+        <label>推荐文字:</label>
+        <textarea type="text" style="width:400px;height:50px;"><%= @ask.title %>
+<%= ask_url(@ask.id) %></textarea>
+        <p class="hint">你可以复制上面的内容，并把它转发到你的微博或发送给你的QQ好友,他们点击链接就能看到此页面。</p>
       </div>
       <div class="actions"><a href="#" onclick="$.facebox.close();return false;">关闭</a></div>
     </div>
@@ -38,7 +39,7 @@
   $("#share_ask .dialog_tabs a").click(function(){
     a = $(this);
     $(".share_panel").hide();
-    $("#share_panel_"+a.attr("show")).show().find("input").first().focus();
+    $("#share_panel_"+a.attr("show")).show().find("input,textarea").first().focus().select();
     $("#share_ask .dialog_tabs a").removeClass("actived");
     $(this).addClass("actived");
     return false;
