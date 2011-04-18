@@ -147,14 +147,24 @@ var Asks = {
     });
   },
 
-  toggleInviteToAsk : function(el){
-    if($(el).attr("class").split(" ").indexOf("active")){
-      $(el).removeClass("active");
+  toggleShareAsk : function(el,type){
+    $(el).parent().find("a").removeClass("actived");
+    klass = $(el).attr("class");
+    if(klass.length > 0){
+      if(klass.split(" ").indexOf("actived")){
+        return false;
+      }
+    }
+    $(el).addClass("actived");
+    if(type == "share"){
+      $(el).parent().parent().find(".inner .invite").hide();
+      $(el).parent().parent().find(".inner .share").show();
     }
     else{
-      $(el).addClass("active");
+      $(el).parent().parent().find(".inner .share").hide();
+      $(el).parent().parent().find(".inner .invite").show();
+      $.facebox.close();
     }
-    $(el).parent().next().toggle();
 		return false;
   },
 

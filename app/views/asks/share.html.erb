@@ -1,0 +1,51 @@
+<div id="share_ask">
+  <h2>分享问题</h2>
+  <div class="dialog_tabs">
+    <a href="#" show="email" class="tab"><span class="has_icon email">Email</span></a>
+    <a href="#" show="url" class="tab"><span class="has_icon url">转发地址</span></a>
+  </div>
+  <form action="<%= share_ask_path(@ask.id) %>" class="simple_form" method="post" data-remote="true">
+    <%= auth_token %>
+    <div style="display:none" class="share_panel" id="share_panel_email">
+      <input type="hidden" name="type" value="email" />
+      <div class="row">
+        <label>收件人:</label>
+        <input type="text" name="to" placeholder="如：user@163.com" required="required" type="email" />
+      </div>
+      <div class="row">
+        <label>邮件主题:</label>
+        <input type="text" style="width:400px;" required="required" name="subject" value="<%= current_user.name %>向你推荐问题" />
+      </div>
+      <div class="row">
+        <label>正文:</label>
+        <textarea style="width:400px;height:60px;" required="required" onclick="$(this).height(150);" name="body"><%= current_user.name %>说：
+向你推荐这个问题《<%=@ask.title%>》
+访问地址：<%= ask_url(@ask.id) %></textarea>
+      </div>
+      <div class="actions"><button type="submit">分享</button> 或 <a href="#" onclick="$.facebox.close();return false;">关闭</a></div>
+    </div>
+    <div style="display:none" class="share_panel" id="share_panel_url">
+      <div class="row">
+        <label>地址:</label>
+        <input type="text" name="url" style="width:400px;" value="<%= ask_url(@ask.id) %>" />
+        <p class="hint">你可以复制这个地址，并把它转发到你的微博或发送给你的QQ好友,他们点击这个链接就能看到此页面。</p>
+      </div>
+      <div class="actions"><a href="#" onclick="$.facebox.close();return false;">关闭</a></div>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+  $("#share_ask .dialog_tabs a").click(function(){
+    a = $(this);
+    $(".share_panel").hide();
+    $("#share_panel_"+a.attr("show")).show().find("input").first().focus();
+    $("#share_ask .dialog_tabs a").removeClass("actived");
+    $(this).addClass("actived");
+    return false;
+  });
+  <% if !params[:type].blank? %>
+    $("#share_ask .dialog_tabs a[show*=<%= params[:type] %>]").click();
+  <% else %>
+    $("#share_ask .dialog_tabs a").first().click();
+  <% end %>
+</script>

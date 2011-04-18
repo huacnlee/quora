@@ -39,6 +39,26 @@ var App = {
     }
   },
 
+  alert : function(msg){
+    html = '<div class="alert_message">';
+    html += msg;
+    html += '</div>';
+    $(".notice_message").remove();
+    $(".alert_message").remove();
+    $("#main .left_wrapper").prepend(html);
+    return true;
+  },
+
+  notice : function(msg){
+    html = '<div class="notice_message">';
+    html += msg;
+    html += '</div>';
+    $(".notice_message").remove();
+    $(".alert_message").remove();
+    $("#main .left_wrapper").prepend(html);
+    return true;
+  },
+
   /*
    * 检查 Ajax 返回结果的登陆状态，如果是未登陆，就转向登陆页面
    * 此处要配合 ApplicationController 里面的 require_user 使用
