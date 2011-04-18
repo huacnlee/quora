@@ -156,13 +156,18 @@
     </div>
 
 
-		<div class="box standard">
+		<div id="relation_asks" class="box standard">
 			<h2>相关问题</h2>
 			<div class="inner">
 				<ul>
-				<% for ask in @relation_asks %>
-					<li><a href="/asks/<%= ask.id %>"><%= ask.title %></a></li>
+				<% @relation_asks.each_with_index do |ask,i| %>
+          <li <%= "style='display:none;'" if i > 4 %>><a href="/asks/<%= ask.id %>"><%= ask.title %></a></li>
 				<% end %>
+        <% if @relation_asks.count > 4 %>
+          <li class="more">
+            <a href="#" onclick="$(this).parent().parent().find('li').show();$(this).hide();return false;">查看更多相关问题</a>
+          </li>
+        <% end %>
 				<ul>
 			</div>
     </div>

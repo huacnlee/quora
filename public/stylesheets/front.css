@@ -85,6 +85,8 @@ address, blockquote {
 	margin: 6px 0 8px;
 	*text-indent: -16px;
 }
+#relation_asks ul li a { font-weight:bold; }
+#relation_asks ul li.more a { font-weight:normal; color: #538DC2; font-size:12px; }
 
 .sidebar .sections { font-size:14px; }
 .sidebar .sections li { display:inline; }
