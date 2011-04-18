@@ -1,50 +1,16 @@
 body { text-align:center; }
 .container { width:960px; margin:0 auto; text-align:left; }
+address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px solid #D0E5F2; }
 
-address, blockquote {
-  font-style: normal;
-  padding: 0 0 0 10px;
-  border-left: 3px solid #D0E5F2;
-}
+.box { -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px;
+	border-radius: 5px; background-color: #fff; }
+.standard-box { background-color: #FFFEC8; border: 3px solid #C7C592; padding: 3px 10px; }
+.gray { color: gray; font-color: 1em; }
+.orange { color: #db841c; } 
+.green { color: #009c3a; }
+.purple { color: #754962; }
 
-.box {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-o-border-radius: 5px;
-	border-radius: 5px;
-
-	background-color: #fff;
-}
-
-.standard-box {
-	background-color: #FFFEC8;
-	border: 3px solid #C7C592;
-	padding: 3px 10px;
-}
-
-.gray {
-	color: gray;
-	font-color: 1em;
-}
-
-.orange {
-	color: #db841c;
-}
-
-.green {
-	color: #009c3a;
-}
-
-.purple {
-	color: #754962;
-}
-
-#header {
-  background: #505759;
-  height: 35px;
-  padding-top: 18px;
-  color:#FFF;
-}
+#header { background: #505759; height: 35px; padding-top: 18px; color:#FFF; }
 #header #site_name { background-color:#a82400; color:#FFF; height:35px; width:68px; text-align:center; line-height:35px;  float:left;
   font-size:20px; font-weight:bold;  }
 #header #site_name a { color:#FFF; text-decoration:none; }
@@ -59,12 +25,7 @@ address, blockquote {
 #footer .links {   margin-bottom:5px;  }
 
 #header:after, #main:after, .ask:after, .notification-title:after, .answer:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after, .followed-item li .item:after {
-    content:"";
-    display:block;
-    visibility:hidden;
-    height:0;
-    clear:both;
-}
+    content:""; display:block; visibility:hidden; height:0; clear:both; }
 
 #main { margin:20px 0; }
 .left_wrapper { float:left; width:630px; }
@@ -76,15 +37,15 @@ address, blockquote {
 .leftbox .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1.2em; margin-bottom: 3px; }
 .leftbox .box { margin-bottom:20px; }
 .sidebar li { line-height:160%; }
-.sidebar .standard ul {
-	margin: 0;
-	padding: 0;
-}
-.sidebar .standard ul li {
-	list-style: none;
-	margin: 6px 0 8px;
-	*text-indent: -16px;
-}
+.sidebar .standard ul { margin: 0; padding: 0; }
+.sidebar .standard ul li { list-style: none; margin: 6px 0 8px; *text-indent: -16px; }
+#relation_asks ul li a { font-weight:bold; }
+#relation_asks ul li.more a { font-weight:normal; color: #538DC2; font-size:12px; }
+
+.sidebar h2 samp { color:#999; font-weight:normal; font-size:13px; }
+.sidebar h2 a { font-size:13px; color:#538DC2; outline:none; }
+.sidebar h2 a.actived,
+.sidebar h2 a.actived:hover { cursor:text; color:#333; text-decoration:none; }
 
 .sidebar .sections { font-size:14px; }
 .sidebar .sections li { display:inline; }
@@ -93,6 +54,7 @@ address, blockquote {
 .sidebar .sections li a:hover,
 .sidebar .sections li a.active { background-color: #DFEAF4; text-decoration: none; }
 .sidebar .sections li a.active { background-color:#DDD; color:#333; cursor:default; }
+
 
 #sys_notice { margin-left: 0; padding: 10px; overflow: hidden; border-radius: 5px;
   -moz-border-radius: 5px; -webkit-border-radius: 5px; background-color: #fff6c1;
@@ -494,19 +456,22 @@ a.user img.normal { width:100px; height:100px; }
 	position: relative;
 }
 
-.badge {
-	background: none repeat scroll 0 0 #C3412F;
-	color: white;
-	display: block;
-	font-size: 11px;
-	line-height: 13px;
-	padding: 1px 5px;
-	position: absolute;
-	right: -8px;
-	text-decoration: none;
-	top: -7px;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
-	-o-border-radius: 30px;
-	border-radius: 30px;
-}
+.badge { background: none repeat scroll 0 0 #C3412F;
+	color: white; display: block; font-size: 11px;
+	line-height: 13px; padding: 1px 5px; position: absolute;
+	right: -8px; text-decoration: none; top: -7px;
+	-webkit-border-radius: 30px; -moz-border-radius: 30px; -o-border-radius: 30px;
+	border-radius: 30px; }
+
+/* 浮动窗口里面的 tabs  */
+.dialog_tabs { border-bottom: 1px solid #A7ABAC; float: left;
+  font-weight: bold; margin-bottom: 3px; width: 100%;}
+.dialog_tabs .tab { float: left; padding: 4px 0 3px 5px; font-weight:normal; }
+.dialog_tabs .tab:hover { background:#eaeaea;text-decoration:none; }
+.dialog_tabs .actived,
+.dialog_tabs .actived:hover { background: #B9BBBC; color:#333; }
+.has_icon { display: inline-block; padding: 0 5px 1px 20px; margin-right: 5px; background-repeat: no-repeat; }
+.has_icon:hover { text-decoration:underline; }
+.has_icon.email { background-image: url(/images/email.gif); }
+.has_icon.url { background-image: url(/images/url.gif); }
+

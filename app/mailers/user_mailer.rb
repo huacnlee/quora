@@ -61,5 +61,11 @@ class UserMailer < BaseMailer
     mail(:to => @user.email, :subject => @title, :from => Setting.email_sender)
   end
 
+  def simple(to, subject, body)
+    @title = subject
+    @body = body
+    mail(:to => to, :subject => @title, :from => Setting.email_sender)
+  end
+
 
 end

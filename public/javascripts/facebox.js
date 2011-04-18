@@ -85,7 +85,7 @@
     settings: {
       opacity      : 0.2,
       overlay      : false,
-      loadingImage : '/images/loading.gif',
+      loadingImage : '/images/loading1.gif',
       closeImage   : '/images/x.gif',
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       faceboxHtml  : '\
@@ -103,7 +103,7 @@
       showOverlay()
 
       $('#facebox .content').empty()
-      $('#facebox .body').children().hide().end().
+      $('#facebox .content').children().hide().end().
         append('<div class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>')
 
       $('#facebox').css({
