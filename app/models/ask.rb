@@ -51,7 +51,7 @@ class Ask
   # 正常可显示的问题, 前台调用都带上这个过滤
   scope :normal, where(:spams_count.lt => Setting.ask_spam_max)
   scope :last_actived, desc(:answered_at)
-  scope :recent, desc("$natural")
+  scope :recent, desc("created_at")
   # 除开一些 id，如用到 mute 的问题，传入用户的 muted_ask_ids
   scope :exclude_ids, lambda { |id_array| not_in("_id" => (id_array ||= [])) } 
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 

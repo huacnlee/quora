@@ -6,8 +6,7 @@ class AsksController < ApplicationController
   
   def index
     @per_page = 20
-    @asks = Ask.normal.recent.includes(:user,:topics)
-                .paginate(:page => params[:page], :per_page => @per_page)
+    @asks = Ask.normal.recent.includes(:user).paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("所有问题")
   end
 
