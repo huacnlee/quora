@@ -13,7 +13,7 @@ class SearchController < ApplicationController
   end
 
   def topics
-    result = Search.query(params[:q],:type => "Topic",:limit => 10)
+    result = Search.complete(params[:q],:type => "Topic",:limit => 10)
     if params[:format] == "json"
       render :json => result.to_json
     else
@@ -39,7 +39,7 @@ class SearchController < ApplicationController
   end
 
   def users 
-    result = Search.query(params[:q],:type => "User",:limit => 10)
+    result = Search.complete(params[:q],:type => "User",:limit => 10)
     if params[:format] == "json"
       render :json => result.to_json
     else
