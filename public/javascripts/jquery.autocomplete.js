@@ -251,6 +251,12 @@ $.Autocompleter = function(input, options) {
 		/*}*/
 		
 		var currentValue = $input.val();
+    if(currentValue.length == 0){
+      // TODO show default tip
+      select.display("default", "");
+      select.show();
+      return;
+    }
 		
 		if ( !skipPrevCheck && currentValue == previousValue )
 			return;
@@ -265,7 +271,7 @@ $.Autocompleter = function(input, options) {
 			request(currentValue, receiveData, function(){});
 		} else {
 			stopLoading();
-			// select.hide();
+			select.hide();
 		}
 	};
 	
@@ -347,7 +353,9 @@ $.Autocompleter = function(input, options) {
 			select.show();
 		} else {
       // 没有搜索到内容
-      select.display({},q);
+      // return false;
+      select.display(null,q);
+			select.show();
 			// hideResultsNow();
 		}
 	};
@@ -438,7 +446,8 @@ $.Autocompleter.defaults = {
 	multipleSeparator: " ",
 	inputFocus: true,
 	clickFire: false,
-  noResultHTML : "Can not match anything.",
+  defaultHTML : "输入文本开始搜索",
+  noResultHTML : "没有找到相关内容.",
 	highlight: function(value, term) {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 	},
@@ -683,10 +692,13 @@ $.Autocompleter.Select = function (options, input, select, config) {
 
   /* 填充下拉列表 */
 	function fillList() {
-		list.empty();
-    if(data.length == 0){
+    list.empty();
+    if(data == null || data.length == 0){
 			var li = $("<li/>").html( options.noResultHTML ).addClass("ac_no_result").appendTo(list)[0];
-      // TODO: 没有内容的时候需要暂时没内容的提示。
+			$.data(li,"ac_data", null);
+    }
+    else if(data == "default"){
+			var li = $("<li/>").html( options.defaultHTML ).addClass("ac_default").appendTo(list)[0];
 			$.data(li,"ac_data", null);
     }
     else{
@@ -774,9 +786,8 @@ $.Autocompleter.Select = function (options, input, select, config) {
 						// IE doesn't recalculate width when scrollbar disappears
 						listItems.width( list.width() - parseInt(listItems.css("padding-left")) - parseInt(listItems.css("padding-right")) );
 					}
-                }
-                
-            }
+        }
+      }
 		},
 		selected: function() {
 			var selected = listItems && listItems.filter("." + CLASSES.ACTIVE).removeClass(CLASSES.ACTIVE);

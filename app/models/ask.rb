@@ -179,10 +179,14 @@ class Ask
   def self.mmseg_text(text)
     result = Ask.search(text,:max_matches => 1)
     words = []
+    Rails.logger.debug { "mmseg:#{result.raw_result[:words]}" }
+    words = result.raw_result[:words].collect { |k| k[0] }
     result.raw_result[:words].each do |w|
       next if w[0] == "ask"
       words << ((w[0] == "rubi" and text.downcase.index("ruby")) ? "ruby" : w[0])
     end
+    words.sort { |x,y| (text.index(x) || -1) <=> (text.index(y) || -1) }
+    Rails.logger.debug { "mmseg:#{words}" }
     words
   end
 

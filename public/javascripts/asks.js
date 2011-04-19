@@ -148,6 +148,7 @@ var Asks = {
       scroll : false,
       selectFirst : false,
       clickFire : true,
+      noResultHTML : "没有找到类似的内容，<a href='#' onclick='return addAsk();'>添加一个问题</a>",
       formatItem : function(data, i, total){
         klass = data[data.length - 1];
         switch(klass){
@@ -539,8 +540,8 @@ function addAsk(){
   var txtTitle = $("#hidden_new_ask textarea:nth-of-type(1)");
   ask_search_text = $("#add_ask input").val();
   txtTitle.text(ask_search_text);
-  $.facebox({ div : "#hidden_new_ask", overlay : false });
   txtTitle.focus();
+  $.facebox({ div : "#hidden_new_ask", overlay : false });
   return false;
 }
 
