@@ -15,7 +15,6 @@ module BaseModel
         return false
       end
     end
-
   end
 
   module ClassMethods
@@ -49,12 +48,16 @@ module BaseModel
         def update_search_index
           index_fields_changed = false
           #{ext_fields}.each do |f|
+            next if f.to_s == "id"
             if instance_eval(f.to_s + "_changed?")
               index_fields_changed = true
             end
           end
-          if(self.#{title_field}_changed?)
-            index_fields_changed = true
+          begin
+            if(self.#{title_field}_changed?)
+              index_fields_changed = true
+            end
+          rescue
           end
           if index_fields_changed
             Rails.logger.debug { "-- update_search_index --" }

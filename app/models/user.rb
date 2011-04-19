@@ -3,6 +3,7 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voter
+  include Mongoid::Sphinx
   include BaseModel
   
   devise :invitable, :database_authenticatable, :registerable,
@@ -67,7 +68,14 @@ class User
   def avatar_small_changed?
     self.avatar_changed?
   end
-  redis_search_index(:title_field => :name, :ext_fields => [:slug,:avatar_small,:tagline])
+
+  # FullText indexes
+  search_index(:fields => [:name,:slug],
+               :attributes => [:name,:slug,:avatar_small,:tagline],
+               :attribute_types => {:avatar_small => String, :tagline => String},
+               :options => {} )
+  redis_search_index(:title_field => :name, 
+                     :ext_fields => [:id, :slug,:avatar_small,:tagline])
 
   # 敏感词验证
   before_validation :check_spam_words
@@ -185,7 +193,9 @@ class User
   end
   
   def follow_topic(topic)
+    return if topic.follower_ids.include? self.id
     topic.followers << self
+    topic.followers_count_changed = true
     topic.save
     
     insert_follow_log("FOLLOW_TOPIC", topic)
@@ -196,6 +206,7 @@ class User
     self.save
     
     topic.followers.delete(self)
+    topic.followers_count_changed = true
     topic.save
     
     insert_follow_log("UNFOLLOW_TOPIC", topic)

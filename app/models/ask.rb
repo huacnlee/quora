@@ -59,8 +59,8 @@ class Ask
   scope :asked_to, lambda { |to_user_id| where(:to_user_id => to_user_id) }
 
   # FullText indexes
-  search_index(:fields => [:title,:body, :topics],
-               :attributes => [],
+  search_index(:fields => [:title,:topics],
+               :attributes => [:title,:topics],
                :options => {} )
 
   redis_search_index(:title_field => :title,:ext_fields => [:topics])

@@ -48,9 +48,12 @@
           <a href="/"><%= image_tag("logo.png") %></a>
         </div>
         <div id="add_ask">
-          <input type="text" placeholder="搜索问题，话题，会员" onclick="return showSearchComplete(this,'click');" onkeyup="return showSearchComplete(this,'keyup');" />
+          <input type="text" placeholder="搜索问题，话题，会员" />
           <a href="/asks/new" onclick="return addAsk();">我要提问</a>
         </div>
+        <script type="text/javascript">
+          Asks.completeAll($("#add_ask input"));
+        </script>
       </div>
       <div class="sidebar">
         <div id="user_bar">
