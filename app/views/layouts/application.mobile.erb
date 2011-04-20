@@ -5,19 +5,13 @@
 <html lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <title><%= raw @page_title %><%= Setting.app_name %></title>
-  <% if use_yahei_font?(request.env["HTTP_USER_AGENT"]) %>
-  <%= stylesheet_link_tag "font","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front" %>
-  <% else %>
-  <%= stylesheet_link_tag "font_no_cleartype","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front_for_xp" %>
-  <% end %>
+  <%= stylesheet_link_tag "application","users","asks","mobile","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_mobile_front" %>
 	<%= yield :styles %>
-  <meta name="keywords" content="<%= @meta_keywords %>" />
-  <meta name="description" content="<%= @meta_description %>" />
   <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
   <%= csrf_meta_tag %>
   <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
-  <%= javascript_include_tag "faye" %>
   <%= yield :scripts %>
   <script type="text/javascript">
     <% if current_user %>
@@ -26,49 +20,25 @@
     var logined = false;
     <% end %>
   </script>
-  <% if current_user %>
-  <script type="text/javascript">
-    $(function() {
-      var client = new Faye.Client('http://<%= @zomet_config["server"] %>/faye');
-      var sub_notifies = client.subscribe('/notifications/<%= current_user.slug %>', function(message) {
-        $('#notify_badge').removeClass("force-hide");
-        if ($(document).attr("title").indexOf("(新) ") < 0) {
-          $(document).attr("title", "(新) " + $(document).attr("title"));
-        }
-      });
-    });
-  </script>
-  <% end %>
 </head>
-<body>
+<body class="mobile">
   <div id="header">
     <div class="container">
-      <div class="left_wrapper">
-        <div id="site_name">
-          <a href="/"><%= image_tag("logo.png") %></a>
-        </div>
-        <div id="add_ask">
-          <input type="text" placeholder="搜索问题，话题，会员" />
-          <a href="/asks/new" onclick="return addAsk();">我要提问</a>
-        </div>
-        <script type="text/javascript">
-          Asks.completeAll($("#add_ask input"));
-        </script>
+      <div id="site_name">
+        <a href="/"><%= image_tag("logo.png") %></a>
       </div>
-      <div class="sidebar">
-        <div id="user_bar">
-          <% if not current_user %>
-            <a href="/">随便看看</a>
-            <a href="/login">登录</a>
-            <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
-          <% else %>
-            <a class="home" href="/">首页<span id="notify_badge" class="badge<% if current_user.notifications.unread.count < 1 %> force-hide<% end %>">新</span></a>
-            <%= user_name_tag(current_user) %>
-            <%= link_to('设置', edit_user_registration_path) %>
-            <a href="/logout">退出</a>
-          <% end %>
-        </div>
+      <div id="add_ask">
+        <input type="text" placeholder="搜索问题，话题，会员" />
+        <a href="/asks/new" onclick="return addAsk();"><%= image_tag("add_ask.gif") %></a>
       </div>
+      <script type="text/javascript">
+        Asks.completeAll($("#add_ask input"));
+      </script>
+    </div>
+  </div>
+  <div id="sidebar">
+    <div class="container">
+      <%= yield :sidebar %>
     </div>
   </div>
   <div id="main">
@@ -99,27 +69,19 @@
         <% end %> 
         <%= yield %>
       </div>
-      <div class="sidebar">
-        <%= yield :sidebar %>
-      </div>
     </div>
   </div>
   <div id="footer">
     <div class="container">
-      <div class="left_wrapper">
-        <div class="links">
-          <a href="/about">关于者也</a> • 
-          <a href="/asks/4d95f33bfd503c3bf2000011">每天进步一点</a> •
-          <a href="http://blog.zheye.org" target="_blank">博客</a> •
-          <a href="/register">如何注册</a> •
-          <a href="http://twitter.com/zheyecn" target="_blank">Twitter</a> •
-          <a href="mailto:nowazhu@gmail.com">合作联系</a> •
-          <a href="mailto:huacnlee@gmail.com">反馈</a>
-        </div>
-        <p class="copyright">
-          <%= raw Setting.foot_html %>
-        </p>
-      </div>
+      <a href="/">手机版首页</a>
+      <% if not current_user %>
+        <a href="/login">登录</a>
+        <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
+      <% else %>
+        <%= user_name_tag(current_user) %>
+        <a href="/logout">登出</a>
+      <% end %>
+      <a style="float:right;" href="<%= request.url %>?mobile=false">普通版</a>
     </div>
   </div>
   <%= yield :bottom %>
@@ -146,7 +108,7 @@
         <div class="row">
           <input type="hidden" name="url" value="<%= request.url %>" />
           <label class="string">请填写举报原因:</label>
-          <textarea name="desc" style="width:400px;height:80px;"></textarea>
+          <textarea name="desc" style="width:250px;height:80px;"></textarea>
         </div>
         <div class="acitons">
           <button type="submit">提交</button> <a href="#" style="margin-left:5px;" onclick="$.facebox.close(); return false;">关闭</a>

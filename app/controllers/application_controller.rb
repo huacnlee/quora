@@ -2,7 +2,20 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :all
-  before_filter :load_notice
+  before_filter :init, :load_notice
+  has_mobile_fu
+
+  def init
+    if params[:force_format] == "mobile"
+      cookies[:mobile] = true
+    elsif params[:force_format] == "desktop"
+      cookies[:mobile] = nil
+    end
+
+    if !cookies[:mobile].blank? and request.format.to_sym == :html
+      force_mobile_format
+    end
+  end
 
   def load_notice
     @notice = Notice.last
@@ -14,8 +27,8 @@ class ApplicationController < ActionController::Base
   end
   
   # 暂时不使用mobile-fu的功能，仅仅使用其is_mobile_device?方法
-  include ActionController::MobileFu::InstanceMethods
-  helper_method :is_mobile_device?
+  #include ActionController::MobileFu::InstanceMethods
+  #helper_method :is_mobile_device?
   
   # Comet Server
   use_zomet

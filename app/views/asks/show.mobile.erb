@@ -1,0 +1,202 @@
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    var ask_id = '<%= @ask.id %>';
+    var ask_redirected = false;
+  </script>
+<% end %>
+<%= render 'base' %>
+<% if not @rf_ask.blank? %>
+  <script type="text/javascript">
+    Asks.redirected_tip('<%= @rf_ask.title %>', '<%= @rf_ask.id %>','rf');
+  </script>
+<% end %>
+<% if not @r_ask.blank? %>
+  <script type="text/javascript">
+    ask_redirected = true;
+    Asks.redirected_tip('<%= @r_ask.title %>', '<%= @r_ask.id %>','nr', '<%= @ask.id %>');
+  </script>
+<% end %>
+<div class="ask the-ask" id="ask_<%= @ask.id %>">
+  <% if current_user %>
+  <div class="follow_buttons">
+    <div class="box">
+      <div class="inner">
+        <% if current_user.ask_followed?(@ask) %>
+        <a href="#" style="width:80px;" class="flat_button" onclick="return Asks.unfollow(this);">取消关注</a>
+        <% else %>
+        <a href="#" style="width:80px;" class="gray_button green_button" onclick="return Asks.follow(this);">关注此问题</a>
+        <% end %>
+        <a href="#" class="dropdown" onclick="return Asks.dropdown_menu(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <div class="topics">
+    <div class="item_list">
+      <% if !@ask.topics.blank? %>
+        <%= topics_name_tag(@ask.topics) %>
+      <% else %>
+        <% if current_user %>
+          <span class="no_result">给这个问题选个话题吧，好让别人来回答</span>
+        <% end %>
+      <% end %>
+      <% if current_user %>
+        <a href="#" onclick="return Asks.toggleEditTopics(true);" class="in_place_edit">修改</a>
+      <% end %>
+    </div>
+    <div class="edit_topics" style="display:none">
+      <div class="items">
+        <% if !@ask.topics.blank? %>
+          <% @ask.topics.each_with_index do |item,i| %>
+          <div class="topic">
+            <a href="#" onclick="Asks.removeTopic(this,<%= i %>,'<%= item %>');" class="remove"></a>
+            <span><%= item %></span>
+          </div>
+          <% end %>
+        <% end %>
+      </div>
+      <form data-remote="true" action="<%= ask_path(@ask.id) %>/update_topic" onsubmit="return Asks.beforeAddTopic(this);" method="post">
+        <%= auth_token  %>
+        <input type="text" class="name" id="searchTopic" style="width:100px;" name="name" value="" placeholder="搜索话题" /> 
+        <input type="hidden" name="add" value="1" /> 
+        <button type="submit" class="small">添加</button> 
+        <a href="#" onclick="return Asks.toggleEditTopics(false);">完成</a>
+      </form>
+      <script type="text/javascript">Asks.completeTopic($("#searchTopic"));</script>
+    </div>
+  </div>
+  <div class="title">
+    <h1><%= "#{@ask.to_user.name}：" if !@ask.to_user.blank? %><span id="ask_title"><%= @ask.title %></span></h1>
+    <%= in_place_edit_tag @ask, :title, :type => :textarea, :width => 300, :height => 40, :rich => false, :text_id => "ask_title" %>
+  </div>
+  <div class="md_body">
+    <div id="ask_body"<% if @ask.chomp_body.blank? %> class="blank-body"<% end %>><%= md_body(@ask.chomp_body) %></div>
+    <% if @ask.chomp_body.blank? %>
+      <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body",:label => "添加补充资料" %>
+    <% else %>
+      <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body" %>
+    <% end %>
+  </div>
+  <div class="action">
+    <% if @ask.comments_count == 0 %>
+      <a href="#" onclick="return Asks.toggleComments('ask','<%= @ask.id %>');">添加评论</a>
+    <% else %>
+      <a href="#" onclick="return Asks.toggleComments('ask','<%= @ask.id %>');"><%= @ask.comments_count %> 条评论</a>
+    <% end %>
+    • <a href="#new_answer" onclick="return $('#new_answer .qeditor_preview').focus();">添加答案</a>
+    • <a href="#" onclick="return Asks.report(this);">举报</a>
+    • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return Asks.spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友认为是烂问题以后,问题将会隐藏。" href="#">烂问题</a>
+    <% if !@ask.spams_count.blank? %>(<span id="spams_count"><%= @ask.spams_count %></span>人认为)<% end %>
+    • <span class="date"><%= l @ask.created_at.getlocal, :format => :short %></span>
+  </div>
+</div>
+
+<% if @ask.answers_count > 0 %>
+<div class="answers-count">
+	有<%= @ask.answers_count %>个回答
+</div>
+<% end %>
+
+<div class="answers">
+  <% user_answered = false %>
+  <% if !@answers.blank? %>
+    <% @answers.each do |item| %>
+      <% user_answered = true if owner?(item) %>
+      <%= render("answer", :item => item) %>
+    <% end %>
+  <% end %>
+</div>
+
+<% if current_user %>
+  <% if user_answered %>
+    <div class="disabled_answer">一个问题你只能回答一次，但你可以对现有的回答进行修改。</div>
+  <% elsif !@ask.to_user.blank? and current_user.id != @ask.to_user_id %>
+    <div class="disabled_answer">这个问题是对 <%= user_name_tag(@ask.to_user) %> 提问的，只有<%= user_sex_title(@ask.to_user) %>才能回答。</div>
+  <% else %>
+    <div class="answer_form from">
+      <h2>添加答案</h2>
+      <% if current_user %>
+      <div class="user_info">
+        <%= user_name_tag(current_user) %>,
+        <span id="answer_user_tagline"><%= user_tagline_tag(current_user) %></span>
+        <%= in_place_edit_tag current_user, :tagline, :text_id => "answer_user_tagline", :label => "修改简介" %>
+      </div>
+      <% end %>
+      <%= form_for(@answer, :remote => true, :html => { :onsubmit => "return Asks.beforeAnswer(this);" },
+                   :url => answer_ask_path(@ask.id)) do |f| %>
+        <div class="row">
+          <%= f.text_area :body, :style => "height:100px;", :class => "text long" %>
+        </div>
+        <div class="actions">
+          <button class="submit" type="submit">提交回答</button>
+        </div>
+      <% end %>
+      <script type="text/javascript">
+        $("#answer_body").qeditor({'is_mobile_device': <%= is_mobile_device? ? 'true' : 'false' %>});
+      </script>
+    </div>
+  <% end %>
+<% end %>
+<% content_for :sidebar do %>
+<% end %>
+<div id="ask_sidebar" class="sidebar">
+  <div style="display:none" id="redirect_ask">
+    <div id="redirect_ask_panel" class="facebox_window simple_form">
+      <h2>指向另外个已经存在的问题</h2>
+      <form action="" onsubmit="return Asks.redirect_ask_save(this);">
+        <div class="field">
+          <label>把问题“<%= @ask.title %>”指向:</label>
+          <input type="text" class="search" style="width:250px;" placeholder="搜索标题" />
+          <input type="hidden" class="r_title" />
+          <input type="hidden" class="r_id" />
+        </div>
+        <div class="actions">
+          <button type="submit">确定重定向</button>
+          <a style="margin-left:10px;" onclick="$.facebox.close(); return false;" href="#">取消</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div id="relation_asks" class="box standard">
+    <h2>相关问题</h2>
+    <div class="inner">
+      <ul>
+      <% @relation_asks.each_with_index do |ask,i| %>
+        <li <%= "style='display:none;'" if i > 4 %>><a href="/asks/<%= ask.id %>"><%= ask.title %></a></li>
+      <% end %>
+      <% if @relation_asks.count > 4 %>
+        <li class="more">
+          <a href="#" onclick="$(this).parent().parent().find('li').show();$(this).hide();return false;">查看更多相关问题</a>
+        </li>
+      <% end %>
+      <ul>
+    </div>
+  </div>
+
+  <div class="box standard gray">
+    <h2>问题状态</h2>
+    <div class="inner">
+      <p>最近活动：<%= l @ask.last_updated_at ? @ask.last_updated_at.getlocal : (@ask.answered_at ? @ask.answered_at.getlocal : @ask.updated_at.getlocal), :format => :min %></p>
+      <p>被浏览 <%= @ask.views_count %> 次，<%= @ask.followers.count %> 人关注了该问题</p>
+      <% if @ask.user %>
+      <p><%= user_name_tag(@ask.user) %> 创建了该问题</p>
+      <% end %>
+      <div class="followers">
+        <% for item in @ask.followers %>
+          <%= user_avatar_tag(item,:small) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<% if params[:eawc] == "yes" or params[:easc] == "yes" %>
+	<% content_for :scripts do %>
+	  <script type="text/javascript">
+			$(document).ready(function() {
+				Asks.toggleComments('<%= params[:eawc] == "yes" ? "answer" : "ask" %>','<%= params[:eawc] == "yes" ? params[:awid] : params[:asid] %>');
+			});
+		</script>
+	<% end %>
+<% end %>

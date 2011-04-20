@@ -1,0 +1,13 @@
+<div class="user_profile">
+  <%= render "head", :user => @user %>
+</div>
+<div class="asks">
+  <% @asks.each do |item| %>
+    <%= render "/users/answered_ask", :item => item %>
+  <% end %>
+</div>
+<% if @asks.length == @per_page %>
+  <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
+<% end %>
+<%= render "sidebar", :user => @user %>
+

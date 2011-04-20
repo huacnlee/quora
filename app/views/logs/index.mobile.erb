@@ -1,0 +1,27 @@
+<%= content_for :scripts do %>
+  <script type="text/javascript">
+    var current_page = 2;
+    function loadLogs(){
+      App.loading();
+      $.get("<%= request.path %>.js?page="+current_page,function(){
+          App.loading(false);
+      });
+      return false;
+    }
+  </script>
+<% end %>
+
+<%= render :partial => 'logs/notifies' %>
+
+
+<div class="listing">
+<% for log in @logs %>
+  <%= render "logs/log", :log => log %>
+<% end %>
+</div>
+
+<% if @logs.length == @per_page %>
+  <div class="pagination"><a class="page_more" href="#" onclick="return loadLogs();">查看更多...</a></div>
+<% end %>
+
+<%= render "asks/sidebar" %>
