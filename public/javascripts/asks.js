@@ -80,6 +80,7 @@ var Asks = {
     $.facebox({ div : "#redirect_ask", overlay : false });
     $("#redirect_ask_panel input.search").autocomplete("/search/asks",{
       minChars: 1,
+      delay: 50,
       width: 456,
       scroll : false,
     });
@@ -188,6 +189,7 @@ var Asks = {
   completeTopic : function(el){
     $(el).autocomplete("/search/topics",{
       minChars: 1,
+      delay: 50,
       width: 200,
       scroll : false,
       formatItem : function(data, i, total){
@@ -222,6 +224,7 @@ var Asks = {
     input = $("#ask_to_answer");
     input.autocomplete("/search/users", {
       mincChars: 1,
+      delay: 50,
       width: 206,
       scroll : false,
       formatItem : function(data, i, total){
