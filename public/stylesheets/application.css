@@ -101,6 +101,16 @@ button.gray_button.small
 { padding:2px 10px; line-height:16px; }
 
 
+address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px solid #D0E5F2; }
+
+.box { -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px;
+  border-radius: 5px; background-color: #fff; }
+.standard-box { background-color: #FFFEC8; border: 3px solid #C7C592; padding: 3px 10px; }
+.gray { color: gray; font-color: 1em; }
+.orange { color: #db841c; }
+.green { color: #009c3a; }
+.purple { color: #754962; }
+
 
 /* simple_form style */
 .simple_form { }
