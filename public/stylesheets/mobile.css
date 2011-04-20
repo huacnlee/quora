@@ -2,7 +2,7 @@ input.long,textarea.long { width:98%; }
 textarea.long { height:300px; }
 
 body { text-align:center; background: #505759; font-size:70%; }
-.container {min-width: 320px; margin:0 6px; text-align:left; }
+.container {min-width: 300px; margin:0 6px; text-align:left; }
 address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 2px solid #D0E5F2; }
 
 .box { -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px;
