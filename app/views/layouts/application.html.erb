@@ -29,7 +29,7 @@
 		<% if current_user %>
 		window.WEB_SOCKET_SWF_LOCATION = "http://<%= @zomet_config["server"] %>/WebSocketMain.swf";
 		$(document).ready(function() {
-			var jug = new Juggernaut;
+			var jug = new Juggernaut({port: <% if Rails.env.downcase == "production" %>80<% else %>8080<% end %>});
 			jug.subscribe("/notifications/<%= current_user.slug %>", function(data){
 				$('#notify_badge').removeClass("force-hide");
 				if ($(document).attr("title").indexOf("(新) ") >= 0) {
