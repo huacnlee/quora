@@ -4,10 +4,10 @@ html(lang="en")
     title= "Node/Faye/Jade Tech Demo"
     link(href='http://cachedcommons.org/cache/blueprint/0.9.1/stylesheets/screen-min.css', type='text/css', rel='stylesheet')
     script(type='text/javascript', src='http://cachedcommons.org/cache/jquery/1.4.2/javascripts/jquery-min.js')
-    script(type='text/javascript', src='http://zomet.zheye.info/faye.js')
+    script(type='text/javascript', src='http://127.0.0.1:7777/faye.js')
     script(type='text/javascript')
       $(function() {
-      var client = new Faye.Client('http://zomet.zheye.info/faye');
+      var client = new Faye.Client('http://127.0.0.1:7777/faye');
       var subscription = client.subscribe('/messages', function(message) {
         //alert('recieved ' + message['text']);
         message['text'] = message['text'].replace(/<.*?>/g,'');
@@ -44,7 +44,7 @@ html(lang="en")
           a(href='https://gist.github.com/901738') git
           | . We also have a shiney API (for free):
         p
-          code curl http://zomet.zheye.info/faye -d 'message={"channel":"/messages", "data":{"text":"hello world"}}'
+          code curl http://127.0.0.1:7777/faye -d 'message={"channel":"/messages", "data":{"text":"hello world"}}'
         ul#messages
           li messages will appear here
         form#compose(action='javascript:return false;')

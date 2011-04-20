@@ -1,7 +1,7 @@
 var http = require('http'),
     faye = require('faye'),
     jade = require ('jade'),
-		fugue = require('fugue'),
+		// fugue = require('fugue'),
     fs = require('fs');
 
 var template = fs.readFileSync('index.jade', 'utf8');
@@ -20,5 +20,5 @@ var server = http.createServer(function(request, response) {
 
 bayeux.attach(server);
 
-// server.listen(7777);
-fugue.start(server, 7777, null, 10, {verbose : true, log_file : '/home/jason/logs/zomet.log'});
+server.listen(7777);
+// fugue.start(server, 7777, null, 2, {verbose : true});

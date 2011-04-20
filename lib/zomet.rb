@@ -23,11 +23,8 @@ module Zomet
     def pub_to_browser(options)
       return if !options.is_a?(Hash)
       begin
-        # TODO: 暂时使用新开线程的方式发送，后期可以先队列到Redis，然后开启一个Worker来发送
-        Rails.logger.info "ZOMET: curl http://#{@zomet_config["server"]}/faye -d 'message={\"channel\":\"#{options[:channel]}\", \"data\":{\"#{options[:data_type]}\":#{options[:data]}}}'"
-        Thread.new do
-          Rails.logger.info "ZOMETTED: " + `curl http://#{@zomet_config["server"]}/faye -d 'message={"channel":"#{options[:channel]}", "data":{"#{options[:data_type]}":#{options[:data]}}}'`
-        end
+        Rails.logger.info "ZOMET: #{options.inspect}"
+        Juggernaut.publish(options[:channel], options[:data])
       rescue Exception => e
         Rails.logger.error "ZOMET ERROR: #{e.message}"
       end
