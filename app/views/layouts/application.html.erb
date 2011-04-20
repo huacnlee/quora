@@ -39,19 +39,6 @@
 		});
 		<% end %>
   </script>
-  <% if current_user %>
-  <script type="text/javascript">
-    $(function() {
-      var client = new Faye.Client('http://<%= @zomet_config["server"] %>/faye');
-      var sub_notifies = client.subscribe('/notifications/<%= current_user.slug %>', function(message) {
-        $('#notify_badge').removeClass("force-hide");
-        if ($(document).attr("title").indexOf("(新) ") < 0) {
-          $(document).attr("title", "(新) " + $(document).attr("title"));
-        }
-      });
-    });
-  </script>
-  <% end %>
 </head>
 <body>
   <div id="header">
