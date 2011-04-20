@@ -4,23 +4,34 @@
 <%= render 'base' %>
 
 <div id="cpanel_answers">
-  <%= grid(@answers, :show_filters => :always) do |g|
-    g.column :column_name => '', :attribute_name => '_id'
-        g.column :column_name => 'ask_id', :attribute_name => 'ask_id' do |c|
-      c.ask_id if !c.ask_id.blank?
-    end
-    g.column :column_name => 'body', :attribute_name => 'body', :td_html_attrs => { :style => "width:420px;" } do |c|
-      truncate(c.body,:length => 200) if !c.body.blank?
-    end
-        g.column :column_name => 'comments_count', :attribute_name => 'comments_count' do |c|
-      c.comments_count if !c.comments_count.blank?
-    end
-        g.column :column_name => '创建时间', :attribute_name => 'created_at', :td_html_attrs => { :style => "width:120px;" }
-    g.column :td_html_attrs => { :style => "width:50px; text-align:right;" } do |c|
-      raw "#{link_to '修改', edit_cpanel_answer_path(c.id)}
-      #{link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_answer_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
-    end
-  end %>
+  <table class="wice_grid">
+    <thead>
+      <tr class="wice_grid_title_row">
+        <th>用户</th>
+        <th>内容</th>
+        <th>评论</th>
+        <th>Spam</th>
+        <th>时间</th>
+        <th></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @answers.each_with_index do |item,i| %>
+        <tr class="<%= i.odd? ? "odd" : "even" %>">
+          <td><%= user_name_tag(item.user) %></td>
+          <td><%= item.body %></td>
+          <td style="width:50px;"><%= item.comments_count %></td>
+          <td style="width:50px;"><%= item.spams_count %></td>
+          <td style="width:100px;"><%= l item.created_at.getlocal, :format => :short %></td>
+          <td style="width:50px;">
+            <%= link_to '修改', edit_cpanel_answer_path(item.id) %>
+            <%= link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_answer_path(item.id), :method => :delete, :confirm => '确定要删除吗?' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @answers %>
 </div>
 
 
