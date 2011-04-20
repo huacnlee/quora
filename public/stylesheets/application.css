@@ -273,3 +273,10 @@ button.gray_button.small
 #omniauth_links li.google a { background-position:0 -48px; }
 #omniauth_links li.github a { background-position:0 -113px; }
 #omniauth_links li span { color:#999; margin-left:3px; }
+
+#sys_notice { margin-left: 0; padding: 10px; overflow: hidden; border-radius: 5px;
+  -moz-border-radius: 5px; -webkit-border-radius: 5px; background-color: #fff6c1;
+  border: 3px solid #dec88e; margin-bottom: 20px; }
+#sys_notice .info { margin-top:8px;}
+#sys_notice .date { float:right; margin-top:6px; text-align:right; color:#999; }
+

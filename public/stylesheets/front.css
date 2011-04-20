@@ -57,12 +57,6 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
 .sidebar .sections li a.active { background-color:#DDD; color:#333; cursor:default; }
 
 
-#sys_notice { margin-left: 0; padding: 10px; overflow: hidden; border-radius: 5px;
-  -moz-border-radius: 5px; -webkit-border-radius: 5px; background-color: #fff6c1;
-  border: 3px solid #dec88e; margin-bottom: 20px; }
-#sys_notice .info { margin-top:8px;}
-#sys_notice .date { float:right; margin-top:6px; text-align:right; color:#999; }
-
 #inner_new_ask {}
 #inner_new_ask textarea { display:block; width:387px; height:80px; margin-bottom:8px; }
 #inner_new_ask textarea.title { font-size:16px; font-weight:bold; }
