@@ -18,7 +18,7 @@
 
 #facebox .content {
   display:table;
-  width: 370px;
+  width: 300px;
   padding: 7px 10px 10px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -50,7 +50,6 @@
 
 #facebox .loading {
   text-align: center;
-  display:none;
 }
 
 #facebox .image {

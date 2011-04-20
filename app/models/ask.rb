@@ -51,7 +51,7 @@ class Ask
   # 正常可显示的问题, 前台调用都带上这个过滤
   scope :normal, where(:spams_count.lt => Setting.ask_spam_max)
   scope :last_actived, desc(:answered_at)
-  scope :recent, desc("$natural")
+  scope :recent, desc("created_at")
   # 除开一些 id，如用到 mute 的问题，传入用户的 muted_ask_ids
   scope :exclude_ids, lambda { |id_array| not_in("_id" => (id_array ||= [])) } 
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 
@@ -59,8 +59,8 @@ class Ask
   scope :asked_to, lambda { |to_user_id| where(:to_user_id => to_user_id) }
 
   # FullText indexes
-  search_index(:fields => [:title,:body, :topics],
-               :attributes => [],
+  search_index(:fields => [:title,:topics],
+               :attributes => [:title,:topics],
                :options => {} )
 
   redis_search_index(:title_field => :title,:ext_fields => [:topics])
@@ -180,9 +180,13 @@ class Ask
     result = Ask.search(text,:max_matches => 1)
     words = []
     result.raw_result[:words].each do |w|
-      next if w[0] == "ask"
-      words << ((w[0] == "rubi" and text.downcase.index("ruby")) ? "ruby" : w[0])
+      t = w[0].dup.force_encoding("utf-8")
+      next if t == "ask"
+      words << ((t == "rubi" and text.downcase.index("ruby")) ? "ruby" : t )
     end
+    # 修正顺序
+    words = words.sort { |x,y| (text.index(x) || -1) <=> (text.index(y) || -1) }
+    Rails.logger.debug { "mmseg:#{words}" }
     words
   end
 

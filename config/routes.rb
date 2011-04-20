@@ -35,6 +35,7 @@ Quora::Application.routes.draw do
 
   resources :search do
     collection do
+      get "all"
       get "topics"
       get "asks"
       get "users"
@@ -53,6 +54,8 @@ Quora::Application.routes.draw do
       get "update_topic"
       get "redirect"
       get "invite_to_answer"
+      get "share"
+      post "share"
     end
   end
 

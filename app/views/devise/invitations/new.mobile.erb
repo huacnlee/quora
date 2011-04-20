@@ -1,0 +1,25 @@
+<% content_for :styles do %>
+  <style type="text/css">
+    .tip { margin: 10px 0; }
+  </style>
+<% end %>
+<h2>邀请你的朋友</h2>
+<div class="tip">
+  当您的朋友第一次来时<br />
+  请记得帮助他学会如何提问和回答，就像曾经有人帮助过你一样
+</div>
+<%= simple_form_for resource, :as => resource_name, :url => invitation_path(resource_name) do |f| %>
+  <%= devise_error_messages! %>
+  <%= f.input :name, :label => "姓名" %>
+  <%= f.input :email, :label => "邮箱" %>
+  <%= f.input :tagline, :label => "他的特点", :input_html => { :class => "long" }, :hint => "用简短的话描述这个人的特点,如: 技术牛人,某某网站创始人" %>
+  <button type="submit" class="submit">发送邀请邮件</button>
+<% end %>
+<div style="margin-top:20px;" class="sidebar">
+  <div class="box">
+    <h2>邀请说明</h2>
+    <div class="content">
+      本站是不开放注册的，只有通过邀请才可以加入进来。
+    </div>
+  </div>
+</div>

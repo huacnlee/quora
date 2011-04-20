@@ -2,9 +2,7 @@
 class Cpanel::AnswersController < CpanelController
   
   def index
-    @answers = initialize_grid(Answer, 
-      :order => 'id',
-      :order_direction => 'desc')
+    @answers = Answer.includes([:user]).desc("created_at").paginate(:page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html # index.html.erb

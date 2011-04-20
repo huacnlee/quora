@@ -1,9 +1,10 @@
 # coding: utf-8
 class Topic
   include Mongoid::Document
+  include Mongoid::Sphinx
   include BaseModel
   
-  attr_accessor :current_user_id, :cover_changed
+  attr_accessor :current_user_id, :cover_changed, :followers_count_changed
   field :name
   field :summary
   field :cover
@@ -20,7 +21,31 @@ class Topic
   validates_presence_of :name
   validates_uniqueness_of :name, :case_insensitive => true
 
-  redis_search_index(:title_field => :name)
+  # 以下两个方法是给 redis search index 用
+  def followers_count
+    self.follower_ids.count
+  end
+
+  def followers_count_changed?
+    self.followers_count_changed
+  end
+
+  def cover_small
+    self.cover.small.url
+  end
+
+  def cover_small_changed?
+    self.cover_changed?
+  end
+
+  # FullText indexes
+  search_index(:fields => [:name],
+               :attributes => [:name,:cover_small, :followers_count],
+               :attribute_types => {:cover_small => String, :followers_count => Integer},
+               :options => {} )
+
+  redis_search_index(:title_field => :name,
+                     :ext_fields => [:followers_count,:cover_small])
 
   # 敏感词验证
   before_validation :check_spam_words
@@ -42,7 +67,7 @@ class Topic
 
   before_update :update_log
   def update_log
-    return false if self.current_user_id.blank?
+    return  if self.current_user_id.blank?
     insert_action_log("EDIT") if self.cover_changed or self.summary_changed?
   end
 
@@ -62,7 +87,7 @@ class Topic
           log.diff = ""
           log.save
         rescue Exception => e
-
+          Rails.logger.warn { "Topic save_topics failed! #{e}" }
         end
       end
       new_topics << topic.name

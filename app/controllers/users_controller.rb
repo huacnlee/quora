@@ -110,6 +110,7 @@ class UsersController < ApplicationController
 		auth = request.env["omniauth.auth"]  
 		redirect_to root_path if auth.blank?
     provider_name = auth['provider'].gsub(/^t/,"").titleize
+    Rails.logger.debug { auth }
 
 		if current_user
       Authorization.create_from_hash(auth, current_user)

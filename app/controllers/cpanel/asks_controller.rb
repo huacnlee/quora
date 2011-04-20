@@ -2,9 +2,7 @@
 class Cpanel::AsksController < CpanelController
   
   def index
-    @asks = initialize_grid(Ask, 
-      :order => 'id',
-      :order_direction => 'desc')
+    @asks = Ask.includes([:user]).desc("created_at").paginate(:page => params[:page], :per_page => 40)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,0 +1,120 @@
+.ask { margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px; }
+.the-ask { border-bottom:3px solid #ddd; margin-bottom:1px; }
+.ask h1 { font-size: 1.8em; line-height: 1.3em; letter-spacing: -1px; margin-bottom: 0; }
+
+.ask .topic { -moz-border-radius: 3px; -webkit-border-radius: 3px; margin-right:5px; margin-bottom:5px;
+  padding: 2px 5px; color:#19558D; display:inline-block; background:#dfeaf4; text-decoration:none; height:18px; line-height:18px; }
+.ask a.topic:hover { background:#19558D; color:#FFF; }
+
+.ask .title { font-size: 1.3em; line-height: 1.2em; margin: 2px 0 5px; }
+.ask .small_title { font-size:12px; margin:0px; color:#999; }
+.ask .title h1 { font-size: 1.2em; line-height: 1.2em; display:inline; *font-size: 16px; }
+.ask .info { color: #999; margin:3px 0;  }
+.ask .last_answer { margin-top:5px; }
+.ask .last_answer .votes { display:inline-block;
+  -moz-border-radius: 3px; -webkit-border-radius: 3px;
+  background-color: #DFEAF4; font-size: 1em; line-height: 1.1em; color: #538DC2;
+  font-weight:bold; width:20px; text-align:center; padding: 1px 3px; }
+.ask .last_answer .md_body { margin-left:30px; }
+.ask .savatar { float:right }
+.ask a.smore { background:none; font-size:12px; }
+
+.md_body { font-size:1.2em; color: #333; line-height:21px; margin: 8px 0; }
+.md_body blockquote { padding-left:28px; padding-top:8px; background:#FAEBBC url(/images/lquote.gif) left top no-repeat; }
+.md_body blockquote p { padding-right:28px; padding-bottom:8px; font-size:1em; background:url(/images/rquote.gif) bottom right no-repeat; }
+.md_body code { background: #F4F4F4; display:block; margin:5px; padding:2px; font-size:.6em; font-family:monaco,monospace; line-height:120%; }
+.md_body a { background:url(/images/link_out.gif) 4px right no-repeat; font-size:13px; padding-right:10px; display:inline-block; }
+
+a.page_more  { margin-top:10px; padding:8px 0px; -moz-border-radius: 3px; -webkit-border-radius: 3px; 
+  display:block; text-align:center; font-weight: bold; cursor: pointer; color:#333;
+  background:#FFF url(/images/more_bg.gif) left bottom repeat-x; border: 1px solid #bbb; font-size: .9em; }
+a.page_more:hover { color: #333; border-bottom: 1px solid #999; text-decoration: none; }
+a.page_more:active { background: #E0E0E0; border-color: #777; text-shadow: none; }
+
+a.tag { margin:0px 2px; }
+
+a.in_place_edit { font-weight:normal; cursor:pointer; background:url(/images/edit.gif) left  center no-repeat; padding-left:18px; padding-right:5px;
+  font-size:12px; -moz-border-radius: 3px; -webkit-border-radius: 3px; color:#999; }
+a.in_place_edit:hover {color: #405A04; background-color:#c3dd82; text-decoration:none; }
+
+.in_place_editing { }
+.in_place_editing a.cancel { margin-left:10px; }
+.in_place_editing a { background:none; padding:0; }
+.in_place_editing textarea {width: 95%; height:100px;}
+
+a.user img.small { width:25px; height:25px; }
+a.user img.normal { width:100px; height:100px; }
+
+.answers { margin:10px 0 20px; }
+.answers .vote_buttons { float:left; width:20px; position:relative; margin-top:5px; margin-right:8px; margin-left:-27px; }
+.answers .vote_buttons a:link, 
+.answers .vote_buttons a:visited {  display:block; width:20px; height:17px;  background-color: #DFEAF4; background-image: url(/images/vote.gif); background-position: top left; background-repeat: no-repeat; margin-bottom: 1px;
+  -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+.answers .vote_buttons a:hover, .answers .vote_buttons a.voted { background-color:#19558D; background-position: left -17px; }
+.answers .vote_buttons a.vote_down:link, 
+.answers .vote_buttons a.vote_down:visited { background-position: -20px top; }
+.answers .vote_buttons a.vote_down:hover, .answers .vote_buttons a.vote_down.voted { background-color:#19558D; background-position: -20px -17px; }
+.answers .answer_border { padding-right:30px; }
+.answers .avatar_border { margin-top:2px; float:right; width:24px; margin-left:6px; }
+
+.answers .answer { border-bottom:1px solid #DDD; padding:8px 0; margin-bottom:3px; }
+.answers .answer .info { color: #999; margin:3px 0;  }
+
+.ask .info a.user,
+.answer .author { color:#666; }
+.answer .author a.user { font-weight:bold; margin-right:2px; }
+.answer .votes { color:#999; margin-bottom:4px; }
+.answer .votes a { color:#999; }
+.answer .attr { float: left; margin-top: 2px; } 
+.answer .data { margin-left: 10px; } 
+.answer .data .md_body, .answer .data .author { margin-left: 25px; } 
+.answers .spam_answer .md_body { color:#999; font-size:12px; text-decoration :line-through; }
+.answers .spam_answer .author a { color:#666;  }
+.answers .spam_answer .vote_buttons,
+.answers .spam_answer .votes,
+.answers .spam_answer .action { display:none; }
+
+.disabled_answer { background:#ddd; padding:8px; text-align:center; }
+
+.answer .action,
+.ask .action { color:#999; margin:3px 0; }
+.ask .action a,
+.answer .action a { color:#538DC2; }
+.answer .action a.voted { color:#666; }
+.ask .action a.flagged { color:#999; }
+
+.answer a.spamed,
+.answer a.spamed:hover,
+.answer a.thanked,
+.answer a.thanked:hover,
+.ask a.spamed,
+.ask a.spamed:hover { cursor:default; text-decoration:none; color:#999; }
+
+.answer_form { }
+.answer_form h2 { color:#999; }
+.answer_form .user_info { margin:5px 0; }
+
+.comments { margin-top:10px; }
+.comments h2 { font-size:1em; color:#333; }
+.comments .comment { font-size:.9em; *font-size:12px; padding-left:15px; margin-top:8px; background:url(/images/comment_bg.gif) left top no-repeat; }
+.comments .comment .md_body { }
+.comments .comment .info { }
+.comments .form { height: 50px; }
+.comments .form textarea { float:left; height: 30px; width:300px; margin-right:6px;  }
+
+.answers-count {
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 8px 0;
+	color: #999;
+	font-size: 13px;
+}
+.ask .topic a.remove { float:right; margin-left:3px; margin-top:2px; }
+
+#topic { margin-bottom:10px; }
+#topic h1 { font-size:2em; }
+#topic .cover { width: 100px; float:left; margin-right:20px; }
+#topic .cover .edit { display:none; position: relative; background:url(/images/shadow1.png);  margin-top:-22px;  width: 100%;}
+#topic .cover .edit a {display:block; background:url(/images/edit1.gif) 15px center no-repeat; color:#fff;
+  height:22px; line-height:22px; padding-left:30px; overflow:hidden; }
+#topic .info { float:left; width:450px; }

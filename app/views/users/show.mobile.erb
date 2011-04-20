@@ -1,0 +1,60 @@
+<%= content_for :scripts do %>
+  <script type="text/javascript">
+		function follow(el, id){
+      App.loading();
+			$(el).attr("onclick", "return false;");
+			$.get("/users/"+id+"/follow",{}, function(res){
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');">取消关注</a>');
+	    });
+      return false;
+    }
+		
+		function unfollow(el, id){
+      App.loading();
+			$(el).attr("onclick", "return false;");
+			$.get("/users/"+id+"/unfollow",{}, function(res){
+        App.loading(false);
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @user.slug %>\');">关注</a>');
+	    });
+      return false;
+    }
+  </script>
+<% end %>
+
+<div class="user_profile">
+  <div id="user_profile_follow">
+    <div class="box">
+      <div class="inner">
+        <% if current_user and current_user != @user %>
+          <div class="box">
+            <div class="inner">
+              <% if current_user.followed?(@user) %>
+              <a href="#" class="flat_button" onclick="return Users.unfollow(this, '<%= @user.slug %>','');">取消关注</a>
+              <% else %>
+              <a href="#" class="green_button" onclick="return Users.follow(this, '<%= @user.slug %>','');">关注</a>
+              <!-- <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a> -->
+              <% end %>
+            </div>
+          </div>
+        <% elsif owner? @user %>
+          这就是你自己
+        <% else %>
+          登录后你可以关注<%= user_sex_title(@user) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%= render "head", :user => @user %>
+  
+	<br>
+	<% for log in @logs %>
+	<%= render "logs/log", :log => log %>
+	<% end %>
+
+	<% if @logs.length == @per_page %>
+	  <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
+	<% end %>
+</div>
+<%= render "sidebar", :user => @user %>
+<br>

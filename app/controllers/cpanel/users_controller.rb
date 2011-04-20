@@ -2,9 +2,7 @@
 class Cpanel::UsersController < CpanelController
   
   def index
-    @users = initialize_grid(User, 
-      :order => 'id',
-      :order_direction => 'desc')
+    @users = User.desc("created_at").paginate(:page => params[:page], :per_page => 40)
 
     respond_to do |format|
       format.html # index.html.erb

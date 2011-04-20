@@ -6,11 +6,11 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title><%= raw @page_title %><%= Setting.app_name %></title>
-	<% if use_yahei_font?(request.env["HTTP_USER_AGENT"]) %>
-  <%= stylesheet_link_tag "font","application","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front" %>
-	<% else %>
-	<%= stylesheet_link_tag "font_no_cleartype","application","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front_for_xp" %>
-	<% end %>
+  <% if use_yahei_font?(request.env["HTTP_USER_AGENT"]) %>
+  <%= stylesheet_link_tag "font","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front" %>
+  <% else %>
+  <%= stylesheet_link_tag "font_no_cleartype","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front_for_xp" %>
+  <% end %>
 	<%= yield :styles %>
   <meta name="keywords" content="<%= @meta_keywords %>" />
   <meta name="description" content="<%= @meta_description %>" />
@@ -39,6 +39,19 @@
 		});
 		<% end %>
   </script>
+  <% if current_user %>
+  <script type="text/javascript">
+    $(function() {
+      var client = new Faye.Client('http://<%= @zomet_config["server"] %>/faye');
+      var sub_notifies = client.subscribe('/notifications/<%= current_user.slug %>', function(message) {
+        $('#notify_badge').removeClass("force-hide");
+        if ($(document).attr("title").indexOf("(新) ") < 0) {
+          $(document).attr("title", "(新) " + $(document).attr("title"));
+        }
+      });
+    });
+  </script>
+  <% end %>
 </head>
 <body>
   <div id="header">
@@ -48,9 +61,12 @@
           <a href="/"><%= image_tag("logo.png") %></a>
         </div>
         <div id="add_ask">
-          <input type="text" placeholder="搜索问题，话题，会员" onclick="return showSearchComplete(this,'click');" onkeyup="return showSearchComplete(this,'keyup');" />
+          <input type="text" placeholder="搜索问题，话题，会员" />
           <a href="/asks/new" onclick="return addAsk();">我要提问</a>
         </div>
+        <script type="text/javascript">
+          Asks.completeAll($("#add_ask input"));
+        </script>
       </div>
       <div class="sidebar">
         <div id="user_bar">
@@ -103,7 +119,7 @@
   </div>
   <div id="footer">
     <div class="container">
-      <div class="left_wrapper">
+      <div class="inner">
         <div class="links">
           <a href="/about">关于者也</a> • 
           <a href="/asks/4d95f33bfd503c3bf2000011">每天进步一点</a> •
@@ -112,10 +128,11 @@
           <a href="http://twitter.com/zheyecn" target="_blank">Twitter</a> •
           <a href="mailto:nowazhu@gmail.com">合作联系</a> •
           <a href="mailto:huacnlee@gmail.com">反馈</a>
+          <a style="float:right;" href="/?force_format=mobile">手机版</a>
         </div>
-        <p class="copyright">
+        <div class="copyright">
           <%= raw Setting.foot_html %>
-        </p>
+        </div>
       </div>
     </div>
   </div>

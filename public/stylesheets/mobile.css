@@ -1,0 +1,74 @@
+input.long,textarea.long { width:98%; }
+textarea.long { height:300px; }
+
+body { text-align:center; background: #505759; font-size:70%; }
+.container {min-width: 300px; margin:0 6px; text-align:left; }
+address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 2px solid #D0E5F2; }
+
+.box { -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px;
+	border-radius: 5px; }
+
+#header { background: #000; height: 35px; color:#FFF; }
+#header .container { margin:0px; }
+#header #site_name { background-color:#a82400; color:#FFF; height:35px; width:68px; text-align:center; line-height:35px;  float:left;
+  font-size:20px; font-weight:bold;  }
+#header #site_name a { color:#FFF; text-decoration:none; }
+#header #site_name a img { border:0; }
+#header #add_ask { display:inline-block; background:#000; height:35px; line-height:35px; padding:0 6px; overflow:hidden; }
+#header #add_ask input { width: 207px; font-size: 16px;height: 18px; line-height:18px; border:0; margin-top: 2px; }
+#header #add_ask a img { margin-bottom:-3px; }
+
+#header #user_bar { padding-top:10px; text-align:right; margin-right:4px; width: 210px !important; _width: 220px;  }
+#header #user_bar a { color: #B9BBBC; font-size:12px; display:inline-block; margin-right:8px; }
+
+#footer { clear:both; padding:18px 0; color: #FFF;  }
+#footer a { color:#FFF; }
+#footer .links {   margin-bottom:5px;  }
+
+#header:after, #main:after, .ask:after, .notification-title:after, .answer:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after, .followed-item li .item:after {
+    content:""; display:block; visibility:hidden; height:0; clear:both; }
+
+#main { padding:10px 0px; background:#FFF; clear:both; }
+
+#main_sections { list-style: none; margin:10px 0; }
+#main_sections li { background: #767B7C; float: left; margin-right: 5px;
+  padding: 5px; width: 70px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+#main_sections li a { color: white; float: left; font-size: 11px; position: relative;
+  text-align: center; text-shadow: 0 1px #303030; width: 100%;}
+
+#inner_new_ask {}
+#inner_new_ask textarea { display:block; width:97%; height:80px; margin-bottom:8px; }
+#inner_new_ask textarea.title { font-size:1.6em; font-weight:bold; }
+
+.ask .follow_buttons { margin-bottom:10px; }
+
+.full-body {
+	display: none;
+}
+
+#main .force-hide, #header .force-hide {
+	display: none;
+}
+
+#ask_sidebar { margin-top:20px; }
+.sidebar { }
+.sidebar .box { margin-bottom:20px; }
+.sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1.2em; margin-bottom: 3px; }
+.leftbox .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1.2em; margin-bottom: 3px; }
+.leftbox .box { margin-bottom:20px; }
+.sidebar li { line-height:160%; }
+.sidebar .standard ul { margin: 0; padding: 0; }
+.sidebar .standard ul li { list-style: none; margin: 6px 0 8px; *text-indent: -16px; }
+
+.answers .vote_buttons { float:left; width:20px;  margin-top:0px; margin-right:8px; position:normal; margin-left:0; }
+ 
+#user_sidebar { margin-top: 15px; }
+#user_profile_follow { float:right; }
+#topic_follow_border { float:right; }
+
+#topic .info { width:auto; }
+
+.in_place_editing { }
+.in_place_editing a.cancel { margin-left:10px; }
+.in_place_editing a { background:none; padding:0; }
+.in_place_editing textarea { display:block; margin-bottom:3px; height:100px;}

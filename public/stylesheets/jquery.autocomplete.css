@@ -45,6 +45,12 @@
 .ac_odd {
 }
 
-.ac_over {
+.ac_results li.ac_over {
 	color:#256098;background-color:#e1f0f7;
 }
+
+.ac_results li.ac_no_result,
+.ac_results li.ac_default,
+.ac_results li.ac_no_result.ac_over,
+.ac_results li.ac_default.ac_over { background:#ddd; color:#333; cursor:auto; }
+

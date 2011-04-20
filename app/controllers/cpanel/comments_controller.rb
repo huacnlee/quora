@@ -2,9 +2,7 @@
 class Cpanel::CommentsController < CpanelController
   
   def index
-    @comments = initialize_grid(Comment, 
-      :order => 'id',
-      :order_direction => 'desc')
+    @comments = Comment.desc("created_at").paginate(:page => params[:page], :per_page => 40)
 
     respond_to do |format|
       format.html # index.html.erb

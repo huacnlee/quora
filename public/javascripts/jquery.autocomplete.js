@@ -1,5 +1,5 @@
 /*
- * jQuery Autocomplete plugin 1.1
+ * jQuery Autocomplete plugin 1.2.1
  *
  * Copyright (c) 2009 Jörn Zaefferer
  *
@@ -7,7 +7,9 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * Revision: $Id: jquery.autocomplete.js 15 2009-08-22 10:30:27Z joern.zaefferer $
+ * With small modifications by Alfonso Gómez-Arzola.
+ * See changelog for details.
+ *
  */
 
 ;(function($) {
@@ -97,8 +99,8 @@ $.Autocompleter = function(input, options) {
 		switch(event.keyCode) {
 		
 			case KEY.UP:
-				event.preventDefault();
 				if ( select.visible() ) {
+					event.preventDefault();
 					select.prev();
 				} else {
 					onChange(0, true);
@@ -106,8 +108,8 @@ $.Autocompleter = function(input, options) {
 				break;
 				
 			case KEY.DOWN:
-				event.preventDefault();
 				if ( select.visible() ) {
+					event.preventDefault();
 					select.next();
 				} else {
 					onChange(0, true);
@@ -115,8 +117,8 @@ $.Autocompleter = function(input, options) {
 				break;
 				
 			case KEY.PAGEUP:
-				event.preventDefault();
 				if ( select.visible() ) {
+  				event.preventDefault();
 					select.pageUp();
 				} else {
 					onChange(0, true);
@@ -124,8 +126,8 @@ $.Autocompleter = function(input, options) {
 				break;
 				
 			case KEY.PAGEDOWN:
-				event.preventDefault();
 				if ( select.visible() ) {
+  				event.preventDefault();
 					select.pageDown();
 				} else {
 					onChange(0, true);
@@ -158,14 +160,20 @@ $.Autocompleter = function(input, options) {
 		// results if the field no longer has focus
 		hasFocus++;
 	}).blur(function() {
-		hasFocus = 0;
+	  hasFocus = 0;
 		if (!config.mouseDownOnSelect) {
 			hideResults();
 		}
 	}).click(function() {
 		// show select when clicking in a focused field
-		if ( hasFocus++ > 1 && !select.visible() ) {
-			onChange(0, true);
+		// but if clickFire is true, don't require field
+		// to be focused to begin with; just show select
+		if( options.clickFire ) {
+      onChange(0, true);
+		} else {
+		  if ( hasFocus++ > 1 && !select.visible() ) {
+  			onChange(0, true);
+  		}
 		}
 	}).bind("search", function() {
 		// TODO why not just specifying both arguments?
@@ -189,7 +197,7 @@ $.Autocompleter = function(input, options) {
 	}).bind("flushCache", function() {
 		cache.flush();
 	}).bind("setOptions", function() {
-		$.extend(options, arguments[1]);
+		$.extend(true, options, arguments[1]);
 		// if we've updated the data, repopulate
 		if ( "data" in arguments[1] )
 			cache.populate();
@@ -237,12 +245,18 @@ $.Autocompleter = function(input, options) {
 	}
 	
 	function onChange(crap, skipPrevCheck) {
-		if( lastKeyPressCode == KEY.DEL ) {
-			select.hide();
-			return;
-		}
+		/*if( lastKeyPressCode == KEY.DEL ) {*/
+			/*// select.hide();*/
+			/*return;*/
+		/*}*/
 		
 		var currentValue = $input.val();
+    if(currentValue.length == 0){
+      // TODO show default tip
+      select.display("default", "");
+      select.show();
+      return;
+    }
 		
 		if ( !skipPrevCheck && currentValue == previousValue )
 			return;
@@ -254,7 +268,7 @@ $.Autocompleter = function(input, options) {
 			$input.addClass(options.loadingClass);
 			if (!options.matchCase)
 				currentValue = currentValue.toLowerCase();
-			request(currentValue, receiveData, hideResultsNow);
+			request(currentValue, receiveData, function(){});
 		} else {
 			stopLoading();
 			select.hide();
@@ -310,6 +324,7 @@ $.Autocompleter = function(input, options) {
 		select.hide();
 		clearTimeout(timeout);
 		stopLoading();
+    return false;
 		if (options.mustMatch) {
 			// call search and run callback
 			$input.search(
@@ -337,7 +352,11 @@ $.Autocompleter = function(input, options) {
 			autoFill(q, data[0].value);
 			select.show();
 		} else {
-			hideResultsNow();
+      // 没有搜索到内容
+      // return false;
+      select.display(null,q);
+			select.show();
+			// hideResultsNow();
 		}
 	};
 
@@ -414,8 +433,8 @@ $.Autocompleter.defaults = {
 	matchCase: false,
 	matchSubset: true,
 	matchContains: false,
-	cacheLength: 10,
-	max: 100,
+	cacheLength: 100,
+	max: 1000,
 	mustMatch: false,
 	extraParams: {},
 	selectFirst: true,
@@ -424,7 +443,11 @@ $.Autocompleter.defaults = {
 	autoFill: false,
 	width: 0,
 	multiple: false,
-	multipleSeparator: ", ",
+	multipleSeparator: " ",
+	inputFocus: true,
+	clickFire: false,
+  defaultHTML : "输入文本开始搜索",
+  noResultHTML : "没有找到相关内容.",
 	highlight: function(value, term) {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 	},
@@ -592,7 +615,15 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		.hide()
 		.addClass(options.resultsClass)
 		.css("position", "absolute")
-		.appendTo(document.body);
+		.appendTo(document.body)
+		.hover(function(event) {
+		  // Browsers except FF do not fire mouseup event on scrollbars, resulting in mouseDownOnSelect remaining true, and results list not always hiding.
+		  if($(this).is(":visible")) {
+		    input.focus();
+		  }
+		  config.mouseDownOnSelect = false;
+			//console.debug(config.mouseDownOnSelect);
+		});
 	
 		list = $("<ul/>").appendTo(element).mouseover( function(event) {
 			if(target(event).nodeName && target(event).nodeName.toUpperCase() == 'LI') {
@@ -602,8 +633,8 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		}).click(function(event) {
 			$(target(event)).addClass(CLASSES.ACTIVE);
 			select();
-			// TODO provide option to avoid setting focus again after selection? useful for cleanup-on-focus
-			input.focus();
+			if( options.inputFocus )
+			  input.focus();
 			return false;
 		}).mousedown(function() {
 			config.mouseDownOnSelect = true;
@@ -658,27 +689,38 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			? options.max
 			: available;
 	}
-	
+
+  /* 填充下拉列表 */
 	function fillList() {
-		list.empty();
-		var max = limitNumberOfItems(data.length);
-		for (var i=0; i < max; i++) {
-			if (!data[i])
-				continue;
-			var formatted = options.formatItem(data[i].data, i+1, max, data[i].value, term);
-			if ( formatted === false )
-				continue;
-			var li = $("<li/>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
-			$.data(li, "ac_data", data[i]);
-		}
-		listItems = list.find("li");
-		if ( options.selectFirst ) {
-			listItems.slice(0, 1).addClass(CLASSES.ACTIVE);
-			active = 0;
-		}
-		// apply bgiframe if available
-		if ( $.fn.bgiframe )
-			list.bgiframe();
+    list.empty();
+    if(data == null || data.length == 0){
+			var li = $("<li/>").html( options.noResultHTML ).addClass("ac_no_result").appendTo(list)[0];
+			$.data(li,"ac_data", null);
+    }
+    else if(data == "default"){
+			var li = $("<li/>").html( options.defaultHTML ).addClass("ac_default").appendTo(list)[0];
+			$.data(li,"ac_data", null);
+    }
+    else{
+      var max = limitNumberOfItems(data.length);
+      for (var i=0; i < max; i++) {
+        if (!data[i])
+          continue;
+        var formatted = options.formatItem(data[i].data, i+1, max, data[i].value, term);
+        if ( formatted === false )
+          continue;
+        var li = $("<li/>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
+        $.data(li, "ac_data", data[i]);
+      }
+      listItems = list.find("li");
+      if ( options.selectFirst ) {
+        listItems.slice(0, 1).addClass(CLASSES.ACTIVE);
+        active = 0;
+      }
+    }
+    // apply bgiframe if available
+    if ( $.fn.bgiframe )
+      list.bgiframe();
 	}
 	
 	return {
@@ -723,7 +765,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			var offset = $(input).offset();
 			element.css({
 				width: typeof options.width == "string" || options.width > 0 ? options.width : $(input).width(),
-				top: offset.top + input.offsetHeight - 1,
+				top: offset.top + input.offsetHeight,
 				left: offset.left
 			}).show();
             if(options.scroll) {
@@ -744,9 +786,8 @@ $.Autocompleter.Select = function (options, input, select, config) {
 						// IE doesn't recalculate width when scrollbar disappears
 						listItems.width( list.width() - parseInt(listItems.css("padding-left")) - parseInt(listItems.css("padding-right")) );
 					}
-                }
-                
-            }
+        }
+      }
 		},
 		selected: function() {
 			var selected = listItems && listItems.filter("." + CLASSES.ACTIVE).removeClass(CLASSES.ACTIVE);

@@ -4,23 +4,32 @@
 <%= render 'base' %>
 
 <div id="cpanel_users">
-  <%= grid(@users, :show_filters => :no) do |g|
-    g.column :column_name => '', :attribute_name => '_id'
-      g.column :column_name => 'email', :attribute_name => 'email' do |c|
-      c.email if !c.email.blank?
-    end
-      g.column :column_name => 'name', :attribute_name => 'name' do |c|
-      c.name if !c.name.blank?
-    end
-      g.column :column_name => 'slug', :attribute_name => 'slug' do |c|
-      c.slug if !c.slug.blank?
-    end
-      g.column :column_name => '创建时间', :attribute_name => 'created_at', :td_html_attrs => { :style => "width:210px;" }
-    g.column :td_html_attrs => { :style => "width:60px; text-align:right;" } do |c|
-      raw "#{link_to '修改', edit_cpanel_user_path(c.id)}
-      #{link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_user_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
-    end
-  end %>
+  <table class="wice_grid">
+    <thead>
+      <tr class="wice_grid_title_row">
+        <th>姓名</th>
+        <th>Email</th>
+        <th>Slug</th>
+        <th>时间</th>
+        <th></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each_with_index do |item,i| %>
+        <tr class="<%= i.odd? ? "odd" : "even" %>">
+          <td><%= item.name %></td>
+          <td><%= item.email %></td>
+          <td><%= item.slug %></td>
+          <td style="width:100px;"><%= l item.created_at.getlocal, :format => :short %></td>
+          <td style="width:50px;">
+            <%= link_to '修改', edit_cpanel_user_path(item.id) %>
+            <%= link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_user_path(item.id), :method => :delete, :confirm => '确定要删除吗?' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @users %>
 </div>
 
 

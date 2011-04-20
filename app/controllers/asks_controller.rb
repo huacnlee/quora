@@ -6,8 +6,7 @@ class AsksController < ApplicationController
   
   def index
     @per_page = 20
-    @asks = Ask.normal.recent.includes(:user,:topics)
-                .paginate(:page => params[:page], :per_page => @per_page)
+    @asks = Ask.normal.recent.includes(:user).paginate(:page => params[:page], :per_page => @per_page)
     set_seo_meta("所有问题")
   end
 
@@ -71,6 +70,25 @@ class AsksController < ApplicationController
       @ask.redirect_cancel
       render :text => "1"
     end
+  end
+
+  def share
+    @ask = Ask.find(params[:id])
+    if request.get?
+      if current_user
+        render "share", :layout => false
+      else
+        render_404
+      end
+    else
+      case params[:type]
+      when "email"
+        UserMailer.simple(params[:to], params[:subject], params[:body].gsub("\n","<br />")).deliver
+        @success = true
+        @msg = "已经将问题连接发送到了 #{params[:to]}"
+      end
+    end
+
   end
 
   def answer
