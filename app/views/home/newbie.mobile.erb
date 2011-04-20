@@ -1,0 +1,50 @@
+<%= render :partial => 'logs/notifies' %>
+
+<div class="newbie">
+	<h1>欢迎来到者也</h1>
+	<div class="welcome">
+		这里是一个满足你各种好奇、求知、探索、社交、讨论欲望的地方。她由来自无数行业无数地方的 <span class="orange">人们</span>、各种他们提出的 <span class="green">问题</span> 以及各个用以组织问题的 <span class="purple">话题</span> 组成。你可以利用顶部的搜索框来尝试搜索你感兴趣的关键词，并关注一些话题、问题或者人。当你关注过之后，你可以看到这些人、问题的动态，还可以在“<a href="/followed">我关注的问题</a>”里看到你感兴趣的新老问题。
+	</div>
+	<br>
+	有时候去“<a href="<%= doing_path %>">者也正在发生</a>”闲逛也是不错的发现感兴趣的问题和讨论的方法。
+	<br>
+	<br>
+	
+	<% if !@hot_topics.nil? and @hot_topics.size > 0 %>
+	<h2>或者你可以去看看这些最近比较热门的话题：</h2>
+	<ul class="hot-topics">
+		<% for topic in @hot_topics %>
+		<li><a href="<%= topic_path(topic) %>"><%= topic %></a></li>
+		<% end %>
+	</ul>
+	<% end %>
+	
+	<% 
+	waiting_asks = @asks.where(:answers_count.lte => 2).where(:created_at.lte => (Time.now - 12.hours)).limit(10)
+	if waiting_asks.size > 0
+	%>
+	<br>
+	<h2>又或者是去给这些等待回答的问题添加一些你所知道的答案：</h2>
+	<ul class="hot-asks">
+		<% for ask in waiting_asks %>
+		<li><a href="<%= ask_path(ask) %>"><%= ask.title %></a></li>
+		<% end %>
+	</ul>
+	<% end %>
+	
+	<% if @asks.size > 0 %>
+	<br>
+	<h2>还可以看看这些热门问题：</h2>
+	<ul class="hot-asks">
+		<% for ask in @asks.order_by(:answers_count.desc, :views_count.desc).limit(10) %>
+		<li><a href="<%= ask_path(ask) %>"><%= ask.title %></a></li>
+		<% end %>
+	</ul>
+	<% end %>
+	
+	<br>
+	<p>
+		祝你在“者也”愉快。
+	</p>
+</div>
+<%= render "asks/sidebar" %>

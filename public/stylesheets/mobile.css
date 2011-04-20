@@ -7,7 +7,6 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 2px 
 
 .box { -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px;
 	border-radius: 5px; }
-.standard-box { background-color: #FFFEC8; border: 3px solid #C7C592; padding: 3px 10px; }
 
 #header { background: #000; height: 35px; color:#FFF; }
 #header .container { margin:0px; }

@@ -2,7 +2,7 @@
   <ul id="main_sections" class="clearfix">
     <% if current_user %>
     <li>
-      <a href="<%= root_path %>" class="home<%= ' active' if params[:controller] == "home" and ["index","newbie"].index(params[:action]) %>">我的首页</a>
+      <a href="<%= root_path %>" class="home<%= ' active' if params[:controller] == "home" and ["index","newbie"].index(params[:action]) %>">首页</a>
     </li>
     <li>
       <a href="<%= asks_path %>" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>

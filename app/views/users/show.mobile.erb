@@ -47,24 +47,6 @@
   </div>
   <%= render "head", :user => @user %>
   
-  <div class="box gray">
-    <h2></h2>
-    <ul class="follow-stats">
-      <li>
-        <a href="<%= followers_user_path(@user.slug) %>"><strong>
-        <%= @user.follower_ids.size %></strong>
-        <span>关注<%= user_sex_title(@user) %>的人</span>
-        </a>
-      </li>
-      <li class="last">
-        <a href="<%= following_user_path(@user.slug) %>"><strong>
-        <%= @user.following_ids.size %></strong>
-        <span><%= user_sex_title(@user) %>关注的人</span>
-        </a>
-      </li>
-    </ul>
-    <div class="user-regdate">注册于 <%= l @user.created_at.to_date, :format => :long %></div>
-  </div>
 	<br>
 	<% for log in @logs %>
 	<%= render "logs/log", :log => log %>
