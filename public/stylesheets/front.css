@@ -21,7 +21,8 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
 
 #header #user_bar { padding-top:10px; text-align:right; margin-right:4px; width: 210px !important; _width: 220px;  }
 #header #user_bar a { color: #B9BBBC; font-size:12px; display:inline-block; margin-right:8px; }
-#footer { clear:both; padding-top:25px; height:80px; color: gray;  }
+#footer { clear:both; padding-top:25px;  height:80px; color: gray;  }
+#footer .inner { margin-left: 68px; border-top:1px solid #ccc; padding-top:10px;}
 #footer .links {   margin-bottom:5px;  }
 
 #header:after, #main:after, .ask:after, .notification-title:after, .answer:after, .user_profile .uname:after, .follow-stats:after, .followed-item li:after, .newbie ul.hot-topics:after, .followed-item li .item:after {
