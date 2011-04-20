@@ -3,7 +3,7 @@
   :url => (@comment.id.blank? ? cpanel_comments_path : cpanel_comment_path(@comment.id)) ) do |f| %>
 
   <div class="inputs">
-  <%= f.input :body %>
+    <%= f.input :body, :as => :text %>
   <%= f.input :user_id %>
   <%= f.input :commentable_type %>
   <%= f.input :commentable_id %>

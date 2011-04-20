@@ -4,25 +4,30 @@
 <%= render 'base' %>
 
 <div id="cpanel_topics">
-  <%= grid(@topics, :show_filters => :always) do |g|
-    g.column :column_name => '', :attribute_name => '_id'
-        g.column :column_name => 'name', :attribute_name => 'name' do |c|
-      c.name if !c.name.blank?
-    end
-        g.column :column_name => 'summary', :attribute_name => 'summary' do |c|
-      c.summary if !c.summary.blank?
-    end
-        g.column :column_name => 'cover', :attribute_name => 'cover' do |c|
-      c.cover if !c.cover.blank?
-    end
-        g.column :column_name => 'asks_count', :attribute_name => 'asks_count' do |c|
-      c.asks_count if !c.asks_count.blank?
-    end
-    g.column :td_html_attrs => { :style => "width:50px; text-align:right;" } do |c|
-      raw "#{link_to '修改', edit_cpanel_topic_path(c.id)}
-      #{link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_topic_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
-    end
-  end %>
+  <table class="wice_grid">
+    <thead>
+      <tr class="wice_grid_title_row">
+        <th>名称</th>
+        <th>封面</th>
+        <th>问题数</th>
+        <th></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @topics.each_with_index do |item,i| %>
+        <tr class="<%= i.odd? ? "odd" : "even" %>">
+          <td><%= item.name %></td>
+          <td><%= image_tag(item.cover.small.url) %></td>
+          <td style="width:50px;"><%= item.asks_count %></td>
+          <td style="width:50px;">
+            <%= link_to '修改', edit_cpanel_topic_path(item.id) %>
+            <%= link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_topic_path(item.id), :method => :delete, :confirm => '确定要删除吗?' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @topics %>
 </div>
 
 

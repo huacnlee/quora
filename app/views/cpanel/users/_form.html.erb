@@ -7,7 +7,7 @@
   <%= f.input :name %>
   <%= f.input :slug %>
   <%= f.input :tagline %>
-  <%= f.input :bio %>
+  <%= f.input :bio, :as => :text %>
   <%= f.input :avatar %>
   <% if not @user.avatar.blank? %>
   <div class="row">
