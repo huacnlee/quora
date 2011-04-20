@@ -17,21 +17,27 @@
   <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
   <%= csrf_meta_tag %>
   <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
-	<script type="text/javascript" src="http://<%= @zomet_config["server"] %>/faye.js">
+	<script src="http://<%= @zomet_config["server"] %>/application.js" type="text/javascript" charset="utf-8"></script>
   <%= yield :scripts %>
   <script type="text/javascript">
     <% if current_user %>
     var logined = true;
-		$(function() {
-			var client = new Faye.Client('http://<%= @zomet_config["server"] %>/faye');
-			var sub_notifies = client.subscribe('/notifications/<%= current_user.slug %>', function(message) {
-				$('#notify_badge').removeClass("force-hide");
-				$(document).attr("title", "(新) " + $(document).attr("title"));
-			});
-		});
     <% else %>
     var logined = false;
     <% end %>
+
+		<% if current_user %>
+		window.WEB_SOCKET_SWF_LOCATION = "http://<%= @zomet_config["server"] %>/WebSocketMain.swf";
+		$(document).ready(function() {
+			var jug = new Juggernaut;
+			jug.subscribe("/notifications/<%= current_user.slug %>", function(data){
+				$('#notify_badge').removeClass("force-hide");
+				if ($(document).attr("title").indexOf("(新) ") >= 0) {
+					$(document).attr("title", "(新) " + $(document).attr("title"));
+				}
+			});
+		});
+		<% end %>
   </script>
 </head>
 <body>
