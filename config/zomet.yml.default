@@ -1,5 +1,5 @@
 default: &defaults
-  server: 'localhost:7777'
+  server: 'localhost'
 
 development:
   <<: *defaults
