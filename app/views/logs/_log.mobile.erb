@@ -164,9 +164,7 @@ when "AnswerLog"
 					<% end %>
 				<% end %>
 	    </div> 
-			<% if action == "NEW" and log.user
-				Rails.logger.info "log: #{log.inspect}"
-				 %>
+			<% if action == "NEW" and log.user %>
 	    <div class="last_answer answer">
 	      <div class="attr">
 	        <span class="votes"><%= log.answer.votes_count %></span>

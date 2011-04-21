@@ -286,9 +286,7 @@ class User
   
   # 推荐给我的人或者话题
   def related_items
-    # related_people = self.following.inject([]) do |memo, person|
-    #       memo += person.following
-    #     end
+    # TODO: 把结果cache到redis
     related_people = self.followed_topics.inject([]) do |memo, topic|
       memo += topic.followers
     end.uniq
