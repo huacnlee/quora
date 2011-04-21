@@ -279,6 +279,7 @@ var Asks = {
     else{
       html += '<span class="name">'+data[0]+'</span>';
     }
+    html += '<span class="scate">话题</span>';
     html += '</p>';
     html += '<p class="count">'+count+' 个关注者</p></div>';
     return html;

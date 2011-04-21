@@ -182,6 +182,7 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
 .ac_results li:hover { background:#e1f0f7; }
 .ac_results li:hover a { color:#256098; }
 .ac_results li .cate { color:#333; margin:0 5px; float:right; }
+.ac_results li .scate { color:#666; margin-left:6px;}
 .ac_results li a .light { font-weight:bold;  }
 .ac_results li.more { font-weight:bold; color:#000; }
 .ac_results li .type { margin-left:8px; }
@@ -189,6 +190,7 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
 .ac_results li .uinfo { margin:2px 0; line-height:150%; }
 .ac_results li .uinfo a { line-height:18px;}
 .ac_results li .tagline { color:#999; font-size:12px; }
+.ac_results li .count { color:#999; font-size:12px;}
 
 .dropdown_menu { background:#ddd; }
 .dropdown_menu .contextual_dialog_content {
