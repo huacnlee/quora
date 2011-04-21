@@ -69,13 +69,21 @@ class User
     self.avatar_changed?
   end
 
+  # 用户评分，暂时方案
+  def score
+    self.answers_count + self.follower_ids.count * 2
+  end
+  def score_changed?
+    self.answers_count_changed?
+  end
+
   # FullText indexes
   search_index(:fields => [:name,:slug],
                :attributes => [:name,:slug,:avatar_small,:tagline],
                :attribute_types => {:avatar_small => String, :tagline => String},
                :options => {} )
   redis_search_index(:title_field => :name, 
-                     :ext_fields => [:id, :slug,:avatar_small,:tagline])
+                     :ext_fields => [:id, :slug,:avatar_small,:tagline, :score])
 
   # 敏感词验证
   before_validation :check_spam_words

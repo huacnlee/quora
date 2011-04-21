@@ -25,6 +25,7 @@ class SearchController < ApplicationController
 
   def topics
     result = Search.complete(params[:q].strip,:type => "Topic",:limit => 10)
+    result = Search.sort_result(result, "Topic")
     if params[:format] == "json"
       lines = []
       result.each do |item|
@@ -55,6 +56,7 @@ class SearchController < ApplicationController
 
   def users 
     result = Search.complete(params[:q],:type => "User",:limit => 10)
+    result = Search.sort_result(result, "User")
     if params[:format] == "json"
       render :json => result.to_json
     else

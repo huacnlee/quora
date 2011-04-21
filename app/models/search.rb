@@ -121,4 +121,15 @@ class Search
     end
     result
   end
+  
+  def self.sort_result(items, type)
+    return items if items.blank?
+    case type
+    when "Topic"
+      items = items.sort { |x,y| y['followers_count'] <=> x['followers_count'] }
+    when "User"
+      items = items.sort { |x,y| y['score'] <=> x['score'] }
+    end
+    items
+  end
 end
