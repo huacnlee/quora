@@ -67,7 +67,7 @@
 	border-bottom: 1px dotted #C8C8C8;
 }
 
-.topic-listing li.last, .followers-listing li.last {
+.topic-listing li.last, .followers-listing li.last, .followed-item li.first {
 	border: none;
 }
 

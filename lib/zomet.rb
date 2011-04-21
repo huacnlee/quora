@@ -18,7 +18,9 @@ module Zomet
   module InstanceMethods
     def load_zomet_config
       @zomet_config = YAML.load_file("#{Rails.root}/config/zomet.yml")[Rails.env]
-      @zomet_config["port"] ||= URI.parse("http://#{@zomet_config["server"]}").port
+      uri = URI.parse("http://#{@zomet_config["server"]}")
+      @zomet_config["host"] ||= uri.host
+      @zomet_config["port"] ||= uri.port
     end
     
     def pub_to_browser(options)

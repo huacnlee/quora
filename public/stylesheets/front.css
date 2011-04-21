@@ -41,7 +41,7 @@ body { text-align:center; }
 
 .sidebar .sections { font-size:14px; }
 .sidebar .sections li { display:inline; }
-.sidebar .sections li a { display:block; padding:5px 18px; margin-bottom:4px;
+.sidebar .sections li a { display:block; padding:3px 18px; margin-bottom:3px;
   background:url(/images/section_arrow.gif) left center no-repeat; }
 .sidebar .sections li a:hover,
 .sidebar .sections li a.active { background-color: #DFEAF4; text-decoration: none; }

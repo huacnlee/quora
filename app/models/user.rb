@@ -275,6 +275,24 @@ class User
     
     [notifies, notifications]
   end
+  
+  # 推荐给我的人或者话题
+  def related_items
+    # related_people = self.following.inject([]) do |memo, person|
+    #       memo += person.following
+    #     end
+    related_people = self.followed_topics.inject([]) do |memo, topic|
+      memo += topic.followers
+    end.uniq
+    related_people = related_people - self.following - [self] if related_people
+    
+    related_topics = self.following.inject([]) do |memo, person|
+      memo += person.followed_topics
+    end.uniq
+    related_topics -= self.followed_topics if related_topics
+    
+    return related_people + related_topics
+  end
 
   protected
   

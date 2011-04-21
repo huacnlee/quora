@@ -48,4 +48,5 @@ module Quora
 end
 
 require "string_extensions"
+require "array_extensions"
 require "zomet"

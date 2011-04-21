@@ -29,7 +29,7 @@
 		<% if current_user %>
 		window.WEB_SOCKET_SWF_LOCATION = "http://<%= @zomet_config["server"] %>/WebSocketMain.swf";
 		$(document).ready(function() {
-			var jug = new Juggernaut({host: '<%= @zomet_config["server"] %>', port: <%= @zomet_config["port"] || 80 %>});
+			var jug = new Juggernaut({host: '<%= @zomet_config["host"] %>', port: <%= @zomet_config["port"] || 80 %>});
 			jug.subscribe("/notifications/<%= current_user.slug %>", function(data){
 				$('#notify_badge').removeClass("force-hide");
 				if ($(document).attr("title").indexOf("(新) ") < 0) {

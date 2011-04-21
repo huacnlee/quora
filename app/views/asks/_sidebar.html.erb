@@ -26,13 +26,32 @@
     </ul>
   </div>
 	<% if current_user %>
-	<div class="box">
-		<h2>邀请好友</h2>
-    <ul class="sections">
-			<li>
-	      <a href="<%= new_user_invitation_path %>">邀请你的朋友注册</a>
-	    </li>
-		</ul>
-	</div>
+		<div class="box">
+			<h2>邀请好友</h2>
+	    <ul class="sections">
+				<li>
+		      <a href="<%= new_user_invitation_path %>">邀请你的朋友注册</a>
+		    </li>
+			</ul>
+		</div>
+	
+		<%
+		related = current_user.related_items
+	
+		if related.size > 0
+		%>
+		<div class="box">
+			<h2>你可能会关注的人或话题</h2><br>
+	    <ul class="followed-item listing">
+				<% for item in related.random_pick(6) %>
+					<% if item.is_a?(User) %>
+					<%= render "home/recommended_user", :follower => item %>
+					<% elsif item.is_a?(Topic) %>
+					<%= render "home/recommended_topic", :topic => item %>
+					<% end %>
+				<% end %>
+			</ul>
+		</div>
+		<% end %>
   <% end %>
 <% end %>

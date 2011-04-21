@@ -5,7 +5,7 @@ action = log.action.gsub("ADDTOPIC", "ADD_TOPIC").gsub("DELTOPIC", "DEL_TOPIC")
 case log._type
 when "AskLog"
 	item = log.ask
-	if !item.blank?
+	if !item.blank? and item.spams_count < Setting.ask_spam_max
 %>
 	<div class="ask" ask-id="<%= log.id %>">
 		<div class="savatar">
@@ -82,7 +82,8 @@ when "UserLog"
   elsif ["THANK_ANSWER"].include?(action)
     item = Answer.first(:conditions => {:id => log.target_id})
 	end
-	if !item.nil?
+
+	if !item.nil? or (item.is_a?(Ask) and item.spams_count < Setting.ask_spam_max)
 %>	
 	<div class="ask" ask-id="<%= log.id %>">
 		<% if ["FOLLOW_TOPIC", "UNFOLLOW_TOPIC"].include?(action) %>
@@ -141,7 +142,7 @@ when "UserLog"
 when "AnswerLog"
 	if log.answer
 		item = log.answer.ask
-		if !item.nil?
+		if !item.nil? and item.spams_count < Setting.ask_spam_max
 %>
 	<div class="ask" ask-id="<%= item.id %>">
 		<div class="savatar">
