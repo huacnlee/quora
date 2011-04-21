@@ -292,7 +292,7 @@ class User
 
   # 推荐给我的人或者话题
   def suggest_items
-    return UserSuggestItem.gets(self.id, :redis_limit => 100, :limit => 6)
+    return UserSuggestItem.gets(self.id, :limit => 6)
   end
   
   # 刷新推荐的人
