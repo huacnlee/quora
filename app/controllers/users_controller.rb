@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def init_user
     @user = User.find_by_slug(params[:id])
-    if @user.blank?
+    if @user.blank? or !@user.deleted.blank?
       render_404
     end
     @ask_to_user = Ask.new
