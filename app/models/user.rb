@@ -205,6 +205,9 @@ class User
     topic.followers << self
     topic.followers_count_changed = true
     topic.save
+
+    # 清除推荐话题
+    UserSuggestItem.delete(self.id, "Topic", topic.id)
     
     insert_follow_log("FOLLOW_TOPIC", topic)
   end
@@ -223,6 +226,9 @@ class User
   def follow(user)
     user.followers << self
     user.save
+
+    # 清除推荐话题
+    UserSuggestItem.delete(self.id, "User", user.id)
 
     # 发送被 Follow 的邮件
     UserMailer.be_followed(user.id,self.id).deliver
@@ -286,7 +292,7 @@ class User
 
   # 推荐给我的人或者话题
   def suggest_items
-    return UserSuggestItem.gets(self.id, :limit => 10)
+    return UserSuggestItem.gets(self.id, :redis_limit => 100, :limit => 6)
   end
   
   # 刷新推荐的人
@@ -312,13 +318,8 @@ class User
       # 跳过删除的用户
       next if klass == "User" and item.deleted == 1
       usi = UserSuggestItem.new(:user_id => self.id, 
-                          :type => klass,
-                          :id => item.id,
-                          :suid => nil,
-                          :name => item.name,
-                          :image => (klass == "User" ? item.avatar.small.url : item.cover.small.url),
-                          :summary => (klass == "User" ? item.tagline : item.summary))
-      usi.slug = item.slug if klass == "User"
+                                :type => klass,
+                                :id => item.id)
       if usi.save
         saved_count += 1
       end
