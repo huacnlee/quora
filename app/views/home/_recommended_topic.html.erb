@@ -1,8 +1,14 @@
 <li>
 	<div class="item">
-    <%= topic_name_tag(topic) %>
+		<div class="left">
+      <%= topic_cover_tag(topic,:small) %>
+		</div>
+		<div class="right">
+      <%= topic_name_tag(topic, :prefix => "#") %>
+      <div class="tagline">话题</div>
+		</div>
 	</div>
 	<div class="action">
-		<a class="green_button small" href="#" onclick="return Topics.follow(this, '<%= topic['name'] %>','small');">关注</a>
+		<a class="green_button small" href="#" onclick="return Topics.follow(this, '<%= topic.name %>','small');">关注</a>
 	</div>
 </li>
