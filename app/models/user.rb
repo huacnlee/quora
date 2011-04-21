@@ -283,9 +283,14 @@ class User
     
     [notifies, notifications]
   end
-  
+
   # 推荐给我的人或者话题
-  def related_items
+  def suggest_items
+    return UserSuggestItem.gets(self.id, :limit => 10)
+  end
+  
+  # 刷新推荐的人
+  def refresh_suggest_items
     # TODO: 把结果cache到redis
     related_people = self.followed_topics.inject([]) do |memo, topic|
       memo += topic.followers
@@ -297,7 +302,28 @@ class User
     end.uniq
     related_topics -= self.followed_topics if related_topics
     
-    return related_people + related_topics
+    items = related_people + related_topics
+    # 存入 Redis
+    saved_count = 0
+    # 先删除就的缓存
+    UserSuggestItem.delete_all(self.id)
+    items.each do |item|
+      klass = item.class.to_s
+      # 跳过删除的用户
+      next if klass == "User" and item.deleted == 1
+      usi = UserSuggestItem.new(:user_id => self.id, 
+                          :type => klass,
+                          :id => item.id,
+                          :suid => nil,
+                          :name => item.name,
+                          :image => (klass == "User" ? item.avatar.small.url : item.cover.small.url),
+                          :summary => (klass == "User" ? item.tagline : item.summary))
+      usi.slug = item.slug if klass == "User"
+      if usi.save
+        saved_count += 1
+      end
+    end
+    saved_count
   end
 
   protected
