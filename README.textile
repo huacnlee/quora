@@ -1,8 +1,15 @@
 Quora clone write in Ruby on Rails.
 
-h1. Installation
+h2. Requirements
 
-base on ubuntu 10.04
+* Linux or Mac OS X (Don't try it on Windows, and send me error messages to me!)
+* Ruby 1.9.2
+* MongoDB 1.8
+* Redis 2.2.2
+* Node.js 0.4.5
+* Coreseek 4.0.1 (In English content, you can use Sphinx 1.10)
+
+h2. Installation
 
 pre. 
 git clone git://github.com/huacnlee/quora.git
