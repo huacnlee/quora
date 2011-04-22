@@ -297,7 +297,6 @@ class User
   
   # 刷新推荐的人
   def refresh_suggest_items
-    # TODO: 把结果cache到redis
     related_people = self.followed_topics.inject([]) do |memo, topic|
       memo += topic.followers
     end.uniq
