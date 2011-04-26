@@ -51,28 +51,21 @@
 }
 
 /* 向用户推荐感兴趣的内容 */
-.followed-item {
-	padding: 0;
-	margin: 0;
-	font-size: 1.1em;
-}
-
-.followed-item li {
-	list-style: none;
-	padding-top:10px;
-  height: 45px;
-	border-top: 1px solid #eee;
-} 
-.followed-item li .mute { padding-top:4px; float:left; position:relative; margin-left: -28px; padding-right:5px; padding-left:6px;
+.followed-item { padding: 0; margin: 0; font-size: 1.1em; }
+.followed-item li { list-style: none; height:55px; overflow:hidden;  margin-left:-28px; padding-left:28px; position:relative; } 
+.followed-item li .info { border-top:1px solid #eee; padding-top:10px; }
+.followed-item li .mute { padding-top:14px; float:left; position:relative; margin-left: -28px; padding-right:5px; padding-left:6px;
   width:17px; height:45px; display:none; }
 .followed-item li .mute a { background:#DFEAF4 url(/images/x.gif) -2px -1px no-repeat; display:block;
   height: 15px; width: 15px;margin-bottom:1px;
   -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+.followed-item li .mute a:hover { background-color:#369; background-position:-2px -18px; }
 
 .topic-listing li, .followers-listing li {
 	border-top: none;
 	border-bottom: 1px dotted #C8C8C8;
 }
+
 
 .topic-listing li.last, .followers-listing li.last, .followed-item li.first {
 	border: none;

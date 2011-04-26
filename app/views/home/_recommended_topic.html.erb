@@ -1,17 +1,19 @@
 <li>
   <div class="mute">
-    <a href="#" title="不感兴趣" onclick="Users.mute_suggest_item(this,'Topic','<%= topic.id %>');"></a>
+    <a href="#" title="不感兴趣" onclick="return Users.mute_suggest_item(this,'Topic','<%= topic.id %>');"></a>
   </div>
-	<div class="item">
-		<div class="left">
-      <%= topic_cover_tag(topic,:small) %>
-		</div>
-		<div class="right">
-      <%= topic_name_tag(topic, :prefix => "#") %>
-      <div class="tagline">话题</div>
-		</div>
-	</div>
-	<div class="action">
-		<a class="green_button small" href="#" onclick="return Topics.follow(this, '<%= topic.name %>','small');">关注</a>
-	</div>
+  <div class="info clearfix">
+    <div class="item">
+      <div class="left">
+        <%= topic_cover_tag(topic,:small) %>
+      </div>
+      <div class="right">
+        <%= topic_name_tag(topic, :prefix => "#") %>
+        <div class="tagline">话题</div>
+      </div>
+    </div>
+    <div class="action">
+      <a class="green_button small" href="#" onclick="return Topics.follow(this, '<%= topic.name %>','small');">关注</a>
+    </div>
+  </div>
 </li>

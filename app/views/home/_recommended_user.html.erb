@@ -1,17 +1,19 @@
 <li>
   <div class="mute">
-    <a href="#" title="不感兴趣" onclick="Users.mute_suggest_item(this,'User','<%= follower.id %>');"></a>
+    <a href="#" title="不感兴趣" onclick="return Users.mute_suggest_item(this,'User','<%= follower.id %>');"></a>
   </div>
-	<div class="item">
-		<div class="left">
-      <%= user_avatar_tag(follower,:small) %>
-		</div>
-		<div class="right">
-      <p><%= user_name_tag(follower) %></p>
-			<p class="tagline"><%= truncate(follower.tagline,:length => 9, :truncate_string =>"…") %></p>
-		</div>
-	</div>
-	<div class="action">
-		<a class="green_button small" href="#" onclick="return Users.follow(this, '<%= follower.slug %>','small');">关注</a>
-	</div>
+  <div class="info clearfix">
+    <div class="item">
+      <div class="left">
+        <%= user_avatar_tag(follower,:small) %>
+      </div>
+      <div class="right">
+        <p><%= user_name_tag(follower) %></p>
+        <p class="tagline"><%= truncate(follower.tagline,:length => 9, :truncate_string =>"…") %></p>
+      </div>
+    </div>
+    <div class="action">
+      <a class="green_button small" href="#" onclick="return Users.follow(this, '<%= follower.slug %>','small');">关注</a>
+    </div>
+  </div>
 </li>
