@@ -11,5 +11,5 @@ var commentText = $("textarea", commentForm);
   %>
   commentForm.before("<%= escape_javascript(raw(html)) %>");
 <% end %>
-commentText.text("").focus();
+commentText.val("").focus();
 App.loading(false);

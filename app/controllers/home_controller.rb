@@ -1,6 +1,6 @@
 # coding: utf-8
 class HomeController < ApplicationController
-  before_filter :require_user_text, :only => [:update_in_place]
+  before_filter :require_user_text, :only => [:update_in_place,:mute_suggest_item]
   before_filter :require_user, :except => [:about,:index]
 
   def index
@@ -169,6 +169,11 @@ class HomeController < ApplicationController
     ReportSpam.add(params[:url],params[:desc],name)
     flash[:notice] = "举报信息已经提交，谢谢你。"
     redirect_to params[:url]
+  end
+
+  def mute_suggest_item
+    UserSuggestItem.mute(current_user.id, params[:type].strip.titleize, params[:id])
+    render :text => "1"
   end
 
 end

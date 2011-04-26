@@ -1,4 +1,7 @@
 <li>
+  <div class="mute">
+    <a href="#" title="不感兴趣" onclick="Users.mute_suggest_item(this,'Topic','<%= topic.id %>');"></a>
+  </div>
 	<div class="item">
 		<div class="left">
       <%= topic_cover_tag(topic,:small) %>

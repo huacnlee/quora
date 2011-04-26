@@ -297,7 +297,6 @@ class User
   
   # 刷新推荐的人
   def refresh_suggest_items
-    # TODO: 把结果cache到redis
     related_people = self.followed_topics.inject([]) do |memo, topic|
       memo += topic.followers
     end.uniq
@@ -313,8 +312,11 @@ class User
     saved_count = 0
     # 先删除就的缓存
     UserSuggestItem.delete_all(self.id)
+    mutes = UserSuggestItem.get_mutes(self.id)
     items.shuffle.each do |item|
       klass = item.class.to_s
+      # 跳过 mute 的信息
+      next if mutes.include?({"type" => klass, "id" => item.id.to_s})
       # 跳过删除的用户
       next if klass == "User" and item.deleted == 1
       usi = UserSuggestItem.new(:user_id => self.id, 

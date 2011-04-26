@@ -23,7 +23,7 @@ body { text-align:center; }
 .left_wrapper { float:left; width:630px; }
 #footer .left_wrapper ,
 #main .left_wrapper { margin-left:70px; margin-right:20px; width:605px; }
-.sidebar { float:right; width:210px; overflow:hidden; _width:190px; }
+.sidebar { float:right; width:210px; _width:190px; }
 .sidebar .box { margin-bottom:20px; }
 .sidebar .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1.2em; margin-bottom: 3px; }
 .leftbox .box h2 { border-top: 1px dotted silver; padding: 15px 0 3px; color: #333; font-size: 1.2em; margin-bottom: 3px; }

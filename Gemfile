@@ -70,3 +70,6 @@ gem "resque_mailer"
 
 # Comet
 gem "juggernaut"
+
+# Diff 内容并输出 HTML 格式
+gem "htmldiff", :git => "git://github.com/huacnlee/htmldiff.git"
