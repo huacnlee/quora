@@ -72,3 +72,5 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 2px 
 .in_place_editing a.cancel { margin-left:10px; }
 .in_place_editing a { background:none; padding:0; }
 .in_place_editing textarea { display:block; margin-bottom:3px; height:100px;}
+
+#ask_to_user form textarea { width:98%; }
