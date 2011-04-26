@@ -59,11 +59,11 @@
 
 .followed-item li {
 	list-style: none;
-	padding: 10px 0;
+	padding-top:10px;
   height: 45px;
-	border-top: 1px dotted #C8C8C8;
+	border-top: 1px solid #eee;
 } 
-.followed-item li .mute { padding-top:4px; float:left; position:relative; margin-left: -22px; padding-right:5px;
+.followed-item li .mute { padding-top:4px; float:left; position:relative; margin-left: -28px; padding-right:5px; padding-left:6px;
   width:17px; height:45px; display:none; }
 .followed-item li .mute a { background:#DFEAF4 url(/images/x.gif) -2px -1px no-repeat; display:block;
   height: 15px; width: 15px;margin-bottom:1px;
