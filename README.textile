@@ -20,6 +20,7 @@ bundle install --path vendor/bundle
 cp config/mongoid.yml.default config/mongoid.yml
 cp config/setting.yml.default config/setting.yml
 cp config/redis.yml.default config/redis.yml
+cp config/zomet.yml.default config/zomet.yml
 script/rails s -e development_mongohq
 
 Then, open your browser, points to localhost:3000
