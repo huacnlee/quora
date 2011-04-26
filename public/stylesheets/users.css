@@ -63,7 +63,11 @@
 
 .topic-listing li, .followers-listing li {
 	border-top: none;
-	border-bottom: 1px dotted #C8C8C8;
+  padding:10px 0;
+  margin-left:0;
+  padding-left:0;
+  border-top:1px solid #eee;
+  height:auto;
 }
 
 
