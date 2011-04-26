@@ -1,4 +1,7 @@
 <li>
+  <div class="mute">
+    <a href="#" title="不感兴趣" onclick="Users.mute_suggest_item(this,'User','<%= follower.id %>');"></a>
+  </div>
 	<div class="item">
 		<div class="left">
       <%= user_avatar_tag(follower,:small) %>

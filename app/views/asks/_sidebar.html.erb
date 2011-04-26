@@ -51,6 +51,9 @@
           <% end %>
         </ul>
       </div>
+      <script type="text/javascript">
+        $("ul.followed-item li").mouseenter(function(){ $(this).find(".mute").show(); }).mouseleave(function(){ $(this).find(".mute").hide(); });
+      </script>
     <% end %>
   <% end %>
 <% end %>

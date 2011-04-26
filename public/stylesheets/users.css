@@ -50,6 +50,7 @@
 	margin: 10px 0 10px 10px;
 }
 
+/* 向用户推荐感兴趣的内容 */
 .followed-item {
 	padding: 0;
 	margin: 0;
@@ -59,8 +60,14 @@
 .followed-item li {
 	list-style: none;
 	padding: 10px 0;
+  height: 45px;
 	border-top: 1px dotted #C8C8C8;
 } 
+.followed-item li .mute { padding-top:4px; float:left; position:relative; margin-left: -22px; padding-right:5px;
+  width:17px; height:45px; display:none; }
+.followed-item li .mute a { background:#DFEAF4 url(/images/x.gif) -2px -1px no-repeat; display:block;
+  height: 15px; width: 15px;margin-bottom:1px;
+  -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 
 .topic-listing li, .followers-listing li {
 	border-top: none;
