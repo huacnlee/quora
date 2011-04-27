@@ -24,12 +24,14 @@ module UsersHelper
   end
 
   def user_tagline_tag(user,options = {})
+    return "" if user.blank?
     prefix = options[:prefix] || ""
     return "" if user.tagline.blank?
     raw "#{prefix}#{truncate(user.tagline, :length => 30)}"
   end
 
   def user_sex_title(user)
+    return "" if user.blank?
     if current_user
       return "我" if user.id == current_user.id
     end
