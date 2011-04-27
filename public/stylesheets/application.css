@@ -31,24 +31,30 @@ a.gray_button,
 a.dropdown { 
   background: #EEE;
   display:inline-block;
-  line-height:24px;
+  line-height:22px;
   padding:2px 10px 1px 10px;
   background:#FFF url(/images/gray_button_bg.gif) bottom left repeat-x;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   text-decoration:none;
-  color:#000;
+  color:#444;
+  text-shadow: 0 1px #F0F0F0;
   border:1px solid #bbb;
   border-color: #BBB #BBB #999 #999;
   text-align:center;
 }
+
 a.gray_button:active,
+a.gray_button.active { background:#CCC; border-color: #999; }
+
 a.dropdown:active,
-a.gray_button.active,
-a.dropdown.active {
-  background:#CCC;
-  border-color: #999;
-}
+a.dropdown.active { background:#999; border-color: #999; color:#FFF;
+  -moz-border-radius: 0px; -webkit-border-radius: 0px; text-shadow: 0 0; }
+a.dropdown span.settings { margin:0 4px; font-weight:bold;  padding-left:15px; 
+  background-image:url(/images/settings.gif); background-position: left 2px; background-repeat:no-repeat; }
+a.dropdown:active span.settings,
+a.dropdown.active span.settings { background-position: left -13px; background-repeat:no-repeat; }
+
 a.gray_button.small,
 button.gray_button.small { line-height:18px; padding:2px 10px; }
 
@@ -56,7 +62,7 @@ a.flat_button{
   background: #ddd;
   border:1px solid #ddd;
   display:inline-block;
-  line-height:24px;
+  line-height:22px;
   padding:2px 10px 1px 10px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -77,7 +83,7 @@ a.green_button {
   border:1px solid #8CB332;
   border-bottom: 1px solid #648517;
   display:inline-block;
-  line-height:24px;
+  line-height:22px;
   padding:2px 10px 1px 10px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -164,7 +170,7 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
 .dialog_content .tip { padding:8px 8px; background:#ddd; }
 .dialog_content .complete { padding:0; margin:0; background:#FFF; }
 .dialog_content .complete li { list-style:none; padding:0px 8px; cursor:pointer;
-  overflow:hidden; line-height:24px; }
+  overflow:hidden; line-height:22px; }
 .dialog_content .complete li:hover { background:#e1f0f7; }
 .dialog_content .complete li:hover a { color:#256098; }
 .dialog_content .complete li .cate { color:#333; margin:0 5px; float:right; }
@@ -178,7 +184,7 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
 
 .ac_results { padding:0; margin:0; background:#FFF; }
 .ac_results li { list-style:none; padding:0px 8px; cursor:pointer;
-  overflow:hidden; line-height:24px; }
+  overflow:hidden; line-height:22px; }
 .ac_results li:hover { background:#e1f0f7; }
 .ac_results li:hover a { color:#256098; }
 .ac_results li .cate { color:#333; margin:0 5px; float:right; }
