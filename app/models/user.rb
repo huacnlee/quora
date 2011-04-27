@@ -59,7 +59,7 @@ class User
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug
-  validates_format_of :slug, :with => /[a-z0-9\-\_]+/i
+  validates_format_of :slug, :with => /[a-z0-9\-\_]{4,20}/i
 
   # 以下两个方法是给 redis search index 用
   def avatar_small
