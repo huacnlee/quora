@@ -530,6 +530,44 @@ var Asks = {
     return false;
   },
 
+  showSuggestTopics : function(topics){
+    html = '<div id="ask_suggest_topics" class="ask"><div class="container"><label>根据您的问题，我们推荐了一些话题（点击添加）:</label>';
+    for(var i=0;i<topics.length;i++) {
+      html += '<a href="#" class="topic" onclick="return Asks.addSuggestTopic(this,\''+topics[i]+'\');">'+topics[i]+'</a>';
+    }
+    html += '<a class="gray_button small" href="#" onclick="return Asks.closeSuggestTopics();">完成</a>';
+    html += "</div></div>";
+    $("#main").before(html);
+  },
+
+  addSuggestTopic : function(el,name){
+    App.loading();
+    var csrf = App.getCSRF();
+    $.ajax({
+      url : "/asks/"+ask_id+"/update_topic.js?"+ csrf.key + "=" + csrf.value,
+      data : {
+        name : name,
+        add : 1
+      },
+      dataType : "text",
+      type : "post",
+      success : function(res){
+        App.loading(false);
+        Asks.addTopic(name);
+        $(el).remove();
+        if($("#ask_suggest_topics a.topic").length == 0){
+          $("#ask_suggest_topics").remove();
+        }
+      }
+    });
+    return false;
+  },
+  
+  closeSuggestTopics : function(){
+    $("#ask_suggest_topics").fadeOut("fast",function(){ $(this).remove(); });
+    return false;
+  },
+
   version : function(){
   }
 

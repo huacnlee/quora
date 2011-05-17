@@ -171,6 +171,17 @@ var App = {
     return false;
   },
 
+  /**
+   * Get Rails CSRF key and value
+   * result:
+   * { key : "", value : "" }
+   */
+  getCSRF : function(){
+    key = $("meta[name=csrf-param]").attr("content");
+    value = $("meta[name=csrf-token]").attr("content");
+    return { key : key, value : value };
+  },
+
   varsion : function(){
     return "1.0";
   }

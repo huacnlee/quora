@@ -2,6 +2,7 @@
   <script type="text/javascript">
     var ask_id = '<%= @ask.id %>';
     var ask_redirected = false;
+
   </script>
 <% end %>
 <%= render 'base' %>
@@ -14,6 +15,11 @@
   <script type="text/javascript">
     ask_redirected = true;
     Asks.redirected_tip('<%= @r_ask.title %>', '<%= @r_ask.id %>','nr', '<%= @ask.id %>');
+  </script>
+<% end %>
+<% if !@suggest_topics.blank? %>
+  <script type="text/javascript">
+    Asks.showSuggestTopics(<%=raw @suggest_topics.to_json %>);
   </script>
 <% end %>
 <div class="ask the-ask" id="ask_<%= @ask.id %>">

@@ -261,6 +261,11 @@ address, blockquote { font-style: normal; padding: 0 0 0 10px; border-left: 3px 
   padding: 5px 10px; z-index: 101;}
 #redirected_tip label { margin-left:70px; }
 
+#ask_suggest_topics { background: #FFC; border-bottom: 3px solid #CC9;
+  font-size: 12px; padding: 5px 10px; z-index: 101;}
+#ask_suggest_topics label { margin-left:70px; }
+#ask_suggest_topics a.topic { margin:0 5px; font-weight:bold; }
+
 #ask_invited_users { }
 #ask_invited_users .invite { background: #F5F5F5; border-bottom: 1px solid #E0E0E0; float: left; margin: 3px 3px 0 0;
   -moz-border-radius: 3px; -webkit-border-radius: 3px;
