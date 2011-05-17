@@ -15,6 +15,9 @@ class AskSuggestTopic
     topics = Topic.any_in(:name => words.collect { |w| /^#{w}$/i } )
     topics.sort { |a,b| b.followers_count <=> a.followers_count }
     topics_array = topics.collect { |t| t.name }
+    if topics_array.length > 8
+      topics_array = topics_array[0,8]
+    end
 
     item.topics = topics_array
     item.save
