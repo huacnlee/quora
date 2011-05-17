@@ -59,7 +59,7 @@ class User
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug
-  validates_format_of :slug, :with => /[a-z0-9\-\_]{4,20}/i
+  validates_format_of :slug, :with => /[a-z0-9\-\_]{3,20}/i
 
   # 以下两个方法是给 redis search index 用
   def avatar_small
@@ -100,6 +100,21 @@ class User
     if self.spam?("bio")
       return false
     end
+  end
+
+  before_save :downcase_email
+  def self.find_for_authentication(conditions) 
+    conditions[:email].try(:downcase!)
+    super
+  end
+
+  def self.find_or_initialize_with_errors(required_attributes, attributes, error=:invalid)
+    attributes[:email].try(:downcase!)
+    super
+  end
+
+  def downcase_email
+    self.email.downcase!
   end
 
   def password_required?
