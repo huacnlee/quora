@@ -531,7 +531,7 @@ var Asks = {
   },
 
   showSuggestTopics : function(topics){
-    html = '<div id="ask_suggest_topics" class="ask"><div class="container"><label>根据您的问题，我们推荐了一些话题（点击添加）:</label>';
+    html = '<div id="ask_suggest_topics" class="ask"><div class="container"><label>根据您的问题，我们推荐这些话题(点击添加):</label>';
     for(var i=0;i<topics.length;i++) {
       html += '<a href="#" class="topic" onclick="return Asks.addSuggestTopic(this,\''+topics[i]+'\');">'+topics[i]+'</a>';
     }
