@@ -12,7 +12,7 @@ class AskSuggestTopic
 
     # 生成内容
     words = Ask.mmseg_text(ask.title)
-    topics = Topic.any_in(:name => words)
+    topics = Topic.any_in(:name => words.collect { |w| /^#{w}$/i } )
     topics.sort { |a,b| b.followers_count <=> a.followers_count }
     topics_array = topics.collect { |t| t.name }
 
