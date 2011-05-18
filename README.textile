@@ -16,36 +16,42 @@ h2. Installation
 
 h3. Start Redis, Mongodb first, you need 
 
-    $ sudo service redis start
-    $ sudo service mongodb start
+pre.
+$ sudo service redis start
+$ sudo service mongodb start
 
 h3. Download Quora source code from Github
 
-    $ git clone git://github.com/huacnlee/quora.git
+pre.
+$ git clone git://github.com/huacnlee/quora.git
 
 h3. Configure Quora
 
-    $ cd quora
-    $ bundle install --path vendor/bundle
-    $ cp config/mongoid.yml.default config/mongoid.yml
-    $ cp config/setting.yml.default config/setting.yml
-    $ cp config/redis.yml.default config/redis.yml
-    $ cp config/zomet.yml.default config/zomet.yml
-    $ cp config/sphinx.yml.default config/sphinx.yml
+pre.
+$ cd quora
+$ bundle install --path vendor/bundle
+$ cp config/mongoid.yml.default config/mongoid.yml
+$ cp config/setting.yml.default config/setting.yml
+$ cp config/redis.yml.default config/redis.yml
+$ cp config/zomet.yml.default config/zomet.yml
+$ cp config/sphinx.yml.default config/sphinx.yml
 
 h3. Create Sphinx config files and index the database to Sphinx _(Before here, you need install Coreseek first.)_
   
-    $ rake mongoid_sphinx:configure
-    $ rake mongoid_sphinx:index
-    $ rake mongoid_sphinx:start
+pre.
+$ rake mongoid_sphinx:configure
+$ rake mongoid_sphinx:index
+$ rake mongoid_sphinx:start
 
 h3. If you have Quora project old data in the Mongodb, you need to run this script to index the old data for search
 
-    $ rake search:index
+pre.
+$ rake search:index
 
 h3. After, run Rails Server
 
-    $ rails s
+pre.
+$ rails s
 
 Then, open your browser, points to http://127.0.0.1:3000
 That is it, enjoy yourself.
