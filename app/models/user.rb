@@ -19,6 +19,8 @@ class User
   field :girl, :type => Boolean, :default => false
   # 软删除标记，1 表示已经删除
   field :deleted, :type => Integer
+  # 是否是可信用户，可信用户有更多修改权限
+  field :credible, :type => Boolean, :default => false
 
   # 不感兴趣的问题
   field :muted_ask_ids, :type => Array, :default => []
@@ -55,7 +57,8 @@ class User
 
   attr_accessor  :password_confirmation
   attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website, :girl, 
-                  :mail_new_answer, :mail_be_followed, :mail_invite_to_ask, :mail_ask_me
+                  :mail_new_answer, :mail_be_followed, :mail_invite_to_ask, :mail_ask_me,
+                  :credible
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug

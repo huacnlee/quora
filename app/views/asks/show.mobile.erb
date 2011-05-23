@@ -40,7 +40,7 @@
           <span class="no_result">给这个问题选个话题吧，好让别人来回答</span>
         <% end %>
       <% end %>
-      <% if current_user %>
+      <% if can_edit?(@ask) %>
         <a href="#" onclick="return Asks.toggleEditTopics(true);" class="in_place_edit">修改</a>
       <% end %>
     </div>
@@ -67,14 +67,18 @@
   </div>
   <div class="title">
     <h1><%= "#{@ask.to_user.name}：" if !@ask.to_user.blank? %><span id="ask_title"><%= @ask.title %></span></h1>
-    <%= in_place_edit_tag @ask, :title, :type => :textarea, :width => 300, :height => 40, :rich => false, :text_id => "ask_title" %>
+    <% if can_edit?(@ask) %>
+      <%= in_place_edit_tag @ask, :title, :type => :textarea, :width => 300, :height => 40, :rich => false, :text_id => "ask_title" %>
+    <% end %>
   </div>
   <div class="md_body">
     <div id="ask_body"<% if @ask.chomp_body.blank? %> class="blank-body"<% end %>><%= md_body(@ask.chomp_body) %></div>
-    <% if @ask.chomp_body.blank? %>
-      <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body",:label => "添加补充资料" %>
-    <% else %>
-      <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body" %>
+    <% if can_edit?(@ask) %>
+      <% if @ask.chomp_body.blank? %>
+        <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body",:label => "添加补充资料" %>
+      <% else %>
+        <%= in_place_edit_tag @ask, :body, :type => :textarea, :text_id => "ask_body" %>
+      <% end %>
     <% end %>
   </div>
   <div class="action">
