@@ -23,7 +23,7 @@
 </div>
 <% content_for :sidebar do %>
   <div class="box">
-    <h2>还没有帐号？</h2>
+    <h2><%= t(:new_account) %></h2>
     <%= render :partial => "devise/shared/links" %>
   </div>
   <%= render "/shared/omniauth_links" %>
