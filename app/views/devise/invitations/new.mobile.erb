@@ -11,7 +11,7 @@
 <%= simple_form_for resource, :as => resource_name, :url => invitation_path(resource_name) do |f| %>
   <%= devise_error_messages! %>
   <%= f.input :name, :label => "姓名" %>
-  <%= f.input :email, :label => "邮箱" %>
+  <%= f.input :email, :label => "t(:email)" %>
   <%= f.input :tagline, :label => "他的特点", :input_html => { :class => "long" }, :hint => "用简短的话描述这个人的特点,如: 技术牛人,某某网站创始人" %>
   <button type="submit" class="submit">发送邀请邮件</button>
 <% end %>

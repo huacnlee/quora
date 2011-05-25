@@ -21,7 +21,7 @@
         <li> <a href="<%= root_path %>" class="asks<%= ' active' if params[:controller] == "home" and params[:action] == "index" %>"><%=t(:all_issues)%></a> </li>
 			<% end %>
 			<li>
-        <a href="<%= doing_path %>" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>"><%=t(:were_also_taking_place)%></a>
+        <a href="<%= doing_path %>" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>"><%=t(:open_questions)%></a>
       </li>
     </ul>
   </div>

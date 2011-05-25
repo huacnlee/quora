@@ -26,18 +26,18 @@
     var logined = false;
     <% end %>
 
-		<% if current_user %>
-		window.WEB_SOCKET_SWF_LOCATION = "http://<%= @zomet_config["server"] %>/WebSocketMain.swf";
-		$(document).ready(function() {
-			var jug = new Juggernaut({host: '<%= @zomet_config["host"] %>', port: <%= @zomet_config["port"] || 80 %>});
-			jug.subscribe("/notifications/<%= current_user.slug %>", function(data){
-				$('#notify_badge').removeClass("force-hide");
-				if ($(document).attr("title").indexOf("(#{t(:new)}) ") < 0) {
-					$(document).attr("title", "(#{t(:new)}) " + $(document).attr("title"));
-				}
-			});
-		});
-		<% end %>
+    <% if current_user %>
+    window.WEB_SOCKET_SWF_LOCATION = "http://<%= @zomet_config["server"] %>/WebSocketMain.swf";
+    $(document).ready(function() {
+      var jug = new Juggernaut({host: '<%= @zomet_config["host"] %>', port: <%= @zomet_config["port"] || 80 %>});
+      jug.subscribe("/notifications/<%= current_user.slug %>", function(data){
+        $('#notify_badge').removeClass("force-hide");
+        if ($(document).attr("title").indexOf("(#{t(:new)}) ") < 0) {
+          $(document).attr("title", "(#{t(:new)}) " + $(document).attr("title"));
+        }
+      });
+    });
+    <% end %>
   </script>
 </head>
 <body>
@@ -49,7 +49,7 @@
         </div>
         <div id="add_ask">
           <input type="text" placeholder="<%=t(:search_problems)%>，<%=t(:topic)%>，<%=t(:member)%>" />
-          <a href="/asks/new" onclick="return addAsk();"><%=t(:i_want_to_ask_questions)%></a>
+          <a href="/asks/new" onclick="return addAsk();"><%=t(:add_question)%></a>
         </div>
         <script type="text/javascript">
           Asks.completeAll($("#add_ask input"));
@@ -58,7 +58,7 @@
       <div class="sidebar">
         <div id="user_bar">
           <% if not current_user %>
-            <a href="/"><%=t(:casual_look)%></a>
+            <a href="/"><%=t(:home)%></a>
             <a href="/login"><%=t(:login)%></a>
             <a href="/register"><% if Setting.allow_register %><%=t(:register)%><%else%><%=t(:how_to_register)%>?<%end%></a>
           <% else %>

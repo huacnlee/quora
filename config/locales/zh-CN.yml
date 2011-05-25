@@ -256,7 +256,7 @@
   my_concern: 我关注的问题
   recommend_to_my_question: 推荐给我的问题
   my_question_shielding: 我屏蔽的问题
-  were_also_taking_place: 者也正在发生
+  open_questions: 者也正在发生
   invite_friends: 邀请好友
   invite_your_friends_to_register: 邀请你的朋友注册
   you_may_be_interested_in_the_person_or_topic: 你可能会感兴趣的人或话题
@@ -329,7 +329,7 @@
   im_sorry: 非常抱歉
   the_page_you_requested_could_not_find_us: 你请求的页面我们无法找到
   topic: 话题
-  who_is_also_on_the: 关于者也
+  about: 关于者也
   we_are_a_group_of_programmers_who_aspire_to_a_free_and_open: 我们是一群向往自由开放的程序员
   determined_to_build_an_open_question_and_answer_community_site: 立志构建一个开放的问答社区站点
   we_are_happy_to_share_our_project_source_code_and_design_ideas: 我们乐于分享我们的项目源代码以及设计思路
@@ -375,8 +375,8 @@
   new: 新
   search_problems: 搜索问题
   member: 会员
-  i_want_to_ask_questions: 我要提问
-  casual_look: 随便看看
+  add_question: 我要提问
+  home: 随便看看
   set: 设置
   i_know: 我知道了
   a_little_progress_every_day: 每天进步一点

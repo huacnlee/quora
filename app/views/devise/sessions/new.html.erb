@@ -4,7 +4,7 @@
     <h1>登录</h1>
     <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
-      <%= f.input :email, :label => "邮箱" %>
+      <%= f.input :email, :label => "#{t(:email)}" %>
       <%= f.input :password, :as => :password, :label => "密码" %>
       <% if devise_mapping.rememberable? -%>
         <div class="row"><%= f.check_box :remember_me, :style => "width:auto;" %> <%= f.label :remember_me,"记住登录状态", :style => "display:inline;" %></div>
