@@ -1,25 +1,25 @@
+chinese_words = []
+scan_dirs = [
+  "controllers",
+  "helpers",
+  "mailers",
+  "models",
+  "views/answers",
+  "views/asks",
+  "views/comments",
+  "views/cpanel",
+  "views/devise",
+  "views/errors",
+  "views/home",
+  "views/layouts",
+  "views/logs",
+  "views/registrations",
+  "views/shared",
+  "views/topics",
+  "views/user_mailer",
+  "views/users"
+]
 unless File.exists?("./chinese_words.txt")
-  chinese_words = []
-  scan_dirs = [
-    "controllers",
-    "helpers",
-    "mailers",
-    "models",
-    "views/answers",
-    "views/asks",
-    "views/comments",
-    "views/cpanel",
-    "views/devise",
-    "views/errors",
-    "views/home",
-    "views/layouts",
-    "views/logs",
-    "views/registrations",
-    "views/shared",
-    "views/topics",
-    "views/user_mailer",
-    "views/users"
-  ]
   scan_dirs.each do |dir|
     Dir.entries("./app/#{dir}").each do |file| 
       if file!=".." && file!="."
