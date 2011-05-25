@@ -22,7 +22,7 @@
         <%= f.input :name, :label => "#{t(:name)}（#{t(:can_not_be_changed_after_registration)}）" %>
         <%= f.input :email, :label => "#{t(:email)}" %>
         <%= f.input :password, :as => :password, :label => "#{t(:password)}" %>
-        <%= f.input :password_confirmation, :as => :password, :label => "确认#{t(:password)}"  %>
+        <%= f.input :password_confirmation, :as => :password, :label => "#{t(:password)}"  %>
         <div class="actions"><button type="submit" class="button submit"><%=t(:submit_registration_information)%></button></div>
       <% end %>
     <% end %>
@@ -30,7 +30,7 @@
 </div>
 <%= content_for :sidebar do %>
   <div class="box">
-    <h2><%=t(:already_have_an_account_of_the)%>？</h2>
+    <h2><%=t(:new_account)%>？</h2>
     <p style="line-height:20px;">
     <%= render :partial => "devise/shared/links" %>
     </p>

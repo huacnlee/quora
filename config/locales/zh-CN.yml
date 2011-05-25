@@ -484,8 +484,10 @@
   password: 密码
   confirm_password: 确认密码
   submit_registration_information: 提交注册信息
-  already_have_an_account_of_the: 已经有帐号了
+  new_account: 已经有帐号了
   about_registration: 关于注册
+  forgot_password: 忘记了密码
+  password_mail_message: 此功能将会发送一个找回密码的特别链接到你的邮箱
   itself_can_be_invited_to_register: 本身需要邀请才可以注册的
   but_we_will_occasionally_some_special_days_in_the_temporary_open_up: 但是我们会偶尔在一些特别的日子临时性的开放注册
   if_you_see_this_page: 如果你看到了这个页面
