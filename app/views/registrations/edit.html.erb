@@ -1,38 +1,38 @@
-<% content_for :sitemap do %><span class="current">设置</span><% end %>
+<% content_for :sitemap do %><span class="current"><%=t(:set)%></span><% end %>
 <div class="leftbox">
   <div class="box">
-    <h2>个人资料</h2>
+    <h2><%=t(:personal_information)%></h2>
     <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
     <%= render "shared/error_messages", :target => resource %> 
-      <%= f.input :slug, :label => "个性域名", :hint => "格式要求4-20个字符(可以是字母，数字，中横线),如果格式不对将会自动处理。" %>
-      <%= f.input :girl, :as => :boolean, :label => "我是女性" %>
-      <%= f.input :email, :label => "邮箱" %>
-      <%= f.input :avatar, :label => "头像" %>
+      <%= f.input :slug, :label => "#{t(:personalized_domain_name)}", :hint => "#{t(:format_requirements)}4-20#{t(:characters)}(#{t(:can_be_a_letter)}，#{t(:digital)}，#{t(:the_horizontal_line)}),#{t(:if_the_wrong_format_will_be_automatically_processed)}。" %>
+      <%= f.input :girl, :as => :boolean, :label => "#{t(:i_am_a_female)}" %>
+      <%= f.input :email, :label => "#{t(:email)}" %>
+      <%= f.input :avatar, :label => "#{t(:avatar)}" %>
       <% if not @user.avatar.blank? %>
       <div class="row">
-        <label>预览</label>
+        <label><%=t(:preview)%></label>
         <%= image_tag(@user.avatar.normal.url) %>
       </div>
       <% end %>
-      <%= f.input :website, :input_html => { :placeholder => "http://", :class => "long" }, :label => "个人站点" %>
-      <%= f.input :tagline, :input_html => { :class => "long" }, :label => "最能概括你的标志性语言" %>
-      <%= f.input :bio, :as => :text, :input_html => { :class => "long", :style => "height:120px;"}, :label => "个人经历" %>
+      <%= f.input :website, :input_html => { :placeholder => "http://", :class => "long" }, :label => "#{t(:personal_site)}" %>
+      <%= f.input :tagline, :input_html => { :class => "long" }, :label => "#{t(:best_summarize_your_sign_language)}" %>
+      <%= f.input :bio, :as => :text, :input_html => { :class => "long", :style => "height:120px;"}, :label => "#{t(:personal_experience)}" %>
       <script type="text/javascript">$("#user_bio").qeditor({'is_mobile_device': <%= is_mobile_device? ? 'true' : 'false' %>});</script>
       <div class="actions">
-        <button type="submit">保存</button>
+        <button type="submit"><%=t(:save)%></button>
       </div>
     <% end %>
   </div>
   <div class="box">
-    <h2 id="mail_notify_settings">邮件提醒设置</h2>
+    <h2 id="mail_notify_settings">邮件提醒<%=t(:set)%></h2>
     <div class="content">
       <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
-        <%= f.input :mail_be_followed, :as => :boolean, :label => "被人关注" %>
-        <%= f.input :mail_new_answer, :as => :boolean, :label => "关注的问题有新回答" %>
-        <%= f.input :mail_invite_to_ask, :as => :boolean, :label => "有人邀请我回答问题" %>
-        <%= f.input :mail_ask_me, :as => :boolean, :label => "有人向我提问" %>
+        <%= f.input :mail_be_followed, :as => :boolean, :label => "#{t(:be_concerned)}" %>
+        <%= f.input :mail_new_answer, :as => :boolean, :label => "#{t(:to_answer_the_concerns_of_a_new)}" %>
+        <%= f.input :mail_invite_to_ask, :as => :boolean, :label => "#{t(:i_was_invited_to_answer_questions)}" %>
+        <%= f.input :mail_ask_me, :as => :boolean, :label => "#{t(:some_people_have_asked_me)}" %>
         <div class="actions">
-          <button type="submit">保存</button>
+          <button type="submit"><%=t(:save)%></button>
         </div>
       <% end %>
     </div>
@@ -41,7 +41,7 @@
 <% content_for :sidebar do %>
   <%= render "/shared/omniauth_links" %>
   <div class="box">
-    <h2>删除我的帐号</h2>
-    <p>不喜欢? <%= link_to "删除此帐号", registration_path(resource_name), :confirm => "删除后无法恢复，你确定吗?", :method => :delete %>.</p>
+    <h2><%=t(:delete_my_account)%></h2>
+    <p><%=t(:do_not_like)%>? <%= link_to "#{t(:delete_this_account)}", registration_path(resource_name), :confirm => "#{t(:can_not_recover_deleted)}，#{t(:are_you_sure_you)}?", :method => :delete %>.</p>
   </div>
 <% end %>

@@ -1,0 +1,15 @@
+<% if @success %>
+html = "<%= escape_javascript(render("answer", :item => @answer)) %>";
+$("#answer_body").text("").focus();
+answer = $(html);
+$(".answers").append(answer);
+answerPreview = $("#answer_body").next();
+answerPreview.html("");
+answerPreview.focus();
+answer.fadeOut(100).fadeIn(200);
+$(".answer_form").remove();
+<% else %>
+$("#answer_body").focus();
+<% end %>
+App.loading(false);
+$(".answer_form button.submit").attr("disabled",false);

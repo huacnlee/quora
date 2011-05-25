@@ -24,13 +24,13 @@ when "AskLog"
         case action
         when "NEW"
       %>
-      <%= user_name_tag(log.user) %> 添加了该问题
+      <%= user_name_tag(log.user) %> <%=t(:add_the_problem)%>
       <% when "NEW_TO_USER" %>
-        <%= user_name_tag(log.user) %> 向 <%= user_name_tag(item.to_user) %> 提出了问题
+        <%= user_name_tag(log.user) %> <%=t(:to)%> <%= user_name_tag(item.to_user) %> <%=t(:issues_raised)%>
       <% when "EDIT" %>
-      <%= user_name_tag(log.user) %> <%= log.target_attr == "TITLE" ? "修改了该问题" : "修改了该问题的补充说明" %>
+      <%= user_name_tag(log.user) %> <%= log.target_attr == "TITLE" ? "#{t(:modify_the_problem)}" : "#{t(:modify_the_problem)}#{t(:the)}补充说明" %>
       <% when "ADD_TOPIC" %>
-      <%= user_name_tag(log.user) %> 给该问题添加了话题 
+      <%= user_name_tag(log.user) %> <%=t(:add_the_topic_to_the_problem)%> 
         <%
           topics = log.title.split(',')
           for topic in topics
@@ -38,7 +38,7 @@ when "AskLog"
         <a href="/topics/<%= topic %>">#<%= topic %></a> &nbsp;
         <% end %>
       <% when "DEL_TOPIC" %>
-      <%= user_name_tag(log.user) %> 从该问题删除了话题 
+      <%= user_name_tag(log.user) %> <%=t(:remove_the_subject_from_the_issue)%> 
         <%
           topics = log.title.split(',')
           for topic in topics
@@ -51,14 +51,14 @@ when "AskLog"
         • <%= item.answers_count %> 个答案 
         <% if current_user %>
           <% if current_user.ask_followed?(item) %>
-          • <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
+          • <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')"><%=t(:cancel_concern)%></a> 
           <% else %>
           • <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
           <% end %>
           <% if current_user.ask_muted?(item.id) %>
-          • <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+          • <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')"><%=t(:unmasked)%></a> 
           <% else %>
-          • <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+          • <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')"><%=t(:not_interested)%></a> 
           <% end %>
         <% end %>
       <% end %>
@@ -86,30 +86,30 @@ when "UserLog"
 %>	
 	<div class="ask" ask-id="<%= log.id %>">
 		<% if ["FOLLOW_TOPIC", "UNFOLLOW_TOPIC"].include?(action) %>
-	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_TOPIC" ? "关注" : "取消关注" %>了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
+	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_TOPIC" ? "关注" : "#{t(:cancel_concern)}" %><%=t(:the_topic)%> <a href="/topics/<%= item.name %>">#<%= item.name %></a></div>
 		<% elsif ["FOLLOW_USER", "UNFOLLOW_USER"].include?(action) %>
-	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_USER" ? "关注" : "取消关注" %>了 <%= user_name_tag(item) %></div>
+	  <div class="title small_title"><%= user_name_tag(log.user) %> <%= action == "FOLLOW_USER" ? "关注" : "#{t(:cancel_concern)}" %><%=t(:a)%> <%= user_name_tag(item) %></div>
     <% elsif action == "THANK_ANSWER"  %>
-      <div class="title small_title"><%= user_name_tag(log.user) %> 感谢了 <%= user_name_tag(item.user) %> 
-        在 <a href="/asks/<%= log.target_parent_id %>?nr=1#answer_<%= log.target_id %>"><%= log.target_parent_title %></a> 中的回答。 </div>
+      <div class="title small_title"><%= user_name_tag(log.user) %> 感谢<%=t(:a)%> <%= user_name_tag(item.user) %> 
+        <%=t(:in)%> <a href="/asks/<%= log.target_parent_id %>?nr=1#answer_<%= log.target_id %>"><%= log.target_parent_title %></a> <%=t(:the_answer)%>。 </div>
 		<% else %>
 			<div class="savatar">
 	      <%= user_avatar_tag(log.user,:small) %>
 	    </div>
     <div class="title<% if ["FOLLOW", "UNFOLLOW"].include?(action) %> small_title<% end %>"><%= ask_title_tag(item) %></div>
       <div class="info">
-        <%= user_name_tag(log.user) %> <%= action == "FOLLOW" ? "关注了该问题" : (action == "UNFOLLOW" ? "取消关注了该问题" : "赞同该回答") %>
+        <%= user_name_tag(log.user) %> <%= action == "FOLLOW" ? "关注#{t(:a)}该问题" : (action == "UNFOLLOW" ? "#{t(:cancel_concern)}#{t(:a)}该问题" : "#{t(:agree_with_the_answer)}") %>
         • <%= item.answers_count %> 个答案 
         <% if current_user %>
           <% if current_user.ask_followed?(item) %>
-          • <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
+          • <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')"><%=t(:cancel_concern)%></a> 
           <% else %>
           • <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
           <% end %>
           <% if current_user.ask_muted?(item.id) %>
-          • <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+          • <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')"><%=t(:unmasked)%></a> 
           <% else %>
-          • <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+          • <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')"><%=t(:not_interested)%></a> 
           <% end %>
         <% end %>
       </div>
@@ -129,7 +129,7 @@ when "UserLog"
 					<% else %>
 					<div class="full-body" id="awb_<%= log.id %>_<%= answer.id %>"><%= md_body(answer.chomp_body) %></div>
           <div id="aws_<%= log.id %>_<%= answer.id %>"><%= raw truncate(answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> 
-          <a class="smore" href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= answer.id %>')">(更多)</a></div>
+          <a class="smore" href="#" onclick="return show_all_answer_body('<%= log.id %>', '<%= answer.id %>')">(<%=t(:more)%>)</a></div>
 					<% end %>
 				</div>
 			</div>
@@ -149,18 +149,18 @@ when "AnswerLog"
     </div>
     <div class="title"><%= ask_title_tag(item) %></div>
 	    <div class="info">
-	      <%= user_name_tag(log.user) %> <%= action == "NEW" ? "回答了该问题" : "修改了自己的回答" %>
+	      <%= user_name_tag(log.user) %> <%= action == "NEW" ? "回答#{t(:a)}该问题" : "修改#{t(:a)}自己#{t(:the)}回答" %>
 	      • <%= item.answers_count %> 个答案 
 				<% if current_user %>
 					<% if current_user.ask_followed?(item) %>
-	      	• <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
+	      	• <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')"><%=t(:cancel_concern)%></a> 
 					<% else %>
 					• <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
 					<% end %>
 					<% if current_user.ask_muted?(item.id) %>
-					• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+					• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')"><%=t(:unmasked)%></a> 
 					<% else %>
-	      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+	      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')"><%=t(:not_interested)%></a> 
 					<% end %>
 				<% end %>
 	    </div> 
@@ -179,7 +179,7 @@ when "AnswerLog"
 						<% else %>
 						<div class="full-body" id="awb_<%= log.id %>_<%= log.answer.id %>"><%= md_body(log.answer.chomp_body) %></div>
             <div id="aws_<%= log.id %>_<%= log.answer.id %>"><%= raw truncate(log.answer.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> 
-              <a href="#" class="smore" onclick="return show_all_answer_body('<%= log.id %>', '<%= log.answer.id %>')">(更多)</a></div>
+              <a href="#" class="smore" onclick="return show_all_answer_body('<%= log.id %>', '<%= log.answer.id %>')">(<%=t(:more)%>)</a></div>
 						<% end %>
 					</div>
 				</div>
@@ -196,10 +196,10 @@ when "TopicLog"
   <div class="ask" ask-id="<%= log.id %>">
     <div class="title small_title">
     <% if log.action == "EDIT" %>
-      <%= user_name_tag(log.user) %> 为话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a> 
-      的<%= log.target_attr == "COVER" ?  "上传了封面图片。" : "提交了介绍。" %>
+      <%= user_name_tag(log.user) %> <%=t(:as_the_topic)%> <a href="/topics/<%= item.name %>">#<%= item.name %></a> 
+      <%=t(:the)%><%= log.target_attr == "COVER" ?  "上传#{t(:a)}封面图片。" : "提交#{t(:a)}介绍。" %>
     <% else %>
-      <%= user_name_tag(log.user) %> 创建了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a>
+      <%= user_name_tag(log.user) %> 创建<%=t(:the_topic)%> <a href="/topics/<%= item.name %>">#<%= item.name %></a>
     <% end %>
       
     </div>
@@ -213,13 +213,13 @@ when "CommentLog"
 		when "Ask"
 %>
 	<div class="ask" ask-id="<%= log.id %>">
-	  <div class="title small_title"><%= user_name_tag(log.user) %> 评论了问题 <a href="/asks/<%= log.target_parent_id %>?easc=yes&asid=<%= log.target_parent_id %>#ask_comments">#<%= log.title %></a></div>
+	  <div class="title small_title"><%= user_name_tag(log.user) %> 评论<%=t(:a)%>问题 <a href="/asks/<%= log.target_parent_id %>?easc=yes&asid=<%= log.target_parent_id %>#ask_comments">#<%= log.title %></a></div>
 	</div>
 <%
 		when "Answer"
 %>
 	<div class="ask" ask-id="<%= log.id %>">
-	  <div class="title small_title"><%= user_name_tag(log.user) %> 评论了问题 <a href="/asks/<%= log.target_parent_id %>?eawc=yes&awid=<%= log.title %>#answer_<%= log.title %>">#<%= log.target_parent_title %></a> 中的回答</div>
+	  <div class="title small_title"><%= user_name_tag(log.user) %> 评论<%=t(:a)%>问题 <a href="/asks/<%= log.target_parent_id %>?eawc=yes&awid=<%= log.title %>#answer_<%= log.title %>">#<%= log.target_parent_title %></a> <%=t(:the_answer)%></div>
 	</div>
 <%
 		end

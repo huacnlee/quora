@@ -2,8 +2,8 @@
     class="answer<%= ' spam_answer' if spam_answer?(item) %>">
   <div class="vote_buttons">
     <% if not owner?(item) %>
-      <a rel="tipsyr" title="赞同 (排序将上升)" class="vote_up<%= ' voted' if voted?(item, :up) %>" onclick="return Asks.vote('<%= item.id %>',1);" href="#"></a>
-      <a rel="tipsyr" title="反对 (不会显示你的名字)" class="vote_down<%= ' voted' if voted?(item, :down) %>" onclick="return Asks.vote('<%= item.id %>',0);" href="#"></a>
+      <a rel="tipsyr" title="#{t(:agree)} (#{t(:sort_will_rise)})" class="vote_up<%= ' voted' if voted?(item, :up) %>" onclick="return Asks.vote('<%= item.id %>',1);" href="#"></a>
+      <a rel="tipsyr" title="#{t(:against)} (#{t(:does_not_display_your_name)})" class="vote_down<%= ' voted' if voted?(item, :down) %>" onclick="return Asks.vote('<%= item.id %>',0);" href="#"></a>
     <% end %>
   </div>
   <div class="avatar_border">
@@ -13,7 +13,7 @@
     <div class="author"><%= user_name_tag(item.user) %><%= user_tagline_tag(item.user,:prefix => ",") %></div>
     <% if item.up_votes_count != 0 %>
       <div class="votes"> 
-        <span class="num"><%= item.up_votes_count %></span>票，来自<%= up_voter_links item.up_voters %>
+        <span class="num"><%= item.up_votes_count %></span><%=t(:votes)%>，<%=t(:from)%><%= up_voter_links item.up_voters %>
       </div>
     <% end %>
     <div class="md_body">
@@ -26,14 +26,14 @@
     </div>
     <div class="action">
       <% if item.comments_count == 0 %>
-        <a href="#" onclick="return Asks.toggleComments('answer','<%= item.id %>');">添加评论</a>
+        <a href="#" onclick="return Asks.toggleComments('answer','<%= item.id %>');"><%=t(:add_a_comment)%></a>
       <% else %>
-        <a href="#" onclick="return Asks.toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> 条评论</a>
+        <a href="#" onclick="return Asks.toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> <%=t(:comments)%></a>
       <% end %>
       <% if not owner? item %>
-        • <a rel="tipsyr" title="向回答者表示感谢" class="thank<%= ' thanked' if thank_answered?(item) %>" href="#" onclick="return Asks.thankAnswer(this,'<%= item.id %>')">感谢</a>
+        • <a rel="tipsyr" title="#{t(:expressed_appreciation_to_the_respondents)}" class="thank<%= ' thanked' if thank_answered?(item) %>" href="#" onclick="return Asks.thankAnswer(this,'<%= item.id %>')"><%=t(:thanks)%></a>
       <% end %>
-      • <a rel="tipsyr" title="认为此回答与问题不相干，或者没有实际作用" class="notusefull<%= ' spamed' if spam_answered?(item) %>" onclick="return Asks.spamAnswer(this,'<%= item.id %>');" href="#">没有帮助</a>
+      • <a rel="tipsyr" title="#{t(:and_pertain_to_the_question_that_this_answer)}，#{t(:or_no_practical_effect)}" class="notusefull<%= ' spamed' if spam_answered?(item) %>" onclick="return Asks.spamAnswer(this,'<%= item.id %>');" href="#"><%=t(:no_help)%></a>
       • <%= l item.created_at.getlocal, :format => :short %>
     </div>
   </div>

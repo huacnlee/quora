@@ -1,0 +1,174 @@
+<%= spaceless do %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title><%= raw @page_title %><%= Setting.app_name %></title>
+  <% if use_yahei_font?(request.env["HTTP_USER_AGENT"]) %>
+  <%= stylesheet_link_tag "font","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.tipsy", :cache => "cached_front" %>
+  <% else %>
+  <%= stylesheet_link_tag "font_no_cleartype","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.tipsy", :cache => "cached_front_for_xp" %>
+  <% end %>
+	<%= yield :styles %>
+  <meta name="keywords" content="<%= @meta_keywords %>" />
+  <meta name="description" content="<%= @meta_description %>" />
+  <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
+  <%= csrf_meta_tag %>
+  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie","jquery.tipsy" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
+	<script src="http://<%= @zomet_config["server"] %>/application.js" type="text/javascript" charset="utf-8"></script>
+  <%= yield :scripts %>
+  <script type="text/javascript">
+    <% if current_user %>
+    var logined = true;
+    <% else %>
+    var logined = false;
+    <% end %>
+
+		<% if current_user %>
+		window.WEB_SOCKET_SWF_LOCATION = "http://<%= @zomet_config["server"] %>/WebSocketMain.swf";
+		$(document).ready(function() {
+			var jug = new Juggernaut({host: '<%= @zomet_config["host"] %>', port: <%= @zomet_config["port"] || 80 %>});
+			jug.subscribe("/notifications/<%= current_user.slug %>", function(data){
+				$('#notify_badge').removeClass("force-hide");
+				if ($(document).attr("title").indexOf("(新) ") < 0) {
+					$(document).attr("title", "(新) " + $(document).attr("title"));
+				}
+			});
+		});
+		<% end %>
+  </script>
+</head>
+<body>
+  <div id="header">
+    <div class="container">
+      <div class="left_wrapper">
+        <div id="site_name">
+          <a href="/"><%= image_tag("logo.png") %></a>
+        </div>
+        <div id="add_ask">
+          <input type="text" placeholder="搜索问题，话题，会员" />
+          <a href="/asks/new" onclick="return addAsk();">我要提问</a>
+        </div>
+        <script type="text/javascript">
+          Asks.completeAll($("#add_ask input"));
+        </script>
+      </div>
+      <div class="sidebar">
+        <div id="user_bar">
+          <% if not current_user %>
+            <a href="/">随便看看</a>
+            <a href="/login"><%=t(:login)%></a>
+            <a href="/register"><% if Setting.allow_register %><%=t(:register)%><%else%><%=t(:how_to_register)%>?<%end%></a>
+          <% else %>
+            <a class="home" href="/">首页<span id="notify_badge" class="badge<% if current_user.notifications.unread.count < 1 %> force-hide<% end %>">新</span></a>
+            <%= user_name_tag(current_user) %>
+            <%= link_to('设置', edit_user_registration_path) %>
+            <a href="/logout"><%=t(:logout)%></a>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="main">
+    <div class="container">
+      <div class="left_wrapper">
+        <% if !@notice.blank? %>
+          <% if cookies[:hide_notice] != @notice.id.to_s %>
+            <div id="sys_notice">
+              <%= raw @notice.body %>
+              <div class="info">
+                <span class="date"><%= l @notice.updated_at.getlocal, :format => :long %></span>
+                <a href="#" class="gray_button small" onclick="return App.hideNotice('<%= @notice.id %>');">我知道了</a>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <% if !notice.blank? %>
+          <div class="notice_message"><%= notice %></div>
+          <script type="text/javascript">
+            $(".notice_message").fadeOut().fadeIn();    
+          </script>
+        <% end %>
+        <% if !alert.blank? %>
+          <div class="alert_message"><%= alert %></div>
+          <script type="text/javascript">
+            $(".alert_message").fadeOut().fadeIn();    
+          </script>
+        <% end %> 
+        <%= yield %>
+      </div>
+      <div class="sidebar">
+        <%= yield :sidebar %>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+    <div class="container">
+      <div class="inner">
+        <div class="links">
+          <a href="/about">关于者也</a> • 
+          <a href="/asks/4d95f33bfd503c3bf2000011">每天进步一点</a> •
+          <a href="http://blog.zheye.org" target="_blank">博客</a> •
+          <a href="/register">如何注册</a> •
+          <a href="http://twitter.com/zheyecn" target="_blank">Twitter</a> •
+          <a href="mailto:nowazhu@gmail.com">合作联系</a> •
+          <a href="mailto:huacnlee@gmail.com">反馈</a>
+          <a style="float:right;" href="/?force_format=mobile">手机版</a>
+        </div>
+        <div class="copyright">
+          <%= raw Setting.foot_html %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= yield :bottom %>
+  <div style="display: none;" id="hidden_new_ask">
+    <h2>创建新问题</h2>
+    <form action="/asks" method="post" id="inner_new_ask">
+      <%= auth_token %>
+      <textarea type="text" name="ask[title]" class="title" placeholder="在这里输入问题"></textarea>
+      <label>可选:</label>添加更多描述
+      <textarea type="text" name="ask[body]"></textarea>
+      <button type="submit" class="submit">添加问题</button> <a href="#" onclick="$.facebox.close(); return false;">取消</a>
+    </form>
+  </div>
+  <div style="display: none;" id="loading"> 
+    <div class="logo"></div> 
+    <div class="text">加载中…</div> 
+  </div> 
+  <div style="width:0px;height:0px;overflow:hidden;">
+    <%= image_tag("loading.gif") %>
+    <div id="report_page">
+      <h2>举报内容</h2>
+      <form id="report_page_form" action="/report.js" onsubmit="App.loading();" method="post" class="simple_form">
+        <%= auth_token %>
+        <div class="row">
+          <input type="hidden" name="url" value="<%= request.url %>" />
+          <label class="string">请填写举报原因:</label>
+          <textarea name="desc" style="width:400px;height:80px;"></textarea>
+        </div>
+        <div class="acitons">
+          <button type="submit">提交</button> <a href="#" style="margin-left:5px;" onclick="$.facebox.close(); return false;">关闭</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $("[rel=tipsy]").tipsy({gravity: $.fn.tipsy.autoNS});
+    $("[rel=tipsyr]").tipsy({gravity: "w" });
+    $("[rel=tipsyt]").tipsy({gravity: "s" });
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '<%= Setting.google_analytics_id %>']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</body>
+</html>
+<% end %>

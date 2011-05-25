@@ -12,16 +12,16 @@
       <li class="last">
         <a href="<%= following_user_path(@user.slug) %>"><strong>
         <%= @user.following_ids.size %></strong>
-        <span><%= user_sex_title(@user) %>关注的人</span>
+        <span><%= user_sex_title(@user) %><%=t(:persons_of_concern)%></span>
         </a>
       </li>
     </ul>
-    <div class="user-regdate">注册于 <%= l @user.created_at.to_date, :format => :long %></div>
+    <div class="user-regdate"><%=t(:registered_in)%> <%= l @user.created_at.to_date, :format => :long %></div>
   </div>
 
   <% if @user.followed_topic_ids.size > 0 %>
   <div class="box gray">
-  <h2>关注 <a href="<%= following_topics_user_path(@user.slug) %>"><%= @user.followed_topic_ids.size %>个话题</a></h2>
+  <h2>关注 <a href="<%= following_topics_user_path(@user.slug) %>"><%= @user.followed_topic_ids.size %><%=t(:topics)%></a></h2>
   <ul class="followed-item">
     <% for topic in @user.followed_topics.desc("$natural").limit(7) %>
     <%= render "topic", :topic => topic %>

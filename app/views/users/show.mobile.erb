@@ -5,7 +5,7 @@
 			$(el).attr("onclick", "return false;");
 			$.get("/users/"+id+"/follow",{}, function(res){
         App.loading(false);
-        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');">取消关注</a>');
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');"><%=t(:cancel_concern)%></a>');
 	    });
       return false;
     }
@@ -30,7 +30,7 @@
           <div class="box">
             <div class="inner">
               <% if current_user.followed?(@user) %>
-              <a href="#" class="flat_button" onclick="return Users.unfollow(this, '<%= @user.slug %>','');">取消关注</a>
+              <a href="#" class="flat_button" onclick="return Users.unfollow(this, '<%= @user.slug %>','');"><%=t(:cancel_concern)%></a>
               <% else %>
               <a href="#" class="green_button" onclick="return Users.follow(this, '<%= @user.slug %>','');">关注</a>
               <!-- <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a> -->
@@ -38,9 +38,9 @@
             </div>
           </div>
         <% elsif owner? @user %>
-          这就是你自己
+          <%=t(:this_is_your_own)%>
         <% else %>
-          登录后你可以关注<%= user_sex_title(@user) %>
+          <%=t(:after_logging_you_can_focus)%><%= user_sex_title(@user) %>
         <% end %>
       </div>
     </div>
@@ -53,7 +53,7 @@
 	<% end %>
 
 	<% if @logs.length == @per_page %>
-	  <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
+	  <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();"><%=t(:see_more)%>...</a></div>
 	<% end %>
 </div>
 <%= render "sidebar", :user => @user %>

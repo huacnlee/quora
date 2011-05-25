@@ -1,51 +1,51 @@
 <div class="box" id="omniauth_links">
-  <h2>用其他平台的帐号登陆</h2>
+  <h2><%=t(:login_account_with_other_platforms)%></h2>
   <% if not current_user %>
     <ul>
-      <li class="google"><a href="/auth/google">Google帐号</a></li>
+      <li class="google"><a href="/auth/google">Google<%=t(:account)%></a></li>
       <li class="github"><a href="/auth/github">Github</a></li>
-      <li class="douban"><a href="/auth/douban">豆瓣</a></li>
-      <li class="tqq"><a href="/auth/tqq">QQ帐号(腾讯微博)</a></li>
-      <li class="tsina"><a href="/auth/tsina">新浪微博</a></li>
-      <li class="t163"><a href="/auth/t163">网易帐号</a></li>
-      <li class="tsohu"><a href="/auth/tsohu">搜狐帐号</a></li>
+      <li class="douban"><a href="/auth/douban"><%=t(:douban)%></a></li>
+      <li class="tqq"><a href="/auth/tqq">QQ<%=t(:account)%>(<%=t(:tencent_microblogging)%>)</a></li>
+      <li class="tsina"><a href="/auth/tsina"><%=t(:sina_microblogging)%></a></li>
+      <li class="t163"><a href="/auth/t163">网易<%=t(:account)%></a></li>
+      <li class="tsohu"><a href="/auth/tsohu">搜狐<%=t(:account)%></a></li>
     </ul>
   <% else %>
     <ul>
       <% if not current_user.auths.index("google") %>
-        <li class="google"><a href="/auth/google">Google帐号</a></li>
+        <li class="google"><a href="/auth/google">Google<%=t(:account)%></a></li>
       <% else %>
-        <li class="google"><a href="#" class="disabled">Google帐号</a><span>[已绑定]</span></li>
+        <li class="google"><a href="#" class="disabled">Google<%=t(:account)%></a><span>[<%=t(:is_bound)%>]</span></li>
       <% end %>
       <% if not current_user.auths.index("github") %>
         <li class="github"><a href="/auth/github">Github</a></li>
       <% else %>
-        <li class="github"><a href="#" class="disabled">Github</a><span>[已绑定]</span></li>
+        <li class="github"><a href="#" class="disabled">Github</a><span>[<%=t(:is_bound)%>]</span></li>
       <% end %>
       <% if not current_user.auths.index("douban") %>
-        <li class="douban"><a href="/auth/douban">豆瓣</a></li>
+        <li class="douban"><a href="/auth/douban"><%=t(:douban)%></a></li>
       <% else %>
-        <li class="douban"><a href="#" class="disabled">豆瓣</a><span>[已绑定]</span></li>
+        <li class="douban"><a href="#" class="disabled"><%=t(:douban)%></a><span>[<%=t(:is_bound)%>]</span></li>
       <% end %>
       <% if not current_user.auths.index("tqq") %>
-        <li class="tqq"><a href="/auth/tqq">QQ帐号(腾讯微博)</a></li>
+        <li class="tqq"><a href="/auth/tqq">QQ<%=t(:account)%>(<%=t(:tencent_microblogging)%>)</a></li>
       <% else %>
-        <li class="tqq"><a href="#" class="disabled">QQ帐号</a><span>[已绑定]</span></li>
+        <li class="tqq"><a href="#" class="disabled">QQ<%=t(:account)%></a><span>[<%=t(:is_bound)%>]</span></li>
       <% end %>
       <% if not current_user.auths.index("tsina") %>
-        <li class="tsina"><a href="/auth/tsina">新浪微博</a></li>
+        <li class="tsina"><a href="/auth/tsina"><%=t(:sina_microblogging)%></a></li>
       <% else %>
-        <li class="tsina"><a href="#" class="disabled">新浪微博</a><span>[已绑定]</span></li>
+        <li class="tsina"><a href="#" class="disabled"><%=t(:sina_microblogging)%></a><span>[<%=t(:is_bound)%>]</span></li>
       <% end %>
       <% if not current_user.auths.index("t163") %>
-        <li class="t163"><a href="/auth/t163">网易帐号</a></li>
+        <li class="t163"><a href="/auth/t163">网易<%=t(:account)%></a></li>
       <% else %>
-        <li class="t163"><a href="#" class="disabled">网易帐号</a><span>[已绑定]</span></li>
+        <li class="t163"><a href="#" class="disabled">网易<%=t(:account)%></a><span>[<%=t(:is_bound)%>]</span></li>
       <% end %>
       <% if not current_user.auths.index("tsohu") %>
-        <li class="tsohu"><a href="/auth/tsohu">搜狐帐号</a></li>
+        <li class="tsohu"><a href="/auth/tsohu">搜狐<%=t(:account)%></a></li>
       <% else %>
-        <li class="tsohu"><a href="#" class="disabled">搜狐帐号</a><span>[已绑定]</span></li>
+        <li class="tsohu"><a href="#" class="disabled">搜狐<%=t(:account)%></a><span>[<%=t(:is_bound)%>]</span></li>
       <% end %>
     </ul>
   <% end %>

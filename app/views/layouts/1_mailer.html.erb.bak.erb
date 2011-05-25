@@ -1,0 +1,27 @@
+<%= spaceless do %>
+<div style="background:#FFF; font-size:12px; font-family:'helvetica neue', helvetica, arial, sans-serif;">
+  <table>
+    <tr style="height:35px;">
+      <td valign="top" style="width:80px; text-align:right; padding-right:10px;">
+        <a href="<%= root_url %>" title="<%= Setting.app_name %>" target="_blank"><img src="http://zheye.org/images/logo.png" /></a>
+      </td>
+      <td valign="middle">
+        <h3 style="color:#000000;margin:0;padding:0;font-size:15px;"><%= @title %></h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" style="width:80px; text-align:right; padding-right:5px;"></td>
+      <td valign="top" style="font-size:12px;">
+        <%= yield %>
+        <div style="margin-top:25px; padding:8px; text-align:right;">
+          <a href="<%= root_url %>" style="color:#333;">者也团队</a><br />
+        </div>
+        <div style="margin-top:5px; padding-top:10px; color:#999; border-top:1px solid #ccc;">
+          这封邮件发自<%= Setting.app_name %>, 一个新型问答社区。<br />
+          <a style="color:#999;" href="<%= root_url %>"><%= root_url %></a> &nbsp;|&nbsp; <a style="color:#999;" href="<%= edit_user_registration_url %>#mail_notify_settings">邮件通知设置</a>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<% end %>

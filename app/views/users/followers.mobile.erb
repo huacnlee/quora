@@ -6,7 +6,7 @@
     <%= render "follower", :follower => item %>
   <% end %>
 	<% if @followers.length == @per_page %>
-	<li class="pagination last"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></li>
+	<li class="pagination last"><a class="page_more" href="#" onclick="return loadAsks();"><%=t(:see_more)%>...</a></li>
 	<% end %>
 </ul>
 <%= render "sidebar", :user => @user %>

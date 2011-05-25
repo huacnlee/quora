@@ -5,7 +5,7 @@
 			$(el).attr("onclick", "return false;");
 			$.get("/users/"+id+"/follow",{}, function(res){
         App.loading(false);
-        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');">取消关注</a>');
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');"><%=t(:cancel_concern)%></a>');
 	    });
       return false;
     }
@@ -31,7 +31,7 @@
 	<% end %>
 
 	<% if @logs.length == @per_page %>
-	  <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
+	  <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();"><%=t(:see_more)%>...</a></div>
 	<% end %>
 </div>
 <%= render "sidebar", :user => @user %>

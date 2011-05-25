@@ -5,13 +5,13 @@
       <a href="<%= root_path %>" class="home<%= ' active' if params[:controller] == "home" and ["index","newbie"].index(params[:action]) %>">首页</a>
     </li>
     <li>
-      <a href="<%= asks_path %>" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>">所有问题</a>
+      <a href="<%= asks_path %>" class="asks<%= ' active' if params[:controller] == "asks" and params[:action] == "index" %>"><%=t(:all_issues)%></a>
     </li>
     <% else %>
       <li> <a href="<%= root_path %>" class="asks<%= ' active' if params[:controller] == "home" and params[:action] == "index" %>">首页</a> </li>
     <% end %>
     <li>
-      <a href="<%= doing_path %>" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>">动态</a>
+      <a href="<%= doing_path %>" class="logs<%= ' active' if params[:controller] == "logs" and params[:action] == "index" %>"><%=t(:news)%></a>
     </li>
   </ul>
 <% end %>

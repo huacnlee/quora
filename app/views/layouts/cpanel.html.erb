@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html> 
 <head> 
-  <title><%= Setting.app_name %> - 后台</title> 
+  <title><%= Setting.app_name %> - <%=t(:background)%></title> 
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
   <%= stylesheet_link_tag "application","cpanel","wice_grid", :cache => "cached_cpanel" %>
   <%= javascript_include_tag "jquery.min","rails","wice_grid", :cache => "cached_cpanel" %>
@@ -13,20 +13,20 @@
       <table> 
         <tr> 
           <td id="app_name"> 
-            控制台 <a href="<%= root_path %>" class="out">回前台</a> 
+            <%=t(:console)%> <a href="<%= root_path %>" class="out"><%=t(:back_to_front)%></a> 
           </td>          
           <td id="nav">
-            <a href="<%= cpanel_notices_path %>">公告</a> |
-            <a href="<%= cpanel_users_path %>">用户</a> |
-            <a href="<%= cpanel_asks_path %>">问题</a> |
+            <a href="<%= cpanel_notices_path %>"><%=t(:notice)%></a> |
+            <a href="<%= cpanel_users_path %>"><%=t(:users)%></a> |
+            <a href="<%= cpanel_asks_path %>"><%=t(:problem)%></a> |
             <a href="<%= cpanel_answers_path %>">回答</a> |
-            <a href="<%= cpanel_topics_path %>">话题</a> |
+            <a href="<%= cpanel_topics_path %>"><%=t(:topic)%></a> |
             <a href="<%= cpanel_comments_path %>">评论</a> |
-            <a href="<%= cpanel_report_spams_path %>">举报</a>
+            <a href="<%= cpanel_report_spams_path %>"><%=t(:report)%></a>
           </td>
 					<td id="user_bar"> 
             <% if current_user %>
-            你好 <strong><%= current_user.name %></strong>  <a href="<%= logout_path %>">登出</a> 
+            <%=t(:hello)%> <strong><%= current_user.name %></strong>  <a href="<%= logout_path %>"><%=t(:logout)%></a> 
 						<% end %>
           </td> 
 				</tr> 
@@ -35,7 +35,7 @@
   </div> 
   <div id="sitemap"> 
     <div class="container">
-		 导航: <a href="<%= cpanel_root_path %>">控制台</a> &gt; <%= yield :sitemap %>
+		 <%=t(:navigation)%>: <a href="<%= cpanel_root_path %>"><%=t(:console)%></a> &gt; <%= yield :sitemap %>
    </div>
 	</div> 
   <div id="main">

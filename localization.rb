@@ -25,13 +25,12 @@ unless File.exists?("./chinese_words.txt")
       if file!=".." && file!="."
         File.open("./app/#{dir}/#{file}") do |f| 
           filestr = f.readlines.to_s if File.stat("./app/#{dir}/#{file}").file?
-      
-          chinese_words << filestr.scan(/[\u4e00-\u9fff]+/) if filestr
+          chinese_words << filestr.scan(/[\u4e00-\u9fff]+/).map(&:strip) if filestr
         end
       end
     end
   end
-  File.open("./chinese_words.txt", "w") do |file|
+  File.open("./chinese_words.txt", "w+") do |file|
     chinese_words.flatten.uniq.each do |word|
       file.puts word
     end

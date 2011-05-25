@@ -1,6 +1,6 @@
 <% if @success == true %>
   $("#topic .cover img").attr("src",'<%= @topic.cover.normal.url %>');
 <% else %>
-  alert("上传失败，格式有问题.");
+  alert("#{t(:upload_failed)}，#{t(:format_problem)}.");
 <% end %>
 App.loading(false);

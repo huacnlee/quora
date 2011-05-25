@@ -1,6 +1,6 @@
 <% if @notifies and @notifies.size > 0 %>
 <div class="listing notifications box standard-box">
-	<h3>新通知</h3>
+	<h3><%=t(:new_notifications)%></h3>
 	<%
 	@notifies.each do |k, children|
 		next if k.to_s.blank?
@@ -9,7 +9,7 @@
 		<%
     if children[:type] == "USER"
 		%>
-      <%= raw children[:items].map {|n| (n.log and n.log.user) ? user_name_tag(User.find(n.log.user_id), {:is_notify => true, :notify => n}) : "" }.uniq.join("、") %> 关注了你。
+      <%= raw children[:items].map {|n| (n.log and n.log.user) ? user_name_tag(User.find(n.log.user_id), {:is_notify => true, :notify => n}) : "" }.uniq.join("、") %> <%=t(:concern_you)%>。
 		<%
     else
       if ["THANK_ANSWER"].include?children[:type]
@@ -37,9 +37,9 @@
           <div class="notification-title" id="NASK_<%= ask.id %>_title">
             <div class="title">
               <% if children[:type] == "THANK_ANSWER" %>
-                <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %>项</a> 关于问题 <a href="<%= ask_path(ask) %>?nr=1#answer_<%= k %>"><%= ask.title %></a>
+                <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %><%=t(:items)%></a> <%=t(:regards)%> <a href="<%= ask_path(ask) %>?nr=1#answer_<%= k %>"><%= ask.title %></a>
               <% else %>
-                <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %>项</a> 关于问题 <a href="<%= ask_path(ask) %>"><%= ask.title %></a>
+                <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %><%=t(:items)%></a> <%=t(:regards)%> <a href="<%= ask_path(ask) %>"><%= ask.title %></a>
               <% end %>
             </div>
           </div>
@@ -75,7 +75,7 @@
 	</div>
 	<% end %>
 	<div class="actions">
-		<a href="#" class="gray_button small" onclick="return mark_notifies_as_read(this, '<%= @notifications.map {|n| n.id}.join(',') %>');">清除这些提醒</a>
+		<a href="#" class="gray_button small" onclick="return mark_notifies_as_read(this, '<%= @notifications.map {|n| n.id}.join(',') %>');"><%=t(:remove_these_reminders)%></a>
 	</div>
 </div>
 <% end %>

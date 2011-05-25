@@ -1,45 +1,45 @@
-<% content_for :sitemap do %><span class="current">加入社区</span><% end %>
+<% content_for :sitemap do %><span class="current"><%=t(:join_the_community)%></span><% end %>
 <div class="leftbox">
 	<div class="box">
     <% if not Setting.allow_register %>
-      <h1>如何注册用户？</h1>
+      <h1><%=t(:how_to_registered_users)%>？</h1>
       <div class="content">
-        为控制社区内容质量，加入必须通过别人邀请。<br />
-        你可以动用你的社会化资源，找其他人邀请你。<br /><br />
-        <p style="font-size:14px;">或者把你的个人资料发到: </p>
+        <%=t(:to_control_the_quality_of_community_content)%>，<%=t(:invite_others_to_join_must)%>。<br />
+        <%=t(:you_can_use_your_social_resources)%>，<%=t(:invite_you_to_find_other_people)%>。<br /><br />
+        <p style="font-size:14px;"><%=t(:or_send_your_personal_data_to)%>: </p>
         <ul style="margin:10px 20px;">
           <% Setting.admin_emails.each do |email| %>
             <li><a href="mailto:<%= email %>"><%= email %></a></li>
           <% end%>
         </ul>
-        <p>我们审核过后，如果你符合要求，便会给你发送<b>邀请链接</b>，所以，请尽量描述你自己。
+        <p><%=t(:after_we_review)%>，<%=t(:if_you_meet_the_requirements)%>，<%=t(:will_send_you)%><b><%=t(:invitation_link)%></b>，<%=t(:therefore)%>，<%=t(:please_try_to_describe_yourself)%>。
       </div>
     <% else %>
-      <h1>注册新用户</h1>
-      <p style="color:green; margin-bottom:10px;">目前是临时开放注册期间，如果你还没有<%= Setting.app_name %>帐号的话，赶紧注册吧！</p>
+      <h1><%=t(:new_user_registration)%></h1>
+      <p style="color:green; margin-bottom:10px;"><%=t(:provisional_registration_period_is_currently_open)%>，<%=t(:if_you_have_not)%><%= Setting.app_name %><%=t(:account_then)%>，<%=t(:hurry_up_now)%>！</p>
       <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name) ) do |f| %>
         <%= render "shared/error_messages", :target => resource %> 
-        <%= f.input :name, :label => "姓名（注册后不可更改）" %>
-        <%= f.input :email, :label => "邮箱" %>
-        <%= f.input :password, :as => :password, :label => "密码" %>
-        <%= f.input :password_confirmation, :as => :password, :label => "确认密码"  %>
-        <div class="actions"><button type="submit" class="button submit">提交注册信息</button></div>
+        <%= f.input :name, :label => "#{t(:name)}（#{t(:can_not_be_changed_after_registration)}）" %>
+        <%= f.input :email, :label => "#{t(:email)}" %>
+        <%= f.input :password, :as => :password, :label => "#{t(:password)}" %>
+        <%= f.input :password_confirmation, :as => :password, :label => "确认#{t(:password)}"  %>
+        <div class="actions"><button type="submit" class="button submit"><%=t(:submit_registration_information)%></button></div>
       <% end %>
     <% end %>
   </div>
 </div>
 <%= content_for :sidebar do %>
   <div class="box">
-    <h2>已经有帐号了？</h2>
+    <h2><%=t(:already_have_an_account_of_the)%>？</h2>
     <p style="line-height:20px;">
     <%= render :partial => "devise/shared/links" %>
     </p>
   </div>
   <div class="box">
-    <h2>关于注册</h2>
+    <h2><%=t(:about_registration)%></h2>
     <div class="inner">
-      <%= Setting.app_name %>本身需要邀请才可以注册的，但是我们会偶尔在一些特别的日子临时性的开放注册。<br />
-      如果你看到了这个页面，那恭喜你，赶紧注册吧，如果你还没有<%= Setting.app_name %>帐号的话。
+      <%= Setting.app_name %><%=t(:itself_can_be_invited_to_register)%>，<%=t(:but_we_will_occasionally_some_special_days_in_the_temporary_open_up)%>。<br />
+      <%=t(:if_you_see_this_page)%>，<%=t(:congratulations_you)%>，<%=t(:hurry_up_now)%>，<%=t(:if_you_have_not)%><%= Setting.app_name %><%=t(:account_then)%>。
     </div>
   </div>
 <% end %>

@@ -5,18 +5,18 @@
   </style>
 <% end %>
 <div id="about">
-  <h1>关于者也</h1>
+  <h1><%=t(:who_is_also_on_the)%></h1>
   <div class="md_body">
-    我们是一群向往自由开放的程序员，立志构建一个开放的问答社区站点。<br />
-    我们乐于分享我们的项目源代码以及设计思路，以供有非盈利性目的的个人，公司使用。
+    <%=t(:we_are_a_group_of_programmers_who_aspire_to_a_free_and_open)%>，<%=t(:determined_to_build_an_open_question_and_answer_community_site)%>。<br />
+    <%=t(:we_are_happy_to_share_our_project_source_code_and_design_ideas)%>，<%=t(:for_a_nonprofit_personal_purposes)%>，<%=t(:companies_use)%>。
   </div>
-  <h2>团队成员</h2>
+  <h2><%=t(:team_members)%></h2>
   <div class="team">
     <% @users.each do |u| %>
       <%= user_avatar_tag(u,:normal) %>
     <% end %>
   </div>
-  <h2>贡献者</h2>
+  <h2><%=t(:contributors)%></h2>
   <div class="contributors">
     <ul>
       <li><a href="https://github.com/saberma">Saberma</a></li>
@@ -27,14 +27,14 @@
 </div>
 <%= content_for :sidebar do %>
   <div class="box">
-    <h2>常见问题</h2>
+    <h2><%=t(:frequently_asked_questions)%></h2>
     <ul> 
-      <li><a href="http://zheye.org/asks/4d92a076fd503c480e00002a">为啥起“者也”这个名字？</a></li> 
-      <li><a href="http://zheye.org/asks/4d95f33bfd503c3bf2000011">者也每天都做了哪些更新？</a></li> 
-      <li><a href="http://zheye.org/asks/4d95a178fd503c6ad6000030">代码部署和二次开发容易吗？</a></li> 
-      <li><a href="http://zheye.org/asks/4d95ee5bfd503c2652000039">者也比知乎好在哪里？</a></li> 
-      <li><a href="http://zheye.org/asks/4d92db71fd503c7c03000188">用户名称可以修改么？</a></li> 
-      <li><a href="http://zheye.org/asks/4d94325efd503c17a5000004">者也是个怎样的问答社区？</a></li> 
+      <li><a href="http://zheye.org/asks/4d92a076fd503c480e00002a"><%=t(:why_play)%>“<%=t(:are_also)%>”<%=t(:the_name)%>？</a></li> 
+      <li><a href="http://zheye.org/asks/4d95f33bfd503c3bf2000011"><%=t(:are_also)%>每天都做了哪些更新？</a></li> 
+      <li><a href="http://zheye.org/asks/4d95a178fd503c6ad6000030"><%=t(:code_deploy_and_easy_for_secondary_development)%>？</a></li> 
+      <li><a href="http://zheye.org/asks/4d95ee5bfd503c2652000039"><%=t(:are_also)%>比知乎好在哪里？</a></li> 
+      <li><a href="http://zheye.org/asks/4d92db71fd503c7c03000188"><%=t(:what_can_change_the_user_name)%>？</a></li> 
+      <li><a href="http://zheye.org/asks/4d94325efd503c17a5000004"><%=t(:are_also)%>是个怎样的问答社区？</a></li> 
     </ul>
   </div>
 <% end %>

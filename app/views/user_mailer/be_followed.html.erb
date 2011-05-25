@@ -11,9 +11,9 @@
     </td>
     <td valign="top">
       <div style="font-weight:bold;padding:8px 0; font-size:14px;"><%= @follower.name %></div>
-      <div>在<%= Setting.app_name %>上，他有 <%= @follower.asks_count %>个问题, <%= @follower.answers_count %>个回答 </div>
+      <div><%=t(:in)%><%= Setting.app_name %>上，<%=t(:he_has)%> <%= @follower.asks_count %><%=t(:question)%>, <%= @follower.answers_count %><%=t(:an_answer)%> </div>
       <% if !@follower.followed_topics.blank? %>
-        <div>关注了<%= @follower.followed_topics.count %>个话题: <%= @follower.followed_topics.limit(3).collect { |t| t.name }.join(",") %>... </div>
+        <div><%=t(:concerned_about_the)%><%= @follower.followed_topics.count %><%=t(:topics)%>: <%= @follower.followed_topics.limit(3).collect { |t| t.name }.join(",") %>... </div>
       <% end %>
     </td>
   </tr>
