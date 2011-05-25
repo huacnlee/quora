@@ -2,6 +2,16 @@
 # by tsechingho (http://github.com/tsechingho)
 
 "zh-CN":
+  
+  login: 登录
+  register: 注册
+  how_to_register: 如何才能注册
+  logout: 退出
+  
+  
+  
+  
+  
   date:
     formats:
       default: "%Y-%m-%d"

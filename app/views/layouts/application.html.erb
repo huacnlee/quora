@@ -59,13 +59,13 @@
         <div id="user_bar">
           <% if not current_user %>
             <a href="/">随便看看</a>
-            <a href="/login">登录</a>
-            <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
+            <a href="/login"><%=t(:login)%></a>
+            <a href="/register"><% if Setting.allow_register %><%=t(:register)%><%else%><%=t(:how_to_register)%>?<%end%></a>
           <% else %>
             <a class="home" href="/">首页<span id="notify_badge" class="badge<% if current_user.notifications.unread.count < 1 %> force-hide<% end %>">新</span></a>
             <%= user_name_tag(current_user) %>
             <%= link_to('设置', edit_user_registration_path) %>
-            <a href="/logout">退出</a>
+            <a href="/logout"><%=t(:logout)%></a>
           <% end %>
         </div>
       </div>

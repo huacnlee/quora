@@ -1,0 +1,39 @@
+"zh-CN":
+   errors:
+     messages:
+       not_found: "not found "
+       already_confirmed: "has confirmed"
+       not_locked: "not locked"
+       not_saved: "there are %{count} errors, %{resource} can not be saved. "
+   devise:
+     failure:
+       unauthenticated: 'Your account has not been authenticated.'
+       unconfirmed: 'Please activate your account.'
+       locked: 'Your account has been locked.'
+       invalid: 'E-mail or password is incorrect'
+       invalid_token: 'authentication code is invalid.'
+       timeout: 'You have been logged out, please log in again.'
+       inactive: 'Your account is inactive.'#TODO double check this one.
+     sessions:
+       signed_in: 'Login successful'
+       signed_out: 'Logged out'
+     passwords:
+       send_instructions: 'After a few minutes, you will receive an e-mail to reset your password. '
+       updated: 'Your password has been changed successfully, please log in again.'
+     confirmations:
+       send_instructions: 'After a few minutes, you will receive account activation email.'
+       confirmed: 'Your account has been activated, please login.'
+     registrations:
+       signed_up: 'Your account has been registered successfully, if nothing unexpected happens, you will receive a confirmation e-mail to'
+       updated: 'account information updated successfully.'
+       destroyed: 'Goodbye! Your account has been successfully canceled. We hope to see you again soon. '
+     unlocks:
+       send_instructions: 'a bit, you will receive an e-mail account to unlock'
+       unlocked: 'Your account has been successfully unlocked, please login.'
+     mailer:
+       confirmation_instructions:
+         subject: 'confirmation'
+       reset_password_instructions:
+         subject: 'reset password information'
+       unlock_instructions:
+         subject: 'unlock information'
