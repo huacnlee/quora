@@ -261,6 +261,7 @@
   invite_your_friends_to_register: 邀请你的朋友注册
   you_may_be_interested_in_the_person_or_topic: 你可能会感兴趣的人或话题
   home: 首页
+  remember_me: "记住登录状态"
   news: 动态
   see_more: 查看更多
   new: 新建
@@ -397,6 +398,7 @@
   login: 登录
   how_to_register: 如何才能注册
   logout: 登出
+  no_account: 还没有帐号
   regular_edition: 普通版
   background: 后台
   console: 控制台
