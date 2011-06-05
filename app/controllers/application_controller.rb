@@ -10,6 +10,11 @@ class ApplicationController < ActionController::Base
   def set_locale
     # if params[:locale] is nil then I18n.default_locale will be used
     @locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    if ["zh","zh-cn"].index(@locale.downcase)
+      @locale = "zh-CN"
+    else
+      @locale = "en"
+    end
     I18n.locale = @locale
   end
 
