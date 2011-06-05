@@ -1,0 +1,17 @@
+<%= render 'base' %>
+<div class="list_title">
+  <h2>站内信箱</h2>
+  <a href="#" class="gray_button small">撰写新消息</a>
+</div>
+<div id="inboxes">
+  <% @inboxes.each do |item| %>
+    <div class="inbox">
+      <div class="sender">
+        <%= user_avatar_tag(item.sender,:small) %>
+      </div>
+      <div class="info">
+
+      </div>
+    </div>
+  <% end %>
+</div>

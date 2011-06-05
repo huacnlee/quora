@@ -76,6 +76,7 @@ Quora::Application.routes.draw do
     end
   end
   resources :logs
+  resources :inbox
 
   namespace :cpanel do
     root :to =>  "home#index"
