@@ -1,14 +1,14 @@
 <div id="ask">
 <%= simple_form_for(@ask) do |f| %>
   <div class="inputs">
-    <%= f.input :title, :label => "标题", :input_html => {:class => "long"}%>
-    <%= f.input :body, :label => "正文", :as => :text, :input_html => {:class => "long"} %>
+    <%= f.input :title, :label => "#{t(:title)}", :input_html => {:class => "long"}%>
+    <%= f.input :body, :label => "#{t(:text)}", :as => :text, :input_html => {:class => "long"} %>
       <script type="text/javascript">
         $("#ask_body").qeditor({'is_mobile_device': <%= is_mobile_device? ? 'true' : 'false' %>});
       </script>
   </div>
   <div class="actions">
-    <button class="submit">提交问题</button> 或者 <%= link_to '返回', asks_path %>
+    <button class="submit"><%=t(:submit_a_question)%></button> 或者 <%= link_to "#{t(:back)}", asks_path %>
   </div>
 <% end %>
 </div>

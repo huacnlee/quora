@@ -1,5 +1,5 @@
 <div style="margin:10px 0;">
-  <b><%= raw @invitors.collect { |u| user_name_tag(u,:url => true) }.join(", ") %></b> 邀请你回答这个问题。
+  <b><%= raw @invitors.collect { |u| user_name_tag(u,:url => true) }.join(", ") %></b> <%=t(:invite_you_to_answer_this_question)%>。
 </div>
-<div style="font-weight:bold;">你可以点击下面的链接进入这个问题的页面：</div>
+<div style="font-weight:bold;"><%=t(:you_can_click_on_the_link_below_to_access_this_page)%>：</div>
 <div><a href="<%= ask_url(@ask.id) %>"><%= ask_url(@ask.id) %></a></div>

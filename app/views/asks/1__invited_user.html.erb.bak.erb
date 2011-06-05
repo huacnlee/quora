@@ -1,0 +1,11 @@
+<div class="invite" title="<%= item.user.name %>" id="ask_invite_<%= item.id %>">
+  <%= user_avatar_tag(item.user,:small) %>
+  <p>
+  <% if current_user and item.invitor_ids.index(current_user.id) %>
+    <a href="#" onclick="return Asks.cancelInviteToAnswer(this,'<%= item.id %>')" class="remove"></a>
+  <% else %>
+    <span class="n"></span>
+  <% end %>
+  <span class="count"><%= item.count %></span>
+  </p>
+</div>

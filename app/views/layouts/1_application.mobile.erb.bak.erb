@@ -1,0 +1,132 @@
+<%= spaceless do %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta id="viewport" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <title><%= raw @page_title %><%= Setting.app_name %></title>
+  <%= stylesheet_link_tag "application","users","asks","mobile","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_mobile_front" %>
+	<%= yield :styles %>
+  <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
+  <%= csrf_meta_tag %>
+  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
+  <%= yield :scripts %>
+  <script type="text/javascript">
+    <% if current_user %>
+    var logined = true;
+    <% else %>
+    var logined = false;
+    <% end %>
+  </script>
+</head>
+<body class="mobile">
+  <div id="header">
+    <div class="container">
+      <div id="site_name">
+        <a href="/"><%= image_tag("logo.png") %></a>
+      </div>
+      <div id="add_ask">
+        <input type="text" placeholder="搜索问题，话题，会员" />
+        <a href="/asks/new" onclick="return addAsk();"><%= image_tag("add_ask.gif") %></a>
+      </div>
+      <script type="text/javascript">
+        Asks.completeAll($("#add_ask input"));
+      </script>
+    </div>
+  </div>
+  <div id="sidebar">
+    <div class="container">
+      <%= yield :sidebar %>
+    </div>
+  </div>
+  <div id="main">
+    <div class="container">
+      <div class="left_wrapper">
+        <% if !@notice.blank? %>
+          <% if cookies[:hide_notice] != @notice.id.to_s %>
+            <div id="sys_notice">
+              <%= raw @notice.body %>
+              <div class="info">
+                <span class="date"><%= l @notice.updated_at.getlocal, :format => :long %></span>
+                <a href="#" class="gray_button small" onclick="return App.hideNotice('<%= @notice.id %>');">我知道了</a>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <% if !notice.blank? %>
+          <div class="notice_message"><%= notice %></div>
+          <script type="text/javascript">
+            $(".notice_message").fadeOut().fadeIn();    
+          </script>
+        <% end %>
+        <% if !alert.blank? %>
+          <div class="alert_message"><%= alert %></div>
+          <script type="text/javascript">
+            $(".alert_message").fadeOut().fadeIn();    
+          </script>
+        <% end %> 
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+    <div class="container">
+      <a href="/">手机版首页</a>
+      <% if not current_user %>
+        <a href="/login">登录</a>
+        <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
+      <% else %>
+        <%= user_name_tag(current_user) %>
+        <a href="/logout">登出</a>
+      <% end %>
+      <a style="float:right;" href="/?force_format=desktop">普通版</a>
+    </div>
+  </div>
+  <%= yield :bottom %>
+  <div style="display: none;" id="hidden_new_ask">
+    <h2>创建新问题</h2>
+    <form action="/asks" method="post" id="inner_new_ask">
+      <%= auth_token %>
+      <textarea type="text" name="ask[title]" class="title" placeholder="在这里输入问题"></textarea>
+      <label>可选:</label>添加更多描述
+      <textarea type="text" name="ask[body]"></textarea>
+      <button type="submit" class="submit">添加问题</button> <a href="#" onclick="$.facebox.close(); return false;">取消</a>
+    </form>
+  </div>
+  <div style="display: none;" id="loading"> 
+    <div class="logo"></div> 
+    <div class="text">加载中…</div> 
+  </div> 
+  <div style="width:0px;height:0px;overflow:hidden;">
+    <%= image_tag("loading.gif") %>
+    <div id="report_page">
+      <h2>举报内容</h2>
+      <form id="report_page_form" action="/report.js" onsubmit="App.loading();" method="post" class="simple_form">
+        <%= auth_token %>
+        <div class="row">
+          <input type="hidden" name="url" value="<%= request.url %>" />
+          <label class="string">请填写举报原因:</label>
+          <textarea name="desc" style="width:250px;height:80px;"></textarea>
+        </div>
+        <div class="acitons">
+          <button type="submit">提交</button> <a href="#" style="margin-left:5px;" onclick="$.facebox.close(); return false;">关闭</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '<%= Setting.google_analytics_id %>']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</body>
+</html>
+<% end %>

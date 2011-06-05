@@ -1,15 +1,15 @@
 <% content_for :sitemap do %><span class="current">加入社区</span><% end %>
 <div class="leftbox">
 	<div class="box">
-    <h1>登录</h1>
+    <h1><%=t(:login) %></h1>
     <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
-      <%= f.input :email, :label => "邮箱" %>
-      <%= f.input :password, :as => :password, :label => "密码" %>
+      <%= f.input :email, :label => "#{t(:email)}" %>
+      <%= f.input :password, :as => :password, :label => "#{t(:password)}" %>
       <% if devise_mapping.rememberable? -%>
-        <div class="row"><%= f.check_box :remember_me, :style => "width:auto;" %> <%= f.label :remember_me,"记住登录状态", :style => "display:inline;" %></div>
+        <div class="row"><%= f.check_box :remember_me, :style => "width:auto;" %> <%= f.label :remember_me,"#{t(:remember_me)}", :style => "display:inline;" %></div>
       <% end -%>
-    <div class="field"><button type="submit" class="button submit">登录</button></div>
+    <div class="field"><button type="submit" class="button submit"><%=t(:login) %></button></div>
     <% end %>
   </div>
   <% if Setting.allow_register %>
@@ -23,7 +23,7 @@
 </div>
 <div style="margin-top:20px;" class="sidebar">
   <div class="box">
-    <h2>还没有帐号？</h2>
+    <h2><%=t(:no_account) %>?</h2>
     <%= render :partial => "devise/shared/links" %>
   </div>
 </div>

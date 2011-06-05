@@ -1,0 +1,47 @@
+<% content_for :sitemap do %><span class="current">设置</span><% end %>
+<div class="leftbox">
+  <div class="box">
+    <h2>个人资料</h2>
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
+    <%= render "shared/error_messages", :target => resource %> 
+      <%= f.input :slug, :label => "个性域名", :hint => "格式要求4-20个字符(可以是字母，数字，中横线),如果格式不对将会自动处理。" %>
+      <%= f.input :girl, :as => :boolean, :label => "我是女性" %>
+      <%= f.input :email, :label => "邮箱" %>
+      <%= f.input :avatar, :label => "头像" %>
+      <% if not @user.avatar.blank? %>
+      <div class="row">
+        <label>预览</label>
+        <%= image_tag(@user.avatar.normal.url) %>
+      </div>
+      <% end %>
+      <%= f.input :website, :input_html => { :placeholder => "http://", :class => "long" }, :label => "个人站点" %>
+      <%= f.input :tagline, :input_html => { :class => "long" }, :label => "最能概括你的标志性语言" %>
+      <%= f.input :bio, :as => :text, :input_html => { :class => "long", :style => "height:120px;"}, :label => "个人经历" %>
+      <script type="text/javascript">$("#user_bio").qeditor({'is_mobile_device': <%= is_mobile_device? ? 'true' : 'false' %>});</script>
+      <div class="actions">
+        <button type="submit">保存</button>
+      </div>
+    <% end %>
+  </div>
+  <div class="box">
+    <h2 id="mail_notify_settings">邮件提醒设置</h2>
+    <div class="content">
+      <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :enctype =>  "multipart/form-data" }) do |f| %>
+        <%= f.input :mail_be_followed, :as => :boolean, :label => "被人关注" %>
+        <%= f.input :mail_new_answer, :as => :boolean, :label => "关注的问题有新回答" %>
+        <%= f.input :mail_invite_to_ask, :as => :boolean, :label => "有人邀请我回答问题" %>
+        <%= f.input :mail_ask_me, :as => :boolean, :label => "有人向我提问" %>
+        <div class="actions">
+          <button type="submit">保存</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% content_for :sidebar do %>
+  <%= render "/shared/omniauth_links" %>
+  <div class="box">
+    <h2>删除我的帐号</h2>
+    <p>不喜欢? <%= link_to "删除此帐号", registration_path(resource_name), :confirm => "删除后无法恢复，你确定吗?", :method => :delete %>.</p>
+  </div>
+<% end %>

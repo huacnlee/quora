@@ -1,0 +1,12 @@
+<% if !@topics.blank? %>
+  <% @topics.each do |item| %>
+    $(".pagination").before('<%= escape_javascript(render("topic",:topic => item)) %>');
+  <% end %>
+  current_page = "<%= (params[:page] || "1").to_i + 1 %>";
+  <% if @topics.count < @per_page %>
+  $(".pagination").remove();
+  <% end %>
+<% else %>
+  $(".pagination").remove();
+<% end %>
+

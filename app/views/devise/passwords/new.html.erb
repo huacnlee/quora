@@ -1,11 +1,11 @@
-<% content_for :sitemap do %><span class="current">忘记了密码</span><% end %>
+<% content_for :sitemap do %><span class="current"><%= t(:forgot_password) %></span><% end %>
 <div class="leftbox">
   <div class="box">
-    <h1>忘记了密码</h1>
+    <h1><%= t(:forgot_password) %></h1>
     <%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
       <%= render "shared/error_messages", :target => resource %> 
-      <%= f.input :email, :hint => "此功能将会发送一个找回密码的特别链接到你的邮箱" %>
-      <div class="actions"><button type="submit" class="button submit">找回密码</button></div>
+      <%= f.input :email, :hint => "#{t(:password_mail_message)}" %>
+      <div class="actions"><button type="submit" class="button submit"><%=t(:forgot_password) %></button></div>
     <% end %>
   </div>
 </div>

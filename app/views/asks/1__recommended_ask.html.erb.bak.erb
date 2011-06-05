@@ -1,0 +1,6 @@
+<div class="ask" ask-id="<%= item.id %>">
+  <div class="title"><a href="/asks/<%= item.id %>"><%= item.title %></a></div>
+    <div class="info">
+      该问题被添加到 <%= raw item.topics.map {|t| "<a href=\"/topics/#{t}\">#{t}</a>"}.join("、") %> 这<%= item.topics.size %>个话题
+    </div> 
+</div>

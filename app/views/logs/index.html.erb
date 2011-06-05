@@ -21,7 +21,7 @@
 </div>
 
 <% if @logs.length == @per_page %>
-  <div class="pagination"><a class="page_more" href="#" onclick="return loadLogs();">查看更多...</a></div>
+  <div class="pagination"><a class="page_more" href="#" onclick="return loadLogs();"><%=t(:see_more)%>...</a></div>
 <% end %>
 
 <%= render "asks/sidebar" %>

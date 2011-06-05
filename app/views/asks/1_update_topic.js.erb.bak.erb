@@ -1,0 +1,6 @@
+<% if @success %>
+  Asks.addTopic("<%= @name %>");
+  $(".ask .edit_topics input.name").val("").focus();
+<% else %>
+<% end %>
+App.loading(false);

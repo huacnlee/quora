@@ -5,25 +5,25 @@
       • <%= item.answers_count %> 个答案 
 			<% if current_user %>
 				<% if current_user.ask_followed?(item) %>
-      	• <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
+      	• <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')"><%=t(:cancel_concern)%></a> 
 				<% else %>
 				• <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
 				<% end %>
 				<% if current_user.ask_muted?(item.id) %>
-				• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+				• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')"><%=t(:unmasked)%></a> 
 				<% else %>
-      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')"><%=t(:not_interested)%></a> 
 				<% end %>
 			<% end %>
     </div> 
     <% if item.last_answer and (not(params[:controller] == "asks" and params[:action] == "index")) %>
       <div class="last_answer answer">
         <div class="attr">
-          <span class="votes" rel="tipsyt" title="参与投票人数"><%= item.last_answer.votes_count %></span>
+          <span class="votes" rel="tipsyt" title="#{t(:number_of_people_to_vote)}"><%= item.last_answer.votes_count %></span>
         </div>
         <div class="data">
           <div class="author">
-            <% if item.last_answer_user %><%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user,:prefix => ",") %> <% else %>匿名用户<% end %>
+            <% if item.last_answer_user %><%= user_name_tag(item.last_answer_user) %><%= user_tagline_tag(item.last_answer_user,:prefix => ",") %> <% else %><%=t(:anonymous_user)%><% end %>
           </div>
           <div class="md_body"><%= md_body(item.last_answer.chomp_body) %></div>
         </div>

@@ -5,6 +5,14 @@ class ApplicationController < ActionController::Base
   before_filter :init, :load_notice
   has_mobile_fu
 
+
+  before_filter :set_locale
+  def set_locale
+    # if params[:locale] is nil then I18n.default_locale will be used
+    @locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    I18n.locale = @locale
+  end
+
   def init
     if params[:force_format] == "mobile"
       cookies[:mobile] = true

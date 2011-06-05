@@ -1,0 +1,15 @@
+var commentForm = $("#<%= @comment.commentable_type.downcase %>_<%= @comment.commentable_id %>_comments .form");
+var commentText = $("textarea", commentForm);
+<% if @success %>
+  <%
+  html = <<-HTML
+  <div class="comment">
+    <div class="md_body">#{@comment.body}</div>
+    <div class="info">#{user_name_tag(current_user)} • #{l @comment.created_at, :format => :short}</div>
+  </div>
+  HTML
+  %>
+  commentForm.before("<%= escape_javascript(raw(html)) %>");
+<% end %>
+commentText.val("").focus();
+App.loading(false);

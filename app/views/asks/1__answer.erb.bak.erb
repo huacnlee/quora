@@ -1,0 +1,40 @@
+<div id="answer_<%= item.id %>" data-uc="<%= item.up_votes_count %>" data-dc="<%= item.down_votes_count %>"
+    class="answer<%= ' spam_answer' if spam_answer?(item) %>">
+  <div class="vote_buttons">
+    <% if not owner?(item) %>
+      <a rel="tipsyr" title="赞同 (排序将上升)" class="vote_up<%= ' voted' if voted?(item, :up) %>" onclick="return Asks.vote('<%= item.id %>',1);" href="#"></a>
+      <a rel="tipsyr" title="反对 (不会显示你的名字)" class="vote_down<%= ' voted' if voted?(item, :down) %>" onclick="return Asks.vote('<%= item.id %>',0);" href="#"></a>
+    <% end %>
+  </div>
+  <div class="avatar_border">
+    <%= user_avatar_tag(item.user, :small) %>
+  </div>
+  <div class="answer_border">
+    <div class="author"><%= user_name_tag(item.user) %><%= user_tagline_tag(item.user,:prefix => ",") %></div>
+    <% if item.up_votes_count != 0 %>
+      <div class="votes"> 
+        <span class="num"><%= item.up_votes_count %></span>票，来自<%= up_voter_links item.up_voters %>
+      </div>
+    <% end %>
+    <div class="md_body">
+      <div id="answer_body_<%= item.id %>">
+        <%= md_body(item.chomp_body) %>
+      </div>
+      <% if owner?(item) %>
+        <%= in_place_edit_tag item, :body, :type => :textarea, :text_id => "answer_body_#{item.id}" %>
+      <% end %>
+    </div>
+    <div class="action">
+      <% if item.comments_count == 0 %>
+        <a href="#" onclick="return Asks.toggleComments('answer','<%= item.id %>');">添加评论</a>
+      <% else %>
+        <a href="#" onclick="return Asks.toggleComments('answer','<%= item.id %>');"><%= item.comments_count %> 条评论</a>
+      <% end %>
+      <% if not owner? item %>
+        • <a rel="tipsyr" title="向回答者表示感谢" class="thank<%= ' thanked' if thank_answered?(item) %>" href="#" onclick="return Asks.thankAnswer(this,'<%= item.id %>')">感谢</a>
+      <% end %>
+      • <a rel="tipsyr" title="认为此回答与问题不相干，或者没有实际作用" class="notusefull<%= ' spamed' if spam_answered?(item) %>" onclick="return Asks.spamAnswer(this,'<%= item.id %>');" href="#">没有帮助</a>
+      • <%= l item.created_at.getlocal, :format => :short %>
+    </div>
+  </div>
+</div>

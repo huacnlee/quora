@@ -1,0 +1,12 @@
+<% if !@followers.blank? %>
+  <% @followers.each do |item| %>
+    $(".pagination").before('<%= escape_javascript(render("follower",:follower => item)) %>');
+  <% end %>
+  current_page = "<%= (params[:page] || "1").to_i + 1 %>";
+  <% if @followers.count < @per_page %>
+  $(".pagination").remove();
+  <% end %>
+<% else %>
+  $(".pagination").remove();
+<% end %>
+

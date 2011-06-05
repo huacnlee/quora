@@ -26,29 +26,29 @@
 		<div class="bio">
 			<span id="user_bio">
 	      <% if @user.bio.blank? and (not owner?@user) %>
-	        <%= @user.name %>还没来得及写他的个人介绍.
+	        <%= @user.name %><%=t(:have_not_had_time_to_write_his_personal_introduction)%>.
 	      <% else %>
 	        <%= md_body @user.bio %>
 	      <% end %>
 	    </span>
-	    <% if owner?@user %> <%= in_place_edit_tag(@user,:bio,:type => :textarea, :text_id => "user_bio", :label => "修改个人经历") %> <% end %>
+	    <% if owner?@user %> <%= in_place_edit_tag(@user,:bio,:type => :textarea, :text_id => "user_bio", :label => "#{t(:modify_personal_experience)}") %> <% end %>
 		</div>
 	</div>
 </div>
 
 <div class="tabs">
-  <a<%= ' class=actived' if params[:action] == "show" %> href="<%= user_path(user.slug) %>">主页</a>
-	<a<%= ' class=actived' if params[:action] == "asked_to" %> href="<%= asked_to_user_path(user.slug) %>">问<%= current_user == user ? "我" : (user.girl ? "她" : "他") %>(<%= Ask.normal.asked_to(user.id).count %>)</a>
-  <a<%= ' class=actived' if params[:action] == "asked" %> href="<%= asked_user_path(user.slug) %>">问过(<%= user.asks_count %>)</a>
-  <a<%= ' class=actived' if params[:action] == "answered" %> href="<%= answered_user_path(user.slug) %>">回答过(<%= user.answered_ask_ids.count %>)</a>
+  <a<%= ' class=actived' if params[:action] == "show" %> href="<%= user_path(user.slug) %>"><%=t(:home)%></a>
+	<a<%= ' class=actived' if params[:action] == "asked_to" %> href="<%= asked_to_user_path(user.slug) %>"><%=t(:q)%><%= current_user == user ? "#{t(:i)}" : (user.girl ? "#{t(:she)}" : "#{t(:he)}") %>(<%= Ask.normal.asked_to(user.id).count %>)</a>
+  <a<%= ' class=actived' if params[:action] == "asked" %> href="<%= asked_user_path(user.slug) %>"><%=t(:q)%>过(<%= user.asks_count %>)</a>
+  <a<%= ' class=actived' if params[:action] == "answered" %> href="<%= answered_user_path(user.slug) %>"><%=t(:answered)%>(<%= user.answered_ask_ids.count %>)</a>
 	<!-- <a<%= ' class=actived' if params[:action] == "following" %> href="<%= following_user_path(user.slug) %>">关注(<%= user.following_ids.count %>)</a>
 		<a<%= ' class=actived' if params[:action] == "followers" %> href="<%= followers_user_path(user.slug) %>">被关注(<%= user.follower_ids.count %>)</a> -->
-	<a<%= ' class=actived' if params[:action] == "following_topics" %> href="<%= following_topics_user_path(user.slug) %>">关注的话题(<%= user.followed_topic_ids.count %>)</a>
+	<a<%= ' class=actived' if params[:action] == "following_topics" %> href="<%= following_topics_user_path(user.slug) %>"><%=t(:a_topic_of_concern)%>(<%= user.followed_topic_ids.count %>)</a>
 </div>
 
 <% if not owner? user %>
 <div id="ask_to_user" class="simple_form">
-  <h3>对<%= user.name %>提问:</h3>
+  <h3><%=t(:true)%><%= user.name %>提<%=t(:q)%>:</h3>
   <form action="/asks" method="post">
     <div class="row">
       <%= auth_token %>
@@ -56,13 +56,13 @@
       <textarea type="text" class="text" onfocus="$(this).parent().next().show();" name="ask[title]"></textarea>
     </div>
     <div style="display:none">
-      <div><a href="#" onclick="$(this).parent().next().show(); $(this).hide(); return false;">添加问题描述</a></div>
+      <div><a href="#" onclick="$(this).parent().next().show(); $(this).hide(); return false;">添加<%=t(:q)%>题描述</a></div>
       <div class="row" style="display:none">
-        <label>问题描述(可选):</label>
+        <label><%=t(:q)%>题描述(<%=t(:optional)%>):</label>
         <textarea type="text" class="text" name="ask[body]"></textarea>
       </div>
       <div class="actions">
-        <button type="submit">提交问题</button>
+        <button type="submit">提交<%=t(:q)%>题</button>
       </div>
     </div>
   </form>

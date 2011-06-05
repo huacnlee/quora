@@ -1,0 +1,79 @@
+<%= content_for :scripts do %>
+  <%= javascript_include_tag("topics", :cache => "cached_topics") %>
+  <script type="text/javascript">
+    var current_page = 2;
+    var topic_id = "<%= @topic.id %>";
+    function loadAsks(){
+      App.loading();
+      $.get("<%= topic_path(params[:name]) %>?page="+current_page,function(){
+          App.loading(false);
+      });
+      return false;
+    }
+
+  </script>
+<% end %>
+<div id="topic" class="clearfix">
+  <div class="cover topic_cover">
+    <%= image_tag(@topic.cover.normal.url) %>
+    <div class="edit"><a href="#">修改图片</a></div>
+  </div>
+  <div id="edit_topic_cover" style="display:none">
+    <h2>修改话题图片</h2>
+    <%= simple_form_for(@topic,:class => "form",:html => { :multipart =>  true, :onsubmit => "App.loading();" }) do |f| %>
+      <%= f.input :cover, :label => "本地上传",:hint => "支持 jpg, gif, png 格式的图片，不要超过 2MB。建议图片尺寸大于 100×100。" %>
+      <div class="actions">
+        <button type="submit">上传图片</button>
+        <a href="#" onclick="$.facebox.close(); return false;">关闭</a>
+      </div>
+    <% end %>
+  </div>
+  <script type='text/javascript'>Topics.editCover($("#topic .cover"));</script>
+  <div class="info">
+    <h1><%= @topic.name %></h1>
+    <div class="summary">
+      <span id="topic_summary"><%= md_body @topic.summary  %></span>
+      <% if @topic.summary.blank? %>
+        <%= in_place_edit_tag @topic, :summary, :type => :textarea, :text_id => "topic_summary",:label => "添加补充资料" %>
+      <% else %>
+        <%= in_place_edit_tag @topic, :summary, :type => :textarea, :text_id => "topic_summary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<br>
+<div id="asks" style="claer:both;">
+  <% @asks.each do |item| %>
+    <%= render "asks/ask", :item => item %>
+  <% end %>
+  <% if @asks.length == @per_page %>
+    <div class="pagination"><a class="page_more" href="#" onclick="return loadAsks();">查看更多...</a></div>
+  <% end %>
+</div>
+
+<% content_for :sidebar do %>
+  <% if current_user %>
+    <div class="box">
+      <div class="inner">
+				<% if current_user.topic_followed?(@topic) %>
+				<a href="#" class="gray_button" onclick="return Topics.unfollow(this, '<%= @topic.name %>','');">取消关注</a>
+				<% else %>
+        <a href="#" class="gray_button green_button" onclick="return Topics.follow(this, '<%= @topic.name %>','');">关注</a>
+				<% end %>
+      </div>
+		</div>
+	<% end %>
+
+		<div class="box standard gray">
+			<h2>最近关注此话题的人</h2>
+			<div class="inner">
+				<div class="followers">
+					<% for follower in @topic.followers.desc("$natural").limit(40) %>
+					<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
+						<%= user_avatar_tag(follower, :small) %>
+					</a>
+					<% end %>
+				</div>
+			</div>
+    </div>
+<% end %>

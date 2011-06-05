@@ -1,5 +1,5 @@
 <%- if controller_name != 'sessions' %>
-<%= link_to "登录", new_session_path(resource_name) %><br />
+<%= link_to t(:login), new_session_path(resource_name) %><br />
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
@@ -7,7 +7,7 @@
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-  <%= link_to "忘记了密码?", new_password_path(resource_name) %><br />
+  <%= link_to "#{t(:forgot_password)}?", new_password_path(resource_name) %><br />
 <% end -%>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>

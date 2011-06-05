@@ -1,0 +1,81 @@
+<% if @notifies and @notifies.size > 0 %>
+<div class="listing notifications box standard-box">
+	<h3>新通知</h3>
+	<%
+	@notifies.each do |k, children|
+		next if k.to_s.blank?
+	%>
+	<div class="notification">
+		<%
+    if children[:type] == "USER"
+		%>
+      <%= raw children[:items].map {|n| (n.log and n.log.user) ? user_name_tag(User.find(n.log.user_id), {:is_notify => true, :notify => n}) : "" }.uniq.join("、") %> 关注了你。
+		<%
+    else
+      if ["THANK_ANSWER"].include?children[:type]
+        answer = Answer.first(:conditions => {:id => k})
+        next if answer.blank?
+        ask = answer.ask
+        next if ask.blank?
+      else
+        ask = Ask.first(:conditions => {:id => k})
+      end
+			if ask
+		%>
+        <%
+        if children[:items].size > 1
+          items = []; comments = []
+          children[:items].each do |item|
+            if item.action == "NEW_COMMENT" and !comments.include?("#{item.targer_id},#{item.user_id}")
+              items << item
+              comments << "#{item.targer_id},#{item.user_id}"
+            elsif item.action != "NEW_COMMENT"
+              items << item
+            end
+          end
+        %>
+          <div class="notification-title" id="NASK_<%= ask.id %>_title">
+            <div class="title">
+              <% if children[:type] == "THANK_ANSWER" %>
+                <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %>项</a> 关于问题 <a href="<%= ask_path(ask) %>?nr=1#answer_<%= k %>"><%= ask.title %></a>
+              <% else %>
+                <a href="#" class="expand" onclick="return expand_notification(this, 'ASK', '<%= ask.id %>')"><%= items.size %>项</a> 关于问题 <a href="<%= ask_path(ask) %>"><%= ask.title %></a>
+              <% end %>
+            </div>
+          </div>
+          <ul class="notification-items" id="NASK_<%= ask.id %>_items">
+            <%
+            items.each do |item|
+              if item.log
+                target_id = ["THANK_ANSWER","INVITE_TO_ANSWER"].include?(item.action) ? item.log.target_parent_id : item.target_id
+            %>
+            <li>
+              <%= raw ask_notification_tag(target_id, item, false) %>
+              <span class="time"><%= l item.log.created_at.getlocal, :format => :short %></span>
+            </li>
+              <%
+              end
+            end
+            %>
+          </ul>
+        <%
+        else
+          item = children[:items].first
+          if item and item.log
+            target_id = ["THANK_ANSWER","INVITE_TO_ANSWER"].include?(item.action) ? item.log.target_parent_id : item.target_id
+            %>
+            <%= raw ask_notification_tag(target_id, item, true) %>
+            <span class="time"><%= l item.log.created_at.getlocal, :format => :short %></span>
+            <%
+          end
+        end
+			end
+		end
+		%>
+	</div>
+	<% end %>
+	<div class="actions">
+		<a href="#" class="gray_button small" onclick="return mark_notifies_as_read(this, '<%= @notifications.map {|n| n.id}.join(',') %>');">清除这些提醒</a>
+	</div>
+</div>
+<% end %>

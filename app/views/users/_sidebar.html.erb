@@ -5,7 +5,7 @@
 	    <div class="box">
 	      <div class="inner">
 	        <% if current_user.followed?(@user) %>
-					<a href="#" class="flat_button" onclick="return Users.unfollow(this, '<%= @user.slug %>','');">取消关注</a>
+					<a href="#" class="flat_button" onclick="return Users.unfollow(this, '<%= @user.slug %>','');"><%=t(:cancel_concern)%></a>
 					<% else %>
 	        <a href="#" class="green_button" onclick="return Users.follow(this, '<%= @user.slug %>','');">关注</a>
 	        <!-- <a href="#" class="dropdown" onclick="return dropdownSettings(this);"><%= image_tag("settings.png",:style => "margin-bottom:-5px;") %></a> -->
@@ -13,9 +13,9 @@
 	      </div>
 			</div>
 		<% elsif owner? @user %>
-			这就是你自己
+			<%=t(:this_is_your_own)%>
 		<% else %>
-      登录后你可以关注<%= user_sex_title(@user) %>
+      <%=t(:after_logging_you_can_focus)%><%= user_sex_title(@user) %>
 		<% end %>
   </div>
 </div>
@@ -31,16 +31,16 @@
 		<li class="last">
 			<a href="<%= following_user_path(@user.slug) %>"><strong>
 			<%= @user.following_ids.size %></strong>
-			<span><%= user_sex_title(@user) %>关注的人</span>
+			<span><%= user_sex_title(@user) %><%=t(:persons_of_concern)%></span>
 			</a>
 		</li>
 	</ul>
-	<div class="user-regdate">注册于 <%= l user.created_at.to_date, :format => :long %></div>
+	<div class="user-regdate"><%=t(:registered_in)%> <%= l user.created_at.to_date, :format => :long %></div>
 </div>
 
 <% if @user.followed_topic_ids.size > 0 %>
 <div class="box gray">
-	<h2>关注 <a href="<%= following_topics_user_path(@user.slug) %>"><%= @user.followed_topic_ids.size %>个话题</a></h2>
+	<h2>关注 <a href="<%= following_topics_user_path(@user.slug) %>"><%= @user.followed_topic_ids.size %><%=t(:topics)%></a></h2>
 	<ul class="followed-item topic-listing">
 		<% for topic in @user.followed_topics.desc("$natural").limit(7) %>
 		<%= render "topic", :topic => topic %>
@@ -51,7 +51,7 @@
 
 <% if @user.follower_ids.size > 0 %>
 <div class="box standard gray">
-  <h2>最近关注<%= user_sex_title(@user) %>的人</h2>
+  <h2><%=t(:recent_attention)%><%= user_sex_title(@user) %>的人</h2>
 	<div class="inner">
 		<div class="followers">
 			<% for follower in @user.followers.desc("$natural").limit(42) %>
@@ -66,7 +66,7 @@
 
 <% if @user.following_ids.size > 0 %>
 <div class="box standard gray">
-  <h2><%= user_sex_title(@user) %>最近关注的人</h2>
+  <h2><%= user_sex_title(@user) %>最近<%=t(:persons_of_concern)%></h2>
 	<div class="inner">
 		<div class="followers">
 			<% for follower in @user.following.desc("$natural").limit(42) %>
