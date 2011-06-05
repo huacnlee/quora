@@ -5,7 +5,8 @@ body { text-align:center; }
 #header #site_name { background-color:#a82400; color:#FFF; height:35px; width:68px; text-align:center; line-height:35px;  float:left;
   font-size:20px; font-weight:bold;  }
 #header #site_name a { color:#FFF; text-decoration:none; }
-#header #site_name a img { border:0; }
+#header #site_name a.logo { width:68px; height:35px; display:inline-block; background:url(/images/logo.png) left top no-repeat; }
+#header #site_name a.logo:active {  background:url(/images/logo.png) left -35px no-repeat; }
 #header #add_ask { display:inline-block; background:#000; height:35px; line-height:35px; padding:0 6px; overflow:hidden; }
 #header #add_ask input { width:360px; font-size: 16px;height: 18px; line-height:18px; border:0; margin-top: 2px; }
 #header #add_ask a { color: #F0F0F0; font-weight: bold; font-size: 13px; padding: 10px 10px; text-align: center;}
