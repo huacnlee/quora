@@ -1,6 +1,6 @@
 class InboxController < ApplicationController
   def index
-    @inboxes = current_user.inboxes
+    @inboxes = Inbox.find_by_user_id(current_user.id)
   end
 
   def show
@@ -9,6 +9,7 @@ class InboxController < ApplicationController
   
   def new
     @inbox = Inbox.new
+    render "new", :layout => false
   end
   
   def create

@@ -16,7 +16,7 @@
   <meta name="description" content="<%= @meta_description %>" />
   <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
   <%= csrf_meta_tag %>
-  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie","jquery.tipsy" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
+  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie","jquery.tipsy" ,"jcaches","application","asks","topics","users","inbox", :cache => "cached_application" %>
 	<script src="http://<%= @zomet_config["server"] %>/application.js" type="text/javascript" charset="utf-8"></script>
   <%= yield :scripts %>
   <script type="text/javascript">
@@ -63,6 +63,7 @@
             <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
           <% else %>
             <a class="home" href="/">首页<span id="notify_badge" class="badge<% if current_user.notifications.unread.count < 1 %> force-hide<% end %>">新</span></a>
+            <a href="/inbox">私信</a>
             <%= user_name_tag(current_user) %>
             <%= link_to('设置', edit_user_registration_path) %>
             <a href="/logout">退出</a>
