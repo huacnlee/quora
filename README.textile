@@ -1,20 +1,61 @@
 Quora clone write in Ruby on Rails.
 
-h1. Installation
+h2. Requirements
 
-base on ubuntu 10.04
+Install there software at first
+
+* Linux _(suggest Ubuntu 10.10+)_ or Mac OS X _(Don't try it on Windows, and send error messages to me!)_
+* Ruby 1.9.2 _(not support 1.9.1 or 1.8)_
+* MongoDB 1.8
+* Redis 2.2.2
+* Node.js 0.4.5
+* Coreseek 4.0.1 _(In English content, you can use Sphinx 1.10)_
+* Git 
+
+h2. Installation
+
+h3. Start Redis, Mongodb first, you need 
 
 pre. 
-git clone git://github.com/huacnlee/quora.git
-sudo apt-get install mongodb
-sudo apt-get install redis-server
-cd quora
-bundle install --path vendor/bundle
-cp config/mongoid.yml.default config/mongoid.yml
-cp config/setting.yml.default config/setting.yml
-cp config/redis.yml.default config/redis.yml
-script/rails s -e development_mongohq
+$ sudo service redis start
+$ sudo service mongodb start
 
-Then, open your browser, points to localhost:3000
+h3. Download Quora source code from Github
+
+pre. 
+$ git clone git://github.com/huacnlee/quora.git
+
+h3. Configure Quora
+
+pre. 
+$ cd quora
+$ bundle install --path vendor/bundle
+$ cp config/mongoid.yml.default config/mongoid.yml
+$ cp config/setting.yml.default config/setting.yml
+$ cp config/redis.yml.default config/redis.yml
+$ cp config/zomet.yml.default config/zomet.yml
+$ cp config/sphinx.yml.default config/sphinx.yml
+
+h3. Create Sphinx config files and index the database to Sphinx _(Before here, you need install Coreseek first.)_
+  
+pre. 
+$ rake mongoid_sphinx:configure
+$ rake mongoid_sphinx:index
+$ rake mongoid_sphinx:start
+
+h3. If you have Quora project old data in the Mongodb, you need to run this script to index the old data for search
+
+pre. 
+$ rake search:index
+
+h3. After, run Rails Server
+
+pre. 
+$ rails s
+
+Then, open your browser, points to http://127.0.0.1:3000
 That is it, enjoy yourself.
+
+If you have any Issues or Questions, please send message to "Quora Issues":https://github.com/huacnlee/quora/issues on Github.
+
 

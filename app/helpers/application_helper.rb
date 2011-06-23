@@ -72,6 +72,14 @@ module ApplicationHelper
     return false
   end
 
+  # 可信用户，管理员，Owner 可以
+  def can_edit?(item)
+    return false if current_user.blank?
+    return true if owner?(item)
+    return true if current_user.credible == true or admin?(current_user)
+    false
+  end
+
   def auto_link_urls(text, href_options = {}, options = {})
     extra_options = tag_options(href_options.stringify_keys) || ""
     limit = options[:limit] || nil

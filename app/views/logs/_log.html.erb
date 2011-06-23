@@ -118,7 +118,7 @@ when "UserLog"
     <% if ["AGREE"].include?(action) %>
     <div class="last_answer answer">
       <div class="attr">
-        <span class="votes"><%= answer.votes_count %></span>
+        <span class="votes" rel="tipsyt" title="参与投票人数"><%= answer.votes_count %></span>
       </div>
 			<div class="data">
 				<div class="author">
@@ -168,7 +168,7 @@ when "AnswerLog"
 			<% if action == "NEW" and log.user %>
 	    <div class="last_answer answer">
 	      <div class="attr">
-	        <span class="votes"><%= log.answer.votes_count %></span>
+          <span class="votes" rel="tipsyt" title="参与投票人数"><%= log.answer.votes_count %></span>
 	      </div>
 				<div class="data">
 					<div class="author">

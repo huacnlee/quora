@@ -11,9 +11,9 @@
 .ask .title h1 { font-size: 1.2em; line-height: 1.2em; display:inline; *font-size: 16px; }
 .ask .info { color: #999; margin:3px 0;  }
 .ask .last_answer { margin-top:5px; }
-.ask .last_answer .votes { display:inline-block;
-  -moz-border-radius: 3px; -webkit-border-radius: 3px;
-  background-color: #DFEAF4; font-size: 1em; line-height: 1.1em; color: #538DC2;
+.ask .last_answer .votes { display:inline-block; cursor:default;
+  -moz-border-radius: 3px; -webkit-border-radius: 3px; margin-top:0px;
+  background-color: #DFEAF4; font-size:12px; line-height: 1.1em; color: #538DC2;
   font-weight:bold; width:20px; text-align:center; padding: 1px 3px; }
 .ask .last_answer .md_body { margin-left:30px; }
 .ask .savatar { float:right }
@@ -46,7 +46,7 @@ a.user img.small { width:25px; height:25px; }
 a.user img.normal { width:100px; height:100px; }
 
 .answers { margin:10px 0 20px; }
-.answers .vote_buttons { float:left; width:20px; position:relative; margin-top:5px; margin-right:8px; margin-left:-27px; }
+.answers .vote_buttons { float:left; width:20px; position:relative; margin-top:0px; margin-right:8px; margin-left:-27px; }
 .answers .vote_buttons a:link, 
 .answers .vote_buttons a:visited {  display:block; width:20px; height:17px;  background-color: #DFEAF4; background-image: url(/images/vote.gif); background-position: top left; background-repeat: no-repeat; margin-bottom: 1px;
   -moz-border-radius: 3px; -webkit-border-radius: 3px; }
@@ -63,9 +63,12 @@ a.user img.normal { width:100px; height:100px; }
 .ask .info a.user,
 .answer .author { color:#666; }
 .answer .author a.user { font-weight:bold; margin-right:2px; }
-.answer .votes { color:#999; margin-bottom:4px; }
-.answer .votes a { color:#999; }
-.answer .attr { float: left; margin-top: 2px; } 
+.answer .votes { margin-top:4px; color:#999; margin-bottom:4px; }
+.answer .voters .hidden { display:none; }
+.answer .votes a { color:#999; display:inline-block; margin:0 1px; }
+.answer .votes .voters a.more { text-decoration:underline;margin-left:5px;}
+.answer .votes .voters a.more:hover { color:#888; }
+.answer .attr { float: left; margin-top: 0px; } 
 .answer .data { margin-left: 10px; } 
 .answer .data .md_body, .answer .data .author { margin-left: 25px; } 
 .answers .spam_answer .md_body { color:#999; font-size:12px; text-decoration :line-through; }
@@ -118,3 +121,4 @@ a.user img.normal { width:100px; height:100px; }
 #topic .cover .edit a {display:block; background:url(/images/edit1.gif) 15px center no-repeat; color:#fff;
   height:22px; line-height:22px; padding-left:30px; overflow:hidden; }
 #topic .info { float:left; width:450px; }
+

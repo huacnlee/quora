@@ -53,6 +53,8 @@ class AsksController < ApplicationController
     @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
     # 被邀请回答的用户
     @invites = @ask.ask_invites.includes(:user)
+    # 推荐话题,如果没有设置话题的话
+    @suggest_topics = AskSuggestTopic.find_by_ask(@ask)
     set_seo_meta(@ask.title)
 
     respond_to do |format|

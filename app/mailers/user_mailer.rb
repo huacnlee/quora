@@ -2,7 +2,7 @@
 class UserMailer < BaseMailer
   def welcome(user_id)
     @user = User.find(user_id)
-    @title = "欢迎加入#{Setting.app_name}"
+    @title = "欢迎加入[#{Setting.app_name}]"
     mail(:to => @user.email,:subject => @title, :from => Setting.email_sender)
   end
 
@@ -12,7 +12,7 @@ class UserMailer < BaseMailer
     # 跳过，如果用户不允许发邮件
     return if @user.mail_be_followed == false
     @follower = User.find(follower_id)
-    @title = "#{@follower.name}在#{Setting.app_name}关注了你"
+    @title = "#{@follower.name}在[#{Setting.app_name}]关注了你"
     mail(:to => @user.email,
          :subject => @title, :from => Setting.email_sender)
   end

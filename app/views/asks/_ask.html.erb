@@ -19,7 +19,7 @@
     <% if item.last_answer and (not(params[:controller] == "asks" and params[:action] == "index")) %>
       <div class="last_answer answer">
         <div class="attr">
-          <span class="votes"><%= item.last_answer.votes_count %></span>
+          <span class="votes" rel="tipsyt" title="参与投票人数"><%= item.last_answer.votes_count %></span>
         </div>
         <div class="data">
           <div class="author">

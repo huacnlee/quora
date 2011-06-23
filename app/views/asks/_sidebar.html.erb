@@ -40,7 +40,7 @@
       if !items.blank?
     %>
       <div class="box">
-        <h2>你可能会关注的人或话题</h2><br>
+        <h2>你可能会感兴趣的人或话题</h2>
         <ul class="followed-item listing">
           <% for item in items %>
             <% if item.class.to_s == 'User' %>
@@ -51,6 +51,9 @@
           <% end %>
         </ul>
       </div>
+      <script type="text/javascript">
+        $("ul.followed-item li").mouseenter(function(){ $(this).find(".mute").show(); }).mouseleave(function(){ $(this).find(".mute").hide(); });
+      </script>
     <% end %>
   <% end %>
 <% end %>

@@ -171,6 +171,41 @@ var App = {
     return false;
   },
 
+  /**
+   * Get Rails CSRF key and value
+   * result:
+   * { key : "", value : "" }
+   */
+  getCSRF : function(){
+    key = $("meta[name=csrf-param]").attr("content");
+    value = $("meta[name=csrf-token]").attr("content");
+    return { key : key, value : value };
+  },
+
+  /**
+   * 文本框帮顶自动搜索用户功能
+   * input  搜索框
+   * callback 回调函数
+   */
+  completeUser : function(input,callback){
+    input.autocomplete("/search/users", {
+      mincChars: 1,
+      delay: 50,
+      width: 206,
+      scroll : false,
+      formatItem : function(data, i, total){
+        return Asks.completeLineUser(data,false);
+      }
+    });
+    input.result(function(e,data,formatted){
+      if(data){
+        user_id = data[1];
+        name = data[0];
+        callback(name, user_id);
+      }
+    });
+  },
+
   varsion : function(){
     return "1.0";
   }

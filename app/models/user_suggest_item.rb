@@ -102,4 +102,28 @@ class UserSuggestItem
     result
   end
 
+  # 取得不感兴趣的列表
+  def self.get_mutes(user_id)
+    key = "#{UserSuggestItem.gkey(user_id)}:mutes"
+    $redis.llen(key)
+    max = $redis.llen(key)
+    items = $redis.lrange(key, 0, max)
+    result = []
+    items.each do |item|
+      json = JSON.parse(item)
+      result << json
+    end
+    result
+  end
+
+  # 不感兴趣
+  def self.mute(user_id, type, id)
+    # TODO: 需要防止重复插入
+    key = "#{UserSuggestItem.gkey(user_id)}:mutes"
+    val = { :type => type, :id => id }
+    $redis.rpush(key,val.to_json)
+    UserSuggestItem.delete(user_id, type, id)
+    true
+  end
+
 end

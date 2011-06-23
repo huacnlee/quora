@@ -7,16 +7,16 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title><%= raw @page_title %><%= Setting.app_name %></title>
   <% if use_yahei_font?(request.env["HTTP_USER_AGENT"]) %>
-  <%= stylesheet_link_tag "font","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front" %>
+  <%= stylesheet_link_tag "font","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.tipsy", :cache => "cached_front" %>
   <% else %>
-  <%= stylesheet_link_tag "font_no_cleartype","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", :cache => "cached_front_for_xp" %>
+  <%= stylesheet_link_tag "font_no_cleartype","application","users","asks","front","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.tipsy", :cache => "cached_front_for_xp" %>
   <% end %>
 	<%= yield :styles %>
   <meta name="keywords" content="<%= @meta_keywords %>" />
   <meta name="description" content="<%= @meta_description %>" />
   <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
   <%= csrf_meta_tag %>
-  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
+  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie","jquery.tipsy" ,"jcaches","application","asks","topics","users","inbox", :cache => "cached_application" %>
 	<script src="http://<%= @zomet_config["server"] %>/application.js" type="text/javascript" charset="utf-8"></script>
   <%= yield :scripts %>
   <script type="text/javascript">
@@ -45,7 +45,7 @@
     <div class="container">
       <div class="left_wrapper">
         <div id="site_name">
-          <a href="/"><%= image_tag("logo.png") %></a>
+          <a href="/" class="logo"></a>
         </div>
         <div id="add_ask">
           <input type="text" placeholder="搜索问题，话题，会员" />
@@ -63,6 +63,7 @@
             <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
           <% else %>
             <a class="home" href="/">首页<span id="notify_badge" class="badge<% if current_user.notifications.unread.count < 1 %> force-hide<% end %>">新</span></a>
+            <a href="/inbox">私信</a>
             <%= user_name_tag(current_user) %>
             <%= link_to('设置', edit_user_registration_path) %>
             <a href="/logout">退出</a>
@@ -156,6 +157,9 @@
     </div>
   </div>
   <script type="text/javascript">
+    $("[rel=tipsy]").tipsy({gravity: $.fn.tipsy.autoNS});
+    $("[rel=tipsyr]").tipsy({gravity: "w" });
+    $("[rel=tipsyt]").tipsy({gravity: "s" });
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '<%= Setting.google_analytics_id %>']);
     _gaq.push(['_trackPageview']);

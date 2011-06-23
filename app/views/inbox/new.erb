@@ -1,0 +1,21 @@
+<div id="new_inbox">
+  <h2>发送私信</h2>
+  <%= simple_form_for(@inbox,:url => "/inbox", :remote => true) do |f| %>
+    <div class="inputs">
+      <b>给:</b> <input id="new_inbox_to_s" type="text" class="text" />
+      <input type="hidden" id="new_inbox_to" name="to" class="text" />
+      <textarea name="body" style="margin-top:5px;width:450px;height:120px;"></textarea>
+    </div>
+    <div class="actions">
+      <button class="submit">发送</button> 或者 <%= link_to '取消', asks_path %>
+    </div>
+  <% end %>
+  <script type="text/javascript">
+    var to_search = $("#new_inbox_to_s");
+    App.completeUser(to_search,function(name, id){
+        to_search.val(name);
+        to_search.addClass("added");
+        $("#new_inbox_to").val(id);
+    });
+  </script>
+</div>

@@ -23,6 +23,14 @@ class Answer
   validates_presence_of :user_id, :body
   validates_uniqueness_of :user_id, :scope => [:ask_id]
 
+  # 支持者
+  def up_voters
+    # TODO: 这里需要加上缓存
+    ids = self.up_voter_ids[0,(self.up_voter_ids.count > 30 ? 30 : self.up_voter_ids.count)]
+    items = User.find(ids)
+    items.sort { |y,x| x.score <=> y.score }
+  end
+
   # 敏感词验证
   before_validation :check_spam_words
   def check_spam_words

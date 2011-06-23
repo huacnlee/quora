@@ -1,0 +1,10 @@
+<%= render 'base' %>
+<div class="list_title">
+  <h2>站内信箱</h2>
+  <a href="/inbox/new" onclick="return Inbox.new();" class="gray_button small">撰写新消息</a>
+</div>
+<div id="inboxes">
+  <% @inboxes.each do |item| %>
+    <%= render "inbox", :item => item %>
+  <% end %>
+</div>

@@ -19,6 +19,8 @@ class User
   field :girl, :type => Boolean, :default => false
   # 软删除标记，1 表示已经删除
   field :deleted, :type => Integer
+  # 是否是可信用户，可信用户有更多修改权限
+  field :credible, :type => Boolean, :default => false
 
   # 不感兴趣的问题
   field :muted_ask_ids, :type => Array, :default => []
@@ -43,6 +45,7 @@ class User
   field :answers_count, :type => Integer, :default => 0
   has_many :answers
   has_many :notifications
+  has_many :inboxes
 
   references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
   references_and_referenced_in_many :followed_topics, :stored_as => :array, :inverse_of => :followers, :class_name => "Topic"
@@ -55,11 +58,12 @@ class User
 
   attr_accessor  :password_confirmation
   attr_accessible :email, :password,:name, :slug, :tagline, :bio, :avatar, :website, :girl, 
-                  :mail_new_answer, :mail_be_followed, :mail_invite_to_ask, :mail_ask_me
+                  :mail_new_answer, :mail_be_followed, :mail_invite_to_ask, :mail_ask_me,
+                  :credible
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :slug
-  validates_format_of :slug, :with => /[a-z0-9\-\_]+/i
+  validates_format_of :slug, :with => /[a-z0-9\-\_]{3,20}/i
 
   # 以下两个方法是给 redis search index 用
   def avatar_small
@@ -100,6 +104,21 @@ class User
     if self.spam?("bio")
       return false
     end
+  end
+
+  before_save :downcase_email
+  def self.find_for_authentication(conditions) 
+    conditions[:email].try(:downcase!)
+    super
+  end
+
+  def self.find_or_initialize_with_errors(required_attributes, attributes, error=:invalid)
+    attributes[:email].try(:downcase!)
+    super
+  end
+
+  def downcase_email
+    self.email.downcase!
   end
 
   def password_required?
@@ -294,7 +313,6 @@ class User
   
   # 刷新推荐的人
   def refresh_suggest_items
-    # TODO: 把结果cache到redis
     related_people = self.followed_topics.inject([]) do |memo, topic|
       memo += topic.followers
     end.uniq
@@ -310,8 +328,11 @@ class User
     saved_count = 0
     # 先删除就的缓存
     UserSuggestItem.delete_all(self.id)
+    mutes = UserSuggestItem.get_mutes(self.id)
     items.shuffle.each do |item|
       klass = item.class.to_s
+      # 跳过 mute 的信息
+      next if mutes.include?({"type" => klass, "id" => item.id.to_s})
       # 跳过删除的用户
       next if klass == "User" and item.deleted == 1
       usi = UserSuggestItem.new(:user_id => self.id, 
