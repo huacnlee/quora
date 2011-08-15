@@ -1,6 +1,6 @@
 # coding: UTF-8
 class AsksController < ApplicationController
-  before_filter :require_user, :only => [:answer,:update_topic]
+  before_filter :require_user, :only => [:answer]
   before_filter :require_user_js, :only => [:answer,:invite_to_answer]
   before_filter :require_user_text, :only => [:update_topic,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
   
@@ -11,19 +11,9 @@ class AsksController < ApplicationController
   end
 
   def search
-    if params[:format] == "json"
-      result = Ask.search_title(params["w"],:limit => 10)
-      simple_items = result[:items].collect do |item|
-        {:topics => item.topics,
-          :title => item.title,
-          :_id => item.id}
-      end
-      render :json => simple_items.to_json
-    else
-      @asks = Ask.search_title(params["w"],:limit => 20)[:items]
-      set_seo_meta("关于“#{params[:w]}”的搜索结果")
-      render "index"
-    end
+    # @asks = Ask.search_title(params["w"],:limit => 20)[:items]
+    set_seo_meta("关于“#{params[:w]}”的搜索结果")
+    render "index"
   end
 
   def show

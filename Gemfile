@@ -7,17 +7,15 @@ gem "bson", "1.2.4"
 gem "bson_ext", "1.2.4"
 gem 'mongo-rails-instrumentation', "0.2.0"
 gem "mongoid-eager-loading","0.3.1"
-# gem "mongoid-sphinx-huacnlee", :path => "/Users/jason/work/mongoid-sphinx", :require => "mongoid_sphinx"
-gem "mongoid-sphinx-huacnlee", :require => "mongoid_sphinx"
 gem "mongoid_rails_migrations", "0.0.10"
 
 gem "redis", "2.1.1"
 
-# to_xs 方法，Mongoid-sphinx 需要
-gem 'fast_xs', "0.8.0"
-
 # Vote 插件 for Mongoid
 gem 'voteable_mongoid', "0.6.0"
+
+# 分词
+gem 'rmmseg-cpp-huacnlee', '0.2.8'
 
 # 用户系统
 gem 'devise', '1.2.rc2'
@@ -73,3 +71,7 @@ gem "juggernaut"
 
 # Diff 内容并输出 HTML 格式
 gem "htmldiff", :git => "git://github.com/huacnlee/htmldiff.git"
+
+group :development do
+	gem 'rails-dev-boost-beta','0.1.2', :require => 'rails_development_boost'
+end

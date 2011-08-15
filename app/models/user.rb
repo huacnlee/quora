@@ -3,7 +3,6 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voter
-  include Mongoid::Sphinx
   include BaseModel
   
   devise :invitable, :database_authenticatable, :registerable,
@@ -45,6 +44,7 @@ class User
   field :answers_count, :type => Integer, :default => 0
   has_many :answers
   has_many :notifications
+  has_many :inboxes
 
   references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
   references_and_referenced_in_many :followed_topics, :stored_as => :array, :inverse_of => :followers, :class_name => "Topic"
@@ -79,12 +79,7 @@ class User
   def score_changed?
     self.answers_count_changed?
   end
-
-  # FullText indexes
-  search_index(:fields => [:name,:slug],
-               :attributes => [:name,:slug,:avatar_small,:tagline],
-               :attribute_types => {:avatar_small => String, :tagline => String},
-               :options => {} )
+  
   redis_search_index(:title_field => :name, 
                      :ext_fields => [:id, :slug,:avatar_small,:tagline, :score])
 
@@ -175,9 +170,6 @@ class User
   end
   
   def ask_followed?(ask)
-    # Rails.logger.info { "user: #{self.inspect}" }
-    # Rails.logger.info { "asks: #{self.followed_asks.inspect}" }
-    # Rails.logger.info { "ask: #{ask.inspect}" }
     self.followed_asks.include?(ask)
   end
   

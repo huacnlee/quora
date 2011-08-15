@@ -11,7 +11,7 @@ class AskSuggestTopic
     return item.topics if !item.topics.blank?
 
     # 生成内容
-    words = Ask.mmseg_text(ask.title)
+    words = MMSeg.split(ask.title)
     topics = Topic.any_in(:name => words.collect { |w| /^#{w}$/i } )
     topics.sort { |a,b| b.followers_count <=> a.followers_count }
     topics_array = topics.collect { |t| t.name }

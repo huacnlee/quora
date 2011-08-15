@@ -2,7 +2,7 @@
 class SearchController < ApplicationController
 
   def index
-    @asks = Ask.search_title(params["w"].to_s.strip,:limit => 20)
+    # @asks = Ask.search_title(params["w"].to_s.strip,:limit => 20)
     set_seo_meta("关于“#{params[:w]}”的搜索结果")
     render "/asks/index"
   end

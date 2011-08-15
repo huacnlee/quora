@@ -89,7 +89,7 @@ class Search
   def self.query(text,options = {})
     return [] if text.strip.blank?
 
-    words = Ask.mmseg_text(text)
+    words = MMSeg.split(text)
     limit = options[:limit] || 10
     type = options[:type] || nil
     word_match = words.collect(&:downcase).join("*")

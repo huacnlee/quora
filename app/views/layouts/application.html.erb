@@ -1,4 +1,3 @@
-<%= spaceless do %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 
@@ -16,7 +15,7 @@
   <meta name="description" content="<%= @meta_description %>" />
   <link rel="shortcut icon" href="/favicon.ico?v=003" /> 
   <%= csrf_meta_tag %>
-  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie","jquery.tipsy" ,"jcaches","application","asks","topics","users", :cache => "cached_application" %>
+  <%= javascript_include_tag "jquery.min","rails","facebox","jquery.jdialog","jquery.qeditor","jquery.autocomplete", "jquery.cookie","jquery.tipsy" ,"jcaches","application","asks","topics","users","inbox", :cache => "cached_application" %>
 	<script src="http://<%= @zomet_config["server"] %>/application.js" type="text/javascript" charset="utf-8"></script>
   <%= yield :scripts %>
   <script type="text/javascript">
@@ -170,4 +169,3 @@
   </script>
 </body>
 </html>
-<% end %>

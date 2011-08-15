@@ -79,6 +79,7 @@
         <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
       <% else %>
         <%= user_name_tag(current_user) %>
+        <a href="/inbox">私信</a>
         <a href="/logout">登出</a>
       <% end %>
       <a style="float:right;" href="/?force_format=desktop">普通版</a>

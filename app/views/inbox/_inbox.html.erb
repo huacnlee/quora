@@ -1,0 +1,22 @@
+<div class="inbox">
+  <div class="user">
+    <% if item.sender_id == current_user.id %>
+      <%= user_avatar_tag(item.sender,:small) %>
+    <% else %>
+      <%= user_avatar_tag(item.user,:small) %>
+    <% end %>
+  </div>
+  <div class="info">
+    <div class="to">
+      <% if item.user_id == current_user.id %>
+        <%= user_name_tag(item.sender) %> 给我
+      <% else %>
+        发给 <%= user_name_tag(item.user) %>
+      <% end %>
+    </div>
+    <%= item.body %>
+  </div>
+  <div class="time">
+    <%= item.created_at %>
+  </div>
+</div>
