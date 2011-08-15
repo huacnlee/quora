@@ -1,6 +1,6 @@
 # coding: UTF-8
 class AsksController < ApplicationController
-  before_filter :require_user, :only => [:answer,:update_topic]
+  before_filter :require_user, :only => [:answer]
   before_filter :require_user_js, :only => [:answer,:invite_to_answer]
   before_filter :require_user_text, :only => [:update_topic,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
   

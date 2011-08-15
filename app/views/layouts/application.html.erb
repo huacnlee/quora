@@ -1,4 +1,3 @@
-<%= spaceless do %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 
@@ -63,7 +62,6 @@
             <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
           <% else %>
             <a class="home" href="/">首页<span id="notify_badge" class="badge<% if current_user.notifications.unread.count < 1 %> force-hide<% end %>">新</span></a>
-            <a href="/inbox">私信</a>
             <%= user_name_tag(current_user) %>
             <%= link_to('设置', edit_user_registration_path) %>
             <a href="/logout">退出</a>
@@ -172,4 +170,3 @@
   </script>
 </body>
 </html>
-<% end %>
