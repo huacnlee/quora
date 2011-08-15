@@ -3,7 +3,6 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voter
-  include Mongoid::Sphinx
   include BaseModel
   
   devise :invitable, :database_authenticatable, :registerable,
@@ -80,12 +79,7 @@ class User
   def score_changed?
     self.answers_count_changed?
   end
-
-  # FullText indexes
-  search_index(:fields => [:name,:slug],
-               :attributes => [:name,:slug,:avatar_small,:tagline],
-               :attribute_types => {:avatar_small => String, :tagline => String},
-               :options => {} )
+  
   redis_search_index(:title_field => :name, 
                      :ext_fields => [:id, :slug,:avatar_small,:tagline, :score])
 

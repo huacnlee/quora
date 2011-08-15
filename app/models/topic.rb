@@ -1,7 +1,6 @@
 # coding: utf-8
 class Topic
   include Mongoid::Document
-  include Mongoid::Sphinx
   include BaseModel
   
   attr_accessor :current_user_id, :cover_changed, :followers_count_changed
@@ -37,13 +36,7 @@ class Topic
   def cover_small_changed?
     self.cover_changed?
   end
-
-  # FullText indexes
-  search_index(:fields => [:name],
-               :attributes => [:name,:cover_small, :followers_count],
-               :attribute_types => {:cover_small => String, :followers_count => Integer},
-               :options => {} )
-
+  
   redis_search_index(:title_field => :name,
                      :ext_fields => [:followers_count,:cover_small])
 

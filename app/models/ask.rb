@@ -2,7 +2,6 @@
 class Ask
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Sphinx
   include BaseModel
   
   field :title
@@ -57,11 +56,6 @@ class Ask
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) } 
   # 问我的问题
   scope :asked_to, lambda { |to_user_id| where(:to_user_id => to_user_id) }
-
-  # FullText indexes
-  search_index(:fields => [:title,:topics],
-               :attributes => [:title,:topics],
-               :options => {} )
 
   redis_search_index(:title_field => :title,:ext_fields => [:topics])
 
@@ -174,20 +168,6 @@ class Ask
     self.current_user_id = "NULL"
     self.save()
     return self.spams_count
-  end
-
-  def self.mmseg_text(text)
-    result = Ask.search(text,:max_matches => 1)
-    words = []
-    result.raw_result[:words].each do |w|
-      t = w[0].dup.force_encoding("utf-8")
-      next if t == "ask"
-      words << ((t == "rubi" and text.downcase.index("ruby")) ? "ruby" : t )
-    end
-    # 修正顺序
-    words = words.sort { |x,y| (text.index(x) || -1) <=> (text.index(y) || -1) }
-    Rails.logger.debug { "mmseg:#{words}" }
-    words
   end
 
   def self.search_title(text,options = {})
