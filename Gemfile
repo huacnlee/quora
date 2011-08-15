@@ -65,7 +65,7 @@ gem 'whenever', '0.6.2'
 gem "aws-ses", "0.4.2", :require => 'aws/ses'
 
 # Background Jobs
-gem "resque", '1.15.0'
+gem "resque", '1.15.0', :require => "resque/server"
 gem "resque_mailer", '1.0.1'
 
 # Comet

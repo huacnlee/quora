@@ -87,4 +87,6 @@ Quora::Application.routes.draw do
     resources :report_spams
     resources :notices
   end
+
+  mount Resque::Server, :at => "/cpanel/resque"
 end

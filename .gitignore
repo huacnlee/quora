@@ -1,5 +1,4 @@
 .bundle
-Gemfile.lock
 db/*.sqlite3
 log/*.log
 log/*.pid
@@ -13,6 +12,7 @@ db/sphinx
 db/dict/*.lib
 db/dict/thesaurus.txt
 juggernaut/
+public/110110110100000110011101014224583646.txt
 
 #以bundle install --path vendor/bundle方式安装，不影响开发者现有gems环境
 vendor/bundle
