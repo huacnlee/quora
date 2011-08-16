@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'rails', '3.0.5'
+gem 'rails', '3.0.9'
 
 # MongoDB
 gem "mongoid", "2.0.0"
@@ -33,7 +33,6 @@ gem 'memcache-client', '1.8.5'
 # OAuth
 gem 'omniauth', '0.2.0'
 gem "oa-openid", '0.2.0'
-# gem "omniauth_china", :path => "/Users/jason/work/omniauth_china"
 gem "omniauth_china", "0.0.6"
 
 # 后台列表

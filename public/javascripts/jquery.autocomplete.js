@@ -446,6 +446,7 @@ $.Autocompleter.defaults = {
 	multipleSeparator: " ",
 	inputFocus: true,
 	clickFire: false,
+	hideOnNoResult : false,
   defaultHTML : "输入文本开始搜索",
   noResultHTML : "没有找到相关内容.",
 	highlight: function(value, term) {
@@ -692,16 +693,21 @@ $.Autocompleter.Select = function (options, input, select, config) {
 
   /* 填充下拉列表 */
 	function fillList() {
-    list.empty();
+    
     if(data == null || data.length == 0){
-			var li = $("<li/>").html( options.noResultHTML ).addClass("ac_no_result").appendTo(list)[0];
-			$.data(li,"ac_data", null);
+      if(options.hideOnNoResult){
+        list.empty();
+        var li = $("<li/>").html( options.noResultHTML ).addClass("ac_no_result").appendTo(list)[0];
+        $.data(li,"ac_data", null);
+      }
     }
     else if(data == "default"){
+      list.empty();
 			var li = $("<li/>").html( options.defaultHTML ).addClass("ac_default").appendTo(list)[0];
 			$.data(li,"ac_data", null);
     }
     else{
+      list.empty();
       var max = limitNumberOfItems(data.length);
       for (var i=0; i < max; i++) {
         if (!data[i])

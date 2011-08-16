@@ -149,6 +149,7 @@ var Asks = {
       scroll : false,
       selectFirst : false,
       clickFire : true,
+      hideOnNoResult : false,
       noResultHTML : "没有找到类似的内容，<a href='#' onclick='return addAsk();'>添加一个问题</a>",
       formatItem : function(data, i, total){
         klass = data[data.length - 1];
@@ -274,7 +275,7 @@ var Asks = {
     }
     html += '<div class="uinfo"><p>';
     if(allow_link == true){
-      html += '<a href="/topics/'+data[0]+'">'+data[0]+'</a>';
+      html += '<a href="/topics/'+data[0]+'">'+ data[0] +'</a>';
     }
     else{
       html += '<span class="name">'+data[0]+'</span>';
@@ -297,7 +298,7 @@ var Asks = {
         html += '<span class="cate">'+topics[0]+'</span>';
       }
     }
-    html += '<a href="/asks/'+data[1]+'">'+data[0]+'</a>';
+    html += '<a href="/asks/'+data[1]+'">'+data[0].replace("/","")+'</a>';
     return html;
   },
 

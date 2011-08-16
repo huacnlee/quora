@@ -8,7 +8,14 @@ class SearchController < ApplicationController
   end
 
   def all
-    result = Search.query(params[:q].strip,:limit => 10)
+    result = Search.query(params[:q].strip,:limit => 10, :type => "Topic")
+    if result.length < 10
+      result += Search.query(params[:q].strip,:limit => 10, :type => "User")
+      if result.length < 10
+        result += Search.query(params[:q].strip,:limit => 10, :type => "Ask")
+      end
+    end
+    
     lines = []
     result.each do |item|
       case item['type']
@@ -25,7 +32,6 @@ class SearchController < ApplicationController
 
   def topics
     result = Search.complete(params[:q].strip,:type => "Topic",:limit => 10)
-    result = Search.sort_result(result, "Topic")
     if params[:format] == "json"
       lines = []
       result.each do |item|
@@ -56,7 +62,6 @@ class SearchController < ApplicationController
 
   def users 
     result = Search.complete(params[:q],:type => "User",:limit => 10)
-    result = Search.sort_result(result, "User")
     if params[:format] == "json"
       render :json => result.to_json
     else
