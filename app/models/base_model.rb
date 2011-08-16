@@ -41,7 +41,7 @@ module BaseModel
 
         before_destroy :remove_search_index
         def remove_search_index
-          Search.remove(:title => self.#{title_field}, :type => self.class.to_s)
+          Search.remove(:id => self.id, :title => self.#{title_field}, :type => self.class.to_s)
         end
 
         before_update :update_search_index
@@ -60,8 +60,7 @@ module BaseModel
           rescue
           end
           if index_fields_changed
-            Rails.logger.debug { "-- update_search_index --" }
-            Search.remove(:title => self.#{title_field}_was, :type => self.class.to_s)
+            Search.remove(:id => self.id, :title => self.#{title_field}_was, :type => self.class.to_s)
             self.create_search_index
           end
         end

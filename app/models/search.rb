@@ -53,7 +53,15 @@ class Search
   end
 
   def self.remove(options = {})
-    # $redis_search.del(generate_key(options[:title],options[:type]))
+    puts options.inspect
+    type = options[:type]
+    $redis_search.hdel(type,options[:id])
+    words = MMSeg.split(options[:title])
+    words.each do |word|
+      next if not Search.word?(word)
+      key = Search.mk_sets_key(type,word)
+      $redis_search.srem(key, options[:id])
+    end
   end
 
   def self.complete(w, options = {})
