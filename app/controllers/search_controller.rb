@@ -8,9 +8,9 @@ class SearchController < ApplicationController
   end
 
   def all
-    result = RedisSearch::Search.query("Topic",params[:q].strip,:limit => 10)
+    result = RedisSearch::Search.complete("Topic",params[:q].strip,:limit => 10)
     if result.length < 10
-      result += RedisSearch::Search.query("User",params[:q].strip,:limit => 10)
+      result += RedisSearch::Search.complete("User",params[:q].strip,:limit => 10)
       if result.length < 10
         result += RedisSearch::Search.query("Ask",params[:q].strip,:limit => 10)
       end
