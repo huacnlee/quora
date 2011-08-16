@@ -88,7 +88,9 @@ module ApplicationHelper
       if a =~ /<a\s/i # don't replace URL's that are already linked
         all
       else
-        text = b + c
+        text = ""
+        text += b if !b.blank?
+        text += c if !c.blank?
         text = yield(text) if block_given?
         if(not limit.blank?)
           text = truncate(text, :length => limit)
