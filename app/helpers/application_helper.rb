@@ -88,9 +88,12 @@ module ApplicationHelper
       if a =~ /<a\s/i # don't replace URL's that are already linked
         all
       else
-        text = ""
-        text += b if !b.blank?
-        text += c if !c.blank?
+        begin
+          text = b + c
+        rescue => e
+          Rails.logger.warn { "auto_link_urls faield text = b + c" }
+        end
+
         text = yield(text) if block_given?
         if(not limit.blank?)
           text = truncate(text, :length => limit)
