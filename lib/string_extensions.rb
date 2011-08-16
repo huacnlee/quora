@@ -1,4 +1,13 @@
 module StringExtensions
+  JS_ESCAPE_MAP = {
+                    '\\'    => '\\\\',
+                    '</'    => '<\/',
+                    "\r\n"  => '\n',
+                    "\n"    => '\n',
+                    "\r"    => '\n',
+                    '"'     => '\\"',
+                    "'"     => "\\'" }
+  
   # clear unsafe char with url slug
   def safe_slug(spliter = '-',allow_number = true)
     slug = self
@@ -9,6 +18,14 @@ module StringExtensions
     slug = slug.gsub(regex,spliter).downcase  
     slug = slug.gsub(/^\-+|\-+$/,'').gsub(/\-+/,spliter)
     slug
+  end
+  
+  def escape_javascript
+    if self
+      self.gsub(/(\\|<\/|\r\n|[\n\r"'])/) { JS_ESCAPE_MAP[$1] }
+    else
+      ''
+    end
   end
 end
 

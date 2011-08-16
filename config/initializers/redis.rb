@@ -1,11 +1,15 @@
 require "redis"
+require "redis_search"
 
 redis_config = YAML.load_file("#{Rails.root}/config/redis.yml")[Rails.env]
 $redis = Redis.new(:host => redis_config[:host],:port => redis_config[:port])
 $redis.select("quora")
 
-$redis_search = Redis.new(:host => redis_config[:host],:port => redis_config[:port])
-$redis_search.select("quora.search")
+redis_search = Redis.new(:host => redis_config[:host],:port => redis_config[:port])
+redis_search.select("tmp.search")
+RedisSearch.configure do |config|
+  config.redis = redis_search
+end
 
 # Resque
 Resque.redis = Redis.new(:host => redis_config[:host],:port => redis_config[:port])

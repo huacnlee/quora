@@ -8,11 +8,11 @@ class SearchController < ApplicationController
   end
 
   def all
-    result = Search.query(params[:q].strip,:limit => 10, :type => "Topic")
+    result = RedisSearch::Search.query("Topic",params[:q].strip,:limit => 10)
     if result.length < 10
-      result += Search.query(params[:q].strip,:limit => 10, :type => "User")
+      result += RedisSearch::Search.query("User",params[:q].strip,:limit => 10)
       if result.length < 10
-        result += Search.query(params[:q].strip,:limit => 10, :type => "Ask")
+        result += RedisSearch::Search.query("Ask",params[:q].strip,:limit => 10)
       end
     end
     
@@ -31,7 +31,7 @@ class SearchController < ApplicationController
   end
 
   def topics
-    result = Search.complete(params[:q].strip,:type => "Topic",:limit => 10)
+    result = RedisSearch::Search.complete("Topic",params[:q].strip,:limit => 10)
     if params[:format] == "json"
       lines = []
       result.each do |item|
@@ -48,7 +48,8 @@ class SearchController < ApplicationController
   end
 
   def asks
-    result = Search.query(params[:q].strip,:type => "Ask",:limit => 10)
+    result = RedisSearch::Search.query("Ask",params[:q].strip,:limit => 10)
+    puts result.inspect
     if params[:format] == "json"
       render :json => result.to_json
     else
@@ -61,7 +62,7 @@ class SearchController < ApplicationController
   end
 
   def users 
-    result = Search.complete(params[:q],:type => "User",:limit => 10)
+    result = RedisSearch::Search.complete("User",params[:q],:limit => 10)
     if params[:format] == "json"
       render :json => result.to_json
     else
@@ -76,7 +77,7 @@ class SearchController < ApplicationController
   private
     def complete_line_ask(item,hash = true)
       if hash
-        "#{item['title']}#!##{item['id']}#!##{item['topics'].join(',')}#!#Ask"
+        "#{item['title'].escape_javascript}#!##{item['id']}#!##{item['topics'].join(',')}#!#Ask"
       else
         "#{item.title.gsub("\n",'')}#!##{item.id}#!##{item.topics.join(',')}#!#Ask"
       end
@@ -84,7 +85,7 @@ class SearchController < ApplicationController
 
     def complete_line_topic(item,hash = true)
       if hash
-        "#{item['title']}#!##{item['followers_count']}#!##{item['cover_small']}#!#Topic"
+        "#{item['title'].escape_javascript}#!##{item['followers_count']}#!##{item['cover_small']}#!#Topic"
       else
         "#{item.name}#!##{item.followers_count}#!##{item.cover_small}#!#Topic"
       end
@@ -92,9 +93,10 @@ class SearchController < ApplicationController
 
     def complete_line_user(item,hash = true)
       if hash
-        "#{item['title']}#!##{item['id']}#!##{item['tagline']}#!##{item['avatar_small']}#!##{item['slug']}#!#User"
+        "#{item['title'].escape_javascript}#!##{item['id']}#!##{item['tagline']}#!##{item['avatar_small']}#!##{item['slug']}#!#User"
       else
         "#{item.name}#!##{item.id}#!##{item.tagline}#!##{item.avatar_small}#!##{item.slug}#!#User"
       end
     end
+
 end

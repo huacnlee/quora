@@ -17,8 +17,8 @@ module ApplicationHelper
     log = notify.log
     a = notify.action
     tag = ""
-    ask = Ask.find(ask_id)
-    return "" if ask.nil? or log.user.nil?
+    ask = Ask.where(:ask_id => ask_id).first()
+    return "" if ask.blank? or log.blank? or log.user.blank?
     # ask_tag = "<a href=\"#{ask_path(ask)}\">#{ask.title}</a>"
     user_tag = "<a href=\"/users/#{log.user.slug}\">#{log.user.name}</a> "
     
@@ -128,7 +128,7 @@ module ApplicationHelper
     data = with_output_buffer(&block)
     data = data.gsub(/\n\s+/," ")
     data = data.gsub(/>\s+</,"> <")
-    data
+    raw data
   end
   
 end

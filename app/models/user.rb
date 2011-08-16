@@ -3,6 +3,7 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Voter
+  include RedisSearch
   include BaseModel
   
   devise :invitable, :database_authenticatable, :registerable,
