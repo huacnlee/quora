@@ -479,7 +479,7 @@ $.Autocompleter.Cache = function(options) {
 		if (!data[q]){ 
 			length++;
 		}
-		data[q] = value;
+		data[q] = value.strip
 	}
 	
 	function populate(){
