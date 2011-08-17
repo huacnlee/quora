@@ -39,6 +39,7 @@ class Topic
   end
   
   redis_search_index(:title_field => :name,
+										 :prefix_index_enable => true,
                      :ext_fields => [:followers_count,:cover_small])
 
   # 敏感词验证

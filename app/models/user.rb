@@ -82,6 +82,7 @@ class User
   end
   
   redis_search_index(:title_field => :name, 
+										 :prefix_index_enable => true,
                      :ext_fields => [:id, :slug,:avatar_small,:tagline, :score])
 
   # 敏感词验证

@@ -8,9 +8,9 @@ class SearchController < ApplicationController
   end
 
   def all
-    result = RedisSearch::Search.complete("Topic",params[:q].strip,:limit => 10)
+    result = RedisSearch::Search.query("Topic",params[:q].strip,:limit => 10)
     if result.length < 10
-      result += RedisSearch::Search.complete("User",params[:q].strip,:limit => 10)
+      result += RedisSearch::Search.query("User",params[:q].strip,:limit => 10)
       if result.length < 10
         result += RedisSearch::Search.query("Ask",params[:q].strip,:limit => 10)
       end
@@ -31,7 +31,7 @@ class SearchController < ApplicationController
   end
 
   def topics
-    result = RedisSearch::Search.complete("Topic",params[:q].strip,:limit => 10)
+    result = RedisSearch::Search.complete("Topic",params[:q],:limit => 10)
     if params[:format] == "json"
       lines = []
       result.each do |item|
