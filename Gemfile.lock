@@ -4,13 +4,6 @@ GIT
   specs:
     htmldiff (0.0.1)
 
-PATH
-  remote: ../redis-search
-  specs:
-    redis-search (0.3)
-      redis (~> 2.1.1)
-      rmmseg-cpp-huacnlee (~> 0.2.8)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -175,6 +168,9 @@ GEM
     redis (2.1.1)
     redis-namespace (1.0.3)
       redis (< 3.0.0)
+    redis-search (0.3.1)
+      redis (~> 2.1.1)
+      rmmseg-cpp-huacnlee (~> 0.2.8)
     resque (1.15.0)
       json (~> 1.4.6)
       redis-namespace (>= 0.10.0)
@@ -241,7 +237,7 @@ DEPENDENCIES
   rails (= 3.0.5)
   rails-dev-boost-beta (= 0.1.2)
   redis (= 2.1.1)
-  redis-search (= 0.3)!
+  redis-search (= 0.3.1)
   resque (= 1.15.0)
   resque_mailer (= 1.0.1)
   rmmseg-cpp-huacnlee (= 0.2.8)

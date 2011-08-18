@@ -71,7 +71,7 @@ gem "juggernaut"
 # Diff 内容并输出 HTML 格式
 gem "htmldiff", :git => "git://github.com/huacnlee/htmldiff.git"
 
-gem "redis-search", "0.3", :path => "../redis-search"
+gem "redis-search", "0.3.1"
 
 group :development do
 	gem 'rails-dev-boost-beta','0.1.2', :require => 'rails_development_boost'
