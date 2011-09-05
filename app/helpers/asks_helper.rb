@@ -7,7 +7,7 @@ module AsksHelper
       topics = topics[0,limit]
     end
     for topic in topics
-      html << "<a class=\"topic\" href=\"/topics/#{topic}\">#{topic}</a>"
+      html << "<a class=\"topic\" href=\"/topics/#{topic}\">#{h(topic)}</a>"
     end
     return raw html.join("")
   end
@@ -18,7 +18,7 @@ module AsksHelper
     if !ask.to_user.blank?
       prefix = "#{ask.to_user.name}："
     end
-    raw "<a href=\"/asks/#{ask.id}\" class=\"#{class_name}\">#{prefix}#{ask.title}</a>"
+    raw "<a href=\"/asks/#{ask.id}\" class=\"#{class_name}\">#{h(prefix)}#{h(ask.title)}</a>"
   end
 
   def md_body(str)

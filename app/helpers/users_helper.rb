@@ -6,7 +6,7 @@ module UsersHelper
     return "匿名用户" if !user.deleted.blank?
     return user.name if user.slug.blank?
     url = options[:url] == true ? user_url(user.slug) : user_path(user.slug)
-    raw "<a#{options[:is_notify] == true ? " onclick=\"mark_notifies_as_read(this, '#{options[:notify].id}');\"" : ""} href=\"#{url}\" class=\"user\" title=\"#{user.name}\">#{user.name}</a>"
+    raw "<a#{options[:is_notify] == true ? " onclick=\"mark_notifies_as_read(this, '#{options[:notify].id}');\"" : ""} href=\"#{url}\" class=\"user\" title=\"#{h(user.name)}\">#{h(user.name)}</a>"
   end
   
   def user_avatar_tag(user,size)
@@ -17,7 +17,7 @@ module UsersHelper
       if url.blank?
         url = ""
       end
-      raw "<a href=\"#{user_path(user.slug)}\" class=\"user\" title=\"#{user.name}\">#{image_tag(url, :class => size)}</a>"
+      raw "<a href=\"#{user_path(user.slug)}\" class=\"user\" title=\"#{h(user.name)}\">#{image_tag(url, :class => size)}</a>"
     else
       raw image_tag("avatar/#{size.to_s}.jpg", :title => "匿名用户")
     end
@@ -27,7 +27,7 @@ module UsersHelper
     return "" if user.blank?
     prefix = options[:prefix] || ""
     return "" if user.tagline.blank?
-    raw "#{prefix}#{truncate(user.tagline, :length => 30)}"
+    raw "#{prefix}#{h(truncate(user.tagline, :length => 30))}"
   end
 
   def user_sex_title(user)
