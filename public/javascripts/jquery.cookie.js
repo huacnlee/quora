@@ -53,45 +53,35 @@
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
-jQuery.cookie = function(name, value, options) {
-    if (typeof value != 'undefined') { // name and value given, set cookie
-        options = options || {};
-        if (value === null) {
-            value = '';
-            options.expires = -1;
-        }
-        var expires = '';
-        if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
-            var date;
-            if (typeof options.expires == 'number') {
-                date = new Date();
-                date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-            } else {
-                date = options.expires;
-            }
-            expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
-        }
-        // CAUTION: Needed to parenthesize options.path and options.domain
-        // in the following expressions, otherwise they evaluate to undefined
-        // in the packed version for some reason...
-        var path = options.path ? '; path=' + (options.path) : '';
-        var domain = options.domain ? '; domain=' + (options.domain) : '';
-        var secure = options.secure ? '; secure' : '';
-        document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
-    } else { // only name given, get cookie
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-};
+jQuery.cookie = function (key, value, options) {
 
+   // key and at least value given, set cookie...
+   if (arguments.length > 1 && String(value) !== "[object Object]") {
+       options = jQuery.extend({ path : '/', expires : 30 }, options);
+
+       if (value === null || value === undefined) {
+           options.expires = -1;
+       }
+
+       if (typeof options.expires === 'number') {
+           var days = options.expires, t = options.expires = new Date();
+           t.setDate(t.getDate() + days);
+       }
+
+       value = String(value);
+
+       return (document.cookie = [
+           encodeURIComponent(key), '=',
+           options.raw ? value : encodeURIComponent(value),
+           options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+           options.path ? '; path=' + options.path : '',
+           options.domain ? '; domain=' + options.domain : '',
+           options.secure ? '; secure' : ''
+       ].join(''));
+   }
+
+   // key and possibly options given, get cookie...
+   options = value || {};
+   var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
+   return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
+};
