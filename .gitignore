@@ -1,7 +1,6 @@
 .bundle
 db/*.sqlite3
-log/*.log
-log/*.pid
+log/*
 tmp/
 config/*.yml
 public/javascripts/cached_*
