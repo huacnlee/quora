@@ -38,45 +38,9 @@
 	<div class="user-regdate">注册于 <%= l user.created_at.to_date, :format => :long %></div>
 </div>
 
-<% if @user.followed_topic_ids.size > 0 %>
-<div class="box gray">
-	<h2>关注 <a href="<%= following_topics_user_path(@user.slug) %>"><%= @user.followed_topic_ids.size %>个话题</a></h2>
-	<ul class="followed-item topic-listing">
-		<% for topic in @user.followed_topics.desc("$natural").limit(7) %>
-		<%= render "topic", :topic => topic %>
-		<% end %>
-	</ul>
-</div>
-<% end %>
+<%= render_cell :user, :followed_topics, :user => @user, :current_user => current_user %>
+<%= render_cell :user, :followers, :user => @user %>
+<%= render_cell :user, :following, :user => @user %>
 
-<% if @user.follower_ids.size > 0 %>
-<div class="box standard gray">
-  <h2>最近关注<%= user_sex_title(@user) %>的人</h2>
-	<div class="inner">
-		<div class="followers">
-			<% for follower in @user.followers.desc("$natural").limit(42) %>
-			<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
-				<%= user_avatar_tag(follower, :small) %>
-			</a>
-			<% end %>
-		</div>
-	</div>
-</div>
-<% end %>
-
-<% if @user.following_ids.size > 0 %>
-<div class="box standard gray">
-  <h2><%= user_sex_title(@user) %>最近关注的人</h2>
-	<div class="inner">
-		<div class="followers">
-			<% for follower in @user.following.desc("$natural").limit(42) %>
-			<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
-				<%= user_avatar_tag(follower, :small) %>
-			</a>
-			<% end %>
-		</div>
-	</div>
-</div>
-<% end %>
 
 <% end %>
