@@ -17,7 +17,7 @@ module ApplicationHelper
     log = notify.log
     a = notify.action
     tag = ""
-    ask = Ask.where(:ask_id => ask_id).first()
+    ask = Ask.first(:conditions => {:id => ask_id})
     return "" if ask.blank? or log.blank? or log.user.blank?
     # ask_tag = "<a href=\"#{ask_path(ask)}\">#{ask.title}</a>"
     user_tag = "<a href=\"/users/#{log.user.slug}\">#{log.user.name}</a> "
