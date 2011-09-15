@@ -179,15 +179,15 @@ class User
   end
   
   def ask_followed?(ask)
-    self.followed_asks.include?(ask)
+    self.followed_ask_ids.include?(ask.id)
   end
   
   def followed?(user)
-    self.following.include?(user)
+    self.following_ids.include?(user.id)
   end
   
   def topic_followed?(topic)
-    self.followed_topics.include?(topic)
+    self.followed_topic_ids.include?(topic.id)
   end
   
   def mute_ask(ask_id)
