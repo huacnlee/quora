@@ -6,14 +6,25 @@ class AskCell < Cell::Rails
   def relation_asks(opts = {})
     @ask = opts[:ask] || nil
     if @ask
-      @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
+      @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("answers_count")
     end
     render
   end
 
   def followers(opts = {})
     @ask = opts[:ask] || nil
-    @followers = @ask.followers
+    if @ask
+      @followers = @ask.followers
+    end
+    render
+  end
+
+  def invites(opts = {})
+    @ask = opts[:ask] || nil
+    @current_user = opts[:current_user] || nil
+    if @ask
+      @invites = @ask.ask_invites.includes(:user)
+    end
     render
   end
 
@@ -25,6 +36,6 @@ class AskCell < Cell::Rails
 
     def followers_key(opts = {})
       return "followers/nil" if opts[:ask].blank?
-      "followers/#{opts[:ask].id}/#{opts[:ask].followers.to_s.md5}"
+      "followers/#{opts[:ask].id}/#{opts[:ask].follower_ids.to_s.md5}"
     end
 end

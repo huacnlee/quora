@@ -1,0 +1,34 @@
+<% if !@ask.blank? %>
+  <div id="share_ask_box" class="box standard">
+    <h2>
+      <a class="actived" href="<%= share_ask_path(@ask.id) %>" onclick="return Asks.toggleShareAsk(this,'share');" id="share_link">分享</a> <samp>或</samp>
+      <a href="#" onclick="return Asks.toggleShareAsk(this,'invite');">邀请他人回答此问题<% if @invites.count > 0 %> (<%= @invites.count %>)<% end %></a>
+    </h2>
+    <div class="inner">
+      <div class="share">
+        <a rel="nofollow" href="<%= share_ask_path(@ask.id) %>?type=email"><span class="has_icon email">Email</span></a>
+        <a rel="nofollow" href="<%= share_ask_path(@ask.id) %>?type=url"><span class="has_icon url">转发地址</span></a>
+      </div>
+      <div class="invite" style="display:none">
+        <input type="text" id="ask_to_answer" style="width:200px;" placeholder="搜索人" />
+        <div id="ask_invited_users" class="clearfix">
+          <% for item in @invites %>
+            <% if item.count > 0 %>
+              <div class="invite" title="<%= item.user.name %>" id="ask_invite_<%= item.id %>">
+                <%= user_avatar_tag(item.user,:small) %>
+                <p>
+                <% if @current_user and item.invitor_ids.include?(@current_user.id) %>
+                  <a href="#" onclick="return Asks.cancelInviteToAnswer(this,'<%= item.id %>')" class="remove"></a>
+                <% else %>
+                  <span class="n"></span>
+                <% end %>
+                <span class="count"><%= item.count %></span>
+                </p>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
