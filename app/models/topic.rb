@@ -13,6 +13,9 @@ class Topic
   field :asks_count, :type => Integer, :default => 0
 
   index :name
+  index :follower_ids
+  index :asks_count
+
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
   
   # Followers

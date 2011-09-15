@@ -40,7 +40,6 @@ class AsksController < ApplicationController
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
     @answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc,:"created_at".asc)
     @answer = Answer.new
-    @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
     # 被邀请回答的用户
     @invites = @ask.ask_invites.includes(:user)
     # 推荐话题,如果没有设置话题的话

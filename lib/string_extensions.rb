@@ -27,6 +27,10 @@ module StringExtensions
       ''
     end
   end
+
+  def md5
+    Digest::SHA1.hexdigest(self)
+  end
 end
 
 String.send :include,StringExtensions

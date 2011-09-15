@@ -168,21 +168,7 @@
     </div>
 
 
-		<div id="relation_asks" class="box standard">
-			<h2>相关问题</h2>
-			<div class="inner">
-				<ul>
-				<% @relation_asks.each_with_index do |ask,i| %>
-          <li <%= "style='display:none;'" if i > 4 %>><a href="/asks/<%= ask.id %>"><%= ask.title %></a></li>
-				<% end %>
-        <% if @relation_asks.count > 4 %>
-          <li class="more">
-            <a href="#" onclick="$(this).parent().parent().find('li').show();$(this).hide();return false;">查看更多相关问题</a>
-          </li>
-        <% end %>
-				<ul>
-			</div>
-    </div>
+    <%= render_cell :ask, :relation_asks, :ask => @ask %>
 
     <% if current_user %>
       <div id="share_ask_box" class="box standard">
@@ -221,11 +207,7 @@
 				<% if @ask.user %>
 				<p><%= user_name_tag(@ask.user) %> 创建了该问题</p>
 				<% end %>
-				<div class="followers">
-					<% for item in @ask.followers %>
-            <%= user_avatar_tag(item,:small) %>
-					<% end %>
-				</div>
+        <%= render_cell :ask, :followers, :ask => @ask %>
 			</div>
     </div>
 <% end %>

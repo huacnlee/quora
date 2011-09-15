@@ -1,0 +1,7 @@
+<% if !@followers.blank? %>
+  <div class="followers">
+    <% for item in @followers %>
+      <%= user_avatar_tag(item,:small) %>
+    <% end %>
+  </div>
+<% end %>

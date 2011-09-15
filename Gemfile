@@ -8,6 +8,8 @@ gem "bson_ext", "1.2.4"
 gem 'mongo-rails-instrumentation', "0.2.0"
 gem "mongoid-eager-loading","0.3.1"
 gem "mongoid_rails_migrations", "0.0.10"
+gem "cells","3.6.5"
+gem "dalli","1.1.2"
 
 gem "redis", "2.1.1"
 
