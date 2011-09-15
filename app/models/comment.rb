@@ -12,6 +12,11 @@ class Comment
   belongs_to :ask, :foreign_key => "commentable_id"
   belongs_to :answer, :foreign_key => "commentable_id"
 
+  index :user_id
+  index :commentable_type
+  index :commentable_id
+  index :created_at
+
   validates_presence_of :body
 
   # 敏感词验证

@@ -9,7 +9,8 @@ class Inbox
   field :unread, :type => Boolean, :default => true
   embeds_many :replies, :class_name => "InboxReply", :inverse_of => :inbox
 
-  index :user_id, :sender_id
+  index :user_id
+  index :sender_id
 
   validates_presence_of :user_id, :sender_id, :body
   

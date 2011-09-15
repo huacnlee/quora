@@ -20,8 +20,10 @@ class Ask
   # 重定向问题编号
   field :redirect_ask_id
 
+  index :created_at
   index :topics
-  index :title
+  index :user_id
+  index :spams_count
 
   # 提问人
   belongs_to :user, :inverse_of => :asks

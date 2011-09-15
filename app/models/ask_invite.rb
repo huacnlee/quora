@@ -9,6 +9,7 @@ class AskInvite
   # 邀请者
   field :invitor_ids, :type => Array, :default => []
   field :mail_sent, :type => Integer, :default => 0
+
   index :ask_id
 
   scope :unsend, where(:mail_sent => 0, :count.gt => 0)

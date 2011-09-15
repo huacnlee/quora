@@ -13,6 +13,9 @@ class Log
   
   index :target_attr
   index :action
+  index :target_id
+  index :_type
+  index :user_id
   
   belongs_to :user, :inverse_of => :logs
   

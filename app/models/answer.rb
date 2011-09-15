@@ -14,6 +14,9 @@ class Answer
   belongs_to :ask, :inverse_of => :answers, :counter_cache => true
   belongs_to :user, :inverse_of => :answers, :counter_cache => true
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
+
+  index :ask_id
+  index :user_id
   
   field :spams_count, :type => Integer, :default => 0
   field :spam_voter_ids, :type => Array, :default => []

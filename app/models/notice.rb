@@ -5,4 +5,6 @@ class Notice
   field :body
   field :end_at, :type => DateTime
 
+  index :end_at
+
 end

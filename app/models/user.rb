@@ -47,6 +47,13 @@ class User
   has_many :notifications
   has_many :inboxes
 
+  index :slug, :uniq => true
+  index :email, :uniq => true
+  index :follower_ids
+  index :following_ids
+  index :followed_ask_ids
+  index :followed_topic_ids
+
   references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
   references_and_referenced_in_many :followed_topics, :stored_as => :array, :inverse_of => :followers, :class_name => "Topic"
   
