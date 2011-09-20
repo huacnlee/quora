@@ -30,14 +30,14 @@ class AskLog < Log
   def send_notification
     case self.action
     when "INVITE_TO_ANSWER"
-      Notification.create(user_id: self.target_parent_id, 
+      Notification.create(user_id: self.target_id, 
                           log_id: self.id, 
-                          target_id: self.target_id, 
+                          target_id: self.target_parent_id, 
                           action: "INVITE_TO_ANSWER")
     when "NEW_TO_USER"
-      Notification.create(user_id: self.target_parent_id, 
+      Notification.create(user_id: self.target_id, 
                           log_id: self.id, 
-                          target_id: self.target_id, 
+                          target_id: self.target_parent_id, 
                           action: "ASK_USER")
     end
   end
