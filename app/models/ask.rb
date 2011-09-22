@@ -2,7 +2,7 @@
 class Ask
   include Mongoid::Document
   include Mongoid::Timestamps
-  include RedisSearch
+  include Redis::Search
   include BaseModel
   
   field :title

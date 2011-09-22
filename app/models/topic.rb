@@ -1,7 +1,7 @@
 # coding: utf-8
 class Topic
   include Mongoid::Document
-  include RedisSearch
+  include Redis::Search
   include BaseModel
   
   attr_accessor :current_user_id, :cover_changed, :followers_count_changed
