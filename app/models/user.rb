@@ -134,11 +134,12 @@ class User
 		user = User.new
 		user.name = auth["user_info"]["name"]  
 		user.email = auth['user_info']['email']
+		user.slug = auth['user_info']['slug'].safe_slug
     if user.email.blank?
       user.errors.add("Email","三方网站没有提供你的Email信息，无法直接注册。")
       return user
     end
-		user.save
+		user.save(:validate => false)
 		user
   end  
 

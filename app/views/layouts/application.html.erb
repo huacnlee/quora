@@ -59,7 +59,6 @@
           <% if not current_user %>
             <a href="/">随便看看</a>
             <a href="/login">登录</a>
-            <a href="/register"><% if Setting.allow_register %>注册<%else%>如何才能注册?<%end%></a>
           <% else %>
             <a class="home" href="/">首页<span id="notify_badge" class="badge<% if current_user.notifications.unread.count < 1 %> force-hide<% end %>">新</span></a>
             <%= user_name_tag(current_user) %>
@@ -109,7 +108,6 @@
         <div class="links">
           <a href="/about">关于者也</a> • 
           <a href="http://blog.zheye.org" target="_blank">博客</a> •
-          <a href="/register">如何注册</a> •
           <a href="http://twitter.com/zheyecn" target="_blank">Twitter</a> •
           <a href="mailto:nowazhu@gmail.com">合作联系</a> •
           <a href="mailto:huacnlee@gmail.com">反馈</a>

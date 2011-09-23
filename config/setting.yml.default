@@ -21,6 +21,8 @@ default: &defaults
   answer_spam_max: 5
   google_analytics_id: "UA-22413508-1"
   spam_words: /敏感词1|敏感词2/
+  # 用淘宝 SSO 帐号，开启此项将会用淘宝内网的 SSO 系统代替登陆系统
+  taobao_sso: false
 
 development:
   <<: *defaults

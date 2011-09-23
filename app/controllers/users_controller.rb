@@ -1,7 +1,7 @@
 # coding: utf-8
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:auth_callback]
-  before_filter :init_user, :except => [:auth_callback]
+  before_filter :init_user, :except => [:auth_callback, :login, :logout]
 
   def init_user
     @user = User.find_by_slug(params[:id])
@@ -105,8 +105,26 @@ class UsersController < ApplicationController
     current_user.unfollow(@user)
     render :text => "1"
   end
+  
+  def login
+    if !cookies[:TBSSO].blank?
+      redirect_to "/auth/taobao/callback"
+    else
+      redirect_to "https://backyard.seraph.taobao.com/login/?url=http://#{Setting.domain}/auth/taobao/callback"
+    end
+  end
+  
+  def logout
+    sign_out current_user
+    redirect_to "https://backyard.seraph.taobao.com/login/?action=logout&url=#{root_url}"
+  end
 
   def auth_callback
+    if params[:provider] == "taobao"
+      auto_taobao_sso
+      return
+    end
+    
 		auth = request.env["omniauth.auth"]  
 		redirect_to root_path if auth.blank?
     provider_name = auth['provider'].gsub(/^t/,"").titleize
@@ -136,6 +154,35 @@ class UsersController < ApplicationController
         redirect_back_or_default "/login"
       end
 		end
+  end
+  
+  def auto_taobao_sso
+    hash = {}
+    cookies[:TBSSO].split("&").map { |row| hash[row.split("=")[0]] = row.split("=")[1] }
+    auth  = { "uid" => hash["sign"], 
+               "provider" => "taobao_sso",
+               "user_info" => {
+                 "name" => CGI::unescape(hash["cname"]).split("(").first,
+                 "email" => hash["email"],
+                 'slug' => hash['userid']
+               }
+             }
+    if @user = Authorization.find_from_hash(auth)
+      sign_in @user
+			flash[:notice] = "登陆成功。"
+			redirect_to "/"
+    else
+      @new_user = Authorization.create_from_hash(auth, current_user) #Create a new user
+      if @new_user.errors.blank?
+        sign_in @new_user
+        flash[:notice] = "欢迎来自淘宝的用户，你的帐号已经创建成功。"
+        redirect_to "/"
+      else
+        render :text => @new_user.errors
+        flash[:notice] = "淘宝的帐号提供信息不全，无法直接登陆，请先注册。"
+
+      end
+    end
   end
 
 end

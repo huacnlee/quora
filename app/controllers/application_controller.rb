@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
       force_mobile_format
     end
   end
+  
+  
 
   def load_notice
     @notice = Notice.last
@@ -71,7 +73,9 @@ class ApplicationController < ActionController::Base
     format = options[:format] || :html
     format = format.to_s
     if format == "html"
-      authenticate_user!
+      if current_user.blank?
+        redirect_to "/login"
+      end
     elsif format == "json"
       if current_user.blank?
         render :json => { :success => false, :msg => "你还没有登陆。" }

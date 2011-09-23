@@ -15,9 +15,9 @@ Quora::Application.routes.draw do
 
   # devise_for :users, :path => '', :path_names => {:sign_in => "login", :sign_out => "logout", :sign_up => "register", :registration }
   devise_for :users,  :controllers => { :registrations => "registrations" } do
-    get "/register", :to => "registrations#new" 
-    get "/login", :to => "devise/sessions#new" 
-    get "/logout", :to => "devise/sessions#destroy" 
+    # get "/register", :to => "registrations#new" 
+    # get "/login", :to => "devise/sessions#new" 
+    # get "/logout", :to => "devise/sessions#destroy" 
   end
   resources :users do
     member do
@@ -32,6 +32,8 @@ Quora::Application.routes.draw do
       get "following_asks"
     end
   end
+  match "login", :to => "users#login"
+  match "logout", :to => "users#logout"
   match "auth/:provider/callback", :to => "users#auth_callback"  
 
   resources :search do
