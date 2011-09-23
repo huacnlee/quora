@@ -20,7 +20,7 @@
           <td><%= item.name %></td>
           <td><%= item.email %></td>
           <td><%= item.slug %></td>
-          <td style="width:100px;"><%= l item.created_at.getlocal, :format => :short %></td>
+          <td style="width:100px;"><%= l item.created_at, :format => :short %></td>
           <td style="width:50px;">
             <%= link_to '修改', edit_cpanel_user_path(item.id) %>
             <%= link_to image_tag("wice_grid/delete.png", :style => "margin-bottom:-4px"), cpanel_user_path(item.id), :method => :delete, :confirm => '确定要删除吗?' %>

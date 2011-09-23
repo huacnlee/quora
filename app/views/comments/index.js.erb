@@ -3,7 +3,7 @@
     <% @comments.each do |item| %>
       <div class="comment">
         <div class="md_body"><%= item.body %></div>
-        <div class="info"><%= user_name_tag(item.user) %> • <%= l item.created_at.getlocal, :format => :short %></div>
+        <div class="info"><%= user_name_tag(item.user) %> • <%= l item.created_at, :format => :short %></div>
       </div>
     <% end %>
   <% end %>

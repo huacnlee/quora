@@ -91,7 +91,7 @@
     • <a href="#" onclick="return Asks.report(this);">举报</a>
     • <a class="spam<%= ' spamed' if spamed?(@ask) %>" onclick="return Asks.spamAsk(this,'<%= @ask.id %>');" title="问题被<%= Setting.ask_spam_max %>个网友认为是烂问题以后,问题将会隐藏。" href="#">烂问题</a>
     <% if !@ask.spams_count.blank? %>(<span id="spams_count"><%= @ask.spams_count %></span>人认为)<% end %>
-    • <span class="date"><%= l @ask.created_at.getlocal, :format => :short %></span>
+    • <span class="date"><%= l @ask.created_at, :format => :short %></span>
   </div>
 </div>
 
@@ -182,7 +182,7 @@
   <div class="box standard gray">
     <h2>问题状态</h2>
     <div class="inner">
-      <p>最近活动：<%= l @ask.last_updated_at ? @ask.last_updated_at.getlocal : (@ask.answered_at ? @ask.answered_at.getlocal : @ask.updated_at.getlocal), :format => :min %></p>
+      <p>最近活动：<%= l @ask.last_updated_at ? @ask.last_updated_at : (@ask.answered_at ? @ask.answered_at : @ask.updated_at), :format => :min %></p>
       <p>被浏览 <%= @ask.views_count %> 次，<%= @ask.followers.count %> 人关注了该问题</p>
       <% if @ask.user %>
       <p><%= user_name_tag(@ask.user) %> 创建了该问题</p>

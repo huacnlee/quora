@@ -2,7 +2,7 @@
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Voter
+  include Mongo::Voter
   include Redis::Search
   include BaseModel
   
@@ -54,11 +54,11 @@ class User
   index :followed_ask_ids
   index :followed_topic_ids
 
-  references_and_referenced_in_many :followed_asks, :stored_as => :array, :inverse_of => :followers, :class_name => "Ask"
-  references_and_referenced_in_many :followed_topics, :stored_as => :array, :inverse_of => :followers, :class_name => "Topic"
+  has_and_belongs_to_many :followed_asks,:inverse_of => :followers, :class_name => "Ask"
+  has_and_belongs_to_many :followed_topics,:inverse_of => :followers, :class_name => "Topic"
   
-  references_and_referenced_in_many :following, :class_name => 'User', :inverse_of => :followers, :index => true, :stored_as => :array
-  references_and_referenced_in_many :followers, :class_name => 'User', :inverse_of => :following, :index => true, :stored_as => :array
+  has_and_belongs_to_many :following, :class_name => 'User', :inverse_of => :followers, :index => true
+  has_and_belongs_to_many :followers, :class_name => 'User', :inverse_of => :following, :index => true
 
   embeds_many :authorizations
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"

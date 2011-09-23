@@ -4,6 +4,11 @@ GIT
   specs:
     htmldiff (0.0.1)
 
+PATH
+  remote: ../voteable_mongo
+  specs:
+    voteable_mongo (0.9.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -45,9 +50,9 @@ GEM
       mime-types
       xml-simple
       xml-simple
-    bcrypt-ruby (2.1.4)
-    bson (1.2.4)
-    bson_ext (1.2.4)
+    bcrypt-ruby (3.0.1)
+    bson (1.4.0)
+    bson_ext (1.4.0)
     builder (2.1.2)
     carrierwave (0.5.3)
       activesupport (~> 3.0)
@@ -56,13 +61,13 @@ GEM
       railties (~> 3.0)
     colorize (0.5.8)
     dalli (1.1.2)
-    devise (1.2.rc2)
-      bcrypt-ruby (~> 2.1.2)
+    devise (1.4.7)
+      bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
-    devise_invitable (0.4.rc5)
-      devise (~> 1.2.rc2)
-      rails (~> 3.0.0)
+    devise_invitable (0.5.5)
+      devise (~> 1.4.1)
+      rails (>= 3.0.0, < 3.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faraday (0.5.7)
@@ -82,22 +87,22 @@ GEM
     mime-types (1.16)
     mini_magick (3.2)
       subexec (~> 0.0.4)
-    mongo (1.2.4)
-      bson (>= 1.2.4)
+    mongo (1.4.0)
+      bson (= 1.4.0)
     mongo-rails-instrumentation (0.2.0)
       rails (~> 3.0.0)
-    mongoid (2.0.0)
+    mongoid (2.2.0)
       activemodel (~> 3.0)
-      mongo (~> 1.2)
+      mongo (~> 1.3)
       tzinfo (~> 0.3.22)
-      will_paginate (~> 3.0.pre)
     mongoid-eager-loading (0.3.1)
+    mongoid_auto_increment_id (0.2)
+      mongoid (~> 2.2.0)
     mongoid_rails_migrations (0.0.10)
       activesupport (~> 3.0.0)
       bundler (>= 0.9.19)
       rails (~> 3.0.0)
       railties (~> 3.0.0)
-    mongoid_wice_grid (4.0.0)
     multi_json (0.0.5)
     multipart-post (1.1.2)
     net-ldap (0.1.1)
@@ -205,9 +210,7 @@ GEM
     tzinfo (0.3.29)
     vegas (0.1.8)
       rack (>= 1.0.0)
-    voteable_mongoid (0.6.0)
-      mongoid (~> 2.0.0)
-    warden (1.0.4)
+    warden (1.0.5)
       rack (>= 1.0)
     whenever (0.6.2)
       aaronh-chronic (>= 0.3.9)
@@ -220,23 +223,23 @@ PLATFORMS
 
 DEPENDENCIES
   aws-ses (= 0.4.2)
-  bson (= 1.2.4)
-  bson_ext (= 1.2.4)
+  bson (= 1.4.0)
+  bson_ext (= 1.4.0)
   carrierwave (= 0.5.3)
   cells (= 3.6.5)
   colorize (= 0.5.8)
   dalli (= 1.1.2)
-  devise (= 1.2.rc2)
-  devise_invitable (= 0.4.rc5)
+  devise (= 1.4.7)
+  devise_invitable (= 0.5.5)
   htmldiff!
   juggernaut
   memcache-client (= 1.8.5)
   mini_magick (= 3.2)
   mongo-rails-instrumentation (= 0.2.0)
-  mongoid (= 2.0.0)
+  mongoid (= 2.2.0)
   mongoid-eager-loading (= 0.3.1)
+  mongoid_auto_increment_id (= 0.2)
   mongoid_rails_migrations (= 0.0.10)
-  mongoid_wice_grid (= 4.0.0)
   oa-openid (= 0.2.0)
   omniauth (= 0.2.0)
   omniauth_china (= 0.0.6)
@@ -251,6 +254,6 @@ DEPENDENCIES
   simple_form (= 1.3.1)
   smurf-huacnlee
   tagged-cache (= 1.1.1)
-  voteable_mongoid (= 0.6.0)
+  voteable_mongo!
   whenever (= 0.6.2)
   will_paginate (= 3.0.pre)

@@ -78,7 +78,7 @@
             <div id="sys_notice">
               <%= raw @notice.body %>
               <div class="info">
-                <span class="date"><%= l @notice.updated_at.getlocal, :format => :long %></span>
+                <span class="date"><%= l @notice.updated_at, :format => :long %></span>
                 <a href="#" class="gray_button small" onclick="return App.hideNotice('<%= @notice.id %>');">我知道了</a>
               </div>
             </div>

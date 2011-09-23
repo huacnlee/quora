@@ -19,7 +19,7 @@ class Topic
   has_many :logs, :class_name => "Log", :foreign_key => "target_id"
   
   # Followers
-  references_and_referenced_in_many :followers, :stored_as => :array, :inverse_of => :followed_topics, :class_name => "User"
+  has_and_belongs_to_many :followers, :inverse_of => :followed_topics, :class_name => "User"
 
   validates_presence_of :name
   validates_uniqueness_of :name, :case_insensitive => true

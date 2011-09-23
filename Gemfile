@@ -2,27 +2,28 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.5'
 
 # MongoDB
-gem "mongoid", "2.0.0"
-gem "bson", "1.2.4"
-gem "bson_ext", "1.2.4"
+gem "mongoid", "2.2.0"
+gem "bson", "1.4.0"
+gem "bson_ext", "1.4.0"
 gem 'mongo-rails-instrumentation', "0.2.0"
 gem "mongoid-eager-loading","0.3.1"
 gem "mongoid_rails_migrations", "0.0.10"
+gem "mongoid_auto_increment_id", "0.2"
 gem "cells","3.6.5"
 gem "dalli","1.1.2"
 
 gem "redis", "2.1.1"
 
 # Vote 插件 for Mongoid
-gem 'voteable_mongoid', "0.6.0"
+gem 'voteable_mongo', :path => "../voteable_mongo"
 
 # 分词
 gem 'rmmseg-cpp-huacnlee', '0.2.8'
 
 # 用户系统
-gem 'devise', '1.2.rc2'
+gem 'devise', '1.4.7'
 # 邀请系统
-gem 'devise_invitable', '0.4.rc5'
+gem 'devise_invitable', '0.5.5'
 
 # 图片上传
 gem 'carrierwave', "0.5.3"
@@ -36,9 +37,6 @@ gem 'memcache-client', '1.8.5'
 gem 'omniauth', '0.2.0'
 gem "oa-openid", '0.2.0'
 gem "omniauth_china", "0.0.6"
-
-# 后台列表
-# gem 'wice_grid', '3.0.0.pre1'
 
 # 设置
 gem 'settingslogic', '2.0.6'
@@ -54,9 +52,6 @@ gem 'tagged-cache', '1.1.1'
 
 # PUT 颜色
 gem 'colorize', '0.5.8'
-
-# 后台表格
-gem 'mongoid_wice_grid', '4.0.0', :require => "wice_grid"
 
 # Crontab 辅助
 gem 'whenever', '0.6.2'

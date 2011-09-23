@@ -34,7 +34,7 @@
         • <a rel="tipsyr" title="向回答者表示感谢" class="thank<%= ' thanked' if thank_answered?(item) %>" href="#" onclick="return Asks.thankAnswer(this,'<%= item.id %>')">感谢</a>
       <% end %>
       • <a rel="tipsyr" title="认为此回答与问题不相干，或者没有实际作用" class="notusefull<%= ' spamed' if spam_answered?(item) %>" onclick="return Asks.spamAnswer(this,'<%= item.id %>');" href="#">没有帮助</a>
-      • <%= l item.created_at.getlocal, :format => :short %>
+      • <%= l item.created_at, :format => :short %>
     </div>
   </div>
 </div>

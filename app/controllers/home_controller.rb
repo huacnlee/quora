@@ -37,8 +37,7 @@ class HomeController < ApplicationController
         end
       end
     else
-      @asks = Ask.normal.recent.includes(:user,:last_answer,:last_answer_user,:topics)
-                  .paginate(:page => params[:page], :per_page => @per_page)
+      @asks = Ask.normal.recent.paginate(:page => params[:page], :per_page => @per_page)
       if params[:format] == "js"
         render "/asks/index.js"
       end
