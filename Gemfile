@@ -15,7 +15,7 @@ gem "dalli","1.1.2"
 gem "redis", "2.1.1"
 
 # Vote 插件 for Mongoid
-gem 'voteable_mongo', :path => "../voteable_mongo"
+gem 'voteable_mongo_huacnlee', :require => "voteable_mongo"
 
 # 分词
 gem 'rmmseg-cpp-huacnlee', '0.2.8'
