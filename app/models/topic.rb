@@ -43,7 +43,8 @@ class Topic
   
   redis_search_index(:title_field => :name,
 										 :prefix_index_enable => true,
-                     :ext_fields => [:followers_count,:cover_small])
+										 :score_field => :followers_count,
+                     :ext_fields => [:followers_count,:asks_count,:cover_small])
 
   # 敏感词验证
   before_validation :check_spam_words

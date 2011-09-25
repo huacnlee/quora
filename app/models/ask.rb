@@ -60,7 +60,9 @@ class Ask
   # 问我的问题
   scope :asked_to, lambda { |to_user_id| where(:to_user_id => to_user_id) }
 
-  redis_search_index(:title_field => :title,:ext_fields => [:topics])
+  redis_search_index(:title_field => :title,
+                     :score_field => :score,
+                     :ext_fields => [:topics])
 
   before_save :fill_default_values
   after_create :create_log, :inc_counter_cache, :send_mails
@@ -69,6 +71,10 @@ class Ask
 
   def view!
     self.inc(:views_count, 1)
+  end
+  
+  def score
+    self.comments_count + (self.answers_count * 3) + (self.follower_ids.count * 2)
   end
 
   def send_mails
