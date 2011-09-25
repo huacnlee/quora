@@ -76,6 +76,21 @@ class Ask
   def score
     self.comments_count + (self.answers_count * 3) + (self.follower_ids.count * 2)
   end
+  
+  def score_changed?
+    Rails.logger.debug "--- score_changed"
+    if self.comments_count_changed?
+      return true
+    end
+    if self.answers_count_changed?
+      return true
+    end
+    if self.follower_ids != self.follower_ids_was
+      return true
+    end
+     Rails.logger.debug "--- score_changed false #{self.follower_ids_was} --- #{self.follower_ids}"
+    false
+  end
 
   def send_mails
     # 向某人提问
