@@ -9,7 +9,7 @@ redis_search = Redis.new(:host => redis_config['host'],:port => redis_config['po
 redis_search.select("3")
 Redis::Search.configure do |config|
   config.redis = redis_search
-	config.complete_max_length = 30
+  config.complete_max_length = 30
 end
 
 # Resque
