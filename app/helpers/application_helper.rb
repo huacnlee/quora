@@ -3,7 +3,7 @@ module ApplicationHelper
   def use_yahei_font?(ua)
     use = true
     ["Windows NT 5.2", "Windows NT 5.1"].each do |w|
-      if ua.include?(w)
+      if ua and ua.include?(w)
         use = false
         break
       end
