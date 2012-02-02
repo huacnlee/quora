@@ -1,0 +1,43 @@
+default: &defaults
+  # 网站名称
+  app_name: "者也"
+  # 页脚版权
+  foot_html: "&copy; 者也 zheye.org - 非营利问答平台，开源项目，<a href=\"http://github.com/huacnlee/quora\">代码</a>。内测期间，如有问题还请谅解。"
+  # 网站的域名
+  domain: "127.0.0.1:3000"
+  # 配置图片的域名
+  upload_url: "http://127.0.0.1:3000/uploads"
+  # 设置管理员，在下面填写需要设置为管理员的用户 email
+  admin_emails: 
+    - "huacnlee@gmail.com"
+  email_sender: 'no-reply@zheye.org'
+  aws_access_key_id: 'your aws access_key_id'
+  aws_secret_access_key: 'your aws secret_access_key'
+  # 是否开放注册
+  allow_register: true
+  # 问题被多少次 spam 隐藏
+  ask_spam_max: 8
+  # 回答被多少次 spam 会删除线
+  answer_spam_max: 5
+  google_analytics_id: "UA-22413508-1"
+  spam_words: /敏感词1|敏感词2/
+
+development:
+  <<: *defaults
+
+development_mongohq:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  app_name: "者也"
+  # 页脚版权
+  foot_html: "&copy; 者也 zheye.org - 非营利问答平台，开源项目，<a href=\"http://github.com/huacnlee/quora\">代码</a>，内测期间，如有问题还请谅解。"
+  # 网站的域名
+  domain: "zheye.org"
+  # 配置图片的域名
+  upload_url: "http://zheye.org/uploads"
+  google_analytics_id: "UA-22413508-1"

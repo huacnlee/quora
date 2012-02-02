@@ -1,0 +1,15 @@
+default: &defaults
+  server: 'localhost'
+
+development:
+  <<: *defaults
+
+development_mongohq:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
