@@ -78,4 +78,17 @@ gem "redis-search", "0.6.1"
 
 group :development do
 	gem 'rails-dev-boost-beta','0.1.2', :require => 'rails_development_boost'
+  gem "rspec-rails", "~> 2.6"
+  gem 'pry'
+end
+
+
+group :test do
+  gem "rspec-rails", "~> 2.6"
+  gem 'turn', :require => false
+  gem "factory_girl_rails", "~> 1.2"
+  gem 'capybara'
+  gem 'guard-rspec'
+  gem 'pry'
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
