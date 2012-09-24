@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Quora by huacnlee</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Quora</h1>
+        <p>Quora clone by Ruby on Rails</p>
+
+        <p class="view"><a href="https://github.com/huacnlee/quora">View the Project on GitHub <small>huacnlee/quora</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/huacnlee/quora/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/huacnlee/quora/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/huacnlee/quora">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Quora clone write in Ruby on Rails.</p>
+
+<p>h2. Requirements</p>
+
+<p>Install there software at first</p>
+
+<ul>
+<li>Linux <em>(suggest Ubuntu 10.10+)</em> or Mac OS X <em>(Don't try it on Windows, and send error messages to me!)</em>
+</li>
+<li>Ruby 1.9.2 <em>(not support 1.9.1 or 1.8)</em>
+</li>
+<li>MongoDB 1.8</li>
+<li>Redis 2.2.2</li>
+<li>Node.js 0.4.5</li>
+<li>Coreseek 4.0.1 <em>(In English content, you can use Sphinx 1.10)</em>
+</li>
+<li>Git </li>
+</ul><p>h2. Installation</p>
+
+<p>h3. Start Redis, Mongodb first, you need </p>
+
+<p>pre. 
+$ sudo service redis start
+$ sudo service mongodb start</p>
+
+<p>h3. Download Quora source code from Github</p>
+
+<p>pre. 
+$ git clone git://github.com/huacnlee/quora.git</p>
+
+<p>h3. Configure Quora</p>
+
+<p>pre. 
+$ cd quora
+$ bundle install --path vendor/bundle
+$ cp config/mongoid.yml.default config/mongoid.yml
+$ cp config/setting.yml.default config/setting.yml
+$ cp config/redis.yml.default config/redis.yml
+$ cp config/zomet.yml.default config/zomet.yml
+$ cp config/sphinx.yml.default config/sphinx.yml</p>
+
+<p>h3. Create Sphinx config files and index the database to Sphinx <em>(Before here, you need install Coreseek first.)</em></p>
+
+<p>pre. 
+$ rake mongoid_sphinx:configure
+$ rake mongoid_sphinx:index
+$ rake mongoid_sphinx:start</p>
+
+<p>h3. If you have Quora project old data in the Mongodb, you need to run this script to index the old data for search</p>
+
+<p>pre. 
+$ rake search:index</p>
+
+<p>h3. After, run Rails Server</p>
+
+<p>pre. 
+$ rails s</p>
+
+<p>Then, open your browser, points to <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a>
+That is it, enjoy yourself.</p>
+
+<p>If you have any Issues or Questions, please send message to "Quora Issues":<a href="https://github.com/huacnlee/quora/issues">https://github.com/huacnlee/quora/issues</a> on Github.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/huacnlee">huacnlee</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-9745660-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
