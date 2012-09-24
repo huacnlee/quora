@@ -30,7 +30,7 @@
       <section>
         <p>Quora clone write in Ruby on Rails.</p>
 
-<p>h2. Requirements</p>
+<h2>Requirements</h2>
 
 <p>Install there software at first</p>
 
@@ -45,46 +45,47 @@
 <li>Coreseek 4.0.1 <em>(In English content, you can use Sphinx 1.10)</em>
 </li>
 <li>Git </li>
-</ul><p>h2. Installation</p>
+</ul><h2>Installation</h2>
 
-<p>h3. Start Redis, Mongodb first, you need </p>
+<h3>Start Redis, Mongodb first, you need</h3>
 
-<p>pre. 
-$ sudo service redis start
-$ sudo service mongodb start</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo service redis start
+<span class="nv">$ </span>sudo service mongodb start
+</pre></div>
 
-<p>h3. Download Quora source code from Github</p>
+<h3>Download Quora source code from Github</h3>
 
-<p>pre. 
-$ git clone git://github.com/huacnlee/quora.git</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/huacnlee/quora.git
+</pre></div>
 
-<p>h3. Configure Quora</p>
+<h3>Configure Quora</h3>
 
-<p>pre. 
-$ cd quora
-$ bundle install --path vendor/bundle
-$ cp config/mongoid.yml.default config/mongoid.yml
-$ cp config/setting.yml.default config/setting.yml
-$ cp config/redis.yml.default config/redis.yml
-$ cp config/zomet.yml.default config/zomet.yml
-$ cp config/sphinx.yml.default config/sphinx.yml</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>quora
+<span class="nv">$ </span>bundle install --path vendor/bundle
+<span class="nv">$ </span>cp config/mongoid.yml.default config/mongoid.yml
+<span class="nv">$ </span>cp config/setting.yml.default config/setting.yml
+<span class="nv">$ </span>cp config/redis.yml.default config/redis.yml
+<span class="nv">$ </span>cp config/zomet.yml.default config/zomet.yml
+<span class="nv">$ </span>cp config/sphinx.yml.default config/sphinx.yml
+</pre></div>
 
-<p>h3. Create Sphinx config files and index the database to Sphinx <em>(Before here, you need install Coreseek first.)</em></p>
+<h3>Create Sphinx config files and index the database to Sphinx <em>(Before here, you need install Coreseek first.)</em>
+</h3>
 
-<p>pre. 
-$ rake mongoid_sphinx:configure
-$ rake mongoid_sphinx:index
-$ rake mongoid_sphinx:start</p>
+<div class="highlight"><pre><span class="nv">$ </span>rake mongoid_sphinx:configure
+<span class="nv">$ </span>rake mongoid_sphinx:index
+<span class="nv">$ </span>rake mongoid_sphinx:start
+</pre></div>
 
-<p>h3. If you have Quora project old data in the Mongodb, you need to run this script to index the old data for search</p>
+<h3>If you have Quora project old data in the Mongodb, you need to run this script to index the old data for search</h3>
 
-<p>pre. 
-$ rake search:index</p>
+<div class="highlight"><pre><span class="nv">$ </span>rake search:index
+</pre></div>
 
-<p>h3. After, run Rails Server</p>
+<h3>After, run Rails Server</h3>
 
-<p>pre. 
-$ rails s</p>
+<div class="highlight"><pre><span class="nv">$ </span>rails s
+</pre></div>
 
 <p>Then, open your browser, points to <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a>
 That is it, enjoy yourself.</p>
