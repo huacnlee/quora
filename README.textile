@@ -17,8 +17,8 @@ h2. Installation
 h3. Start Redis, Mongodb first, you need 
 
 pre. 
-$ sudo service redis start
-$ sudo service mongodb start
+$ redis start or sudo redis start 
+$ mongodb or sudo mongodb 
 
 h3. Download Quora source code from Github
 
